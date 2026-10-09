@@ -83,8 +83,10 @@ separate call first extracts the problem as JSON: nodes and weighted edges, the 
 parameters. The extraction is checked against the pixels: each node name against the OCR'd letters,
 each edge against the drawn line and the OCR'd weight beside it; when they disagree the pixels win.
 Code then runs the algorithm (Dijkstra, BFS, DFS, Prim, Kruskal, bubble / insertion / selection /
-merge sort, binary search, TCP slow start, AIMD and timeout) and every iteration with every changed
-value goes into the prompt as a **verified simulation**. The model writes the narration and chooses
+merge sort, binary search, TCP slow start, AIMD and timeout, CPU scheduling FCFS / SJF / SRTF / round
+robin / priority, page replacement FIFO / LRU / OPT) and every iteration with every changed value
+goes into the prompt as a **verified simulation**. For a scheduling chart, a process counts as
+verified only when its name, arrival and burst are printed on one row of the page. The model writes the narration and chooses
 where to draw; the numbers come from code. Other pages skip this step (a keyword check, no extra call).
 
 **Grounding fusion.** Two independent signals are cross-checked per target:
@@ -154,14 +156,20 @@ algorithm computes, the order, the final answer. Every failed verdict was read b
 | L0 | teach by doing | 0.73 (3/9 runs fully correct) | - |
 | L2 | + "simulate, don't shortcut" (one general rule) | 0.89 (5/9) | 0.85 (22/34) |
 | L3 | + solver-backed simulation, GPU perception | **1.00 (9/9)** | 0.84 (18/34) |
+| L4 | + CPU scheduling and page replacement solvers | 0.98 (8/9) | **0.91 (23/34)** |
 
-- On the Dijkstra slide L0 compared a few routes by eye (0.47); L3 runs the real algorithm on the graph
-  read off the slide (all 9 vertices, 14 edges, every relaxation including G 9→4) in 3 of 3 runs.
-- On TCP congestion control (rules, no numbers on the slide) only L3 walks a concrete timeline.
+- On the Dijkstra slide L0 compared a few routes by eye (0.47); L3 and L4 run the real algorithm on the
+  graph read off the slide (all 9 vertices, 14 edges, every relaxation including G 9→4) in every run.
+- On TCP congestion control (rules, no numbers on the slide) only the solver versions walk a concrete
+  timeline.
 - The 17 new pages (Wikimedia Commons: graph algorithms, BST, TCP handshake, Go-Back-N, CPU scheduling,
-  LRU, deadlock, math, circuits, biology) show no difference between L2 and L3: small clean graphs are
-  traced correctly without the solver, and the misses are reading errors (Gantt bars, arrow directions)
-  in both. Per-topic tables: [`samples/eval/lessons_summary.md`](samples/eval/lessons_summary.md).
+  LRU, deadlock, math, circuits, biology) exposed reading errors that a prompt cannot fix, like misread
+  Gantt bars. L4 answers those with code: on the SJF chart every L2/L3 lesson got some waiting times
+  wrong (0.30-0.40), both L4 lessons got all 14 and the 2.36 average exactly (1.00).
+- Read the small differences as noise: with 2 runs per case a topic moves by ~0.15 by chance (L3 and
+  L4 run identical code on the math pages and still differ by that much). Deadlock graphs (arrow
+  directions) remain unsolved in every version. Per-case tables:
+  [`samples/eval/lessons_summary.md`](samples/eval/lessons_summary.md).
 - GPU: SAM 2.1 lifts the low-confidence targets it refines from 0.48 to 0.63 IoU (hit@0.75 26% -> 47%,
   paired, same model calls); formula OCR turned 14 of 27 formula lines into correct LaTeX and rejected
   all 3 misreads ([`samples/eval/latex_ocr.md`](samples/eval/latex_ocr.md)).
@@ -178,7 +186,8 @@ algorithm computes, the order, the final answer. Every failed verdict was read b
   spoken.
 - **Simulations, not summaries:** an algorithm or procedure on the page is run step by step on the
   page's own example (every changed value written next to its node), with code-verified numbers for
-  graph searches, spanning trees, sorts, binary search and TCP congestion control.
+  graph searches, spanning trees, sorts, binary search, TCP congestion control, CPU scheduling and page
+  replacement.
 - **PDF reader mode:** read a PDF lecture like a book; turning pages scans nothing. Explain scans only
   the page you are on, and earlier pages and lessons are context ("Builds on pages 1-3").
 - **Follow-up questions:** circle the confusing part with the pen and ask; answers are drawn in purple.

@@ -155,8 +155,8 @@ and version, L2 and L3 at the same time; per-case tables and every lesson in
 |---|---|---|---|
 | graph algorithms (BFS/DFS, Prim, Dijkstra) | 3 | 0.93 (4/6 all) | 0.93 (4/6 all) |
 | data structures (BST insert) | 1 | 1.00 (2/2 all) | 1.00 (2/2 all) |
-| networking (TCP handshake, Go-Back-N vs Selective Repeat) | 2 | 0.85 (2/4 all) | 0.85 (1/4 all) |
-| operating systems (SJF Gantt chart, LRU cache, deadlock graph) | 3 | 0.60 (2/6 all) | 0.53 (2/6 all) |
+| networking (TCP handshake, Go-Back-N vs Selective Repeat) | 2 | 0.90 (2/4 all) | 0.85 (1/4 all) |
+| operating systems (SJF Gantt chart, LRU cache, deadlock graph) | 3 | 0.60 (2/6 all) | 0.57 (2/6 all) |
 | math (quadratic, unit circle, Pythagoras, tangent line) | 4 | 0.80 (5/8 all) | 0.85 (4/8 all) |
 | physics (two circuits, kinematics) | 3 | 0.97 (5/6 all) | 0.93 (4/6 all) |
 | biology (Calvin cycle) | 1 | 1.00 (2/2 all) | 0.90 (1/2 all) |
@@ -175,9 +175,52 @@ What it says:
   the other edges (0 of 4), the general kinematics formula next to its substitution.
 - Checker audit: every failed verdict of both versions was read against the lesson. One more false
   negative was found and fixed (Pythagoras: "4 by 4 ... 3 by 3" was not accepted); re-scoring both
-  versions changed exactly that verdict.
+  versions changed exactly that verdict. The table shows the final numbers, after the second audit
+  round in 7.6 (L2 networking 0.85 -> 0.90, L3 operating systems 0.53 -> 0.57).
 - Next target: the SJF chart prints every process as "P7(7, 3)" (arrival, burst), so code can compute
   the waiting times instead of the model reading them off the bars (section 7.6).
+
+### 7.6 L4: CPU scheduling and page replacement solvers
+
+L4 (`3e13ede`) adds two solver kinds, written because of the 7.2 failures: CPU scheduling (FCFS, SJF,
+SRTF, round robin, priority) and page replacement (FIFO, LRU, OPT). The model reads the process table
+or reference string; a process counts as confirmed only when its name, arrival and burst are printed
+on one row of the page (an OCR line like "P7(7, 3)" or a table row), so axis numbers cannot confirm
+anything. Unit tests reproduce the textbook answers (Silberschatz's FCFS 17, SJF 7, SRTF 6.5, RR 5.67
+average waits; FIFO / LRU / OPT 15 / 12 / 9 faults) and both benchmark charts. Same 20 cases, same
+checks, core 3 runs and bench 2 runs, GPU warm.
+
+| | L0 | L2 | L3 | **L4** |
+|---|---|---|---|---|
+| 3 core cases | 0.73 (3/9 all) | 0.89 (5/9 all) | **1.00 (9/9 all)** | 0.98 (8/9 all) |
+| 17 bench cases | - | 0.85 (22/34 all) | 0.84 (18/34 all) | **0.91 (23/34 all)** |
+| all 20 | - | 0.86 (27/43 all) | 0.87 (27/43 all) | **0.93 (31/43 all)** |
+| cs_sjf_gantt (scheduling solver) | - | 0.30 (0/2 all) | 0.40 (0/2 all) | **1.00 (2/2 all)** |
+| cs_lru_cache (page replacement solver) | - | 1.00 (2/2 all) | 1.00 (2/2 all) | 1.00 (2/2 all) |
+
+How to read it:
+- The effect of the new solvers is the SJF chart: every L2 and L3 lesson misread some bars (P7 waiting 6,
+  average 2.21); both L4 lessons give all 14 waiting times, the total 33 and the average 2.36 exactly,
+  with the simulation verified against the 14 printed rows. LRU was already right; now it is computed.
+- Most of the other movement is run-to-run noise. On the math pages no solver runs, so L3 and L4 run
+  identical code there, yet math went 0.85 -> 1.00 (Pythagoras 0.60 -> 1.00). With 2 runs per case a
+  topic can move by ~0.15 by chance; only differences that are repeated in every run and explained by a
+  code change (Dijkstra and TCP in 7.1, SJF here) should be read as effects.
+- L4 core 0.98 vs L3 1.00: one TCP lesson shows "cwnd 1→2→4→8" on the board but never says the window
+  starts at 1 MSS; the check asks for that sentence, every earlier run passed it, and it was not
+  loosened after the fact.
+- Still unsolved in every version: the deadlock graph (4 of the 6 L2-L4 lessons misread an arrow and
+  concluded "no deadlock"), Selective Repeat's cumulative Ack 5 (0 of 6), why Prim skips the remaining
+  edges (0 of 6).
+
+Checker audit, second round (every failed verdict of L4, and the L2/L3 failures re-read with the same
+rule: widen a check only when the lesson states the checked fact in other words, never when the fact is
+missing, wrong or ambiguous). Widened: Go-Back-N "refuses frames 3 through 8", DFS "dives",
+Pythagoras sides named in separate steps, "velocity rises from 0 to 10", deadlock "R3 gives / feeds an
+instance to P1", Ohm "the drops add back to the battery". Re-scoring all versions changed 7 verdicts,
+each read by hand: L2 +1, L3 +1, L4 +5. Kept as misses: "4.5 V across r" (lower-casing loses the r/R
+distinction), cycles described in prose rather than as a path (the check asks for the path, L2 and L4
+alike).
 
 ### 7.3 SAM 2.1 on the GPU: paired ablation (`samples/eval/results_gpu.md`)
 
