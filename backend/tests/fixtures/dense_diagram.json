@@ -1,0 +1,427 @@
+{
+ "image": "dense_diagram.png",
+ "width": 1280,
+ "height": 720,
+ "note": "16 shapes (round/rect/ellipse/diamond) with labels, 3px outlines.",
+ "elements": [
+  {
+   "name": "Inside a Computer: Data Paths",
+   "kind": "text",
+   "box": [
+    40,
+    28,
+    509,
+    57
+   ]
+  },
+  {
+   "name": "CPU",
+   "kind": "shape",
+   "shape": "round",
+   "box": [
+    53,
+    121,
+    203,
+    179
+   ]
+  },
+  {
+   "name": "label: CPU",
+   "kind": "text",
+   "box": [
+    107,
+    143,
+    148,
+    157
+   ]
+  },
+  {
+   "name": "ALU",
+   "kind": "shape",
+   "shape": "round",
+   "box": [
+    309,
+    121,
+    459,
+    179
+   ]
+  },
+  {
+   "name": "label: ALU",
+   "kind": "text",
+   "box": [
+    364,
+    143,
+    403,
+    157
+   ]
+  },
+  {
+   "name": "Registers",
+   "kind": "shape",
+   "shape": "rect",
+   "box": [
+    565,
+    121,
+    715,
+    179
+   ]
+  },
+  {
+   "name": "label: Registers",
+   "kind": "text",
+   "box": [
+    599,
+    143,
+    681,
+    161
+   ]
+  },
+  {
+   "name": "L1 Cache",
+   "kind": "shape",
+   "shape": "round",
+   "box": [
+    821,
+    121,
+    971,
+    179
+   ]
+  },
+  {
+   "name": "label: L1 Cache",
+   "kind": "text",
+   "box": [
+    854,
+    143,
+    938,
+    157
+   ]
+  },
+  {
+   "name": "L2 Cache",
+   "kind": "shape",
+   "shape": "round",
+   "box": [
+    1077,
+    121,
+    1227,
+    179
+   ]
+  },
+  {
+   "name": "label: L2 Cache",
+   "kind": "text",
+   "box": [
+    1110,
+    143,
+    1194,
+    157
+   ]
+  },
+  {
+   "name": "Control Unit",
+   "kind": "shape",
+   "shape": "rect",
+   "box": [
+    53,
+    261,
+    203,
+    319
+   ]
+  },
+  {
+   "name": "label: Control Unit",
+   "kind": "text",
+   "box": [
+    77,
+    283,
+    179,
+    297
+   ]
+  },
+  {
+   "name": "RAM",
+   "kind": "shape",
+   "shape": "round",
+   "box": [
+    309,
+    261,
+    459,
+    319
+   ]
+  },
+  {
+   "name": "label: RAM",
+   "kind": "text",
+   "box": [
+    362,
+    283,
+    405,
+    297
+   ]
+  },
+  {
+   "name": "GPU",
+   "kind": "shape",
+   "shape": "round",
+   "box": [
+    565,
+    261,
+    715,
+    319
+   ]
+  },
+  {
+   "name": "label: GPU",
+   "kind": "text",
+   "box": [
+    619,
+    283,
+    661,
+    297
+   ]
+  },
+  {
+   "name": "VRAM",
+   "kind": "shape",
+   "shape": "rect",
+   "box": [
+    821,
+    261,
+    971,
+    319
+   ]
+  },
+  {
+   "name": "label: VRAM",
+   "kind": "text",
+   "box": [
+    868,
+    283,
+    924,
+    297
+   ]
+  },
+  {
+   "name": "SSD",
+   "kind": "shape",
+   "shape": "round",
+   "box": [
+    1077,
+    261,
+    1227,
+    319
+   ]
+  },
+  {
+   "name": "label: SSD",
+   "kind": "text",
+   "box": [
+    1132,
+    283,
+    1172,
+    297
+   ]
+  },
+  {
+   "name": "Bus",
+   "kind": "shape",
+   "shape": "ellipse",
+   "box": [
+    63,
+    395,
+    193,
+    465
+   ]
+  },
+  {
+   "name": "label: Bus",
+   "kind": "text",
+   "box": [
+    111,
+    423,
+    145,
+    437
+   ]
+  },
+  {
+   "name": "I/O Hub",
+   "kind": "shape",
+   "shape": "round",
+   "box": [
+    309,
+    401,
+    459,
+    459
+   ]
+  },
+  {
+   "name": "label: I/O Hub",
+   "kind": "text",
+   "box": [
+    351,
+    423,
+    417,
+    437
+   ]
+  },
+  {
+   "name": "NIC",
+   "kind": "shape",
+   "shape": "diamond",
+   "box": [
+    565,
+    390,
+    715,
+    470
+   ]
+  },
+  {
+   "name": "label: NIC",
+   "kind": "text",
+   "box": [
+    623,
+    423,
+    656,
+    437
+   ]
+  },
+  {
+   "name": "USB",
+   "kind": "shape",
+   "shape": "round",
+   "box": [
+    821,
+    401,
+    971,
+    459
+   ]
+  },
+  {
+   "name": "label: USB",
+   "kind": "text",
+   "box": [
+    876,
+    423,
+    916,
+    437
+   ]
+  },
+  {
+   "name": "BIOS",
+   "kind": "shape",
+   "shape": "rect",
+   "box": [
+    1077,
+    401,
+    1227,
+    459
+   ]
+  },
+  {
+   "name": "label: BIOS",
+   "kind": "text",
+   "box": [
+    1129,
+    423,
+    1175,
+    437
+   ]
+  },
+  {
+   "name": "DMA",
+   "kind": "shape",
+   "shape": "diamond",
+   "box": [
+    53,
+    540,
+    203,
+    620
+   ]
+  },
+  {
+   "name": "label: DMA",
+   "kind": "text",
+   "box": [
+    106,
+    573,
+    149,
+    587
+   ]
+  },
+  {
+   "name": "Clock",
+   "kind": "shape",
+   "shape": "ellipse",
+   "box": [
+    319,
+    545,
+    449,
+    615
+   ]
+  },
+  {
+   "name": "label: Clock",
+   "kind": "text",
+   "box": [
+    359,
+    573,
+    408,
+    587
+   ]
+  },
+  {
+   "name": "PSU",
+   "kind": "shape",
+   "shape": "round",
+   "box": [
+    821,
+    551,
+    971,
+    609
+   ]
+  },
+  {
+   "name": "label: PSU",
+   "kind": "text",
+   "box": [
+    876,
+    573,
+    916,
+    587
+   ]
+  },
+  {
+   "name": "Display",
+   "kind": "shape",
+   "shape": "rect",
+   "box": [
+    1077,
+    551,
+    1227,
+    609
+   ]
+  },
+  {
+   "name": "label: Display",
+   "kind": "text",
+   "box": [
+    1120,
+    573,
+    1184,
+    591
+   ]
+  },
+  {
+   "name": "caption",
+   "kind": "text",
+   "box": [
+    39,
+    680,
+    575,
+    699
+   ]
+  }
+ ]
+}

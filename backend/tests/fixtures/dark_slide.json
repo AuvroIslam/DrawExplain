@@ -1,0 +1,172 @@
+{
+ "image": "dark_slide.png",
+ "width": 1280,
+ "height": 720,
+ "note": "Dark slide: filled boxes (no outline), light text, yellow sun + arrows.",
+ "elements": [
+  {
+   "name": "title",
+   "kind": "text",
+   "box": [
+    60,
+    49,
+    675,
+    87
+   ]
+  },
+  {
+   "name": "sun",
+   "kind": "shape",
+   "shape": "ellipse",
+   "box": [
+    1080,
+    30,
+    1190,
+    140
+   ]
+  },
+  {
+   "name": "Light absorbed",
+   "kind": "shape",
+   "shape": "round",
+   "box": [
+    60,
+    250,
+    380,
+    450
+   ]
+  },
+  {
+   "name": "Light absorbed",
+   "kind": "text",
+   "box": [
+    84,
+    280,
+    299,
+    308
+   ]
+  },
+  {
+   "name": "Chlorophyll captures",
+   "kind": "text",
+   "box": [
+    84,
+    345,
+    299,
+    367
+   ]
+  },
+  {
+   "name": "energy from sunlight",
+   "kind": "text",
+   "box": [
+    84,
+    379,
+    299,
+    401
+   ]
+  },
+  {
+   "name": "Water split",
+   "kind": "shape",
+   "shape": "round",
+   "box": [
+    480,
+    250,
+    800,
+    450
+   ]
+  },
+  {
+   "name": "Water split",
+   "kind": "text",
+   "box": [
+    504,
+    280,
+    657,
+    308
+   ]
+  },
+  {
+   "name": "H2O releases oxygen",
+   "kind": "text",
+   "box": [
+    504,
+    345,
+    732,
+    367
+   ]
+  },
+  {
+   "name": "and electrons",
+   "kind": "text",
+   "box": [
+    504,
+    379,
+    646,
+    396
+   ]
+  },
+  {
+   "name": "Sugar made",
+   "kind": "shape",
+   "shape": "round",
+   "box": [
+    900,
+    250,
+    1220,
+    450
+   ]
+  },
+  {
+   "name": "Sugar made",
+   "kind": "text",
+   "box": [
+    924,
+    280,
+    1096,
+    308
+   ]
+  },
+  {
+   "name": "CO2 is fixed into",
+   "kind": "text",
+   "box": [
+    924,
+    345,
+    1099,
+    362
+   ]
+  },
+  {
+   "name": "glucose molecules",
+   "kind": "text",
+   "box": [
+    924,
+    379,
+    1118,
+    401
+   ]
+  },
+  {
+   "name": "Inputs: carbon dioxide, water and light",
+   "kind": "text",
+   "box": [
+    60,
+    566,
+    540,
+    592
+   ]
+  },
+  {
+   "name": "Outputs: glucose and oxygen",
+   "kind": "text",
+   "box": [
+    60,
+    612,
+    430,
+    638
+   ]
+  }
+ ]
+}
