@@ -34,3 +34,6 @@ samples/eval/cache/
 # third-party course slides used for local testing (not ours to publish)
 samples/real/
 *.pdf
+
+# full screenshot set (local reference for the demo video)
+docs/screenshots_all/
