@@ -9,12 +9,12 @@
    "name": "gbn_discards_3_to_8",
    "description": "(a) The Go-Back-N receiver discards frames 3-8.",
    "any": [
-    "(?:discard|drop|throw|thrown|reject|ignor)\\w*[^.\\n]{0,60}\\b3\\b\\s*(?:-|to|through|thru|until|up to)\\s*8\\b",
-    "\\b3\\b\\s*(?:-|to|through|thru|until|up to)\\s*8\\b[^.\\n]{0,60}(?:discard|drop|throw|thrown|reject|ignor)\\w*",
-    "(?:discard|drop|throw|thrown|reject|ignor)\\w*[^.\\n]{0,60}3,\\s*4,\\s*5,\\s*6,\\s*7,?\\s*(?:and\\s*)?8\\b",
-    "3,\\s*4,\\s*5,\\s*6,\\s*7,?\\s*(?:and\\s*)?8\\b[^.\\n]{0,60}(?:discard|drop|throw|thrown|reject|ignor)\\w*",
-    "(?:six|6) frames[^.\\n]{0,40}(?:discard|drop|throw|thrown|reject|ignor)\\w*",
-    "(?:discard|drop|throw|thrown|reject|ignor)\\w*[^.\\n]{0,40}(?:six|6) frames"
+    "(?:discard|drop|throw|thrown|reject|ignor|refus)\\w*[^.\\n]{0,60}\\b3\\b\\s*(?:-|to|through|thru|until|up to)\\s*8\\b",
+    "\\b3\\b\\s*(?:-|to|through|thru|until|up to)\\s*8\\b[^.\\n]{0,60}(?:discard|drop|throw|thrown|reject|ignor|refus)\\w*",
+    "(?:discard|drop|throw|thrown|reject|ignor|refus)\\w*[^.\\n]{0,60}3,\\s*4,\\s*5,\\s*6,\\s*7,?\\s*(?:and\\s*)?8\\b",
+    "3,\\s*4,\\s*5,\\s*6,\\s*7,?\\s*(?:and\\s*)?8\\b[^.\\n]{0,60}(?:discard|drop|throw|thrown|reject|ignor|refus)\\w*",
+    "(?:six|6) frames[^.\\n]{0,40}(?:discard|drop|throw|thrown|reject|ignor|refus)\\w*",
+    "(?:discard|drop|throw|thrown|reject|ignor|refus)\\w*[^.\\n]{0,40}(?:six|6) frames"
    ],
    "min_any": 1
   },

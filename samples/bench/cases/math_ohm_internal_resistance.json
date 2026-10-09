@@ -51,7 +51,8 @@
     "4[.,]5\\s*(?:v\\s*)?\\+\\s*7[.,]5\\s*(?:v\\s*)?=\\s*12",
     "7[.,]5\\s*(?:v\\s*)?\\+\\s*4[.,]5\\s*(?:v\\s*)?=\\s*12",
     "12\\s*(?:v\\s*)?-\\s*4[.,]5\\s*(?:v\\s*)?=\\s*7[.,]5",
-    "(?:add|adds|sum|total|together)[^\\n]{0,50}(?:to|up to|is|=|back to|make|makes|give|gives)\\s*(?:the\\s*)?(?:full\\s*|whole\\s*)?(?:emf\\s*(?:of\\s*)?|ε\\s*(?:=\\s*)?|battery'?s?\\s*)?12\\s*v"
+    "(?:add|adds|sum|total|together)[^\\n]{0,50}(?:to|up to|is|=|back to|make|makes|give|gives)\\s*(?:the\\s*)?(?:full\\s*|whole\\s*)?(?:emf\\s*(?:of\\s*)?|ε\\s*(?:=\\s*)?|battery'?s?\\s*)?12\\s*v",
+    "drops?[^.\\n]{0,30}\\badd\\w*[^.\\n]{0,30}(?:battery|emf|source|\\b12\\b)"
    ],
    "min_any": 1
   }

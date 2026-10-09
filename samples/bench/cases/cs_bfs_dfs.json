@@ -54,7 +54,8 @@
     "backtrack",
     "recurs",
     "dead[- ]end",
-    "as deep as|as far as possible|goes? deep|going deep|deeper"
+    "as deep as|as far as possible|goes? deep|going deep|deeper",
+    "\\bdiv(?:e|es|ed|ing)\\b"
    ],
    "min_any": 1
   }

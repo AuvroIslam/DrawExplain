@@ -9,7 +9,7 @@
    "name": "p1_holds_r3_waits_r1",
    "description": "P1 holds an instance of R3 and requests R1.",
    "all": [
-    "(?:\\bp1\\b[^.\\n]{0,50}(?:holds?|holding|has|owns?|is allocated|was allocated|got|is assigned|keeps?)[^.\\n]{0,40}\\br3\\b|\\br3\\b[^.\\n]{0,50}(?:held by|allocated to|assigned to|given to|belongs to|owned by|goes to)\\s*(?:process\\s*)?p1\\b|\\br3\\s*->\\s*p1\\b)",
+    "(?:\\bp1\\b[^.\\n]{0,50}(?:holds?|holding|has|owns?|is allocated|was allocated|got|is assigned|keeps?)[^.\\n]{0,40}\\br3\\b|\\br3\\b[^.\\n]{0,50}(?:held by|allocated to|assigned to|given to|belongs to|owned by|goes to)\\s*(?:process\\s*)?p1\\b|\\br3\\s*->\\s*p1\\b|\\br3\\b[^.\\n]{0,40}(?:giv\\w*|feed\\w*)[^.\\n]{0,25}?\\bp1\\b)",
     "(?:\\bp1\\b[^.\\n]{0,50}(?:requests?|requesting|waits?|waiting|wants?|needs?|asks?|asking|blocked)[^.\\n]{0,40}\\br1\\b|\\br1\\b[^.\\n]{0,30}(?:requested|wanted|needed) by\\s*p1\\b|\\bp1\\s*->\\s*r1\\b)"
    ]
   },
@@ -17,7 +17,7 @@
    "name": "p2_holds_r1_waits_r2",
    "description": "P2 holds R1 (and an R3 instance) and requests R2.",
    "all": [
-    "(?:\\bp2\\b[^.\\n]{0,50}(?:holds?|holding|has|owns?|is allocated|was allocated|got|is assigned|keeps?)[^.\\n]{0,40}\\br1\\b|\\br1\\b[^.\\n]{0,50}(?:held by|allocated to|assigned to|given to|belongs to|owned by|goes to)\\s*(?:process\\s*)?p2\\b|\\br1\\s*->\\s*p2\\b)",
+    "(?:\\bp2\\b[^.\\n]{0,50}(?:holds?|holding|has|owns?|is allocated|was allocated|got|is assigned|keeps?)[^.\\n]{0,40}\\br1\\b|\\br1\\b[^.\\n]{0,50}(?:held by|allocated to|assigned to|given to|belongs to|owned by|goes to)\\s*(?:process\\s*)?p2\\b|\\br1\\s*->\\s*p2\\b|\\br1\\b[^.\\n]{0,40}(?:giv\\w*|feed\\w*)[^.\\n]{0,25}?\\bp2\\b)",
     "(?:\\bp2\\b[^.\\n]{0,50}(?:requests?|requesting|waits?|waiting|wants?|needs?|asks?|asking|blocked)[^.\\n]{0,40}\\br2\\b|\\br2\\b[^.\\n]{0,30}(?:requested|wanted|needed) by\\s*p2\\b|\\bp2\\s*->\\s*r2\\b)"
    ]
   },
@@ -25,7 +25,7 @@
    "name": "p3_holds_r2_waits_r3",
    "description": "P3 holds R2 and requests R3.",
    "all": [
-    "(?:\\bp3\\b[^.\\n]{0,50}(?:holds?|holding|has|owns?|is allocated|was allocated|got|is assigned|keeps?)[^.\\n]{0,40}\\br2\\b|\\br2\\b[^.\\n]{0,50}(?:held by|allocated to|assigned to|given to|belongs to|owned by|goes to)\\s*(?:process\\s*)?p3\\b|\\br2\\s*->\\s*p3\\b)",
+    "(?:\\bp3\\b[^.\\n]{0,50}(?:holds?|holding|has|owns?|is allocated|was allocated|got|is assigned|keeps?)[^.\\n]{0,40}\\br2\\b|\\br2\\b[^.\\n]{0,50}(?:held by|allocated to|assigned to|given to|belongs to|owned by|goes to)\\s*(?:process\\s*)?p3\\b|\\br2\\s*->\\s*p3\\b|\\br2\\b[^.\\n]{0,40}(?:giv\\w*|feed\\w*)[^.\\n]{0,25}?\\bp3\\b)",
     "(?:\\bp3\\b[^.\\n]{0,50}(?:requests?|requesting|waits?|waiting|wants?|needs?|asks?|asking|blocked)[^.\\n]{0,40}\\br3\\b|\\br3\\b[^.\\n]{0,30}(?:requested|wanted|needed) by\\s*p3\\b|\\bp3\\s*->\\s*r3\\b)"
    ]
   },
