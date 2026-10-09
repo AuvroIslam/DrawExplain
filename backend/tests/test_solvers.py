@@ -19,6 +19,7 @@ from app.tutor.context import LessonContext
 from app.tutor.llm import LLMError
 from app.tutor.solvers import algorithms as alg
 from app.tutor.solvers.crosscheck import check_graph
+from app.tutor.solvers.extract import clean
 
 INF = math.inf
 
@@ -160,6 +161,49 @@ def test_tcp_triple_duplicate_ack_reno_and_tahoe():
     assert default.data["cwnd"][:6] == [1, 2, 4, 8, 16, 17]
 
 
+def _procs(*rows: tuple) -> list[alg.Proc]:
+    return [alg.Proc(f"P{i}", *row) for i, row in enumerate(rows, 1)]
+
+
+def test_cpu_scheduling_textbook_examples():
+    # Silberschatz, Operating System Concepts, ch. 5 (all arrive at 0 unless given)
+    fcfs = alg.cpu_schedule(_procs((0, 24), (0, 3), (0, 3)), "fcfs")
+    assert fcfs.data["waiting"] == {"P1": 0, "P2": 24, "P3": 27} and fcfs.data["avg_waiting"] == 17
+    sjf = alg.cpu_schedule(_procs((0, 6), (0, 8), (0, 7), (0, 3)), "sjf")
+    assert sjf.data["order"] == ["P4", "P1", "P3", "P2"] and sjf.data["avg_waiting"] == 7
+    srtf = alg.cpu_schedule(_procs((0, 8), (1, 4), (2, 9), (3, 5)), "srtf")
+    assert srtf.data["waiting"] == {"P1": 9, "P2": 0, "P3": 15, "P4": 2} and srtf.data["avg_waiting"] == 6.5
+    assert [g[0] for g in srtf.data["gantt"]] == ["P1", "P2", "P4", "P1", "P3"]
+    rr = alg.cpu_schedule(_procs((0, 24), (0, 3), (0, 3)), "rr", quantum=4)
+    assert rr.data["waiting"] == {"P1": 6, "P2": 4, "P3": 7} and "17/3 = 5.67" in rr.result
+    pri = alg.cpu_schedule(_procs((0, 10, 3), (0, 1, 1), (0, 2, 4), (0, 1, 5), (0, 5, 2)), "priority")
+    assert pri.data["order"] == ["P2", "P5", "P1", "P3", "P4"] and pri.data["avg_waiting"] == 8.2
+    late = alg.cpu_schedule(_procs((2, 3), (10, 1)), "fcfs")  # idle CPU before and between processes
+    assert late.data["gantt"] == [("idle", 0.0, 2), ("P1", 2, 5), ("idle", 5, 10), ("P2", 10, 11)]
+    with pytest.raises(alg.SolverError):
+        alg.cpu_schedule(_procs((0, 1), (0, 2)), "rr")  # no quantum
+
+
+def test_sjf_gantt_chart_of_the_benchmark_page():
+    # samples/bench/images/cs_sjf_gantt.png: P1(0, 1) ... P14(17, 2)
+    rows = [(0, 1), (0, 1), (0, 1), (3, 1), (3, 2), (3, 3), (7, 3), (7, 2), (7, 1), (13, 1), (13, 2), (13, 3),
+            (17, 1), (17, 2)]
+    t = alg.cpu_schedule(_procs(*rows), "sjf")
+    assert list(t.data["waiting"].values()) == [0, 1, 2, 0, 1, 3, 5, 3, 2, 2, 3, 8, 1, 2]
+    assert t.data["order"][6:9] == ["P9", "P8", "P7"] and "33/14 = 2.36" in t.result
+    assert "the shortest burst is P9" in next(s for s in t.steps if s.startswith("t=9:"))
+
+
+def test_page_replacement_textbook_and_benchmark():
+    refs = "7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1".split()  # Silberschatz, 3 frames
+    assert [alg.page_replacement(refs, 3, v).data["faults"] for v in ("fifo", "lru", "optimal")] == [15, 12, 9]
+    lru = alg.page_replacement(list("ABCDEDF"), 4, "lru")  # samples/bench/images/cs_lru_cache.png
+    assert (lru.data["faults"], lru.data["hits"]) == (6, 1)
+    assert [e["victim"] for e in lru.data["events"] if e["victim"]] == ["A", "B"]
+    assert "replace B, the least recently used (last used at t=1)" in lru.steps[6]
+    assert lru.data["frames"] == ["E", "F", "C", "D"]
+
+
 # ---------------------------------------------------------------- pixel cross-check (fake perception)
 
 W, H = 800, 600
@@ -286,6 +330,63 @@ def test_detection_fires_only_on_algorithmic_pages():
     assert solvers.looks_algorithmic(plain, "What is the shortest path from the laptop?") == "keyword"
     assert solvers.looks_algorithmic(graph_page()) == "keyword"
     assert solvers.looks_algorithmic(graph_page(title="Example")) == "graph-like"
+
+
+def text_page(lines: list[str], image_id: str = "text") -> PerceptionResult:
+    """A page of OCR text lines, one per row (y grows down the page)."""
+    regs = [Region(id=f"R{i}", kind="text", box=_nbox(40, 30 + 36 * i, 400, 56 + 36 * i), text=t, source="ocr")
+            for i, t in enumerate(lines, 1)]
+    img = Image.new("RGB", (W, H), "white")
+    ink = np.zeros((H, W), bool)
+    return PerceptionResult(perception=Perception(image_id=image_id, width=W, height=H, regions=regs), image=img,
+                            marked=img, ink=ink, freespace=_FreeSpace(ink))
+
+
+SJF_ROWS = [(0, 1), (0, 1), (0, 1), (3, 1), (3, 2), (3, 3), (7, 3), (7, 2), (7, 1), (13, 1), (13, 2), (13, 3),
+            (17, 1), (17, 2)]
+
+
+def _scheduling_extraction(rows=SJF_ROWS, variant: str = "sjf") -> dict:
+    return {"kind": "cpu_scheduling", "variant": variant, "graph": None, "source": None, "target": None, "array": None,
+            "search_key": None, "tcp": None, "quantum": None, "pages": None, "assumed": False, "note": None,
+            "processes": [{"name": f"P{i}", "arrival": a, "burst": b, "priority": None}
+                          for i, (a, b) in enumerate(rows, 1)]}
+
+
+def test_scheduling_page_is_detected_and_its_rows_confirm_the_extraction():
+    lines = ["Process (arrival time, burst time)", " ".join(str(t) for t in range(25))]
+    lines += [f"P{i}({a}, {b})" for i, (a, b) in enumerate(SJF_ROWS, 1)]
+    page = text_page(lines, "sjf")
+    assert solvers.looks_algorithmic(page) == "keyword"
+    sim = solvers.build(page, clean(_scheduling_extraction()))
+    assert sim is not None and sim.verified and sim.evidence.startswith("14/14 processes")
+    assert "33/14 = 2.36" in sim.prompt and "P7 5, P8 3, P9 2," in sim.prompt
+    assert "t=9: ready: P7 (burst 3), P8 (burst 2), P9 (burst 1); the shortest burst is P9" in sim.prompt
+    misread = [list(r) for r in SJF_ROWS]
+    misread[6][1] = 4  # P7's burst read as 4: that row does not confirm it (the axis numbers must not either)
+    sim = solvers.build(page, clean(_scheduling_extraction([tuple(r) for r in misread])))
+    assert sim is not None and not sim.verified and sim.evidence.startswith("13/14")
+    assert solvers.build(page, clean(_scheduling_extraction(variant="lottery"))) is None  # no solver for it
+
+
+def test_page_replacement_build_and_quantum_physics_is_not_scheduling():
+    page = text_page(["LRU cache with 4 slots", "Access sequence: A B C D E D F"], "lru")
+    data = clean({"kind": "page_replacement", "variant": "LRU", "pages": {"reference": list("ABCDEDF"), "frames": 4}})
+    sim = solvers.build(page, data)
+    assert sim is not None and sim.verified and sim.trace.data["faults"] == 6
+    assert "t=4: E is not in memory: fault, replace A, the least recently used (last used at t=0)" in sim.prompt
+    physics = text_page(["Quantum mechanics: the photon", "E = hf, momentum p = h / lambda"], "physics")
+    assert solvers.looks_algorithmic(physics) is None
+
+
+def test_clean_drops_malformed_scheduling_and_page_data():
+    d = clean({"kind": "cpu_scheduling", "processes": [{"name": "P1", "arrival": -2, "burst": 3},
+                                                       {"name": "P2", "arrival": 1, "burst": "x"}, "junk",
+                                                       {"name": "", "burst": 1}], "quantum": 0,
+               "pages": {"reference": "ABC", "frames": True}})
+    assert d["processes"] == [{"name": "P1", "arrival": 0.0, "burst": 3.0, "priority": None}]
+    assert d["quantum"] is None and d["pages"] is None
+    assert solvers.build(text_page(["FCFS"]), d) is None  # one process: nothing to schedule
 
 
 # ---------------------------------------------------------------- simulation + planner (mocked model)

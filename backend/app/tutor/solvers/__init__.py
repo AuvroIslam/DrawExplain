@@ -7,8 +7,9 @@ code RUNS the algorithm, and the pixels CHECK what the model read.
 
 Flow: looks_algorithmic (regex + region structure, no model call) -> extract (one strict-JSON call,
 reasoning low, cached per image + question) -> check_graph (graph kinds: vertices -> regions, edge weights
--> numeric OCR labels next to each edge, lines in the ink mask) -> solver (Dijkstra, BFS, DFS, Prim,
-Kruskal, sorts, binary search, TCP cwnd) -> prompt block.
+-> numeric OCR labels next to each edge, lines in the ink mask; processes: name + arrival + burst on one
+printed row) -> solver (Dijkstra, BFS, DFS, Prim, Kruskal, sorts, binary search, TCP cwnd, CPU scheduling,
+page replacement) -> prompt block.
 
 Environment (read here, all optional):
     SIM_SOLVER=0        switch the feature off (default on)
@@ -31,15 +32,18 @@ from app.tutor.solvers.algorithms import (
     SORTS,
     Edge,
     Graph,
+    Proc,
     SolverError,
     Trace,
     bfs,
     binary_search,
+    cpu_schedule,
     dfs,
     dijkstra,
     fmt,
     kruskal,
     node_key,
+    page_replacement,
     parse_values,
     prim,
     tcp_cwnd,
@@ -60,7 +64,7 @@ DEFAULT_TIMEOUT = 12.0
 MAX_CACHED = 256  # simulations kept in memory (per image + question + model)
 NAMES = {"shortest_path": "Dijkstra's algorithm", "bfs": "breadth-first search", "dfs": "depth-first search",
          "mst": "minimum spanning tree", "sort": "sorting", "binary_search": "binary search",
-         "tcp_cwnd": "TCP congestion window"}
+         "tcp_cwnd": "TCP congestion window", "cpu_scheduling": "CPU scheduling", "page_replacement": "page replacement"}
 
 
 @dataclass
@@ -138,6 +142,17 @@ def _how_to_teach(sim: Simulation) -> str:
                 "short labels such as \"cwnd 1→2→4→8\" or \"ssthresh = 6\" next to the rule on the page that produces "
                 "them (slow start, additive increase, the loss rule)"
                 + ("; say once that the numbers are an example" if sim.assumed else "") + "; then state the result.")
+    if sim.kind == "cpu_scheduling":
+        return ("How to teach it: go through the scheduling decisions in this order (one or two per step): which "
+                "processes are ready and which rule picks the next one. " + _FIT +
+                "a label with each process's waiting time next to its row or bar on the page, written like \"P7 wait 5\" "
+                "(or its run, \"P9 9-10\"); finish with the total and the average waiting time"
+                + ("; say once that the numbers are an example" if sim.assumed else "") + ".")
+    if sim.kind == "page_replacement":
+        return ("How to teach it: go through the references in order (a few per step): hit or fault and, for a fault "
+                "with all frames full, which page leaves and why. " + _FIT +
+                "labels such as \"E: fault, evicts A\" or \"D: hit\" next to the reference or frame on the page; finish "
+                "with the number of faults and hits.")
     return ("How to teach it: walk through these steps in order (one or two per lesson step). " + _FIT +
             "short labels with the values (the array after each pass, lo/hi/mid) next to the data on the page; "
             "then state the result.")
@@ -261,7 +276,74 @@ def build(pr: "PerceptionResult", data: dict[str, Any]) -> Simulation | None:
         if assumed:
             extras.append("The page gives the rules but no numbers, so this is an illustrative example: say so.")
         return Simulation(kind, trace, data, verified=verified, assumed=assumed, evidence=evidence, extras=extras)
+
+    if kind == "cpu_scheduling":
+        procs = data.get("processes") or []
+        scheduler = _scheduler(variant)
+        if len(procs) < 2 or scheduler is None:
+            return None
+        trace = cpu_schedule([Proc(p["name"], p["arrival"], p["burst"], p["priority"]) for p in procs], scheduler,
+                             data.get("quantum"))
+        assumed = bool(data.get("assumed"))
+        confirmed = _process_rows(pr, procs)
+        evidence = f"{confirmed}/{len(procs)} processes printed with these arrival and burst times"
+        extras = ["The page gives the rules but no numbers, so this is an illustrative example: say so."] if assumed else []
+        return Simulation(kind, trace, data, verified=confirmed == len(procs) or assumed, assumed=assumed,
+                          evidence=evidence, extras=extras)
+
+    if kind == "page_replacement":
+        pages = data.get("pages") or {}
+        refs = pages.get("reference") or []
+        policy = ("lru" if re.search(r"lru|least", variant) else "opt" if re.search(r"opt|belady", variant)
+                  else "fifo" if re.search(r"fifo|first", variant) else None)
+        if len(refs) < 2 or policy is None:
+            return None
+        trace = page_replacement(refs, pages["frames"], policy)
+        assumed = bool(data.get("assumed"))
+        found = _found_in_text(refs, " ".join(r.text or "" for r in pr.perception.regions if r.kind == "text"))
+        return Simulation(kind, trace, data, verified=found == len(refs) or assumed, assumed=assumed,
+                          evidence=f"{found}/{len(refs)} references found in the page text")
     return None
+
+
+def _scheduler(variant: str) -> str | None:
+    """The extraction's variant ("sjf", "Round Robin", "non-preemptive priority", ...) -> a cpu_schedule name."""
+    v = re.sub(r"[-_]", " ", variant.lower())
+    preemptive = "preempt" in v and "non" not in v
+    if re.search(r"round|\brr\b", v):
+        return "rr"
+    if "priority" in v:
+        return "priority_preemptive" if preemptive else "priority"
+    if "srtf" in v or "remaining" in v or (preemptive and re.search(r"sjf|shortest", v)):
+        return "srtf"
+    if re.search(r"sjf|shortest|\bspn\b", v):
+        return "sjf"
+    if re.search(r"fcfs|first come|fifo", v):
+        return "fcfs"
+    return None
+
+
+_TOKEN = re.compile(r"[A-Za-z]+\d*|\d+(?:\.\d+)?")
+
+
+def _process_rows(pr: "PerceptionResult", procs: list[dict[str, Any]]) -> int:
+    """How many processes appear with their name, arrival and burst on one printed row of the page: one OCR
+    line such as "P7(7, 3)" or a table row "P7 | 7 | 3" (text whose middle lies in the name's row band)."""
+    texts = [r for r in pr.perception.regions if r.kind == "text" and r.text]
+    confirmed = 0
+    for p in procs:
+        name = str(p["name"]).lower()
+        need = [fmt(p["arrival"]), fmt(p["burst"])]
+        for r in texts:
+            if name not in (t.lower() for t in _TOKEN.findall(r.text or "")):
+                continue
+            pad = 0.25 * r.box.h
+            row = " ".join(x.text or "" for x in texts if r.box.y - pad <= x.box.y + x.box.h / 2 <= r.box.y + r.box.h + pad)
+            pool = [t for t in _TOKEN.findall(row) if t[0].isdigit()]
+            if all(pool.count(v) >= need.count(v) for v in need):
+                confirmed += 1
+                break
+    return confirmed
 
 
 # ---------------------------------------------------------------- cached, time-boxed entry point

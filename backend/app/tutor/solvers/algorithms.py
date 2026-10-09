@@ -703,3 +703,278 @@ def tcp_cwnd(initial: float = 1, ssthresh: float = 8, events: Iterable[tuple[int
     setup = [f"Start: cwnd = {fmt(initial)} MSS, ssthresh = {fmt(ssthresh)} MSS."]
     return Trace("tcp_cwnd", "TCP congestion window (slow start, congestion avoidance, multiplicative decrease)",
                  setup, steps, result, {"rows": rows, "cwnd": [r["cwnd"] for r in rows]}, notes)
+
+
+# ---------------------------------------------------------------- CPU scheduling
+
+EPS = 1e-9
+SCHEDULERS = {"fcfs": "first-come, first-served (FCFS)", "sjf": "shortest job first (SJF, non-preemptive)",
+              "srtf": "shortest remaining time first (SRTF, preemptive SJF)", "rr": "round robin (RR)",
+              "priority": "priority scheduling (non-preemptive)",
+              "priority_preemptive": "priority scheduling (preemptive)"}
+
+
+@dataclass
+class Proc:
+    name: str
+    arrival: float
+    burst: float
+    priority: float | None = None
+
+
+def _avg(total: float, n: int) -> str:
+    """33 / 14 -> "33/14 = 2.36"; 21 / 3 -> "21/3 = 7"."""
+    v = total / n
+    return f"{fmt(total)}/{n} = {fmt(v) if float(v).is_integer() else f'{v:.2f}'}"
+
+
+def cpu_schedule(procs: Sequence[Proc], variant: str = "fcfs", quantum: float | None = None) -> Trace:
+    """Finish, waiting and turnaround time of every process, one line per scheduling decision.
+    Ties: earlier arrival, then the order the processes are listed in (P1 before P2); a running process keeps
+    the CPU on a tie. Priority: a lower number is a higher priority. Round robin: processes that arrive during
+    a time slice join the ready queue before the preempted process goes back to its end."""
+    variant = (variant or "fcfs").lower()
+    if variant not in SCHEDULERS:
+        raise SolverError(f"no solver for scheduler {variant!r}")
+    ps = list(procs)
+    if not 2 <= len(ps) <= 20:
+        raise SolverError("CPU scheduling needs 2-20 processes")
+    order = {p.name: i for i, p in enumerate(ps)}
+    if len(order) != len(ps):
+        raise SolverError("duplicate process names")
+    if any(p.burst <= 0 or p.arrival < 0 for p in ps):
+        raise SolverError("bursts must be positive and arrivals non-negative")
+    q = float(quantum or 0)
+    if variant == "rr" and q <= 0:
+        raise SolverError("round robin needs a time quantum")
+    if variant.startswith("priority") and any(p.priority is None for p in ps):
+        raise SolverError("priority scheduling needs a priority for every process")
+    by_name = {p.name: p for p in ps}
+    remaining = {p.name: float(p.burst) for p in ps}
+    first: dict[str, float] = {}
+    finish: dict[str, float] = {}
+    gantt: list[list[Any]] = []  # [name or "idle", start, end]
+    steps: list[str] = []
+
+    def run(name: str, start: float, end: float) -> None:
+        first.setdefault(name, start)
+        if gantt and gantt[-1][0] == name and abs(gantt[-1][2] - start) < EPS:
+            gantt[-1][2] = end
+        else:
+            gantt.append([name, start, end])
+
+    def idle(start: float, end: float) -> None:
+        gantt.append(["idle", start, end])
+        steps.append(f"t={fmt(start)}: no process is ready, so the CPU is idle until {fmt(end)}.")
+
+    def listing(names: Iterable[str], what: str) -> str:
+        vals = {"burst": lambda n: by_name[n].burst, "remaining": lambda n: remaining[n],
+                "priority": lambda n: by_name[n].priority, "arrival": lambda n: by_name[n].arrival}[what]
+        return ", ".join(f"{n} ({what} {fmt(vals(n))})" for n in names)
+
+    t = min(p.arrival for p in ps)
+    if t > EPS:
+        idle(0.0, t)
+    if variant in ("fcfs", "sjf", "priority"):
+        what = {"fcfs": "arrival", "sjf": "burst", "priority": "priority"}[variant]
+        rule = {"fcfs": "the earliest arrival", "sjf": "the shortest burst",
+                "priority": "the highest priority (lowest number)"}[variant]
+
+        def key(p: Proc) -> tuple:
+            first_key = {"fcfs": p.arrival, "sjf": p.burst, "priority": p.priority}[variant]
+            return (first_key, p.arrival, order[p.name])
+
+        while len(finish) < len(ps):
+            ready = sorted((p for p in ps if p.name not in finish and p.arrival <= t + EPS),
+                           key=lambda p: (p.arrival, order[p.name]))
+            if not ready:
+                nxt = min(p.arrival for p in ps if p.name not in finish)
+                idle(t, nxt)
+                t = nxt
+                continue
+            p = min(ready, key=key)
+            start, end = t, t + p.burst
+            run(p.name, start, end)
+            finish[p.name] = end
+            why = (f"only {p.name} is ready" if len(ready) == 1 else
+                   f"ready: {listing((r.name for r in ready), what)}; {rule} is {p.name}")
+            steps.append(f"t={fmt(start)}: {why}, so {p.name} runs {fmt(start)}-{fmt(end)} to completion "
+                         f"(waited {fmt(start)} - {fmt(p.arrival)} = {fmt(start - p.arrival)}).")
+            t = end
+    elif variant in ("srtf", "priority_preemptive"):
+        what = "remaining" if variant == "srtf" else "priority"
+        rule = "the shortest remaining time" if variant == "srtf" else "the highest priority (lowest number)"
+        current: str | None = None
+        while len(finish) < len(ps):
+            ready = sorted((p for p in ps if p.name not in finish and p.arrival <= t + EPS),
+                           key=lambda p: (p.arrival, order[p.name]))
+            if not ready:
+                nxt = min(p.arrival for p in ps if p.name not in finish)
+                idle(t, nxt)
+                t, current = nxt, None
+                continue
+
+            def pkey(p: Proc) -> tuple:
+                base = remaining[p.name] if variant == "srtf" else p.priority
+                return (base, 0 if p.name == current else 1, p.arrival, order[p.name])
+
+            p = min(ready, key=pkey)
+            arrivals = [x.arrival for x in ps if x.name not in finish and x.arrival > t + EPS]
+            end = t + remaining[p.name]
+            if arrivals:
+                end = min(end, min(arrivals))
+            if p.name != current:
+                why = (f"only {p.name} is ready" if len(ready) == 1 else
+                       f"ready: {listing((r.name for r in ready), what)}; {rule} is {p.name}")
+                pre = f" ({current} is preempted)" if current and current not in finish else ""
+                steps.append(f"t={fmt(t)}: {why}, so {p.name} runs{pre}.")
+            run(p.name, t, end)
+            remaining[p.name] -= end - t
+            t, current = end, p.name
+            if remaining[p.name] <= EPS:
+                finish[p.name] = t
+                steps.append(f"t={fmt(t)}: {p.name} finishes (waited {fmt(t)} - {fmt(by_name[p.name].arrival)} - "
+                             f"{fmt(by_name[p.name].burst)} = {fmt(t - by_name[p.name].arrival - by_name[p.name].burst)}).")
+                current = None
+    else:  # round robin
+        queue: deque[str] = deque()
+        admitted: set[str] = set()
+
+        def admit(upto: float) -> list[str]:
+            new = [p.name for p in sorted(ps, key=lambda p: (p.arrival, order[p.name]))
+                   if p.name not in admitted and p.arrival <= upto + EPS]
+            for n in new:
+                queue.append(n)
+                admitted.add(n)
+            return new
+
+        admit(t)
+        while len(finish) < len(ps):
+            if not queue:
+                nxt = min(p.arrival for p in ps if p.name not in admitted)
+                idle(t, nxt)
+                t = nxt
+                admit(t)
+                continue
+            before = list(queue)
+            name = queue.popleft()
+            span = min(q, remaining[name])
+            start, end = t, t + span
+            run(name, start, end)
+            remaining[name] -= span
+            t = end
+            arrived = admit(t)
+            came = f" ({', '.join(arrived)} arrived and joined the queue)" if arrived else ""
+            if remaining[name] <= EPS:
+                finish[name] = t
+                did = f"{name} runs {fmt(start)}-{fmt(end)} and finishes{came}"
+            else:
+                queue.append(name)
+                did = (f"{name} runs {fmt(start)}-{fmt(end)} (one quantum), {fmt(remaining[name])} left{came}, "
+                       f"back to the end of the queue")
+            steps.append(f"t={fmt(start)}: queue [{', '.join(before)}] -> {did}. Queue now: [{', '.join(queue)}].")
+    waiting = {p.name: finish[p.name] - p.arrival - p.burst for p in ps}
+    turnaround = {p.name: finish[p.name] - p.arrival for p in ps}
+    response = {p.name: first[p.name] - p.arrival for p in ps}
+    n = len(ps)
+    chart = " | ".join(f"{g[0]} {fmt(g[1])}-{fmt(g[2])}" for g in gantt)
+    result = (f"waiting times {', '.join(f'{p.name} {fmt(waiting[p.name])}' for p in ps)}; average waiting time "
+              f"{_avg(sum(waiting.values()), n)}; average turnaround time {_avg(sum(turnaround.values()), n)}. "
+              f"Gantt chart: {chart}.")
+    setup = ["Processes (arrival, burst" + (", priority" if variant.startswith("priority") else "") + "): "
+             + ", ".join(f"{p.name} ({fmt(p.arrival)}, {fmt(p.burst)}"
+                         + (f", {fmt(p.priority)}" if variant.startswith("priority") else "") + ")" for p in ps)
+             + (f"; time quantum {fmt(q)}" if variant == "rr" else "") + "."]
+    notes = [f"Rules ({SCHEDULERS[variant]}): "
+             + {"fcfs": "run processes in arrival order, each to completion.",
+                "sjf": "whenever the CPU is free, run the ready process with the shortest burst to completion.",
+                "srtf": "at every arrival and completion, run the ready process with the shortest remaining time "
+                        "(a new shorter job preempts the running one).",
+                "rr": f"run the process at the front of the ready queue for at most {fmt(q)} time units; if it is not "
+                      "done it goes to the back of the queue.",
+                "priority": "whenever the CPU is free, run the ready process with the highest priority to completion.",
+                "priority_preemptive": "at every arrival and completion, run the ready process with the highest "
+                                       "priority (a higher-priority arrival preempts the running one)."}[variant],
+             "Waiting time = finish - arrival - burst; turnaround = finish - arrival. Ties: earlier arrival, then "
+             "listing order; a running process keeps the CPU on a tie."
+             + (" Lower priority number = higher priority." if variant.startswith("priority") else "")
+             + (" Processes arriving during a time slice join the queue before the preempted one." if variant == "rr"
+                else "")]
+    data = {"gantt": [tuple(g) for g in gantt], "order": [g[0] for g in gantt if g[0] != "idle"], "finish": finish,
+            "waiting": waiting, "turnaround": turnaround, "response": response,
+            "avg_waiting": sum(waiting.values()) / n, "avg_turnaround": sum(turnaround.values()) / n}
+    return Trace("cpu_scheduling", f"CPU scheduling, {SCHEDULERS[variant]}", setup, steps, result, data, notes)
+
+
+# ---------------------------------------------------------------- page replacement
+
+REPLACEMENT = {"fifo": "FIFO page replacement", "lru": "LRU (least recently used) page replacement",
+               "opt": "optimal (OPT / Belady) page replacement"}
+
+
+def page_replacement(reference: Sequence[Any], frames: int, variant: str = "fifo") -> Trace:
+    """Hits and faults of FIFO, LRU or OPT for a reference string, one line per reference (time t = 0, 1, ...).
+    Pages keep their frame; a fault fills the first free frame, else replaces the victim in place.
+    OPT ties (several pages never used again): the one loaded earliest."""
+    variant = (variant or "fifo").lower()
+    variant = "opt" if variant in ("optimal", "belady", "min") else variant
+    if variant not in REPLACEMENT:
+        raise SolverError(f"no solver for page replacement {variant!r}")
+    refs = [fmt(x) if isinstance(x, (int, float)) else str(x).strip() for x in reference]
+    refs = [r for r in refs if r]
+    if not 2 <= len(refs) <= 40:
+        raise SolverError("the reference string needs 2-40 references")
+    frames = int(frames)
+    if not 1 <= frames <= 12:
+        raise SolverError("1-12 frames")
+    slots: list[str | None] = [None] * frames
+    loaded: dict[str, int] = {}
+    used: dict[str, int] = {}
+    hits = faults = 0
+    steps: list[str] = []
+    events: list[dict[str, Any]] = []
+    for t, r in enumerate(refs):
+        if r in slots:
+            hits += 1
+            before = used[r]
+            used[r] = t
+            line = f"t={t}: {r} is in a frame: hit" + (f" (its last use moves from {before} to {t})" if variant == "lru" else "")
+            events.append({"t": t, "page": r, "hit": True, "victim": None})
+        else:
+            faults += 1
+            victim = None
+            if None in slots:
+                j = slots.index(None)
+                why = f"frame {j + 1} is free"
+            else:
+                if variant == "fifo":
+                    victim = min((s for s in slots if s), key=lambda s: loaded[s])
+                    why = f"replace {victim}, loaded first (at t={loaded[victim]})"
+                elif variant == "lru":
+                    victim = min((s for s in slots if s), key=lambda s: used[s])
+                    why = f"replace {victim}, the least recently used (last used at t={used[victim]})"
+                else:
+                    def next_use(s: str) -> float:
+                        return next((k for k in range(t + 1, len(refs)) if refs[k] == s), INF)
+
+                    victim = max((s for s in slots if s), key=lambda s: (next_use(s), -loaded[s]))
+                    nu = next_use(victim)
+                    why = (f"replace {victim}, never used again" if nu == INF else
+                           f"replace {victim}, used farthest in the future (next at t={nu})")
+                j = slots.index(victim)
+                del loaded[victim], used[victim]
+            slots[j] = r
+            loaded[r] = used[r] = t
+            line = f"t={t}: {r} is not in memory: fault, {why}"
+            events.append({"t": t, "page": r, "hit": False, "victim": victim})
+        steps.append(f"{line}. Frames: [{', '.join(s or '-' for s in slots)}].")
+    n = len(refs)
+    result = (f"{faults} page faults (misses) and {hits} hit{'s' if hits != 1 else ''} in {n} references "
+              f"(hit ratio {hits}/{n}); final frames [{', '.join(s or '-' for s in slots)}].")
+    setup = [f"Reference string: {' '.join(refs)}; {frames} frames, all empty at the start."]
+    notes = [f"Rules ({REPLACEMENT[variant]}): a referenced page already in a frame is a hit; otherwise a fault "
+             "loads it into a free frame or, when all are full, replaces "
+             + {"fifo": "the page that was loaded earliest.", "lru": "the page whose last use is longest ago.",
+                "opt": "the page whose next use is farthest in the future (or never)."}[variant]]
+    return Trace("page_replacement", REPLACEMENT[variant], setup, steps, result,
+                 {"faults": faults, "hits": hits, "frames": slots, "events": events}, notes)

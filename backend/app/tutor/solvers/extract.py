@@ -15,20 +15,24 @@ from app.tutor import llm, prompts
 if TYPE_CHECKING:
     from app.perception.types import PerceptionResult
 
-KINDS = ["shortest_path", "bfs", "dfs", "mst", "sort", "binary_search", "tcp_cwnd", "none"]
+KINDS = ["shortest_path", "bfs", "dfs", "mst", "sort", "binary_search", "tcp_cwnd", "cpu_scheduling",
+         "page_replacement", "none"]
 
 # words that by themselves mean "a procedure with concrete state is taught here"
 _STRONG = re.compile(
     r"dijkstra|bellman|kruskal|\bprim'?s?\b|spanning|shortest|cheapest\s+path|breadth[\s-]*first|depth[\s-]*first"
     r"|\bbfs\b|\bdfs\b|\bmst\b|traversal|travers(e|ing)|\bsort(s|ed|ing)?\b|bubble|insertion\s+sort|selection\s+sort"
     r"|merge\s*sort|quick\s*sort|binary\s+search|\bcwnd\b|cong\s*win|congestion|ssthresh|slow\s*start|\baimd\b"
-    r"|additive\s+increase|multiplicative\s+decrease|relax(ation|ed|ing)?\b",
+    r"|additive\s+increase|multiplicative\s+decrease|relax(ation|ed|ing)?\b"
+    r"|\bfcfs\b|first[\s-]*come|\bsjf\b|\bsrtf\b|round[\s-]*robin|time\s*(?:quantum|slice)|burst\s*time|gantt"
+    r"|turnaround|cpu\s*schedul|page[\s-]*(?:replacement|faults?)|\blru\b|least[\s-]*recently[\s-]*used|belady"
+    r"|reference\s+string",
     re.I,
 )
 # weaker words: only count for a question, or on a page that also looks like a graph / an array
 _WEAK = re.compile(
     r"algorithm|graph|path|tree|search|vertex|vertices|edges?\b|nodes?\b|queue|stack|array|window|threshold"
-    r"|time-?out|iteration|trace|simulat|step\s+by\s+step|\brun\b|order|visit",
+    r"|time-?out|iteration|trace|simulat|step\s+by\s+step|\brun\b|order|visit|waiting\s+time|schedul",
     re.I,
 )
 _SHORT_LABEL = re.compile(r"^[A-Za-z0-9]{1,3}$")
@@ -73,6 +77,8 @@ kind = which procedure to run:
 - sort: sorting an array (variant "bubble", "insertion", "selection" or "merge").
 - binary_search: searching a sorted array for a key.
 - tcp_cwnd: how TCP's congestion window (cwnd) changes over transmission rounds: slow start, congestion avoidance / additive increase, timeouts, triple duplicate ACKs (variant "tahoe" or "reno"; default "reno").
+- cpu_scheduling: CPU scheduling of processes: order, Gantt chart, waiting / turnaround times (variant "fcfs", "sjf" = non-preemptive shortest job first, "srtf" = preemptive shortest remaining time first, "rr" = round robin, "priority" = non-preemptive priority, "priority_preemptive").
+- page_replacement: page or cache replacement for a sequence of references: hits, faults / misses, which page is evicted (variant "fifo", "lru" or "optimal").
 - none: anything else: pages that only define terms or discuss properties (fairness, throughput or delay curves, complexity, proofs), a network or system diagram with no procedure to run, data that cannot be read, or a STUDENT QUESTION that asks why / what-is rather than for a result the procedure computes.
 Choose a procedure only when running it step by step is what the page shows or what the question asks for. If the STUDENT QUESTION asks for something one of these computes (a path, distances, a visiting order, a spanning tree, the sorted array, how the window changes over time), use that kind; if it asks something conceptual, use none. Without a question, use what the page teaches.
 
@@ -84,6 +90,8 @@ Data (fill what the kind needs, null otherwise):
 - source: the start vertex: from the question ("from A"), else the one the page names, else null. target: the destination vertex when the question asks about reaching one vertex, else null.
 - array (sort, binary_search): the values exactly as printed, in order, as strings. search_key: the value searched for (binary_search), else null.
 - tcp (tcp_cwnd): initial_cwnd and ssthresh in MSS; events: [{round, type}] with type "timeout" or "triple_dup_ack", meaning the loss is detected during that transmission round (round 1 = the first round trip); rounds: how many rounds to simulate (enough to answer the question: usually through the event and 3-4 rounds after it). Use the page's numbers when it gives them. When the page gives only the rules, choose a small illustrative example instead: initial_cwnd 1, ssthresh 8, and (if the question or page involves a loss) one event a few rounds after cwnd passes ssthresh, e.g. a timeout in round 8; then set assumed = true.
+- processes (cpu_scheduling): one entry per process exactly as printed: name ("P1"), arrival time (0 when the page gives none), burst / service time, priority (null unless the page gives one). quantum: the round robin time quantum, else null.
+- pages (page_replacement): reference = the referenced pages or blocks in order, as strings ("7", "A"); frames = the number of frames / cache slots.
 - assumed: true when any of the data is invented rather than printed on the page (say what in note).
 - note: one short sentence about anything uncertain, else null."""
 
@@ -157,10 +165,39 @@ SCHEMA: dict = {
                 {"type": "null"},
             ]
         },
+        "processes": {
+            "anyOf": [
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {"name": {"type": "string"}, "arrival": {"type": "number"},
+                                       "burst": {"type": "number"}, "priority": _nullable("number")},
+                        "required": ["name", "arrival", "burst", "priority"],
+                        "additionalProperties": False,
+                    },
+                },
+                {"type": "null"},
+            ]
+        },
+        "quantum": _nullable("number"),
+        "pages": {
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {"reference": {"type": "array", "items": {"type": "string"}},
+                                   "frames": {"type": "integer"}},
+                    "required": ["reference", "frames"],
+                    "additionalProperties": False,
+                },
+                {"type": "null"},
+            ]
+        },
         "assumed": {"type": "boolean"},
         "note": _nullable("string"),
     },
-    "required": ["kind", "variant", "graph", "source", "target", "array", "search_key", "tcp", "assumed", "note"],
+    "required": ["kind", "variant", "graph", "source", "target", "array", "search_key", "tcp", "processes", "quantum",
+                 "pages", "assumed", "note"],
     "additionalProperties": False,
 }
 
@@ -219,7 +256,30 @@ def clean(data: Any) -> dict:
                       "rounds": t.get("rounds") if isinstance(t.get("rounds"), int) else None, "events": events}
     else:
         out["tcp"] = None
+    procs = []
+    raw_procs = d.get("processes") if isinstance(d.get("processes"), list) else []
+    for p in raw_procs:
+        if isinstance(p, dict) and _s(p.get("name")) and _real(p.get("burst")) is not None:
+            procs.append({"name": _s(p.get("name")), "arrival": max(_real(p.get("arrival")) or 0.0, 0.0),
+                          "burst": _real(p.get("burst")), "priority": _real(p.get("priority"))})
+    out["processes"] = procs or None
+    q = _real(d.get("quantum"))
+    out["quantum"] = q if q is not None and q > 0 else None
+    pg = d.get("pages") if isinstance(d.get("pages"), dict) else {}
+    raw_refs = pg.get("reference") if isinstance(pg.get("reference"), list) else []
+    refs = [str(v).strip() for v in raw_refs if str(v).strip()]
+    frames = pg.get("frames")
+    out["pages"] = ({"reference": refs, "frames": int(frames)}
+                    if refs and isinstance(frames, int) and not isinstance(frames, bool) and frames > 0 else None)
     return out
+
+
+def _real(v: Any) -> float | None:
+    """A JSON number as float (None for null, booleans, strings and non-finite values)."""
+    if isinstance(v, bool) or not isinstance(v, (int, float)):
+        return None
+    f = float(v)
+    return f if f == f and abs(f) != float("inf") else None
 
 
 def _s(v: Any) -> str | None:
