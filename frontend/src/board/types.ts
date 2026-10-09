@@ -10,6 +10,8 @@ export interface DrawOptions {
   durationMs?: number;
   /** Aborting finishes the drawing instantly instead of animating. */
   signal?: AbortSignal;
+  /** Marker colour for drawings that carry none of their own (margin sketches; default blue). */
+  color?: Color;
 }
 
 export type PreviousSteps = "dim" | "show" | "hide";
@@ -19,8 +21,11 @@ export interface BoardHandle {
   loadImage(url: string, width: number, height: number): Promise<void>;
   /** Animate one tutor annotation as pen strokes; resolves when it is fully drawn. */
   drawAnnotation(annotation: Annotation, options: DrawOptions): Promise<void>;
-  /** Draw annotations immediately without animation (jumping between steps, "show all"). */
-  drawInstant(annotations: Annotation[], stepIndex: number): void;
+  /** Margin sketch: draw a small Mermaid flowchart beside the page (hand-drawn, revealed node by node)
+   *  and widen the fitted view to show it. Resolves when it is fully drawn; an unparsable sketch is skipped. */
+  drawSketch(mermaid: string, options: DrawOptions): Promise<void>;
+  /** Draw annotations (and the step's margin sketch) immediately without animation (jumping between steps, "show all"). */
+  drawInstant(annotations: Annotation[], stepIndex: number, sketch?: string | null): void;
   /** Remove tutor drawings of steps >= fromStep (all when omitted). Student drawings stay. */
   clearTutorDrawings(fromStep?: number): void;
   /** Emphasise the current step; earlier tutor drawings are dimmed, shown or hidden. */
@@ -39,7 +44,7 @@ export interface BoardHandle {
   drawCross(at: Point, color?: Color): Promise<void>;
   /** PNG of the image plus every drawing ("Save my notes"). */
   exportPng(): Promise<Blob>;
-  /** Fit the image in view (with room for margin notes). */
+  /** Fit the image (and a margin sketch on the board) in view. */
   fitToImage(): void;
 }
 
@@ -47,6 +52,8 @@ export interface WhiteboardBoardProps {
   onReady: (handle: BoardHandle) => void;
   /** Called when the student's own drawings change (enables "Ask about my drawing"). */
   onStudentDrawingChange?: (hasDrawing: boolean) => void;
+  /** Extra screen px the fitted page keeps clear at the bottom of the board (room for overlay buttons). */
+  bottomInset?: number;
   theme?: "light" | "dark";
   className?: string;
 }

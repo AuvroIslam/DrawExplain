@@ -149,6 +149,7 @@ export default function BoardStub({ onReady, className }: WhiteboardBoardProps) 
         setDrawn((d) => [...d, { key: key(annotation.id), annotation, step: stepIndex, animate: true }]);
         return waitOrAbort(durationMs ?? 700, signal);
       },
+      drawSketch: () => Promise.resolve(), // margin sketches need the Excalidraw board
       drawInstant: (annotations, stepIndex) =>
         setDrawn((d) => [
           ...d,

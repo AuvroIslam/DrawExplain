@@ -11,7 +11,8 @@ Upload a slide, a phone photo of a textbook page or a PDF lecture. StudyLens tea
 top of the untouched page: circles, arrows, word-level underlines and handwritten notes appear the
 moment the narrator says them. On an algorithm slide it runs the algorithm. On Dijkstra it writes
 "dist = 0", "1 + 3 = 4" next to the nodes. Circle a confusing part with the pen and ask why; it draws
-the answer. A tap-on-the-image quiz closes the lesson.
+the answer. For a process it also sketches a small flowchart beside the slide. A tap-on-the-image
+quiz closes the lesson.
 
 ## How we built it
 The language model never draws. CV finds the regions first. RapidOCR reads text lines and word
@@ -43,5 +44,4 @@ on dense diagrams, photos and small text, and that is real coursework. Good teac
 "teach by doing": gpt-5.5 traced Dijkstra correctly where a smaller model guessed.
 
 ## What's next
-Margin sketches drawn via Mermaid, formula OCR to LaTeX, and lessons saved as annotated study
-sheets.
+Formula OCR to LaTeX, handwriting support, and lessons saved as annotated study sheets.

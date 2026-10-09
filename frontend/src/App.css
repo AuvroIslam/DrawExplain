@@ -1048,15 +1048,32 @@
   }
 }
 
-.stage-top {
+/* Status chip + "Teach me this", centred at the bottom of the board. Before the lesson (.under-page) the
+   dock keeps both rows (the page does not move when the button comes and goes) and the board fits the
+   page above it (BoardStage measures the dock), so they never cover the page. Later a lone chip (quiz)
+   sits low, in the strip the fitted page always leaves for Excalidraw's footer. */
+.stage-dock {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 96px;
+  bottom: 22px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
   pointer-events: none;
   z-index: 6;
+}
+
+.stage-dock.under-page {
+  justify-content: flex-start;
+  min-height: 110px;
+}
+
+.dock-chip {
+  display: flex;
+  justify-content: center;
 }
 
 .stage-chip {
@@ -1106,17 +1123,6 @@
 .stage-chip.planning svg,
 .stage-chip.quiz svg {
   color: var(--hl);
-}
-
-.stage-bottom {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 26px;
-  display: flex;
-  justify-content: center;
-  pointer-events: none;
-  z-index: 6;
 }
 
 .teach-btn {
@@ -2575,12 +2581,9 @@
     box-shadow: 0 -8px 20px -14px rgb(29 27 38 / 0.35);
   }
 
-  .stage-top {
-    bottom: 84px;
-  }
-
-  /* the panel right below the board has the same big button; keep the small board clear */
-  .stage-bottom {
+  /* the panel right below the board shows the same status, big button and quiz prompt; keep the small
+     board clear (the phone footer leaves no free strip, so a chip here would sit on the page) */
+  .stage-dock {
     display: none;
   }
 

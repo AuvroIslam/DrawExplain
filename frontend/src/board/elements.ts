@@ -7,7 +7,7 @@ import { hashString, type PxBox, type Stroke, type XY } from "./strokes";
 
 export type El = ExcalidrawElement;
 
-export type TutorKind = AnnotationKind | "check" | "cross";
+export type TutorKind = AnnotationKind | "check" | "cross" | "sketch";
 
 /** customData of every tutor element (one annotation may own several elements, see `part`). */
 export interface TutorData {

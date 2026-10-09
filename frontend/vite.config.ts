@@ -40,6 +40,11 @@ function excalidrawFonts(): Plugin {
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), excalidrawFonts()],
+  // the margin-sketch parser is imported lazily on the first sketch; pre-bundle it at startup so the
+  // dev server does not discover it mid-lesson and reload the page
+  optimizeDeps: {
+    include: ['@excalidraw/mermaid-to-excalidraw'],
+  },
   server: {
     proxy: {
       '/api': { target: 'http://127.0.0.1:8000', changeOrigin: true },

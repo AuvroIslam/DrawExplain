@@ -117,14 +117,24 @@ function ann(id: string, s: AnnSpec): Annotation {
   };
 }
 
-function step(index: number, title: string, narration: string, specs: AnnSpec[]): Step {
+function step(index: number, title: string, narration: string, specs: AnnSpec[], sketch: string | null = null): Step {
   return {
     index,
     title,
     narration,
     annotations: specs.map((s, i) => ann(`s${index}a${i + 1}`, s)),
+    sketch,
   };
 }
+
+/** The recap's margin sketch: the packet's route as a little flowchart beside the slide. */
+const ROUTE_SKETCH = [
+  "flowchart LR",
+  "A[Laptop sends packet] --> B[Switch: same network]",
+  "B --> C[Router: next network]",
+  "C --> D[Internet]",
+  "D -.->|every hop| C",
+].join("\n");
 
 /** Ellipse bounds around a rectangle: a hand-drawn circle needs room around the corners. */
 function circleAround([x0, y0, x1, y1]: Px, sx = 1.28, sy = 1.42): Px {
@@ -304,6 +314,7 @@ export const MOCK_LESSON: Lesson = {
           confidence: 0.71,
         },
       ],
+      ROUTE_SKETCH,
     ),
   ],
   quiz: [

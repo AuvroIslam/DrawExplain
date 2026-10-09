@@ -1,7 +1,7 @@
 // Plays lesson steps on the whiteboard: narration clock -> cue-timed pen drawings -> auto-advance.
 // Invariant: after goTo(i) the board shows steps 1..i-1 complete and animates step i.
 import type { BoardHandle, PreviousSteps } from "../board/types";
-import type { Step } from "../types";
+import { type Step, stepInk } from "../types";
 import { errorMessage } from "../api";
 import { scheduleCues, tokenize, type TimedWord, wordAt } from "./timing";
 import { type Playback, type PreparedNarration, speechAvailable, VOICE_LABELS, type VoiceBox, type VoiceMode } from "./voices";
@@ -38,6 +38,8 @@ export interface PlayerOptions {
 
 const ADVANCE_PAUSE_MS = 900;
 const SETTLE_MS = 600;
+/** A step's margin sketch starts once its annotations are under way, about this far into the narration. */
+const SKETCH_AT = 0.4;
 
 function placeholderWords(text: string): TimedWord[] {
   return tokenize(text).map((w) => ({ ...w, start: 0, end: 0 }));
@@ -63,6 +65,8 @@ export class LessonPlayer {
   private ctrl: AbortController | null = null;
   private playback: Playback | null = null;
   private pen: Promise<void> | null = null;
+  /** The margin sketch being drawn (beside the page, so it runs alongside the annotation pen). */
+  private sketchPen: Promise<void> | null = null;
   private advanceTimer = 0;
   private wantPaused = false;
   /** More steps are on their way (a lesson still streaming in). */
@@ -249,7 +253,7 @@ export class LessonPlayer {
     board.clearTutorDrawings();
     this.drawn.clear();
     steps.forEach((s, i) => {
-      board.drawInstant(s.annotations, i + 1);
+      board.drawInstant(s.annotations, i + 1, s.sketch);
       this.drawn.add(i + 1);
     });
     board.setCurrentStep(steps.length, previous);
@@ -277,12 +281,12 @@ export class LessonPlayer {
     return this.opts.voice;
   }
 
-  /** halt() and wait (briefly) until an aborted stroke has landed, so clearing removes it. */
+  /** halt() and wait (briefly) until aborted strokes have landed, so clearing removes them. */
   private async settle() {
     this.halt();
-    const pen = this.pen;
-    if (pen) {
-      await Promise.race([pen, new Promise((r) => window.setTimeout(r, SETTLE_MS))]);
+    const pens = [this.pen, this.sketchPen].filter((p): p is Promise<void> => !!p);
+    if (pens.length) {
+      await Promise.race([Promise.all(pens), new Promise((r) => window.setTimeout(r, SETTLE_MS))]);
     }
   }
 
@@ -300,7 +304,8 @@ export class LessonPlayer {
     board.clearTutorDrawings(first);
     for (const s of [...this.drawn]) if (s >= first) this.drawn.delete(s);
     for (let s = first; s < k; s++) {
-      board.drawInstant(this.state.steps[s - 1].annotations, s);
+      const step = this.state.steps[s - 1];
+      board.drawInstant(step.annotations, s, step.sketch);
       this.drawn.add(s);
     }
     board.setCurrentStep(k, "dim");
@@ -330,6 +335,19 @@ export class LessonPlayer {
         if (this.pen === p) this.pen = null;
       });
     this.pen = p;
+  }
+
+  private startSketch(board: BoardHandle, step: Step, mermaid: string, signal: AbortSignal): Promise<void> {
+    const p: Promise<void> = Promise.resolve()
+      .then(() => board.drawSketch(mermaid, { stepIndex: step.index, signal, color: stepInk(step.annotations) }))
+      .catch((err: unknown) => {
+        if (!signal.aborted) console.warn("drawSketch failed", err);
+      })
+      .finally(() => {
+        if (this.sketchPen === p) this.sketchPen = null;
+      });
+    this.sketchPen = p;
+    return p;
   }
 
   private async run(index: number, token: number) {
@@ -376,6 +394,8 @@ export class LessonPlayer {
     });
     const duration = timeline.duration > 0 ? timeline.duration : 1;
     let nextCue = 0;
+    // margin sketch: due once every annotation has started and ~40% of the narration is spoken
+    let sketch: "none" | "due" | "drawing" | "done" = step.sketch ? "due" : "none";
 
     await new Promise<void>((resolve) => {
       const tick = () => {
@@ -396,7 +416,17 @@ export class LessonPlayer {
           const i = order[nextCue++];
           if (board && i >= 0) this.startPen(board, step, i, ctrl.signal);
         }
-        if (narrationDone && !this.pen && nextCue >= cues.length) {
+        if (sketch === "due" && !paused && nextCue >= cues.length && (narrationDone || t >= SKETCH_AT * duration)) {
+          if (board && step.sketch) {
+            sketch = "drawing";
+            void this.startSketch(board, step, step.sketch, ctrl.signal).then(() => {
+              sketch = "done";
+            });
+          } else {
+            sketch = "done";
+          }
+        }
+        if (narrationDone && !this.pen && nextCue >= cues.length && (sketch === "none" || sketch === "done")) {
           window.clearInterval(timer);
           resolve();
         }
@@ -435,7 +465,7 @@ export class LessonPlayer {
     const step = this.state.steps[index];
     if (board && step) {
       board.clearTutorDrawings(index + 1);
-      board.drawInstant(step.annotations, index + 1);
+      board.drawInstant(step.annotations, index + 1, step.sketch);
       if (!this.expecting) board.setCurrentStep(index + 1, "show");
     }
     this.drawn.add(index + 1);

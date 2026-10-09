@@ -13,7 +13,7 @@ import {
 } from "@excalidraw/excalidraw";
 import type { AppState, BinaryFileData, DataURL, ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types";
 import type { FileId } from "@excalidraw/excalidraw/element/types";
-import { type Annotation, type Box, type Color, PALETTE, type Point, type Region, type RegionKind } from "../types";
+import { type Annotation, type Box, type Color, PALETTE, type Point, type Region, type RegionKind, stepInk } from "../types";
 import {
   arrowTemplate,
   arrowWithPoints,
@@ -48,9 +48,25 @@ import {
   wavyLine,
   type XY,
 } from "./strokes";
+import { arrowPrefix, type Bounds, buildSketch, layoutSketch, SKETCH_FONT, type SketchLayout, type SketchPiece, sketchSource } from "./sketch";
 import type { BoardHandle, DrawOptions, PreviousSteps } from "./types";
 
 type Api = ExcalidrawImperativeAPI;
+
+/** Where a margin sketch sits: beside the page, or under a portrait page when that shows it bigger. */
+type SketchSide = "right" | "below";
+
+interface SketchArea {
+  stepIndex: number;
+  side: SketchSide;
+  bounds: Bounds;
+}
+
+interface View {
+  zoom: number;
+  scrollX: number;
+  scrollY: number;
+}
 
 /** Extra hooks for the dev harness and tests (not part of the BoardHandle contract). */
 export interface BoardDebug {
@@ -97,6 +113,11 @@ interface Phase {
 
 /** Default pen timings in ms. */
 const MS = { circle: 820, box: 860, underline: 420, highlight: 460, arrow: 620, leader: 260, char: 35, check: 720, cross: 150 };
+/** Margin sketch: pause while the view widens, then one node or arrow every `piece` ms; view glide length. */
+const SKETCH_MS = { lead: 600, piece: 150, glide: 650 };
+const SKETCH_ID = "sketch";
+/** Sketch box beside the page (fractions of the page): starts at 1.06 x width, fits 0.6 x width by 0.85 x height. */
+const SKETCH_BOX = { gap: 0.06, w: 0.6, h: 0.85, belowH: 0.45 };
 const DIM = 0.3;
 const HIGHLIGHT_OPACITY = 30;
 const REGION_COLORS: Record<RegionKind, string> = {
@@ -111,6 +132,12 @@ const FONT_SAMPLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456
 
 const annotationKey = (stepIndex: number, id: string) => `${stepIndex}:${id}`;
 const elementId = (key: string, part: string) => `tutor:${key}:${part}`;
+const unionBounds = (a: Bounds, b: Bounds): Bounds => [
+  Math.min(a[0], b[0]),
+  Math.min(a[1], b[1]),
+  Math.max(a[2], b[2]),
+  Math.max(a[3], b[3]),
+];
 
 const sleep = (ms: number) => new Promise<void>((r) => window.setTimeout(r, ms));
 const nextFrame = () => new Promise<void>((r) => requestAnimationFrame(() => r()));
@@ -169,8 +196,15 @@ export class BoardEngine {
   private regionsToken = 0;
   private markSeq = 0;
 
-  private lastFit: { zoom: number; scrollX: number; scrollY: number } | null = null;
+  private lastFit: View | null = null;
   private autoFit = true;
+  /** Screen px at the bottom of the board the fitted page keeps clear of (overlay buttons). */
+  private bottomInset = 0;
+  /** Bumped by every view change, so a glide in progress stops. */
+  private viewToken = 0;
+  private refitQueued = false;
+  /** Margin sketches on the board, by annotation key (the fitted view includes the visible ones). */
+  private sketchAreas = new Map<string, SketchArea>();
   private resizeObserver: ResizeObserver | null = null;
   private unsubscribeScroll: (() => void) | null = null;
   private tapCleanup: (() => void) | null = null;
@@ -183,7 +217,8 @@ export class BoardEngine {
   readonly handle: BoardHandle & BoardDebug = {
     loadImage: (url, width, height) => this.loadImage(url, width, height),
     drawAnnotation: (annotation, options) => this.drawAnnotation(annotation, options),
-    drawInstant: (annotations, stepIndex) => this.drawInstant(annotations, stepIndex),
+    drawSketch: (mermaid, options) => this.drawSketch(mermaid, options),
+    drawInstant: (annotations, stepIndex, sketch) => this.drawInstant(annotations, stepIndex, sketch),
     clearTutorDrawings: (fromStep) => this.clearTutorDrawings(fromStep),
     setCurrentStep: (stepIndex, previous) => this.setCurrentStep(stepIndex, previous),
     showRegions: (regions) => this.showRegions(regions),
@@ -646,6 +681,7 @@ export class BoardEngine {
     this.cancelRuns(() => true);
     this.pending.clear();
     this.removals.clear();
+    this.sketchAreas.clear();
     this.regionsToken++;
     this.currentStep = 0;
     this.previous = "show";
@@ -694,7 +730,7 @@ export class BoardEngine {
     await this.animate(key, step, phases, options);
   }
 
-  drawInstant(annotations: Annotation[], stepIndex: number): void {
+  drawInstant(annotations: Annotation[], stepIndex: number, sketch?: string | null): void {
     if (!this.img || !this.api) return;
     for (const a of annotations) {
       const key = annotationKey(stepIndex, a.id);
@@ -708,6 +744,115 @@ export class BoardEngine {
       if (this.badgesOn) this.stageBadge(key);
     }
     this.flush();
+    if (sketch) {
+      // no animation; it lands as soon as the chart is laid out (at once when it was seen before)
+      const done = new AbortController();
+      done.abort();
+      void this.drawSketch(sketch, { stepIndex, signal: done.signal, color: stepInk(annotations) });
+    }
+  }
+
+  // ------------------------------------------------------------------ margin sketch
+
+  async drawSketch(mermaid: string, options: DrawOptions): Promise<void> {
+    if (!this.img || !this.api) return;
+    const step = options.stepIndex;
+    const key = annotationKey(step, SKETCH_ID);
+    this.cancelRuns((r) => r.key === key);
+    this.removeKey(key);
+    if (this.sketchAreas.delete(key)) this.refit();
+    const run: Run = { key, stepIndex: step, signal: options.signal, cancelled: false };
+    this.runs.add(run);
+    try {
+      const plan = await this.planSketch(mermaid, key, step, options.color ?? "blue", run);
+      if (!plan || run.cancelled) return;
+      this.sketchAreas.set(key, { stepIndex: step, side: plan.side, bounds: plan.bounds });
+      this.refit(); // widen the view first, then sketch into the new space
+      const phases: Phase[] = [{ ms: SKETCH_MS.lead, frame: () => {} }, ...plan.pieces.map((p) => this.sketchPhase(p))];
+      for (const phase of phases) {
+        if (run.cancelled) return;
+        await this.play(run, phase.ms, (t) => {
+          if (!run.cancelled) phase.frame(t);
+        });
+      }
+    } catch (err) {
+      if (!run.cancelled) console.warn("whiteboard: margin sketch skipped", err);
+    } finally {
+      this.runs.delete(run);
+    }
+  }
+
+  /** Nodes pop in with their label; arrows are drawn from tail to head, then their label. */
+  private sketchPhase(piece: SketchPiece): Phase {
+    const [first, ...rest] = piece.els;
+    let shown = false;
+    return {
+      ms: SKETCH_MS.piece,
+      frame: (t) => {
+        if (piece.arrow) {
+          this.stage(arrowPrefix(first, t >= 1 ? 1 : easeInOutSine(t)));
+          if (t >= 1) for (const el of rest) this.stage(el);
+        } else if (!shown) {
+          shown = true;
+          for (const el of piece.els) this.stage(el);
+        }
+      },
+    };
+  }
+
+  /** Lay the chart out for its spot and restyle it as tutor ink; null when the board moved on meanwhile. */
+  private async planSketch(mermaid: string, key: string, step: number, color: Color, run: Run) {
+    const portrait = !!this.img && this.img.h > this.img.w * 1.05;
+    // beside the page; a portrait page also tries under it and keeps whichever shows the chart bigger
+    const sides: SketchSide[] = portrait ? ["right", "below"] : ["right"];
+    let best: { side: SketchSide; layout: SketchLayout; at: XY; scale: number; score: number } | null = null;
+    for (const side of sides) {
+      const source = sketchSource(mermaid, side === "right" ? "down" : "across");
+      if (!source) throw new Error("not a Mermaid flowchart");
+      const layout = await layoutSketch(source);
+      if (run.cancelled || !this.img) return null;
+      const spot = this.sketchSpot(layout, side, key);
+      if (!best || spot.score > best.score) best = { side, layout, ...spot };
+    }
+    if (!best) return null;
+    const data = (part: string): TutorData => ({
+      tutor: true,
+      annotationId: SKETCH_ID,
+      stepIndex: step,
+      kind: "sketch",
+      grounding: "llm_only",
+      confidence: 1,
+      key,
+      part,
+      baseOpacity: 100,
+    });
+    const style = { color: PALETTE[color] ?? PALETTE.blue, strokeWidth: Math.max(1.5, this.penWidth * 0.7) };
+    const built = buildSketch(best.layout, best.at, best.scale, style, elementId(key, ""), data);
+    return { side: best.side, pieces: built.pieces, bounds: built.bounds };
+  }
+
+  /** Top-left and scale of a chart in its spot (after other sketches on that side), and how big its text
+   *  shows on screen once the view fits page + sketches (to pick a side). Text stays near body-text size. */
+  private sketchSpot(layout: SketchLayout, side: SketchSide, key: string): { at: XY; scale: number; score: number } {
+    const img = this.img ?? { w: 1, h: 1 };
+    const lw = Math.max(1, layout.bounds[2] - layout.bounds[0]);
+    const lh = Math.max(1, layout.bounds[3] - layout.bounds[1]);
+    const others = [...this.sketchAreas].filter(([k, a]) => k !== key && a.side === side).map(([, a]) => a.bounds);
+    // text no bigger than a slide's body text (~36 px on a 1600 px page), so the page stays the main thing
+    const maxScale = (0.0225 * Math.max(img.w, img.h)) / SKETCH_FONT;
+    let at: XY;
+    let scale: number;
+    if (side === "right") {
+      at = [Math.max(img.w * (1 + SKETCH_BOX.gap), ...others.map((b) => b[2] + img.w * SKETCH_BOX.gap)), 0];
+      scale = Math.min((img.w * SKETCH_BOX.w) / lw, (img.h * SKETCH_BOX.h) / lh, maxScale);
+    } else {
+      at = [0, Math.max(img.h * (1 + SKETCH_BOX.gap), ...others.map((b) => b[3] + img.h * SKETCH_BOX.gap))];
+      scale = Math.min(img.w / lw, (img.h * SKETCH_BOX.belowH) / lh, maxScale);
+    }
+    const area: Bounds = [at[0], at[1], at[0] + lw * scale, at[1] + lh * scale];
+    const content = [[0, 0, img.w, img.h] as Bounds, ...others, area].reduce(unionBounds);
+    const zoom = this.viewFor(content)?.zoom ?? 1;
+    return { at, scale, score: scale * SKETCH_FONT * zoom };
   }
 
   /** Stage removal of every element (tutor drawing and badge) belonging to an annotation key. */
@@ -726,6 +871,13 @@ export class BoardEngine {
       if (hit(t?.stepIndex) || (o?.overlay === "badges" && hit(o.stepIndex))) this.remove(el.id);
     }
     this.flush();
+    let sketchGone = false;
+    for (const [key, area] of this.sketchAreas) {
+      if (!hit(area.stepIndex)) continue;
+      this.sketchAreas.delete(key);
+      sketchGone = true;
+    }
+    if (sketchGone) this.refit(); // back to the page
   }
 
   setCurrentStep(stepIndex: number, previous: PreviousSteps): void {
@@ -734,6 +886,7 @@ export class BoardEngine {
     this.flush((el) => el);
     // flush only rewrites elements whose opacity changes; make sure a pure emphasis change lands too
     this.flushVisibility();
+    if (this.sketchAreas.size) this.refit(); // a hidden sketch (quiz) leaves the view
   }
 
   private flushVisibility() {
@@ -818,7 +971,7 @@ export class BoardEngine {
     for (const el of this.liveElements()) {
       if (overlayData(el)?.overlay === "badges") this.remove(el.id);
       const t = tutorData(el);
-      if (on && t && t.kind !== "check" && t.kind !== "cross") keys.add(t.key);
+      if (on && t && t.kind !== "check" && t.kind !== "cross" && t.kind !== "sketch") keys.add(t.key);
     }
     for (const key of keys) this.stageBadge(key);
     this.flush();
@@ -831,7 +984,7 @@ export class BoardEngine {
     const live = this.liveElements();
     const own = live.filter((el) => tutorData(el)?.key === key);
     const t = own.length ? tutorData(own[0]) : null;
-    if (!t || t.kind === "check" || t.kind === "cross") return;
+    if (!t || t.kind === "check" || t.kind === "cross" || t.kind === "sketch") return;
     const [x0, y0, x1, y1] = getCommonBounds(own);
     if (!finite(x0, y0, x1, y1)) return;
     const fontSize = Math.min(Math.max(clamp(0.016 * img.h, 10, 18), this.screenPx(10.5)), Math.max(18, 0.026 * img.h));
@@ -1061,28 +1214,108 @@ export class BoardEngine {
     return blob;
   }
 
-  fitToImage(): void {
-    const api = this.api;
+  /** Overlay buttons under the page need this much room at the bottom of the board (0: none). */
+  setBottomInset(px: number) {
+    const v = Number.isFinite(px) ? Math.max(0, Math.round(px)) : 0;
+    if (v === this.bottomInset) return;
+    this.bottomInset = v;
+    if (this.img) this.refit();
+  }
+
+  /** The page plus the margin sketches currently visible (a hidden sketch does not hold the view). */
+  private fitBounds(): Bounds | null {
     const img = this.img;
+    if (!img) return null;
+    let b: Bounds = [0, 0, img.w, img.h];
+    for (const area of this.sketchAreas.values()) {
+      if (this.targetOpacity(area.stepIndex, 100) > 0) b = unionBounds(b, area.bounds);
+    }
+    return b;
+  }
+
+  /** Zoom and scroll that fit scene bounds in the board, clear of Excalidraw's toolbar (top), its
+   *  zoom/undo footer and any overlay buttons (bottom). */
+  private viewFor(b: Bounds): View | null {
     const el = this.container;
-    if (!api || !img || !el) return;
+    if (!el) return null;
     const W = el.clientWidth;
     const H = el.clientHeight;
-    if (W < 40 || H < 40) return;
-    // keep clear of Excalidraw's toolbar (top) and zoom/undo footer (bottom)
+    if (W < 40 || H < 40) return null;
     const top = H >= 420 ? 72 : 56;
-    const bottom = H >= 420 ? 64 : 52;
+    const bottom = Math.max(H >= 420 ? 64 : 52, Math.min(this.bottomInset, 0.45 * H));
     const side = W >= 700 ? 28 : 12;
-    const availW = Math.max(40, W - 2 * side);
+    // Excalidraw's phone layout (its own breakpoint) keeps a lock/hand column at the top right, right where
+    // a margin sketch starts
+    const phone = W < 730 || (H < 500 && W < 1000);
+    const right = phone && b[2] > (this.img?.w ?? Infinity) ? 46 : side;
+    const availW = Math.max(40, W - side - right);
     const availH = Math.max(40, H - top - bottom);
-    const zoom = clamp(Math.min(availW / img.w, availH / img.h) * 0.97, 0.1, 4);
-    const scrollX = (side + availW / 2) / zoom - img.w / 2;
-    const scrollY = (top + availH / 2) / zoom - img.h / 2;
-    this.lastFit = { zoom, scrollX, scrollY };
+    const bw = Math.max(1, b[2] - b[0]);
+    const bh = Math.max(1, b[3] - b[1]);
+    const zoom = clamp(Math.min(availW / bw, availH / bh) * 0.97, 0.1, 4);
+    return {
+      zoom,
+      scrollX: (side + availW / 2) / zoom - (b[0] + b[2]) / 2,
+      scrollY: (top + availH / 2) / zoom - (b[1] + b[3]) / 2,
+    };
+  }
+
+  private setView(view: View) {
+    this.lastFit = view;
     this.autoFit = true;
-    api.updateScene({
-      appState: { zoom: { value: zoom } as AppState["zoom"], scrollX, scrollY },
+    this.api?.updateScene({
+      appState: { zoom: { value: view.zoom } as AppState["zoom"], scrollX: view.scrollX, scrollY: view.scrollY },
       captureUpdate: CaptureUpdateAction.NEVER,
+    });
+  }
+
+  fitToImage(): void {
+    const b = this.api ? this.fitBounds() : null;
+    const view = b && this.viewFor(b);
+    if (!view) return;
+    this.viewToken++; // a glide in progress stops here
+    this.setView(view);
+  }
+
+  /** What the view should fit changed (a sketch came or went, overlay room changed): glide there on the
+   *  next frame, unless the student zoomed or panned the board. A clear + redraw burst glides once. */
+  private refit() {
+    if (this.refitQueued) return;
+    this.refitQueued = true;
+    requestAnimationFrame(() => {
+      this.refitQueued = false;
+      this.glide();
+    });
+  }
+
+  private glide() {
+    const api = this.api;
+    const el = this.container;
+    const b = this.fitBounds();
+    const to = b && this.viewFor(b);
+    if (!api || !el || !to || !this.autoFit) return;
+    const st = api.getAppState();
+    const from: View = { zoom: st.zoom.value, scrollX: st.scrollX, scrollY: st.scrollY };
+    const token = ++this.viewToken;
+    if (Math.abs(from.zoom - to.zoom) < 1e-4 && Math.abs(from.scrollX - to.scrollX) < 0.5 && Math.abs(from.scrollY - to.scrollY) < 0.5) {
+      return;
+    }
+    // ease the scene point at the board centre and the zoom (in log space), so the page never swings away
+    const W = el.clientWidth;
+    const H = el.clientHeight;
+    const cx0 = W / 2 / from.zoom - from.scrollX;
+    const cy0 = H / 2 / from.zoom - from.scrollY;
+    const cx1 = W / 2 / to.zoom - to.scrollX;
+    const cy1 = H / 2 / to.zoom - to.scrollY;
+    void this.play(null, SKETCH_MS.glide, (t) => {
+      if (token !== this.viewToken || !this.autoFit) return;
+      if (t >= 1) {
+        this.setView(to);
+        return;
+      }
+      const k = easeInOutSine(t);
+      const zoom = from.zoom * Math.pow(to.zoom / from.zoom, k);
+      this.setView({ zoom, scrollX: W / 2 / zoom - (cx0 + (cx1 - cx0) * k), scrollY: H / 2 / zoom - (cy0 + (cy1 - cy0) * k) });
     });
   }
 

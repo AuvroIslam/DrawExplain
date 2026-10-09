@@ -42,7 +42,13 @@ const INITIAL_DATA: ExcalidrawProps["initialData"] = {
   scrollToContent: false,
 };
 
-export default function WhiteboardBoard({ onReady, onStudentDrawingChange, theme = "light", className }: WhiteboardBoardProps) {
+export default function WhiteboardBoard({
+  onReady,
+  onStudentDrawingChange,
+  bottomInset = 0,
+  theme = "light",
+  className,
+}: WhiteboardBoardProps) {
   const [engine] = useState(() => new BoardEngine());
   const [failure, setFailure] = useState<Error | null>(null);
   const hostRef = useRef<HTMLDivElement>(null);
@@ -53,6 +59,8 @@ export default function WhiteboardBoard({ onReady, onStudentDrawingChange, theme
     onReadyRef.current = onReady;
     onStudentRef.current = onStudentDrawingChange;
   });
+
+  useEffect(() => engine.setBottomInset(bottomInset), [engine, bottomInset]);
 
   useEffect(() => {
     const host = hostRef.current;

@@ -1,4 +1,4 @@
-import { Component, type KeyboardEvent, type ReactNode, Suspense, useState } from "react";
+import { Component, type KeyboardEvent, type ReactNode, Suspense, useLayoutEffect, useRef, useState } from "react";
 import type { BoardHandle } from "../board/types";
 import type { Session } from "../hooks/useStudySession";
 import { LazyBoard } from "./boardLoader";
@@ -86,6 +86,31 @@ function regionSummary(n: number) {
   return n === 1 ? "Found 1 thing on this page" : `Found ${n} things on this page`;
 }
 
+/** Screen px from the bottom of the stage up to the top of the dock (plus a gap), while `active`
+ *  and the dock shows something: the board keeps the fitted page above it. */
+function useDockRoom(active: boolean) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [room, setRoom] = useState(0);
+  useLayoutEffect(() => {
+    const dock = ref.current;
+    const stage = dock?.parentElement;
+    if (!active || !dock || !stage) {
+      setRoom(0);
+      return;
+    }
+    const measure = () => {
+      const top = dock.getBoundingClientRect().top;
+      setRoom(dock.offsetHeight > 0 ? Math.max(0, Math.round(stage.getBoundingClientRect().bottom - top + 14)) : 0);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(stage);
+    ro.observe(dock);
+    return () => ro.disconnect();
+  }, [active]);
+  return { ref, room };
+}
+
 export function BoardStage({ session, onBoardReady, onStudentDrawing, onTeach, onRetryScan, onHome, onPage }: Props) {
   const { scan, perception, lesson, planning, quiz, source } = session;
   const pdfPages = source.kind === "file" ? (perception?.source_pages ?? source.pages ?? 0) : 0;
@@ -93,6 +118,8 @@ export function BoardStage({ session, onBoardReady, onStudentDrawing, onTeach, o
   const scanning = scan === "scanning" || scan === "found";
   const regions = perception?.regions.length ?? 0;
   const showTeach = scan === "done" && !lesson && !planning;
+  // before the lesson the status chip and "Teach me this" sit under the page, never on it
+  const { ref: dockRef, room: dockRoom } = useDockRoom(!lesson && scan !== "error");
 
   let chip: ReactNode = null;
   if (scan === "scanning") {
@@ -139,7 +166,12 @@ export function BoardStage({ session, onBoardReady, onStudentDrawing, onTeach, o
               </div>
             }
           >
-            <LazyBoard onReady={onBoardReady} onStudentDrawingChange={onStudentDrawing} className="board-canvas" />
+            <LazyBoard
+              onReady={onBoardReady}
+              onStudentDrawingChange={onStudentDrawing}
+              bottomInset={dockRoom}
+              className="board-canvas"
+            />
           </Suspense>
         </BoardBoundary>
       </div>
@@ -152,22 +184,21 @@ export function BoardStage({ session, onBoardReady, onStudentDrawing, onTeach, o
       )}
       {planning && <div className="plan-shimmer" aria-hidden="true" />}
 
-      <div className="stage-top" aria-live="polite">
-        {chip}
-      </div>
-
       {pdfPages > 1 && !quiz && (
         <PagePicker key={pdfPage} page={pdfPage} pages={pdfPages} busy={scan === "scanning"} onPage={onPage} />
       )}
 
-      {showTeach && (
-        <div className="stage-bottom">
+      <div ref={dockRef} className={`stage-dock${!lesson ? " under-page" : ""}`}>
+        <div className="dock-chip" aria-live="polite">
+          {chip}
+        </div>
+        {showTeach && (
           <button type="button" className="teach-btn" onClick={onTeach}>
             <SparkIcon size={22} />
             Teach me this
           </button>
-        </div>
-      )}
+        )}
+      </div>
 
       {scan === "error" && (
         <div className="stage-center">

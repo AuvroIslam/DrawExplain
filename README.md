@@ -113,6 +113,12 @@ What this shows, and what it does not:
   (`samples/eval/results_flatten.md` has that run).
 - Full tables: [`samples/eval/results.md`](samples/eval/results.md).
 
+**On real lectures** (a CS106B Dijkstra deck and a networking course's TCP deck, PDF pages, not
+synthetic): 9 pages, 9 complete lessons of 6-7 steps; 128 of 130 drawings on the TCP pages were
+grounded by consensus between the chosen regions and the model's own boxes; 5 of 8 TCP lessons added a
+margin flowchart of the procedure (slow start, AIMD, CUBIC, ...); the Dijkstra lesson traces the
+algorithm with the correct tentative distances.
+
 ## Features
 
 | How it sees: regions, grounding, confidence | Follow-up: circle it and ask |
@@ -121,6 +127,11 @@ What this shows, and what it does not:
 
 - **Teach me this:** 4-8 narrated steps; each drawing appears when its cue phrase is spoken.
 - **Follow-up questions:** circle the confusing part with the pen and ask; answers are drawn in purple.
+- **Margin sketches:** for a process or algorithm the tutor sketches a small flowchart beside the page.
+  The model writes Mermaid and Excalidraw's converter lays it out, so the model never places anything.
+
+  ![Margin sketch of TCP congestion control](docs/screenshots/margin-sketch.png)
+
 - **Tap quiz:** "Tap the device that forwards packets" checked against the grounded box.
 - **How it sees:** the Set-of-Mark regions, each drawing's grounding type and confidence, timings.
 - **PDF lectures:** upload a PDF and pick a page.
@@ -151,7 +162,7 @@ Command-line tools (from `backend/`):
 python scripts/run_pipeline.py path/to/slide.png     # perception + lesson + preview PNGs
 python scripts/perceive_debug.py path/to/slide.png   # Set-of-Mark image + regions vs ground truth
 python scripts/eval_grounding.py                     # the evaluation above (responses are cached)
-python -m pytest                                     # 50 tests, no network
+python -m pytest                                     # 53 tests, no network
 ```
 
 ## Repository

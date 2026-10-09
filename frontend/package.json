@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@excalidraw/excalidraw": "^0.18.1",
+    "@excalidraw/mermaid-to-excalidraw": "^2.2.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "roughjs": "^4.6.6"

@@ -173,3 +173,18 @@ export const PALETTE: Record<Color, string> = {
   orange: "#f08c00",
   purple: "#9c36b5",
 };
+
+/** Ink of a step's margin sketch: the colour its annotations use most (orange reads poorly as text), else blue. */
+export function stepInk(annotations: Annotation[]): Color {
+  const count = new Map<Color, number>();
+  for (const a of annotations) if (a.color !== "orange" && a.color in PALETTE) count.set(a.color, (count.get(a.color) ?? 0) + 1);
+  let best: Color = "blue";
+  let most = 0;
+  for (const [color, n] of count) {
+    if (n > most) {
+      best = color;
+      most = n;
+    }
+  }
+  return best;
+}
