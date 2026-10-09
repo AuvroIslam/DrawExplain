@@ -1,0 +1,19 @@
+# Render Blueprint for the API. The frontend is deployed on Vercel (see frontend/vercel.json).
+services:
+  - type: web
+    name: drawexplain-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: standard            # 2 GB RAM: OCR models + 1600 px images need more than 512 MB
+    region: oregon            # near the OpenAI API, which every lesson calls
+    healthCheckPath: /api/health
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false           # set in the Render dashboard
+      - key: ELEVENLABS_API_KEY
+        sync: false
+      - key: CORS_ORIGIN_REGEX
+        value: https://.*\.vercel\.app
+      - key: LLM_CACHE
+        value: "1"

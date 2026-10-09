@@ -57,7 +57,26 @@ export function isPdfFile(file: File): boolean {
   return file.type === "application/pdf" || /\.pdf$/i.test(file.name);
 }
 
-const OFFLINE_MESSAGE = "Can't reach the StudyLens server. Is the backend running on port 8000?";
+/** Backend origin when the API is deployed apart from the frontend (e.g. Vercel + Render); "" = same origin. */
+export const API_BASE = ((import.meta.env.VITE_API_BASE as string | undefined) ?? "").trim().replace(/\/+$/, "");
+
+/** Absolute URL for a server path ("/api/...") when the API lives on another origin. */
+export function apiUrl(path: string): string;
+export function apiUrl(path: string | null): string | null;
+export function apiUrl(path: string | null): string | null {
+  if (!path || !API_BASE || !path.startsWith("/")) return path;
+  return API_BASE + path;
+}
+
+const withPerceptionUrls = (p: Perception): Perception => ({
+  ...p,
+  image_url: apiUrl(p.image_url),
+  marked_url: apiUrl(p.marked_url),
+});
+
+const OFFLINE_MESSAGE = API_BASE
+  ? "Can't reach the StudyLens server. Please try again in a moment."
+  : "Can't reach the StudyLens server. Is the backend running on port 8000?";
 const TIMEOUT_MS = 120_000;
 
 function describeDetail(detail: unknown): string | null {
@@ -87,7 +106,7 @@ function withTimeout(signal?: AbortSignal): AbortSignal {
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   let res: Response;
   try {
-    res = await fetch(path, { ...init, signal: withTimeout(init.signal ?? undefined) });
+    res = await fetch(apiUrl(path), { ...init, signal: withTimeout(init.signal ?? undefined) });
   } catch (err) {
     if (err instanceof DOMException && err.name === "AbortError") throw err;
     if (err instanceof DOMException && err.name === "TimeoutError") {
@@ -135,7 +154,7 @@ async function streamLesson(
 ): Promise<Lesson> {
   let res: Response;
   try {
-    res = await fetch("/api/lessons/stream", {
+    res = await fetch(apiUrl("/api/lessons/stream"), {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/x-ndjson" },
       body: JSON.stringify({ image_id: imageId, model: model ?? null }),
@@ -230,16 +249,21 @@ export const api: StudyLensApi = {
     const form = new FormData();
     form.append("file", file, file.name || (isPdfFile(file) ? "upload.pdf" : "upload.png"));
     if (page && page > 1) form.append("page", String(Math.round(page)));
-    return request<Perception>("/api/images", { method: "POST", body: form, signal });
+    return request<Perception>("/api/images", { method: "POST", body: form, signal }).then(withPerceptionUrls);
   },
-  listSamples: () => request<SampleInfo[]>("/api/samples"),
-  loadSample: (name, signal) => postJson<Perception>("/api/samples/load", { name }, signal),
+  listSamples: () =>
+    request<SampleInfo[]>("/api/samples").then((list) => list.map((s) => ({ ...s, url: apiUrl(s.url) }))),
+  loadSample: (name, signal) =>
+    postJson<Perception>("/api/samples/load", { name }, signal).then(withPerceptionUrls),
   createLesson: (imageId, model, signal) =>
     postJson<Lesson>("/api/lessons", { image_id: imageId, model: model ?? null }, signal),
   streamLesson,
   askFollowup: (req, signal) => postJson<FollowupResponse>("/api/followups", req, signal),
   tts: (text, voiceId, signal) =>
-    postJson<TTSResponse>("/api/tts", { text, voice_id: voiceId ?? null }, signal),
+    postJson<TTSResponse>("/api/tts", { text, voice_id: voiceId ?? null }, signal).then((r) => ({
+      ...r,
+      audio_url: apiUrl(r.audio_url),
+    })),
 };
 
 export function errorMessage(err: unknown): string {

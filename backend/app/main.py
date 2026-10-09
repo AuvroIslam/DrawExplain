@@ -68,9 +68,13 @@ async def lifespan(_: FastAPI):
 
 
 app = FastAPI(title="StudyLens Live Whiteboard", version="1.0", lifespan=lifespan)
+# Split deployments (frontend on Vercel, API elsewhere): CORS_ORIGINS="https://a.app,https://b.app" and/or
+# CORS_ORIGIN_REGEX="https://.*\.vercel\.app". Defaults cover the local Vite dev server.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=[o.strip() for o in os.getenv("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",")
+                   if o.strip()],
+    allow_origin_regex=os.getenv("CORS_ORIGIN_REGEX") or None,
     allow_methods=["*"],
     allow_headers=["*"],
 )

@@ -1,0 +1,14 @@
+.git
+.env
+,env
+*.env
+*.pdf
+.workflows
+docs
+frontend
+backend/.venv
+backend/data
+backend/.pytest_cache
+**/__pycache__
+samples/real
+samples/eval
