@@ -25,10 +25,12 @@ from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
 from app import config, perception, tutor
+from app.documents import DocumentError, DocumentStore
 from app.perception import preprocess as perception_preprocess
 from app.perception.types import PerceptionResult
 from app.schemas import (
     Box,
+    DocumentInfo,
     FollowupRequest,
     FollowupResponse,
     Lesson,
@@ -41,13 +43,17 @@ from app.schemas import (
 )
 from app.store import ImageStore, LessonStore, valid_id
 from app.tts import eleven
+from app.documents import DocumentError, DocumentStore
+from app.tutor.context import LessonContext, build_context
 
 log = logging.getLogger("studylens")
 
 MAX_UPLOAD_BYTES = 15 * 1024 * 1024
 IMAGE_TYPES = {"image/png", "image/jpeg", "image/jpg", "image/pjpeg", "image/webp"}
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp"}
+PDF_TYPES = {"application/pdf", "application/x-pdf"}
 MAX_QUESTION_CHARS = 1000
+MAX_LESSON_QUESTION_CHARS = 500
 MAX_TTS_CHARS = 2500
 MIN_SELECTION = 0.02
 _MODEL_RE = re.compile(r"^[A-Za-z0-9._:-]{1,64}$")
@@ -57,6 +63,8 @@ FRONTEND_DIST = config.ROOT_DIR / "frontend" / "dist"
 
 images = ImageStore()
 lessons = LessonStore()
+documents = DocumentStore()
+documents = DocumentStore()
 
 
 @asynccontextmanager
@@ -174,13 +182,15 @@ def create_lesson(req: LessonRequest) -> Lesson:
     model = _model(req.model)
     t0 = time.perf_counter()
     try:
-        lesson = tutor.plan_lesson(pr, model=model)
+        context, page_ref = _lesson_context(pr, req.question)
+        lesson = tutor.plan_lesson(pr, model=model, context=context)
     except HTTPException:
         raise
     except Exception as exc:
         raise _tutor_error("Lesson planning failed", exc) from exc
     lesson.image_id = pr.perception.image_id
     lessons.put(lesson)
+    _record_taught(page_ref, lesson)
     log.info(
         "lesson %s for %s: %d steps, %d warnings, %.1fs",
         lesson.lesson_id, lesson.image_id, len(lesson.steps), len(lesson.warnings), time.perf_counter() - t0,
@@ -194,12 +204,15 @@ def create_lesson_stream(req: LessonRequest) -> StreamingResponse:
     then the full lesson. Errors after the stream started arrive as {"type": "error", "detail": ...}."""
     pr = _perceived(req.image_id)
     model = _model(req.model)
+    context, page_ref = _lesson_context(pr, req.question)
 
     def events() -> Iterator[str]:
         try:
-            for ev in tutor.stream_lesson(pr, model=model):
+            for ev in tutor.stream_lesson(pr, model=model, context=context):
                 if ev["type"] == "lesson":
-                    lessons.put(Lesson.model_validate(ev["lesson"]))
+                    lesson = Lesson.model_validate(ev["lesson"])
+                    lessons.put(lesson)
+                    _record_taught(page_ref, lesson)
                 yield json.dumps(ev, ensure_ascii=False) + "\n"
         except Exception as exc:  # the status line is already sent: report in-band
             err = exc if isinstance(exc, HTTPException) else _tutor_error("Lesson planning failed", exc)
@@ -238,7 +251,8 @@ def create_followup(req: FollowupRequest) -> FollowupResponse:
     selection = _clean_selection(req.selection)
     model = _model(req.model)
     try:
-        return tutor.answer_followup(pr, question, lesson=lesson, selection=selection, model=model)
+        context, _ = _lesson_context(pr, None)
+        return tutor.answer_followup(pr, question, lesson=lesson, selection=selection, model=model, context=context)
     except HTTPException:
         raise
     except Exception as exc:
@@ -314,6 +328,95 @@ def _sniff(data: bytes) -> str | None:
     if len(data) >= 12 and data[:4] == b"RIFF" and data[8:12] == b"WEBP":
         return "webp"
     return None
+
+
+# ---------------------------------------------------------------- documents (PDF reader mode)
+
+
+@app.post("/api/documents", response_model=DocumentInfo)
+def upload_document(file: UploadFile = File(...)) -> DocumentInfo:
+    """Store a PDF for reading: pages are served as plain images; nothing is scanned until asked."""
+    ctype = (file.content_type or "").split(";")[0].strip().lower()
+    ext = Path(file.filename or "").suffix.lower()
+    if ctype != "application/pdf" and ext != ".pdf":
+        raise HTTPException(400, "Upload a PDF here (images go to /api/images)")
+    data = file.file.read(MAX_UPLOAD_BYTES + 1)
+    if len(data) > MAX_UPLOAD_BYTES:
+        raise HTTPException(400, "File is larger than 15 MB")
+    try:
+        return documents.create(data, file.filename)
+    except DocumentError as exc:
+        raise HTTPException(400, str(exc)) from None
+
+
+@app.get("/api/documents/{doc_id}", response_model=DocumentInfo)
+def get_document(doc_id: str) -> DocumentInfo:
+    try:
+        return documents.info(doc_id)
+    except KeyError:
+        raise HTTPException(404, "Unknown document") from None
+
+
+@app.get("/api/documents/{doc_id}/pages/{page}.png")
+def document_page(doc_id: str, page: int) -> FileResponse:
+    """A page as a plain image (rendered once, then cached): browsing never scans."""
+    try:
+        path = documents.page_png(doc_id, page)
+    except KeyError:
+        raise HTTPException(404, "Unknown document or page") from None
+    return FileResponse(path, media_type="image/png", headers={"Cache-Control": "public, max-age=86400"})
+
+
+@app.post("/api/documents/{doc_id}/pages/{page}/perceive", response_model=Perception)
+def perceive_document_page(doc_id: str, page: int) -> Perception:
+    """Scan one page, only when the student asks for it to be explained (asking again reuses the scan)."""
+    try:
+        path = documents.page_png(doc_id, page)
+    except KeyError:
+        raise HTTPException(404, "Unknown document or page") from None
+    with documents.scan_lock(doc_id, page):
+        pr = None
+        image_id = documents.image_for(doc_id, page)
+        if image_id:
+            try:
+                pr = _perceived(image_id)
+            except HTTPException:
+                pr = None
+        if pr is None:
+            pr = _ingest(path.read_bytes())
+            ocr = " ".join(r.text for r in pr.perception.regions if r.kind == "text" and r.text)
+            documents.set_image(doc_id, page, pr.perception.image_id, ocr)
+    return pr.perception.model_copy(update={"doc_id": doc_id, "page": page})
+
+
+MAX_FOCUS_QUESTION_CHARS = 500
+
+
+def _lesson_context(pr: PerceptionResult, question: str | None) -> tuple[LessonContext | None, tuple[str, int] | None]:
+    """(context for the planner, (doc_id, page) when the image is a document page). The context carries the
+    student's focus question and, for a document page, the earlier pages and lessons already taught."""
+    q = " ".join((question or "").split()) or None
+    if q and len(q) > MAX_FOCUS_QUESTION_CHARS:
+        raise HTTPException(400, f"question is longer than {MAX_FOCUS_QUESTION_CHARS} characters")
+    page_ref = documents.page_of_image(pr.perception.image_id)
+    meta = None
+    if page_ref is not None:
+        try:
+            meta = documents.snapshot(page_ref[0])
+        except KeyError:
+            page_ref = None
+    if meta is None and q is None:
+        return None, None
+    return build_context(meta, page_ref[1] if page_ref else None, q), page_ref
+
+
+def _record_taught(page_ref: tuple[str, int] | None, lesson: Lesson) -> None:
+    if page_ref is None:
+        return
+    try:
+        documents.add_taught(page_ref[0], page_ref[1], lesson)
+    except KeyError:
+        log.warning("could not record lesson %s for document %s", lesson.lesson_id, page_ref[0])
 
 
 def _perceived(image_id: str) -> PerceptionResult:

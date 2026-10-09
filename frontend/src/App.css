@@ -2645,3 +2645,244 @@
     font-size: 13.5px;
   }
 }
+
+/* ------------------------------------------------------------------ reader mode (PDFs) */
+
+.teach-btn.calm {
+  height: 50px;
+  padding: 0 24px 0 20px;
+  font-size: 17px;
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--line-2);
+  box-shadow: var(--shadow);
+  animation: rise 0.35s ease both;
+}
+
+.teach-btn.calm svg {
+  color: var(--hl-deep);
+}
+
+.teach-btn.calm:disabled {
+  opacity: 0.55;
+  transform: none;
+}
+
+.stage-chip.soft {
+  opacity: 0.85;
+}
+
+.focus-field {
+  display: block;
+  margin: 14px 0 12px;
+}
+
+.focus-field input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--ink);
+  font: 15px/1.35 var(--font);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.focus-field input::placeholder {
+  color: var(--ink-4);
+}
+
+.focus-field input:focus {
+  outline: none;
+  border-color: var(--hl-deep);
+  box-shadow: 0 0 0 3px var(--hl-soft);
+}
+
+.explain-card h2 .of-pages {
+  color: var(--ink-3);
+  font-weight: 500;
+}
+
+.explain-card .btn-primary.big,
+.explained-card .btn-primary.big {
+  width: 100%;
+}
+
+.done-kicker {
+  color: var(--green);
+}
+
+.again {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line-2);
+}
+
+.again-head {
+  margin: 0 0 2px;
+  color: var(--ink-3);
+  font-size: 12.5px;
+  font-weight: 650;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.again .focus-field {
+  margin-top: 8px;
+}
+
+.btn-ghost.wide {
+  width: 100%;
+  justify-content: center;
+}
+
+.fine.left {
+  text-align: left;
+}
+
+.doc-name,
+.doc-line span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.doc-line {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  margin: 0 0 10px;
+  color: var(--ink-3);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.explained {
+  margin-top: 16px;
+}
+
+.explained-head {
+  margin: 0 0 8px;
+  color: var(--ink-3);
+  font-size: 12.5px;
+  font-weight: 650;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.explained-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.explained-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.explained-item:hover {
+  border-color: var(--line-2);
+}
+
+.explained-item.here {
+  border-color: var(--hl-deep);
+  background: var(--hl-soft);
+}
+
+.ep-num {
+  flex: none;
+  min-width: 40px;
+  color: var(--ink-3);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.ep-title {
+  overflow: hidden;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.lesson-context {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 12px;
+}
+
+.context-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: var(--paper-deep);
+  color: var(--ink-2);
+  font-size: 12.5px;
+  font-weight: 650;
+}
+
+.asked {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  margin: 0;
+  padding: 9px 13px;
+  border-left: 3px solid var(--purple);
+  border-radius: var(--radius-sm);
+  background: var(--purple-soft);
+}
+
+.asked-label {
+  color: var(--purple);
+  font-size: 11.5px;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.asked-q {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.scan-card .scan-list {
+  margin: 12px 0;
+}
+
+.focus-field {
+  position: relative;
+}
+
+.focus-field > svg {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  color: var(--ink-3);
+  pointer-events: none;
+}
+
+.focus-field > svg ~ input {
+  padding-left: 40px;
+}

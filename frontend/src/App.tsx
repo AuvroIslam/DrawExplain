@@ -81,6 +81,7 @@ export default function App() {
             onBoardReady={study.onBoardReady}
             onStudentDrawing={onStudentDrawing}
             onTeach={() => void study.teach()}
+            onReplay={study.replayLesson}
             onRetryScan={study.retryScan}
             onHome={goHome}
             onPage={study.openPage}

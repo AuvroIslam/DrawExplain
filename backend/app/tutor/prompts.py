@@ -11,6 +11,7 @@ from app.schemas import Box
 if TYPE_CHECKING:
     from app.perception.types import PerceptionResult
     from app.schemas import Lesson
+    from app.tutor.context import LessonContext
 
 MAX_REGION_LINES = 250
 TEXT_CHARS = 60
@@ -64,8 +65,37 @@ FOLLOWUP_RULES = f"""The lesson is under way and the student asked a follow-up q
 - If the question is not really about the image, still answer it briefly and point at the closest related thing on the page.
 - title: a short heading for this answer."""
 
+DOCUMENT_RULES = """This page is one page of a longer lecture or document. The DOCUMENT CONTEXT block says which page it is, what the earlier pages said and what you already taught this student:
+- Teach what is on THIS page. Earlier pages are background: do not re-teach them.
+- Connect to an earlier page briefly when it helps, naming it (for example "like the ACK rules on page 8" or "picking up our trace from page 3"), at most once or twice per lesson.
+- When this page continues the previous one (the next step of a worked example, a trace, a derivation), pick up where it left off and spend the steps on what is new here."""
+
+QUESTION_RULES = """The student asked a focus question about this page (STUDENT QUESTION). Shape the lesson around answering it:
+- Step 1 may restate the question in one breath while circling where the answer lives on the page.
+- Spend the steps on what the answer needs, worked out on the page itself; skip parts of the page that do not help. 3-5 steps are usually enough.
+- The last step states the answer plainly. If the page cannot answer it, say so briefly and teach the closest related part."""
+
+DOCUMENT_FOLLOWUP_RULES = """This page is one page of a longer lecture or document (DOCUMENT CONTEXT). If the question touches an earlier page, connect to it briefly by number; do not re-teach it."""
+
 LESSON_SYSTEM = "\n\n".join([PERSONA, INPUTS, TARGETS, DRAWINGS, LESSON_RULES])
 FOLLOWUP_SYSTEM = "\n\n".join([PERSONA, INPUTS, TARGETS, DRAWINGS, FOLLOWUP_RULES])
+
+
+def lesson_system(context: "LessonContext | None" = None) -> str:
+    """LESSON_SYSTEM plus the document / question rules that apply (unchanged without a context, so
+    plain-image lessons keep their cache keys)."""
+    if context is None:
+        return LESSON_SYSTEM
+    extra = [DOCUMENT_RULES] if context.is_document else []
+    if context.question:
+        extra.append(QUESTION_RULES)
+    return "\n\n".join([LESSON_SYSTEM, *extra])
+
+
+def followup_system(context: "LessonContext | None" = None) -> str:
+    if context is None or not context.is_document:
+        return FOLLOWUP_SYSTEM
+    return "\n\n".join([FOLLOWUP_SYSTEM, DOCUMENT_FOLLOWUP_RULES])
 LOCATE_SYSTEM = "\n\n".join([
     "You locate things on a study image so a tutor can draw on them.",
     INPUTS,
@@ -121,11 +151,16 @@ def _image_parts(pr: "PerceptionResult") -> list:
     ]
 
 
-def lesson_parts(pr: "PerceptionResult") -> list:
+def lesson_parts(pr: "PerceptionResult", context: "LessonContext | None" = None) -> list:
     n = len(pr.perception.regions)
+    block = context.prompt_text() if context is not None else ""
+    ask = "Plan the whiteboard lesson for this page."
+    if context is not None and context.question:
+        ask = "Plan the whiteboard lesson for this page, shaped to answer the STUDENT QUESTION."
+    middle = f"{block}\n\n" if block else ""
     return [
         *_image_parts(pr),
-        f"REGION LIST ({n} regions):\n{region_lines(pr)}\n\nPlan the whiteboard lesson for this page.",
+        f"REGION LIST ({n} regions):\n{region_lines(pr)}\n\n{middle}{ask}",
     ]
 
 
@@ -171,7 +206,13 @@ def selection_crop(img: Image.Image, sel: Box, margin: float = 0.15, min_side: i
     return crop
 
 
-def followup_parts(pr: "PerceptionResult", question: str, lesson: "Lesson | None", selection: Box | None) -> list:
+def followup_parts(
+    pr: "PerceptionResult",
+    question: str,
+    lesson: "Lesson | None",
+    selection: Box | None,
+    context: "LessonContext | None" = None,
+) -> list:
     parts: list = [*_image_parts(pr)]
     sel_text = ""
     if selection is not None:
@@ -184,8 +225,10 @@ def followup_parts(pr: "PerceptionResult", question: str, lesson: "Lesson | None
         sel_text = (f"\nThe student selected the area [x, y, w, h] = [{selection.x:.3f}, {selection.y:.3f}, "
                     f"{selection.w:.3f}, {selection.h:.3f}] and asks about it. Use id \"{SEL_ID}\" for the whole selection.")
     n = len(pr.perception.regions)
+    doc = context.document_block() if context is not None else ""
+    doc = f"{doc}\n\n" if doc else ""
     parts.append(
-        f"REGION LIST ({n} regions):\n{region_lines(pr)}\n\n{lesson_context(lesson)}{sel_text}\n\n"
+        f"REGION LIST ({n} regions):\n{region_lines(pr)}\n\n{doc}{lesson_context(lesson)}{sel_text}\n\n"
         f"Student's question: {json.dumps(question.strip(), ensure_ascii=False)}\n\nAnswer it at the board."
     )
     return parts

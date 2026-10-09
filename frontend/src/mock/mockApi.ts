@@ -1,7 +1,8 @@
 // Backend-free API for ?mock=1: same shape as the real client, canned data, realistic delays.
-import { ApiError, type StudyLensApi } from "../api";
-import type { Perception } from "../types";
-import { MOCK_IMAGE_URL, MOCK_LESSON, MOCK_PERCEPTION, MOCK_SAMPLE_NAME, mockFollowup } from "./networkBasic";
+import { ApiError, cleanQuestion, type StudyLensApi } from "../api";
+import type { Lesson, Perception } from "../types";
+import { MOCK_DOC_ID, mockContextPages, mockDocument, mockLessonFor, mockPagePerception } from "./mockDocument";
+import { MOCK_IMAGE_URL, MOCK_PERCEPTION, MOCK_SAMPLE_NAME, mockFollowup } from "./networkBasic";
 
 function delay<T>(ms: number, value: () => T, signal?: AbortSignal): Promise<T> {
   return new Promise((resolve, reject) => {
@@ -34,6 +35,18 @@ function speed(): number {
 
 const perception = (): Perception => structuredClone(MOCK_PERCEPTION);
 
+let lessonCount = 0;
+
+/** The canned lesson for this image, carrying the student's question and the pages it builds on. */
+function lessonFor(imageId: string, question?: string | null): Lesson {
+  return {
+    ...mockLessonFor(imageId),
+    lesson_id: `mock-lesson-${++lessonCount}`,
+    question: cleanQuestion(question),
+    context_pages: mockContextPages(imageId),
+  };
+}
+
 export const mockApi: StudyLensApi = {
   mock: true,
   health: () => delay(60, () => ({ ok: true, model: "gpt-5.4-mini (demo data)", tts: false })),
@@ -49,10 +62,22 @@ export const mockApi: StudyLensApi = {
       },
       signal,
     ),
-  createLesson: (_imageId, _model, signal) => delay(3200 / speed(), () => structuredClone(MOCK_LESSON), signal),
+  // A 3-page demo document whatever PDF is chosen; nothing is scanned until a page is explained.
+  uploadDocument: (file, signal) => delay(900 / speed(), () => mockDocument(file.name), signal),
+  perceivePage: (docId, page, signal) =>
+    delay(
+      2600 / speed(),
+      () => {
+        if (docId !== MOCK_DOC_ID) throw new ApiError("The server doesn't know this document any more.", 404);
+        if (!Number.isInteger(page) || page < 1 || page > 3) throw new ApiError(`There is no page ${page}.`, 400);
+        return mockPagePerception(page);
+      },
+      signal,
+    ),
+  createLesson: (imageId, _model, signal, question) => delay(3200 / speed(), () => lessonFor(imageId, question), signal),
   // Like the real stream: header first, step 1 after a few seconds, later steps every couple of seconds.
-  streamLesson: async (_imageId, handlers, _model, signal) => {
-    const lesson = structuredClone(MOCK_LESSON);
+  streamLesson: async (imageId, handlers, _model, signal, question) => {
+    const lesson = lessonFor(imageId, question);
     const k = speed();
     await delay(1200 / k, () => undefined, signal);
     handlers.onMeta?.({ lesson_id: lesson.lesson_id, image_id: lesson.image_id, model: lesson.model });

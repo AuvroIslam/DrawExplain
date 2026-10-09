@@ -93,7 +93,11 @@ Ground-truth JSON files in `samples/` use **pixel** boxes `[x0, y0, x1, y1]` of 
 | GET | `/api/samples` | | `SampleInfo[]` (images under `samples/`) |
 | GET | `/api/samples/file/{name:path}` | | the sample image |
 | POST | `/api/samples/load` | `LoadSampleRequest {name}` | `Perception` (as if uploaded) |
-| POST | `/api/lessons` | `LessonRequest {image_id, model?}` | `Lesson` |
+| POST | `/api/documents` | multipart `file` (PDF, <= 15 MB) | `DocumentInfo` (no page is scanned) |
+| GET | `/api/documents/{doc_id}` | | `DocumentInfo` |
+| GET | `/api/documents/{doc_id}/pages/{page}.png` | | rendered page image (cached; same pixels the scan uses) |
+| POST | `/api/documents/{doc_id}/pages/{page}/perceive` | | `Perception` with `doc_id`, `page` (re-asking returns the same scan) |
+| POST | `/api/lessons` | `LessonRequest {image_id, model?, question?}` | `Lesson` (`question`, `context_pages` for document pages) |
 | POST | `/api/lessons/stream` | `LessonRequest` | NDJSON events: `meta`, `header`, `step` (one per step, grounded), `lesson` (full), or `error` |
 | POST | `/api/followups` | `FollowupRequest {image_id, lesson_id?, question, selection?, model?}` | `FollowupResponse` |
 | POST | `/api/tts` | `TTSRequest {text, voice_id?}` | `TTSResponse {audio_url, duration, words[]}` |
@@ -192,3 +196,14 @@ the follow-up `selection`. The PIL preview renderer (backend) only needs to be f
   under ~60 paid calls. Use the disk cache (`LLM_CACHE=1`) when re-running the same inputs.
 - ElevenLabs: under ~5,000 characters per agent; always go through the cache.
 - Never print or log API keys.
+
+## PDF reader mode and lesson context
+
+Uploading a PDF to `/api/documents` stores it and extracts each page's text layer (PyMuPDF), but runs
+no perception. The student browses pages as plain images; pressing "Explain this page" perceives that
+page only (`/perceive`), then streams a lesson. For a document page, the lesson request is enriched on
+the server with a document context: the document title, page X of N, a short outline of the previous
+pages' text (the immediately previous page in more detail) and the titles + summaries of lessons
+already taught for this document in this session. The planner tells the model to build on earlier
+pages without re-teaching them, and, when `question` is given, to shape the lesson around answering
+it. `Lesson.context_pages` lists the earlier pages that were included.

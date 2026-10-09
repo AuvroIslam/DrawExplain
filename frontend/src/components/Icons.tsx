@@ -190,6 +190,22 @@ export const LayersIcon = (p: IconProps) => (
   </Icon>
 );
 
+export const BookIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 6.5c-1.8-1.4-4.6-2-8-1.8v13c3.4-.2 6.2.4 8 1.8 1.8-1.4 4.6-2 8-1.8v-13c-3.4-.2-6.2.4-8 1.8Z" />
+    <path d="M12 6.5v13" />
+  </Icon>
+);
+
+/** Two linked pages: "builds on page 2". */
+export const LinkPagesIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="3.5" y="4" width="9" height="12" rx="1.5" />
+    <path d="M12.5 8h6.5a1.5 1.5 0 0 1 1.5 1.5v9A1.5 1.5 0 0 1 19 20h-6.5A1.5 1.5 0 0 1 11 18.5V16" />
+    <path d="M6.5 8.5h3M6.5 11.5h3" />
+  </Icon>
+);
+
 export const TrophyIcon = (p: IconProps) => (
   <Icon {...p}>
     <path d="M8 4h8v5a4 4 0 0 1-8 0V4Z" />

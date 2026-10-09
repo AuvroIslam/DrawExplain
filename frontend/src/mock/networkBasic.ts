@@ -20,17 +20,17 @@ export const MOCK_H = 720;
 export const MOCK_IMAGE_URL = "/mock/network_basic.png";
 export const MOCK_SAMPLE_NAME = "quick/network_basic.png";
 
-type Px = [number, number, number, number];
+export type Px = [number, number, number, number];
 
 export function pxBox([x0, y0, x1, y1]: Px): Box {
   return { x: x0 / MOCK_W, y: y0 / MOCK_H, w: (x1 - x0) / MOCK_W, h: (y1 - y0) / MOCK_H };
 }
 
-function pt(x: number, y: number): Point {
+export function pt(x: number, y: number): Point {
   return { x: x / MOCK_W, y: y / MOCK_H };
 }
 
-function region(
+export function region(
   id: string,
   kind: RegionKind,
   px: Px,
@@ -78,7 +78,7 @@ export const MOCK_PERCEPTION: Perception = {
   marked_url: null,
 };
 
-interface AnnSpec {
+export interface AnnSpec {
   kind: AnnotationKind;
   color: Color;
   cue: string;
@@ -95,7 +95,7 @@ interface AnnSpec {
   confidence?: number;
 }
 
-function ann(id: string, s: AnnSpec): Annotation {
+export function ann(id: string, s: AnnSpec): Annotation {
   return {
     id,
     kind: s.kind,
@@ -117,7 +117,7 @@ function ann(id: string, s: AnnSpec): Annotation {
   };
 }
 
-function step(index: number, title: string, narration: string, specs: AnnSpec[], sketch: string | null = null): Step {
+export function step(index: number, title: string, narration: string, specs: AnnSpec[], sketch: string | null = null): Step {
   return {
     index,
     title,
@@ -137,7 +137,7 @@ const ROUTE_SKETCH = [
 ].join("\n");
 
 /** Ellipse bounds around a rectangle: a hand-drawn circle needs room around the corners. */
-function circleAround([x0, y0, x1, y1]: Px, sx = 1.28, sy = 1.42): Px {
+export function circleAround([x0, y0, x1, y1]: Px, sx = 1.28, sy = 1.42): Px {
   const cx = (x0 + x1) / 2;
   const cy = (y0 + y1) / 2;
   const w = (x1 - x0) * sx;
@@ -145,7 +145,7 @@ function circleAround([x0, y0, x1, y1]: Px, sx = 1.28, sy = 1.42): Px {
   return [cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2];
 }
 
-function pad([x0, y0, x1, y1]: Px, p: number): Px {
+export function pad([x0, y0, x1, y1]: Px, p: number): Px {
   return [x0 - p, y0 - p, x1 + p, y1 + p];
 }
 

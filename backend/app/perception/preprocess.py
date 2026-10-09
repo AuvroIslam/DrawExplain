@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import io
+import threading
 from dataclasses import dataclass
 
 import cv2
@@ -13,6 +14,7 @@ from app import config
 MAX_PIXELS = 40_000_000
 MIN_SIDE = 32
 MIN_LONG_SIDE = 1000
+PDF_LOCK = threading.Lock()  # PyMuPDF is not thread-safe: one PDF operation at a time
 
 
 # ---------------------------------------------------------------- decoding
@@ -22,22 +24,30 @@ def is_pdf(data: bytes) -> bool:
     return data[:5] == b"%PDF-"
 
 
+def pdf_page_dpi(page) -> int:
+    """Resolution that renders a PDF page (pymupdf.Page) with its longest side ~MAX_IMAGE_SIDE px."""
+    side = max(page.rect.width, page.rect.height)
+    if side <= 0:
+        return 72
+    return max(36, min(300, int(config.MAX_IMAGE_SIDE / side * 72)))
+
+
 def render_pdf_page(data: bytes, page: int = 1) -> tuple[bytes, int]:
     """(PNG bytes of a 1-based PDF page rendered with its longest side ~MAX_IMAGE_SIDE, page count)."""
     import pymupdf
 
-    try:
-        doc = pymupdf.open(stream=data, filetype="pdf")
-    except Exception as exc:
-        raise ValueError(f"unreadable PDF: {type(exc).__name__}") from exc
-    with doc:
-        if doc.page_count == 0:
-            raise ValueError("the PDF has no pages")
-        if not 1 <= page <= doc.page_count:
-            raise ValueError(f"page {page} does not exist (the PDF has {doc.page_count} pages)")
-        p = doc[page - 1]
-        dpi = max(36, min(300, int(config.MAX_IMAGE_SIDE / max(p.rect.width, p.rect.height) * 72)))
-        return p.get_pixmap(dpi=dpi, alpha=False).tobytes("png"), doc.page_count
+    with PDF_LOCK:
+        try:
+            doc = pymupdf.open(stream=data, filetype="pdf")
+        except Exception as exc:
+            raise ValueError(f"unreadable PDF: {type(exc).__name__}") from exc
+        with doc:
+            if doc.page_count == 0:
+                raise ValueError("the PDF has no pages")
+            if not 1 <= page <= doc.page_count:
+                raise ValueError(f"page {page} does not exist (the PDF has {doc.page_count} pages)")
+            p = doc[page - 1]
+            return p.get_pixmap(dpi=pdf_page_dpi(p), alpha=False).tobytes("png"), doc.page_count
 
 
 def prepare_image(data: bytes) -> Image.Image:
@@ -87,8 +97,8 @@ def _to_rgb_on_white(img: Image.Image) -> Image.Image:
     return img.convert("RGB")
 
 
-def _resize(img: Image.Image) -> Image.Image:
-    w, h = img.size
+def target_size(w: int, h: int) -> tuple[int, int]:
+    """The size prepare_image gives a w x h image: longest side in [~MIN_LONG_SIDE, MAX_IMAGE_SIDE]."""
     long_side = max(w, h)
     floor = min(MIN_LONG_SIDE, config.MAX_IMAGE_SIDE)
     if long_side > config.MAX_IMAGE_SIDE:
@@ -96,9 +106,13 @@ def _resize(img: Image.Image) -> Image.Image:
     elif long_side < floor:
         scale = floor / long_side
     else:
-        return img
-    size = (max(1, round(w * scale)), max(1, round(h * scale)))
-    return img.resize(size, Image.LANCZOS)
+        return w, h
+    return max(1, round(w * scale)), max(1, round(h * scale))
+
+
+def _resize(img: Image.Image) -> Image.Image:
+    size = target_size(*img.size)
+    return img if size == img.size else img.resize(size, Image.LANCZOS)
 
 
 # ---------------------------------------------------------------- ink analysis

@@ -38,6 +38,8 @@ export interface Perception {
   image_url: string | null;
   marked_url: string | null;
   source_pages?: number | null; // page count when the upload was a PDF
+  doc_id?: string | null; // set when this image is a page of an uploaded document
+  page?: number | null; // 1-based page number within that document
 }
 
 // ---------------------------------------------------------------- lesson
@@ -96,6 +98,8 @@ export interface Lesson {
   model: string;
   timings: Record<string, number>;
   warnings: string[];
+  question?: string | null; // the student's focus question, when one was asked
+  context_pages?: number[]; // earlier document pages the lesson builds on
 }
 
 export interface LocatedTarget {
@@ -112,6 +116,18 @@ export interface LocatedTarget {
 export interface LessonRequest {
   image_id: string;
   model?: string | null;
+  question?: string | null; // optional: what the student wants explained on this page
+}
+
+/** An uploaded PDF: pages are browsed as plain images (no scan); a page is perceived only when the
+ *  student asks for it to be explained (POST /api/documents/{doc_id}/pages/{page}/perceive). */
+export interface DocumentInfo {
+  doc_id: string;
+  filename: string;
+  pages: number;
+  title: string | null;
+  page_sizes: [number, number][]; // [width, height] px of each rendered page image (page i -> index i-1)
+  page_url: string; // template like "/api/documents/<doc_id>/pages/{page}.png"
 }
 
 export interface FollowupRequest {

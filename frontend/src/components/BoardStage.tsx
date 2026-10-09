@@ -1,8 +1,9 @@
 import { Component, type KeyboardEvent, type ReactNode, Suspense, useLayoutEffect, useRef, useState } from "react";
+import { isPdfFile } from "../api";
 import type { BoardHandle } from "../board/types";
-import type { Session } from "../hooks/useStudySession";
+import { scanErrorTitle, type Session } from "../hooks/useStudySession";
 import { LazyBoard } from "./boardLoader";
-import { AlertIcon, CheckIcon, ChevronLeftIcon, ChevronRightIcon, PenIcon, SparkIcon, TapIcon } from "./Icons";
+import { AlertIcon, CheckIcon, ChevronLeftIcon, ChevronRightIcon, PenIcon, ReplayIcon, SparkIcon, TapIcon } from "./Icons";
 
 class BoardBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false };
@@ -34,7 +35,7 @@ class BoardBoundary extends Component<{ children: ReactNode }, { failed: boolean
   }
 }
 
-/** "Page [3] of 42" for PDF uploads: prev/next or type a number; each change re-reads that page. */
+/** "Page [3] of 42" for PDF uploads: prev/next or type a number (reader mode: just shows that page). */
 function PagePicker({ page, pages, busy, onPage }: { page: number; pages: number; busy: boolean; onPage: (p: number) => void }) {
   const [draft, setDraft] = useState(String(page));
   const commitDraft = () => {
@@ -76,7 +77,10 @@ interface Props {
   session: Session;
   onBoardReady: (handle: BoardHandle) => void;
   onStudentDrawing: (has: boolean) => void;
+  /** "Teach me this" (images) / "Explain this page" (reader mode). */
   onTeach: () => void;
+  /** Reader mode: replay the lesson this page already had. */
+  onReplay: () => void;
   onRetryScan: () => void;
   onHome: () => void;
   onPage: (page: number) => void;
@@ -111,25 +115,51 @@ function useDockRoom(active: boolean) {
   return { ref, room };
 }
 
-export function BoardStage({ session, onBoardReady, onStudentDrawing, onTeach, onRetryScan, onHome, onPage }: Props) {
-  const { scan, perception, lesson, planning, quiz, source } = session;
-  const pdfPages = source.kind === "file" ? (perception?.source_pages ?? source.pages ?? 0) : 0;
-  const pdfPage = source.kind === "file" ? (source.page ?? 1) : 1;
+export function BoardStage({ session, onBoardReady, onStudentDrawing, onTeach, onReplay, onRetryScan, onHome, onPage }: Props) {
+  const { scan, perception, lesson, planning, quiz, source, reader } = session;
+  const pdfPages = reader ? reader.doc.pages : source.kind === "file" ? (perception?.source_pages ?? source.pages ?? 0) : 0;
+  const pdfPage = reader ? Math.max(1, reader.page) : source.kind === "file" ? (source.page ?? 1) : 1;
   const scanning = scan === "scanning" || scan === "found";
   const regions = perception?.regions.length ?? 0;
-  const showTeach = scan === "done" && !lesson && !planning;
-  // before the lesson the status chip and "Teach me this" sit under the page, never on it
+  const free = !lesson && !planning;
+  const saved = reader ? reader.explained[reader.page] : undefined;
+  const showTeach = !reader && scan === "done" && free;
+  // reader mode: a page is only scanned when the student asks; a page taught before can be replayed
+  const showExplain = !!reader && free && (scan === "idle" || (scan === "done" && !saved));
+  const showReplay = !!reader && free && scan === "done" && !!saved;
+  // before the lesson the status chip and the big button sit under the page, never on it
   const { ref: dockRef, room: dockRoom } = useDockRoom(!lesson && scan !== "error");
 
   let chip: ReactNode = null;
-  if (scan === "scanning") {
+  if (scan === "loading") {
+    chip = (
+      <span className="stage-chip">
+        <span className="spinner" aria-hidden="true" />
+        Opening your PDF<span className="chip-sub">no page is scanned yet</span>
+      </span>
+    );
+  } else if (reader?.loading && free && !scanning) {
+    chip = (
+      <span className="stage-chip found soft">
+        <span className="spinner" aria-hidden="true" />
+        Turning to page {pdfPage}
+      </span>
+    );
+  } else if (showReplay) {
+    chip = (
+      <span className="stage-chip found">
+        <CheckIcon size={16} />
+        Explained earlier<span className="chip-sub">{saved?.lesson.title}</span>
+      </span>
+    );
+  } else if (scan === "scanning") {
     chip = (
       <span className="stage-chip">
         <span className="spinner" aria-hidden="true" />
         Reading the page<span className="chip-sub">text, shapes, layout</span>
       </span>
     );
-  } else if (scan === "found" || (scan === "done" && !lesson && !planning)) {
+  } else if (scan === "found" || (!reader && scan === "done" && free)) {
     chip = (
       <span className={`stage-chip found${scan === "found" ? " pop" : ""}`}>
         <CheckIcon size={16} />
@@ -182,10 +212,11 @@ export function BoardStage({ session, onBoardReady, onStudentDrawing, onTeach, o
           <div className="scan-line" />
         </div>
       )}
-      {planning && <div className="plan-shimmer" aria-hidden="true" />}
+      {planning && !scanning && <div className="plan-shimmer" aria-hidden="true" />}
 
       {pdfPages > 1 && !quiz && (
-        <PagePicker key={pdfPage} page={pdfPage} pages={pdfPages} busy={scan === "scanning"} onPage={onPage} />
+        <PagePicker key={pdfPage} page={pdfPage} pages={pdfPages} busy={reader ? reader.loading : scan === "scanning"}
+          onPage={onPage} />
       )}
 
       <div ref={dockRef} className={`stage-dock${!lesson ? " under-page" : ""}`}>
@@ -198,20 +229,32 @@ export function BoardStage({ session, onBoardReady, onStudentDrawing, onTeach, o
             Teach me this
           </button>
         )}
+        {showExplain && (
+          <button type="button" className="teach-btn calm" onClick={onTeach} disabled={reader?.loading}>
+            <SparkIcon size={22} />
+            Explain this page
+          </button>
+        )}
+        {showReplay && (
+          <button type="button" className="teach-btn calm" onClick={onReplay}>
+            <ReplayIcon size={21} />
+            Replay lesson
+          </button>
+        )}
       </div>
 
       {scan === "error" && (
         <div className="stage-center">
           <div className="stage-card" role="alert">
             <AlertIcon size={22} />
-            <h3>I couldn&rsquo;t read this page</h3>
+            <h3>{scanErrorTitle(session)}</h3>
             <p>{session.scanError}</p>
             <div className="card-actions">
               <button type="button" className="btn-primary" onClick={onRetryScan}>
                 Try again
               </button>
               <button type="button" className="btn-ghost" onClick={onHome}>
-                Choose another image
+                {source.kind === "file" && isPdfFile(source.file) ? "Choose another file" : "Choose another image"}
               </button>
             </div>
           </div>

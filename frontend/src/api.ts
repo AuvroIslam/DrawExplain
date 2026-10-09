@@ -1,5 +1,6 @@
 // Typed client for the StudyLens backend (FastAPI, prefix /api; Vite proxies it in dev).
 import type {
+  DocumentInfo,
   FollowupRequest,
   FollowupResponse,
   Health,
@@ -20,9 +21,19 @@ export class ApiError extends Error {
   }
 }
 
+/** The stream's first event. Servers may also echo the focus question and the earlier document pages
+ *  the lesson builds on; otherwise those arrive with the full lesson at the end. */
+export interface LessonMeta {
+  lesson_id: string;
+  image_id: string;
+  model: string;
+  question?: string | null;
+  context_pages?: number[];
+}
+
 /** Callbacks of a streamed lesson, in arrival order: meta, header, then one call per step. */
 export interface LessonStreamHandlers {
-  onMeta?: (meta: { lesson_id: string; image_id: string; model: string }) => void;
+  onMeta?: (meta: LessonMeta) => void;
   onHeader?: (header: { title: string; summary: string }) => void;
   /** A grounded, validated step (same shape as Lesson.steps[i]), as soon as the model has written it. */
   onStep?: (step: Step) => void;
@@ -36,7 +47,13 @@ export interface StudyLensApi {
   uploadImage(file: File, signal?: AbortSignal, page?: number): Promise<Perception>;
   listSamples(): Promise<SampleInfo[]>;
   loadSample(name: string, signal?: AbortSignal): Promise<Perception>;
-  createLesson(imageId: string, model?: string | null, signal?: AbortSignal): Promise<Lesson>;
+  /** POST /api/documents: keep a PDF for reader mode. No page is scanned; pages are plain images
+   *  (documentPageUrl) until the student asks for one to be explained (perceivePage). */
+  uploadDocument(file: File, signal?: AbortSignal): Promise<DocumentInfo>;
+  /** POST /api/documents/{doc_id}/pages/{page}/perceive: scan one page (asking again returns the same scan). */
+  perceivePage(docId: string, page: number, signal?: AbortSignal): Promise<Perception>;
+  /** `question` (optional) is what the student wants this page's lesson to focus on. */
+  createLesson(imageId: string, model?: string | null, signal?: AbortSignal, question?: string | null): Promise<Lesson>;
   /** POST /api/lessons/stream (NDJSON): steps arrive through `handlers`; resolves with the full lesson
    *  (steps + quiz) and rejects on an HTTP error, an in-band {"type":"error"} or a stream cut short. */
   streamLesson(
@@ -44,6 +61,7 @@ export interface StudyLensApi {
     handlers: LessonStreamHandlers,
     model?: string | null,
     signal?: AbortSignal,
+    question?: string | null,
   ): Promise<Lesson>;
   askFollowup(req: FollowupRequest, signal?: AbortSignal): Promise<FollowupResponse>;
   tts(text: string, voiceId?: string | null, signal?: AbortSignal): Promise<TTSResponse>;
@@ -73,6 +91,17 @@ const withPerceptionUrls = (p: Perception): Perception => ({
   image_url: apiUrl(p.image_url),
   marked_url: apiUrl(p.marked_url),
 });
+
+/** URL of one page image of an uploaded document (1-based page). */
+export function documentPageUrl(doc: DocumentInfo, page: number): string {
+  return apiUrl(doc.page_url.replace("{page}", String(Math.round(page))));
+}
+
+/** A blank or whitespace-only focus question is no question. */
+export function cleanQuestion(question?: string | null): string | null {
+  const q = (question ?? "").replace(/\s+/g, " ").trim();
+  return q ? q.slice(0, 400) : null;
+}
 
 const OFFLINE_MESSAGE = API_BASE
   ? "Can't reach the StudyLens server. Please try again in a moment."
@@ -140,7 +169,7 @@ function fetchError(err: unknown): unknown {
 }
 
 type StreamEvent =
-  | { type: "meta"; lesson_id: string; image_id: string; model: string }
+  | ({ type: "meta" } & LessonMeta)
   | { type: "header"; title: string; summary: string }
   | { type: "step"; step: Step }
   | { type: "lesson"; lesson: Lesson }
@@ -151,13 +180,14 @@ async function streamLesson(
   handlers: LessonStreamHandlers,
   model?: string | null,
   signal?: AbortSignal,
+  question?: string | null,
 ): Promise<Lesson> {
   let res: Response;
   try {
     res = await fetch(apiUrl("/api/lessons/stream"), {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/x-ndjson" },
-      body: JSON.stringify({ image_id: imageId, model: model ?? null }),
+      body: JSON.stringify({ image_id: imageId, model: model ?? null, question: cleanQuestion(question) }),
       signal: withTimeout(signal),
     });
   } catch (err) {
@@ -255,8 +285,25 @@ export const api: StudyLensApi = {
     request<SampleInfo[]>("/api/samples").then((list) => list.map((s) => ({ ...s, url: apiUrl(s.url) }))),
   loadSample: (name, signal) =>
     postJson<Perception>("/api/samples/load", { name }, signal).then(withPerceptionUrls),
-  createLesson: (imageId, model, signal) =>
-    postJson<Lesson>("/api/lessons", { image_id: imageId, model: model ?? null }, signal),
+  uploadDocument(file, signal) {
+    const form = new FormData();
+    form.append("file", file, file.name || "document.pdf");
+    return request<DocumentInfo>("/api/documents", { method: "POST", body: form, signal }).then((d) => ({
+      ...d,
+      page_url: apiUrl(d.page_url),
+    }));
+  },
+  perceivePage: (docId, page, signal) =>
+    request<Perception>(
+      `/api/documents/${encodeURIComponent(docId)}/pages/${Math.round(page)}/perceive`,
+      { method: "POST", signal },
+    ).then(withPerceptionUrls),
+  createLesson: (imageId, model, signal, question) =>
+    postJson<Lesson>(
+      "/api/lessons",
+      { image_id: imageId, model: model ?? null, question: cleanQuestion(question) },
+      signal,
+    ),
   streamLesson,
   askFollowup: (req, signal) => postJson<FollowupResponse>("/api/followups", req, signal),
   tts: (text, voiceId, signal) =>

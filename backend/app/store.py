@@ -108,10 +108,12 @@ class ImageStore:
         image: Image.Image,
         digest: str | None = None,
         timings: dict[str, float] | None = None,
+        flatten: bool = True,
     ) -> PerceptionResult:
-        """Perceive a prepared image under a fresh id and persist it."""
+        """Perceive a prepared image under a fresh id and persist it. flatten=False keeps the exact pixels
+        (document pages: the scan must match the page image the reader already shows)."""
         image_id = new_id()
-        pr = perception.perceive(image, image_id)
+        pr = perception.perceive(image, image_id, flatten=flatten)
         if timings:
             for key, value in timings.items():
                 pr.perception.timings.setdefault(key, value)
@@ -133,6 +135,11 @@ class ImageStore:
             if digest:
                 self._digests[digest] = image_id
 
+    def peek(self, image_id: str) -> PerceptionResult | None:
+        """From memory only (never perceives)."""
+        with self._lock:
+            return self._items.get(image_id)
+
     def get(self, image_id: str) -> PerceptionResult:
         """From memory, else re-perceived from DATA_DIR (server restart); KeyError if unknown."""
         with self._lock:
@@ -152,7 +159,8 @@ class ImageStore:
             log.info("re-perceiving %s from disk", image_id)
             with Image.open(original) as im:
                 image = im.convert("RGB")
-            pr = perception.perceive(image, image_id)
+            # original.png is already the processed (flattened) page: never flatten it a second time
+            pr = perception.perceive(image, image_id, flatten=False)
             self.put(pr, save_original=False)
         with self._lock:
             self._loading.pop(image_id, None)

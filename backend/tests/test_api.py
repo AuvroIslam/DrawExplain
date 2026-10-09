@@ -86,7 +86,7 @@ def client(tmp_path, monkeypatch, calls: Calls) -> TestClient:
             im.load()
             return im.convert("RGB")
 
-    def fake_perceive(image: Image.Image, image_id: str) -> PerceptionResult:
+    def fake_perceive(image: Image.Image, image_id: str, flatten: bool = True) -> PerceptionResult:
         calls.perceive.append(image_id)
         w, h = image.size
         regions = [
@@ -103,7 +103,7 @@ def client(tmp_path, monkeypatch, calls: Calls) -> TestClient:
             freespace=FakeFreeSpace(),
         )
 
-    def fake_plan(pr: PerceptionResult, model: str | None = None) -> Lesson:
+    def fake_plan(pr: PerceptionResult, model: str | None = None, context=None) -> Lesson:
         calls.plan.append((pr.perception.image_id, model))
         return Lesson(
             lesson_id=uuid.uuid4().hex[:12],
@@ -114,7 +114,7 @@ def client(tmp_path, monkeypatch, calls: Calls) -> TestClient:
             model=model or config.OPENAI_MODEL,
         )
 
-    def fake_followup(pr, question, lesson=None, selection=None, model=None) -> FollowupResponse:
+    def fake_followup(pr, question, lesson=None, selection=None, model=None, context=None) -> FollowupResponse:
         calls.followup.append({"question": question, "lesson": lesson, "selection": selection, "model": model})
         return FollowupResponse(title=f"Re: {question}", steps=[_step(2)], model=model or config.OPENAI_MODEL)
 

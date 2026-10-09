@@ -10,6 +10,7 @@ from app import config
 from app.perception.types import PerceptionResult
 from app.schemas import Annotation, Box, FollowupResponse, Lesson, LocatedTarget, QuizItem, Step
 from app.tutor import prompts
+from app.tutor.context import LessonContext
 from app.tutor.geometry import GeometryBuilder
 from app.tutor.grounding import RELIABLE_AGREEMENT, Grounded, approx_agreement, fuse, user_selection
 from app.tutor.llm import chat_json, chat_json_stream, last_meta
@@ -195,10 +196,19 @@ def _build_quiz(raw_quiz: Any, resolve: _Resolver, warnings: list[str]) -> list[
     return finalize_quiz(quiz, warnings)
 
 
-def plan_lesson(pr: PerceptionResult, model: str | None = None) -> Lesson:
+def _focus(context: LessonContext | None) -> dict[str, Any]:
+    """Lesson fields that echo the context: the focus question and the other pages it builds on."""
+    if context is None:
+        return {"question": None, "context_pages": []}
+    return {"question": context.question, "context_pages": context.context_pages}
+
+
+def plan_lesson(pr: PerceptionResult, model: str | None = None, context: LessonContext | None = None) -> Lesson:
+    """context: document page context and/or the student's focus question (tutor.context.build_context)."""
     model = model or config.OPENAI_MODEL
     t0 = time.perf_counter()
-    data, meta = chat_json(model, prompts.LESSON_SYSTEM, prompts.lesson_parts(pr), prompts.LESSON_SCHEMA, "lesson")
+    data, meta = chat_json(model, prompts.lesson_system(context), prompts.lesson_parts(pr, context),
+                           prompts.LESSON_SCHEMA, "lesson")
     t1 = time.perf_counter()
     warnings: list[str] = []
     resolve = _Resolver(pr)
@@ -221,21 +231,25 @@ def plan_lesson(pr: PerceptionResult, model: str | None = None) -> Lesson:
                  **({"llm_cached": 1.0} if meta.get("cached") else {}),
                  **({"approx_agreement": round(resolve.agreement, 3)} if resolve.agreement is not None else {})},
         warnings=warnings,
+        **_focus(context),
     )
     log.info("lesson %s: %d steps, %d drawings, %d quiz, %.1fs (%s)", lesson.lesson_id, len(steps),
              sum(len(s.annotations) for s in steps), len(quiz), t2 - t0, model)
     return lesson
 
 
-def stream_lesson(pr: PerceptionResult, model: str | None = None) -> Iterator[dict[str, Any]]:
+def stream_lesson(
+    pr: PerceptionResult, model: str | None = None, context: LessonContext | None = None
+) -> Iterator[dict[str, Any]]:
     """plan_lesson, streamed: events {"type": "meta"}, {"type": "header"}, {"type": "step"} per step as
     soon as the model has written it (grounded, laid out, validated), then {"type": "lesson"} with the
     full lesson (the same steps plus the quiz). Lets the board start drawing step 1 while the model is
-    still writing step 4."""
+    still writing step 4. The meta event also echoes the focus question and the context pages."""
     model = model or config.OPENAI_MODEL
     t0 = time.perf_counter()
     lesson_id = uuid.uuid4().hex[:12]
-    yield {"type": "meta", "lesson_id": lesson_id, "image_id": pr.perception.image_id, "model": model}
+    focus = _focus(context)
+    yield {"type": "meta", "lesson_id": lesson_id, "image_id": pr.perception.image_id, "model": model, **focus}
     warnings: list[str] = []
     resolve = _Resolver(pr)
     sb = _StepBuilder(pr, resolve, warnings)
@@ -245,7 +259,8 @@ def stream_lesson(pr: PerceptionResult, model: str | None = None) -> Iterator[di
     seen_ids: set[str] = set()
     header_sent = False
     first_step: float | None = None
-    for delta in chat_json_stream(model, prompts.LESSON_SYSTEM, prompts.lesson_parts(pr), prompts.LESSON_SCHEMA, "lesson"):
+    for delta in chat_json_stream(model, prompts.lesson_system(context), prompts.lesson_parts(pr, context),
+                                  prompts.LESSON_SCHEMA, "lesson"):
         for raw in parser.feed(delta):
             if not header_sent and (head := parser.header()) is not None:
                 header_sent = True
@@ -283,6 +298,7 @@ def stream_lesson(pr: PerceptionResult, model: str | None = None) -> Iterator[di
                  "input_tokens": float(meta.get("input_tokens", 0)), "output_tokens": float(meta.get("output_tokens", 0)),
                  **({"approx_agreement": round(resolve.agreement, 3)} if resolve.agreement is not None else {})},
         warnings=warnings,
+        **focus,
     )
     log.info("streamed lesson %s: %d steps, first step after %.1fs, total %.1fs (%s)", lesson_id, len(steps),
              first_step or total, total, model)
@@ -295,10 +311,13 @@ def answer_followup(
     lesson: Lesson | None = None,
     selection: Box | None = None,
     model: str | None = None,
+    context: LessonContext | None = None,
 ) -> FollowupResponse:
+    """context: the document context of the page (its question is not used: `question` is the follow-up)."""
     model = model or config.OPENAI_MODEL
     t0 = time.perf_counter()
-    data, meta = chat_json(model, prompts.FOLLOWUP_SYSTEM, prompts.followup_parts(pr, question, lesson, selection),
+    data, meta = chat_json(model, prompts.followup_system(context),
+                           prompts.followup_parts(pr, question, lesson, selection, context),
                            prompts.FOLLOWUP_SCHEMA, "followup")
     t1 = time.perf_counter()
     warnings: list[str] = []

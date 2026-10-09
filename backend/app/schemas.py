@@ -53,6 +53,8 @@ class Perception(BaseModel):
     image_url: str | None = None  # served processed image
     marked_url: str | None = None  # served Set-of-Mark debug image
     source_pages: int | None = None  # page count when the upload was a PDF (one page is perceived)
+    doc_id: str | None = None  # set when this image is a page of an uploaded document
+    page: int | None = None  # 1-based page number within that document
 
 
 # ---------------------------------------------------------------- lesson
@@ -126,6 +128,8 @@ class Lesson(BaseModel):
     model: str
     timings: dict[str, float] = Field(default_factory=dict)
     warnings: list[str] = Field(default_factory=list)  # validator notes
+    question: str | None = None  # the student's focus question, when one was asked
+    context_pages: list[int] = Field(default_factory=list)  # earlier document pages the lesson builds on
 
 
 class LocatedTarget(BaseModel):
@@ -144,6 +148,21 @@ class LocatedTarget(BaseModel):
 class LessonRequest(BaseModel):
     image_id: str
     model: str | None = None
+    question: str | None = None  # optional: what the student wants explained on this page
+
+
+# ---------------------------------------------------------------- documents (PDF reader)
+
+class DocumentInfo(BaseModel):
+    """An uploaded PDF. Pages are browsed as plain images (no scan); a page is perceived only when the
+    student asks for it to be explained (POST /api/documents/{doc_id}/pages/{page}/perceive)."""
+
+    doc_id: str
+    filename: str
+    pages: int
+    title: str | None = None  # PDF metadata title, else the first line of page 1
+    page_sizes: list[list[int]]  # [width, height] in px of each rendered page image (1-based page i -> index i-1)
+    page_url: str  # template, e.g. "/api/documents/<doc_id>/pages/{page}.png"; replace "{page}" with the number
 
 
 class FollowupRequest(BaseModel):
