@@ -38,7 +38,11 @@ def perceive(image: Image.Image, image_id: str, flatten: bool = True) -> Percept
 
     transform = None
     if flatten:
-        image, transform = rectify(image)
+        try:
+            image, transform = rectify(image)
+        except Exception:  # flattening is an extra: on any failure keep the picture as uploaded
+            log.warning("photo rectification failed; using the image as uploaded", exc_info=True)
+            transform = None
         lap("rectify")
         if transform is not None:
             timings["rectified"] = 1.0

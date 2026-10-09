@@ -73,3 +73,33 @@ def test_dense_diagram_recall():
     _, truth = _gt(DENSE)
     hits = sum(max(_iou(r.box, b) for r in pr.perception.regions) >= 0.5 for _, b in truth)
     assert hits >= 0.95 * len(truth)
+
+
+def test_native_opencv_failure_is_retried_on_a_fresh_thread(monkeypatch):
+    import threading
+
+    import cv2
+
+    from app import perception
+    from app.perception import pipeline
+
+    monkeypatch.setattr(perception, "RETRY_PAUSE_S", 0.0)
+    calls: list[str] = []
+    real = pipeline.perceive
+
+    def flaky(image, image_id, flatten=True):
+        calls.append(threading.current_thread().name)
+        if len(calls) == 1:
+            raise cv2.error("Unknown C++ exception from OpenCV code")
+        return real(image, image_id, flatten=flatten)
+
+    monkeypatch.setattr(pipeline, "perceive", flaky)
+    pr = perceive(prepare_image(QUICK.read_bytes()), "flaky")
+    assert pr.perception.regions and len(calls) == 2 and calls[1] == "perceive-retry" != calls[0]
+
+    def broken(image, image_id, flatten=True):
+        raise cv2.error("Unknown C++ exception from OpenCV code")
+
+    monkeypatch.setattr(pipeline, "perceive", broken)
+    with pytest.raises(cv2.error):
+        perceive(prepare_image(QUICK.read_bytes()), "broken")

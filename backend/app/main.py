@@ -4,13 +4,13 @@ Run: .venv/Scripts/python -m uvicorn app.main:app --port 8000   (from backend/)
 """
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import json
 import logging
 import math
 import os
 import re
-import threading
 import time
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -43,7 +43,6 @@ from app.schemas import (
 )
 from app.store import ImageStore, LessonStore, valid_id
 from app.tts import eleven
-from app.documents import DocumentError, DocumentStore
 from app.tutor.context import LessonContext, build_context
 
 log = logging.getLogger("studylens")
@@ -64,14 +63,14 @@ FRONTEND_DIST = config.ROOT_DIR / "frontend" / "dist"
 images = ImageStore()
 lessons = LessonStore()
 documents = DocumentStore()
-documents = DocumentStore()
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
     if os.getenv("STUDYLENS_WARMUP", "1") == "1":
-        threading.Thread(target=_warmup, name="perception-warmup", daemon=True).start()
+        # before serving, so the first upload never loads the OCR models / OpenCV alongside another thread
+        await asyncio.to_thread(_warmup)
     yield
 
 
@@ -533,7 +532,7 @@ def _scrub(text: str) -> str:
 
 
 def _warmup() -> None:
-    """Load the OCR models in the background so the first upload is not slower than the rest."""
+    """Load the OCR models and run every perception stage once, so the first upload is not slower than the rest."""
     from PIL import Image, ImageDraw
 
     try:
