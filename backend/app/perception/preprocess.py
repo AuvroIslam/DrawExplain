@@ -18,6 +18,28 @@ MIN_LONG_SIDE = 1000
 # ---------------------------------------------------------------- decoding
 
 
+def is_pdf(data: bytes) -> bool:
+    return data[:5] == b"%PDF-"
+
+
+def render_pdf_page(data: bytes, page: int = 1) -> tuple[bytes, int]:
+    """(PNG bytes of a 1-based PDF page rendered with its longest side ~MAX_IMAGE_SIDE, page count)."""
+    import pymupdf
+
+    try:
+        doc = pymupdf.open(stream=data, filetype="pdf")
+    except Exception as exc:
+        raise ValueError(f"unreadable PDF: {type(exc).__name__}") from exc
+    with doc:
+        if doc.page_count == 0:
+            raise ValueError("the PDF has no pages")
+        if not 1 <= page <= doc.page_count:
+            raise ValueError(f"page {page} does not exist (the PDF has {doc.page_count} pages)")
+        p = doc[page - 1]
+        dpi = max(36, min(300, int(config.MAX_IMAGE_SIDE / max(p.rect.width, p.rect.height) * 72)))
+        return p.get_pixmap(dpi=dpi, alpha=False).tobytes("png"), doc.page_count
+
+
 def prepare_image(data: bytes) -> Image.Image:
     """Decode upload bytes into an RGB image on white: EXIF-rotated, longest side in
     [~1000, MAX_IMAGE_SIDE]. Raises ValueError for unreadable, tiny or huge images."""

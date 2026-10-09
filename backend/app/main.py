@@ -18,12 +18,13 @@ from urllib.parse import quote
 
 import httpx
 import openai
-from fastapi import FastAPI, File, HTTPException, Request, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from app import config, perception, tutor
+from app.perception import preprocess as perception_preprocess
 from app.perception.types import PerceptionResult
 from app.schemas import (
     Box,
@@ -92,16 +93,24 @@ def health() -> dict[str, Any]:
 
 
 @app.post("/api/images", response_model=Perception)
-def upload_image(file: UploadFile = File(...)) -> Perception:
-    """Upload a study image: prepare + perceive it, return regions and served URLs."""
+def upload_image(file: UploadFile = File(...), page: int = Form(1)) -> Perception:
+    """Upload a study image or a PDF (one page of it): prepare + perceive, return regions and URLs."""
     ctype = (file.content_type or "").split(";")[0].strip().lower()
     ext = Path(file.filename or "").suffix.lower()
-    if ctype not in IMAGE_TYPES and ext not in IMAGE_EXTS:
-        raise HTTPException(400, "Unsupported file type; upload a PNG, JPEG or WebP image")
+    pdf = ctype == "application/pdf" or ext == ".pdf"
+    if not pdf and ctype not in IMAGE_TYPES and ext not in IMAGE_EXTS:
+        raise HTTPException(400, "Unsupported file type; upload a PNG, JPEG, WebP image or a PDF")
     data = file.file.read(MAX_UPLOAD_BYTES + 1)
     if len(data) > MAX_UPLOAD_BYTES:
-        raise HTTPException(400, "Image is larger than 15 MB")
-    return _ingest(data).perception
+        raise HTTPException(400, "File is larger than 15 MB")
+    pages = None
+    if pdf or perception_preprocess.is_pdf(data):
+        try:
+            data, pages = perception_preprocess.render_pdf_page(data, page)
+        except ValueError as exc:
+            raise HTTPException(400, str(exc)) from None
+    result = _ingest(data).perception
+    return result.model_copy(update={"source_pages": pages}) if pages else result
 
 
 @app.get("/api/images/{image_id}", response_model=Perception)

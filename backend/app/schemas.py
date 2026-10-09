@@ -52,6 +52,7 @@ class Perception(BaseModel):
     timings: dict[str, float] = Field(default_factory=dict)  # seconds per stage
     image_url: str | None = None  # served processed image
     marked_url: str | None = None  # served Set-of-Mark debug image
+    source_pages: int | None = None  # page count when the upload was a PDF (one page is perceived)
 
 
 # ---------------------------------------------------------------- lesson
