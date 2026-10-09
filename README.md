@@ -7,7 +7,7 @@ to effect and writes the intermediate values of an algorithm next to the nodes, 
 untouched page, while it talks. Ask a follow-up (circle the confusing part with the pen) and it draws
 again; finish with a quiz where you answer by tapping the image.
 
-> Built for **Banana Hacks 2026** (image AI). Demo video: _link coming_.
+> Built for **Banana Hacks 2026** (image AI). **Live app: https://drawexplain.vercel.app** (frontend on Vercel, API on Render). Demo video: _link coming_.
 
 ![Dijkstra's algorithm traced on a CS lecture slide](docs/screenshots/dijkstra-lesson.png)
 
@@ -155,6 +155,9 @@ python -m venv .venv && .venv/Scripts/python -m pip install -r requirements.txt 
 cd ../frontend
 npm install && npm run dev     # http://localhost:5173 (proxies /api to :8000)
 ```
+
+Deployment: the API runs from the root `Dockerfile` on Render (`render.yaml`; set `OPENAI_API_KEY`,
+`ELEVENLABS_API_KEY` and `CORS_ORIGIN_REGEX`), the frontend on Vercel with `VITE_API_BASE` pointing at it.
 
 Command-line tools (from `backend/`):
 
