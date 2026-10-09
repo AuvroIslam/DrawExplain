@@ -30,6 +30,7 @@ class PerceptionResult:
     marked: Image.Image  # Set-of-Mark overlay: region outlines + id tags
     ink: np.ndarray  # bool mask (H, W): True where the page has content
     freespace: FreeSpaceMap
+    transform: np.ndarray | None = None  # 3x3 homography input image -> `image` when a photo was flattened
 
     @property
     def width(self) -> int:
