@@ -1,0 +1,82 @@
+{
+ "id": "cs_tcp_handshake",
+ "topic": "networking",
+ "image": "images/cs_tcp_handshake.png",
+ "question": "Walk me through this TCP three-way handshake: what do the SYN, Seq and Ack values in each of the three segments mean, and why is the first acknowledgement number 1024?",
+ "reference_answer": "1) Client A -> server B: SYN=1, Seq=1023 (A's initial sequence number), ACK flag 0 (nothing to acknowledge yet). 2) B -> A: SYN-ACK: SYN=1, ACK=1, Seq=2131691 (B's own initial sequence number), Ack number 1024 = 1023 + 1 - the SYN consumes one sequence number, so 1024 is the next byte B expects from A. 3) A -> B: ACK=1, SYN=0, Seq=1024, Ack number 2131692 = 2131691 + 1 (acknowledges B's SYN). Both sides now know each other's sequence numbers: the connection is established and data can flow (the third segment can already carry data).",
+ "checks": [
+  {
+   "name": "client_syn_1023",
+   "description": "Segment 1: the client's SYN carries its initial sequence number 1023.",
+   "all": [
+    "(?<![\\w./])1023(?![\\d/]|[.,]\\d)"
+   ],
+   "any": [
+    "\\bsyn\\b[^\\n]{0,60}(?<![\\w./])1023(?![\\d/]|[.,]\\d)",
+    "(?<![\\w./])1023(?![\\d/]|[.,]\\d)[^\\n]{0,60}\\bsyn\\b",
+    "(?:initial|isn|starting|start|random|first)[^.\\n]{0,60}(?<![\\w./])1023(?![\\d/]|[.,]\\d)",
+    "(?<![\\w./])1023(?![\\d/]|[.,]\\d)[^.\\n]{0,60}(?:initial|isn|starting)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "server_isn_2131691",
+   "description": "Segment 2 (SYN-ACK): the server picks its own initial sequence number 2131691.",
+   "all": [
+    "(?<![\\w./])2131691(?![\\d/]|[.,]\\d)"
+   ],
+   "any": [
+    "(?:server|\\bb\\b|its own|initial|isn|syn[- ]?ack)[^.\\n]{0,80}(?<![\\w./])2131691(?![\\d/]|[.,]\\d)",
+    "(?<![\\w./])2131691(?![\\d/]|[.,]\\d)[^.\\n]{0,60}(?:server|initial|isn|its own|b's)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "ack_1024_is_1023_plus_1",
+   "description": "Ack number 1024 = 1023 + 1: the SYN uses one sequence number, 1024 is the next byte expected.",
+   "all": [
+    "(?<![\\w./])1024(?![\\d/]|[.,]\\d)"
+   ],
+   "any": [
+    "1023\\s*\\+\\s*1",
+    "(?:plus|add\\w*|increment\\w*)\\s*(?:by\\s*)?(?:one|1)\\b",
+    "one more",
+    "next[^.\\n]{0,40}(?:byte|sequence|seq|number|1024)",
+    "expect\\w*[^.\\n]{0,40}1024",
+    "1024[^.\\n]{0,60}expect",
+    "consum\\w*",
+    "counts? as (?:one|1|a single)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "final_ack_2131692",
+   "description": "Segment 3: the client acknowledges with Ack number 2131692 = 2131691 + 1.",
+   "all": [
+    "(?<![\\w./])2131692(?![\\d/]|[.,]\\d)"
+   ],
+   "any": [
+    "2131691\\s*\\+\\s*1",
+    "(?:ack|acknowledg)\\w*[^.\\n]{0,60}(?<![\\w./])2131692(?![\\d/]|[.,]\\d)",
+    "(?<![\\w./])2131692(?![\\d/]|[.,]\\d)[^.\\n]{0,60}(?:ack|acknowledg|next|expect)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "third_seq_1024_established",
+   "description": "Segment 3 has Seq 1024 and completes the handshake (connection established, data can flow).",
+   "all": [
+    "establish|connected|connection (?:is )?(?:open|up|ready)|open connection|(?:send|exchang)\\w* data|data (?:can|may|will)"
+   ],
+   "any": [
+    "seq\\w*(?:\\s*number)?\\s*(?:=|:|is|of|now|becomes)?\\s*1024\\b",
+    "1024[^.\\n]{0,30}\\bseq",
+    "seq[^.\\n]{0,40}1023\\s*\\+\\s*1"
+   ],
+   "min_any": 1
+  }
+ ],
+ "source_url": "https://commons.wikimedia.org/wiki/File:TCP_Handshake.png",
+ "license": "CC BY-SA 3.0",
+ "author": "Sajidur89"
+}

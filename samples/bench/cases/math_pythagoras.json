@@ -1,0 +1,69 @@
+{
+ "id": "math_pythagoras",
+ "topic": "math",
+ "image": "images/math_pythagoras_squares.jpg",
+ "question": "How does this picture prove the Pythagorean theorem?",
+ "reference_answer": "The legs are 3 and 4 units and the hypotenuse 5: the squares on them hold 3×3 = 9, 4×4 = 16 and 5×5 = 25 unit squares. 9 + 16 = 25, i.e. 3² + 4² = 5² (a² + b² = c²): the big square on the hypotenuse is filled exactly by the 16 red and 9 yellow squares of the two smaller squares.",
+ "checks": [
+  {
+   "name": "areas",
+   "description": "Counts the three squares: 9, 16 and 25 unit squares.",
+   "all": [
+    "(?<![\\w./,])9(?![\\d/]|[.,]\\d)",
+    "(?<![\\w./,])16(?![\\d/]|[.,]\\d)",
+    "(?<![\\w./,])25(?![\\d/]|[.,]\\d)"
+   ]
+  },
+  {
+   "name": "sides_3_4_5",
+   "description": "Gives the side lengths 3, 4 and 5 (3² + 4² = 5², '3-4-5', '4 by 4' and '3 by 3').",
+   "any": [
+    "3\\s*(?:\\^\\s*2|2|\\s*squared)?\\s*(?:\\+|plus)\\s*4\\s*(?:\\^\\s*2|2|\\s*squared)?\\s*(?:=|equals|is)\\s*5",
+    "4\\s*(?:\\^\\s*2|2|\\s*squared)?\\s*(?:\\+|plus)\\s*3\\s*(?:\\^\\s*2|2|\\s*squared)?\\s*(?:=|equals|is)\\s*5",
+    "3[- ]4[- ]5",
+    "(?<![\\w./,])3\\s*,\\s*4\\s*,?\\s*(?:and\\s*)?5(?![\\d/]|[.,]\\d)",
+    "(?<![\\w./,])3\\s*(?:×|x|\\*|·|⋅|times|by)\\s*3[^\\n]{0,160}?(?<![\\w./,])4\\s*(?:×|x|\\*|·|⋅|times|by)\\s*4",
+    "(?<![\\w./,])4\\s*(?:×|x|\\*|·|⋅|times|by)\\s*4[^\\n]{0,160}?(?<![\\w./,])3\\s*(?:×|x|\\*|·|⋅|times|by)\\s*3"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "sum_9_16_25",
+   "description": "Adds the two small squares: 9 + 16 = 25.",
+   "any": [
+    "(?<![\\w./,])9\\s*(?:\\+|plus|and)\\s*16\\s*(?:=|equals|is|makes|gives)\\s*25",
+    "(?<![\\w./,])16\\s*(?:\\+|plus|and)\\s*9\\s*(?:=|equals|is|makes|gives)\\s*25",
+    "(?<![\\w./,])9[^.\\n]{0,40}16[^.\\n]{0,40}(?:=|equals|total|together|add up|sum|makes|gives|exactly)[^.\\n]{0,20}25",
+    "(?<![\\w./,])16[^.\\n]{0,40}(?<![\\w./,])9[^.\\n]{0,40}(?:=|equals|total|together|add up|sum|makes|gives|exactly)[^.\\n]{0,20}25",
+    "25\\s*=\\s*(?:9\\s*\\+\\s*16|16\\s*\\+\\s*9)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "theorem",
+   "description": "States the theorem: a² + b² = c² (or in words: the squares on the legs add up to the square on the hypotenuse).",
+   "any": [
+    "\\ba\\s*(?:\\^\\s*2|2|\\s*squared)\\s*(?:\\+|plus)\\s*b\\s*(?:\\^\\s*2|2|\\s*squared)\\s*(?:=|equals)\\s*c\\s*(?:\\^\\s*2|2|\\s*squared)",
+    "\\bc\\s*(?:\\^\\s*2|2|\\s*squared)\\s*=\\s*a\\s*(?:\\^\\s*2|2|\\s*squared)\\s*\\+\\s*b\\s*(?:\\^\\s*2|2|\\s*squared)",
+    "[αβγ]\\s*(?:\\^\\s*2|2|\\s*squared)\\s*(?:\\+|plus)\\s*[αβγ]\\s*(?:\\^\\s*2|2|\\s*squared)\\s*(?:=|equals)\\s*[αβγ]\\s*(?:\\^\\s*2|2|\\s*squared)",
+    "(?:squares?|areas?)\\s+(?:on|of)\\s+the\\s+(?:two\\s+)?(?:legs|shorter sides|short sides|other two sides|two smaller sides)[^.\\n]{0,80}(?:equal|=|same as|add up to|sum)[^.\\n]{0,60}hypotenuse",
+    "hypotenuse[^.\\n]{0,80}(?:equals|=|same as|is the sum)[^.\\n]{0,80}(?:legs|other two|two shorter|two smaller|two squares)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "rearrangement",
+   "description": "Explains the colours: the 16 red and 9 yellow unit squares together fill the big square on the hypotenuse.",
+   "any": [
+    "(?:red|pink|magenta|crimson)[^.\\n]{0,100}yellow[^.\\n]{0,100}(?:hypotenuse|big|large|5\\s*(?:×|x|by)\\s*5|25|longest)",
+    "yellow[^.\\n]{0,100}(?:red|pink|magenta|crimson)[^.\\n]{0,100}(?:hypotenuse|big|large|5\\s*(?:×|x|by)\\s*5|25|longest)",
+    "(?:hypotenuse|big|large|5\\s*(?:×|x|by)\\s*5|25|longest)[^.\\n]{0,100}(?:red|pink|magenta|crimson)[^.\\n]{0,100}yellow",
+    "(?:hypotenuse|big|large|5\\s*(?:×|x|by)\\s*5|25|longest)[^.\\n]{0,100}yellow[^.\\n]{0,100}(?:red|pink|magenta|crimson)"
+   ],
+   "min_any": 1
+  }
+ ],
+ "source_url": "https://commons.wikimedia.org/wiki/File:Pythagorean_theorem.jpg",
+ "license": "Public domain",
+ "author": "Ntozis"
+}

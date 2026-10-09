@@ -1,0 +1,67 @@
+{
+ "id": "math_parallel_meters",
+ "topic": "physics",
+ "image": "images/math_parallel_meters.png",
+ "question": "Suppose the battery gives 12 V, R1 = 4 Ω, R2 = 2 Ω and R3 = 4 Ω. What do the ammeters A1, A2, A3 and the voltmeters V3 and V4 read?",
+ "reference_answer": "R1 is on its own branch across the battery; R2 and R3 are in series (2 + 4 = 6 Ω) on a second branch in parallel with it. A2 (R1 branch) = 12/4 = 3 A; A3 (R2–R3 branch) = 12/6 = 2 A; A1 (total) = 3 + 2 = 5 A (= 12 V / 2.4 Ω). V3 = 2 A × 2 Ω = 4 V, V4 = 2 A × 4 Ω = 8 V (4 + 8 = 12 V).",
+ "checks": [
+  {
+   "name": "topology",
+   "description": "R2 and R3 are in series (2 + 4 = 6 Ω) on a branch in parallel with R1.",
+   "all": [
+    "parallel"
+   ],
+   "any": [
+    "r_?2\\s*(?:\\+|and)\\s*r_?3[^.\\n]{0,40}(?:series|6\\s*(?:ω|ohm))",
+    "series[^.\\n]{0,60}r_?2[^.\\n]{0,20}r_?3",
+    "r_?2[^.\\n]{0,20}r_?3[^.\\n]{0,40}series",
+    "2\\s*(?:\\s*(?:ω|ohms?\\b))?\\s*\\+\\s*4\\s*(?:\\s*(?:ω|ohms?\\b))?\\s*=\\s*6(?![\\d/]|[.,]\\d)",
+    "r_?2\\s*\\+\\s*r_?3\\s*=\\s*(?:2\\s*\\+\\s*4\\s*=\\s*)?6(?![\\d/]|[.,]\\d)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "a2_r1_branch",
+   "description": "A2 (the R1 branch) reads 12/4 = 3 A.",
+   "any": [
+    "(?<!\\w)a_?2[^.\\n]{0,60}(?<![\\w.,])3\\s*a\\b",
+    "(?<![\\w.,])3\\s*a\\b[^.\\n]{0,40}(?<!\\w)a_?2",
+    "12\\s*(?:v\\s*)?(?:/|÷|divided by|over)\\s*4\\s*(?:\\s*(?:ω|ohms?\\b))?\\s*=\\s*3(?![\\d/]|[.,]\\d)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "a3_r2r3_branch",
+   "description": "A3 (the R2–R3 branch) reads 12/6 = 2 A.",
+   "any": [
+    "(?<!\\w)a_?3[^.\\n]{0,60}(?<![\\w.,])2\\s*a\\b",
+    "(?<![\\w.,])2\\s*a\\b[^.\\n]{0,40}(?<!\\w)a_?3",
+    "12\\s*(?:v\\s*)?(?:/|÷|divided by|over)\\s*6\\s*(?:\\s*(?:ω|ohms?\\b))?\\s*=\\s*2(?![\\d/]|[.,]\\d)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "a1_total",
+   "description": "A1 (total current) reads 3 + 2 = 5 A.",
+   "any": [
+    "(?<!\\w)a_?1[^.\\n]{0,60}(?<![\\w.,])5\\s*a\\b",
+    "(?<![\\w.,])5\\s*a\\b[^.\\n]{0,40}(?<!\\w)a_?1",
+    "3\\s*(?:a\\s*)?\\+\\s*2\\s*(?:a\\s*)?=\\s*5(?![\\d/]|[.,]\\d)",
+    "2\\s*(?:a\\s*)?\\+\\s*3\\s*(?:a\\s*)?=\\s*5(?![\\d/]|[.,]\\d)",
+    "12\\s*(?:v\\s*)?(?:/|÷|divided by|over)\\s*2[.,]4\\s*(?:\\s*(?:ω|ohms?\\b))?\\s*=\\s*5(?![\\d/]|[.,]\\d)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "v3_v4_split",
+   "description": "The 12 V splits on the series branch: V3 = 2 × 2 = 4 V and V4 = 2 × 4 = 8 V.",
+   "all": [
+    "(?<!\\w)v_?3[^.\\n]{0,60}(?<![\\w.,])4\\s*v\\b|(?<![\\w.,])4\\s*v\\b[^.\\n]{0,40}(?<!\\w)v_?3|2\\s*(?:a\\s*)?\\s*(?:×|x|\\*|·|⋅|times)\\s*2\\s*(?:\\s*(?:ω|ohms?\\b))?\\s*=\\s*4(?![\\d/]|[.,]\\d)",
+    "(?<!\\w)v_?4[^.\\n]{0,60}(?<![\\w.,])8\\s*v\\b|(?<![\\w.,])8\\s*v\\b[^.\\n]{0,40}(?<!\\w)v_?4|2\\s*(?:a\\s*)?\\s*(?:×|x|\\*|·|⋅|times)\\s*4\\s*(?:\\s*(?:ω|ohms?\\b))?\\s*=\\s*8(?![\\d/]|[.,]\\d)"
+   ]
+  }
+ ],
+ "source_url": "https://commons.wikimedia.org/wiki/File:Parallel_circuit_3_resistors_2_branches_both_meters.png",
+ "license": "CC BY-SA 4.0",
+ "author": "Paulgwilliamson"
+}

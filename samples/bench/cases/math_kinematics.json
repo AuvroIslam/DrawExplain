@@ -1,0 +1,61 @@
+{
+ "id": "math_kinematics",
+ "topic": "physics",
+ "image": "images/math_kinematics_slide.png",
+ "question": "For the example at the bottom, how far does the object travel in the 5 seconds? Check it with the v–t graph.",
+ "reference_answer": "u = 0, a = 2 m/s², t = 5 s. s = ut + ½at² = 0 + ½ × 2 × 5² = 25 m. Final speed v = u + at = 10 m/s; the area under the v–t graph is a triangle ½ × 5 s × 10 m/s = 25 m (check: v² = u² + 2as gives 100 = 4s, s = 25 m).",
+ "checks": [
+  {
+   "name": "formula",
+   "description": "Uses s = ut + ½at².",
+   "any": [
+    "s\\s*=\\s*u\\s*t\\s*\\+\\s*(?:1\\s*/\\s*2|0[.,]5|\\(\\s*1\\s*/\\s*2\\s*\\))\\s*(?:×|\\*|·)?\\s*a\\s*(?:×|\\*|·)?\\s*t\\s*(?:\\^\\s*2|2|\\s*squared)",
+    "s\\s*=\\s*\\(?\\s*1\\s*/\\s*2\\s*\\)?\\s*(?:×|\\*|·)?\\s*a\\s*(?:×|\\*|·)?\\s*t\\s*(?:\\^\\s*2|2|\\s*squared)",
+    "ut\\s*\\+\\s*(?:1\\s*/\\s*2|0[.,]5)\\s*a\\s*t"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "substitution",
+   "description": "Substitutes the numbers: ½ × 2 × 5² (u t = 0).",
+   "any": [
+    "(?:1\\s*/\\s*2|0[.,]5|\\bhalf\\b)\\s*(?:×|x|\\*|·|of|times)?\\s*\\(?\\s*2\\s*(?:m/s2|m/s\\^2)?\\s*\\)?\\s*(?:×|x|\\*|·|times)?\\s*\\(?\\s*(?:5\\s*(?:s\\s*)?\\)?\\s*(?:\\^\\s*2|2|\\s*squared)|25)",
+    "0\\s*(?:×|x|\\*|·)\\s*5\\s*\\+\\s*(?:1\\s*/\\s*2|0[.,]5)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "final_velocity",
+   "description": "Final velocity v = u + at = 10 m/s.",
+   "any": [
+    "\\bv\\s*=\\s*(?:u\\s*\\+\\s*a\\s*t\\s*=\\s*)?(?:0\\s*\\+\\s*2\\s*(?:×|x|\\*|·)?\\s*\\(?5\\)?\\s*=\\s*)?10(?![\\d/]|[.,]\\d)",
+    "(?<![\\w.,])10\\s*m/s(?!\\s*(?:2|\\^))"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "distance_25",
+   "description": "Answer: s = 25 m.",
+   "any": [
+    "\\bs\\s*=\\s*(?:[^.\\n]{0,40}=\\s*)?25(?![\\d/]|[.,]\\d)",
+    "(?<![\\w.,])25\\s*(?:m\\b|meters|metres)",
+    "(?:distance|displacement|travel\\w*|covers?|goes|moves)[^.\\n]{0,40}(?<![\\w.,])25(?![\\d/]|[.,]\\d)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "graph_area",
+   "description": "Checks with the v–t graph: the area under it (triangle ½ × 5 × 10) is the same 25 m.",
+   "any": [
+    "(?:area|triangle)[^.\\n]{0,80}(?:1\\s*/\\s*2|0[.,]5|\\bhalf\\b)[^.\\n]{0,30}(?:5[^.\\n]{0,20}10|10[^.\\n]{0,20}5)",
+    "(?:1\\s*/\\s*2|0[.,]5|\\bhalf\\b)\\s*(?:×|x|\\*|·|of|times)?\\s*(?:base\\s*(?:×|x|\\*|·|times)\\s*height\\s*=\\s*)?\\(?\\s*(?:5\\s*(?:s)?\\s*\\)?\\s*(?:×|x|\\*|·|times|by)\\s*\\(?\\s*10|10\\s*(?:m/s)?\\s*\\)?\\s*(?:×|x|\\*|·|times|by)\\s*\\(?\\s*5)",
+    "(?:area|triangle)[^.\\n]{0,60}(?<![\\w.,])25(?![\\d/]|[.,]\\d)",
+    "(?<![\\w.,])25(?![\\d/]|[.,]\\d)[^.\\n]{0,60}(?:area|triangle)"
+   ],
+   "min_any": 1
+  }
+ ],
+ "source_url": "samples/synthetic/clean/formulas_kinematics.png (made by backend/scripts/make_samples.py)",
+ "license": "generated",
+ "author": "DrawExplain synthetic sample generator"
+}

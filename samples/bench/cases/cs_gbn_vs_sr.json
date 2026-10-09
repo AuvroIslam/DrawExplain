@@ -1,0 +1,79 @@
+{
+ "id": "cs_gbn_vs_sr",
+ "topic": "networking",
+ "image": "images/cs_gbn_vs_sr.png",
+ "question": "In both timelines frame 2 is damaged. What does the receiver do with the frames that arrive after it, and which frames does the sender retransmit, in (a) Go-Back-N versus (b) Selective Repeat?",
+ "reference_answer": "(a) Go-Back-N: the receiver only accepts frames in order, so it discards frames 3, 4, 5, 6, 7, 8 (and acknowledges nothing new). The sender's timer for frame 2 expires (timeout interval), it goes back to 2 and retransmits 2, 3, 4, 5, 6, 7, 8 (then continues with 9); acks 2..7 follow. (b) Selective Repeat: the receiver buffers the correct frames 3, 4, 5, sends NAK 2 (and repeats Ack 1), so the sender retransmits only frame 2. When 2 arrives the receiver delivers 2, 3, 4, 5 in order and sends Ack 5 (cumulative), and the transfer continues with 6, 7, 8...",
+ "checks": [
+  {
+   "name": "gbn_discards_3_to_8",
+   "description": "(a) The Go-Back-N receiver discards frames 3-8.",
+   "any": [
+    "(?:discard|drop|throw|thrown|reject|ignor)\\w*[^.\\n]{0,60}\\b3\\b\\s*(?:-|to|through|thru|until|up to)\\s*8\\b",
+    "\\b3\\b\\s*(?:-|to|through|thru|until|up to)\\s*8\\b[^.\\n]{0,60}(?:discard|drop|throw|thrown|reject|ignor)\\w*",
+    "(?:discard|drop|throw|thrown|reject|ignor)\\w*[^.\\n]{0,60}3,\\s*4,\\s*5,\\s*6,\\s*7,?\\s*(?:and\\s*)?8\\b",
+    "3,\\s*4,\\s*5,\\s*6,\\s*7,?\\s*(?:and\\s*)?8\\b[^.\\n]{0,60}(?:discard|drop|throw|thrown|reject|ignor)\\w*",
+    "(?:six|6) frames[^.\\n]{0,40}(?:discard|drop|throw|thrown|reject|ignor)\\w*",
+    "(?:discard|drop|throw|thrown|reject|ignor)\\w*[^.\\n]{0,40}(?:six|6) frames"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "gbn_timeout_resends_from_2",
+   "description": "(a) After the timeout the sender goes back and retransmits 2, 3, ..., 8.",
+   "all": [
+    "time\\s*-?\\s*out|timer|expire"
+   ],
+   "any": [
+    "(?:resen|re-sen|retransmi|re-transmi|send\\w* (?:them )?again|sent again)\\w*[^.\\n]{0,60}\\b2\\b\\s*(?:-|to|through|thru|until|up to)\\s*8\\b",
+    "\\b2\\b\\s*(?:-|to|through|thru|until|up to)\\s*8\\b[^.\\n]{0,60}(?:again|(?:resen|re-sen|retransmi|re-transmi|send\\w* (?:them )?again|sent again)\\w*)",
+    "(?:again|(?:resen|re-sen|retransmi|re-transmi|send\\w* (?:them )?again|sent again)\\w*)[^.\\n]{0,60}2,\\s*3,\\s*4,\\s*5,\\s*6,\\s*7,?\\s*(?:and\\s*)?8\\b",
+    "(?:goes|go|going|went) back to (?:frame\\s*)?2\\b",
+    "(?:resen|re-sen|retransmi|re-transmi|send\\w* (?:them )?again|sent again)\\w*[^.\\n]{0,40}(?:everything|all|every frame)[^.\\n]{0,30}(?:from|starting (?:at|with)|after) (?:frame\\s*)?2\\b",
+    "(?:from|starting (?:at|with)) (?:frame\\s*)?2\\b[^.\\n]{0,40}(?:again|onwards?|(?:resen|re-sen|retransmi|re-transmi|send\\w* (?:them )?again|sent again)\\w*)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "sr_buffers_3_to_5",
+   "description": "(b) The Selective Repeat receiver buffers (keeps) frames 3, 4, 5.",
+   "any": [
+    "buffer\\w*[^.\\n]{0,40}\\b3\\b[^.\\n]{0,15}\\b5\\b",
+    "\\b3\\b[^.\\n]{0,15}\\b5\\b[^.\\n]{0,40}buffer",
+    "(?:keep|keeps|kept|hold|holds|held|store|stores|stored|save|saves|saved)[^.\\n]{0,40}\\b3\\b[^.\\n]{0,15}\\b5\\b",
+    "\\b3\\b[^.\\n]{0,15}\\b5\\b[^.\\n]{0,40}(?:kept|held|stored|saved)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "sr_nak_only_2",
+   "description": "(b) The receiver sends NAK 2 and only frame 2 is retransmitted.",
+   "all": [
+    "\\bnak\\b|negative ack"
+   ],
+   "any": [
+    "only (?:frame\\s*)?2\\b",
+    "(?:just|only|single)[^.\\n]{0,30}(?:frame\\s*)?\\b2\\b",
+    "\\b2\\b[^.\\n]{0,30}(?:alone|only)",
+    "only[^.\\n]{0,30}(?:the )?(?:damaged|lost|missing|bad|corrupted|erroneous|broken|faulty) (?:frame|one)",
+    "(?:resen|re-sen|retransmi|re-transmi|send\\w* (?:them )?again|sent again)\\w*[^.\\n]{0,20}(?:just|only) (?:the )?(?:damaged|lost|missing|bad|corrupted|erroneous)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "sr_ack_5",
+   "description": "(b) Once 2 arrives, frames 2-5 are delivered in order and the receiver sends Ack 5.",
+   "any": [
+    "ack\\w*\\s*(?:number\\s*)?(?:=|:)?\\s*5\\b",
+    "ack\\w*[^.\\n]{0,40}(?:up to|through|thru|all the way to) (?:frame\\s*)?5\\b",
+    "\\b2\\b\\s*(?:-|to|through|thru)\\s*5\\b[^.\\n]{0,60}(?:deliver|pass|hand|up|in order|network layer)",
+    "(?:deliver|pass|hand)\\w*[^.\\n]{0,40}\\b2\\b[^.\\n]{0,15}\\b5\\b",
+    "\\b2,\\s*3,\\s*4,?\\s*(?:and\\s*)?5\\b[^.\\n]{0,60}(?:deliver|pass|hand|in order|network layer)"
+   ],
+   "min_any": 1
+  }
+ ],
+ "source_url": "https://commons.wikimedia.org/wiki/File:Go_Back_N.jpg",
+ "license": "CC BY-SA 2.5",
+ "author": "Kjnawal at English Wikibooks"
+}

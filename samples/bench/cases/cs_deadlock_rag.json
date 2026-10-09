@@ -1,0 +1,75 @@
+{
+ "id": "cs_deadlock_rag",
+ "topic": "operating systems",
+ "image": "images/cs_deadlock_rag.png",
+ "question": "Is there a deadlock in this resource-allocation graph? R3 has two instances, so does the cycle really mean deadlock?",
+ "reference_answer": "Edges: P1 -> R1 (request), R1 -> P2 (assigned), P2 -> R2 (request), R2 -> P3 (assigned), P3 -> R3 (request), R3 -> P1 and R3 -> P2 (one instance each). So P1 holds an R3 instance and waits for R1; P2 holds R1 and an R3 instance and waits for R2; P3 holds R2 and waits for R3. Cycles: P1 -> R1 -> P2 -> R2 -> P3 -> R3 -> P1 and P2 -> R2 -> P3 -> R3 -> P2. With several instances a cycle alone is not enough, but here both R3 instances are held by P1 and P2, which are themselves blocked, and nothing is free (available = 0, 0, 0): no process can finish and release anything, so P1, P2 and P3 are deadlocked.",
+ "checks": [
+  {
+   "name": "p1_holds_r3_waits_r1",
+   "description": "P1 holds an instance of R3 and requests R1.",
+   "all": [
+    "(?:\\bp1\\b[^.\\n]{0,50}(?:holds?|holding|has|owns?|is allocated|was allocated|got|is assigned|keeps?)[^.\\n]{0,40}\\br3\\b|\\br3\\b[^.\\n]{0,50}(?:held by|allocated to|assigned to|given to|belongs to|owned by|goes to)\\s*(?:process\\s*)?p1\\b|\\br3\\s*->\\s*p1\\b)",
+    "(?:\\bp1\\b[^.\\n]{0,50}(?:requests?|requesting|waits?|waiting|wants?|needs?|asks?|asking|blocked)[^.\\n]{0,40}\\br1\\b|\\br1\\b[^.\\n]{0,30}(?:requested|wanted|needed) by\\s*p1\\b|\\bp1\\s*->\\s*r1\\b)"
+   ]
+  },
+  {
+   "name": "p2_holds_r1_waits_r2",
+   "description": "P2 holds R1 (and an R3 instance) and requests R2.",
+   "all": [
+    "(?:\\bp2\\b[^.\\n]{0,50}(?:holds?|holding|has|owns?|is allocated|was allocated|got|is assigned|keeps?)[^.\\n]{0,40}\\br1\\b|\\br1\\b[^.\\n]{0,50}(?:held by|allocated to|assigned to|given to|belongs to|owned by|goes to)\\s*(?:process\\s*)?p2\\b|\\br1\\s*->\\s*p2\\b)",
+    "(?:\\bp2\\b[^.\\n]{0,50}(?:requests?|requesting|waits?|waiting|wants?|needs?|asks?|asking|blocked)[^.\\n]{0,40}\\br2\\b|\\br2\\b[^.\\n]{0,30}(?:requested|wanted|needed) by\\s*p2\\b|\\bp2\\s*->\\s*r2\\b)"
+   ]
+  },
+  {
+   "name": "p3_holds_r2_waits_r3",
+   "description": "P3 holds R2 and requests R3.",
+   "all": [
+    "(?:\\bp3\\b[^.\\n]{0,50}(?:holds?|holding|has|owns?|is allocated|was allocated|got|is assigned|keeps?)[^.\\n]{0,40}\\br2\\b|\\br2\\b[^.\\n]{0,50}(?:held by|allocated to|assigned to|given to|belongs to|owned by|goes to)\\s*(?:process\\s*)?p3\\b|\\br2\\s*->\\s*p3\\b)",
+    "(?:\\bp3\\b[^.\\n]{0,50}(?:requests?|requesting|waits?|waiting|wants?|needs?|asks?|asking|blocked)[^.\\n]{0,40}\\br3\\b|\\br3\\b[^.\\n]{0,30}(?:requested|wanted|needed) by\\s*p3\\b|\\bp3\\s*->\\s*r3\\b)"
+   ]
+  },
+  {
+   "name": "cycle",
+   "description": "Identifies the cycle P1 -> R1 -> P2 -> R2 -> P3 -> R3 -> P1 (or P2 -> R2 -> P3 -> R3 -> P2, or the wait-for cycle P1 -> P2 -> P3 -> P1).",
+   "all": [
+    "cycl|circular"
+   ],
+   "any": [
+    "\\bp1\\s*(?:->|-|,|to)\\s*r1\\s*(?:->|-|,|to)\\s*p2\\s*(?:->|-|,|to)\\s*r2\\s*(?:->|-|,|to)\\s*p3\\s*(?:->|-|,|to)\\s*r3\\s*(?:->|-|,|to)\\s*p1\\b",
+    "\\br1\\s*(?:->|-|,|to)\\s*p2\\s*(?:->|-|,|to)\\s*r2\\s*(?:->|-|,|to)\\s*p3\\s*(?:->|-|,|to)\\s*r3\\s*(?:->|-|,|to)\\s*p1\\s*(?:->|-|,|to)\\s*r1\\b",
+    "\\bp2\\s*(?:->|-|,|to)\\s*r2\\s*(?:->|-|,|to)\\s*p3\\s*(?:->|-|,|to)\\s*r3\\s*(?:->|-|,|to)\\s*p1\\s*(?:->|-|,|to)\\s*r1\\s*(?:->|-|,|to)\\s*p2\\b",
+    "\\br2\\s*(?:->|-|,|to)\\s*p3\\s*(?:->|-|,|to)\\s*r3\\s*(?:->|-|,|to)\\s*p1\\s*(?:->|-|,|to)\\s*r1\\s*(?:->|-|,|to)\\s*p2\\s*(?:->|-|,|to)\\s*r2\\b",
+    "\\bp3\\s*(?:->|-|,|to)\\s*r3\\s*(?:->|-|,|to)\\s*p1\\s*(?:->|-|,|to)\\s*r1\\s*(?:->|-|,|to)\\s*p2\\s*(?:->|-|,|to)\\s*r2\\s*(?:->|-|,|to)\\s*p3\\b",
+    "\\br3\\s*(?:->|-|,|to)\\s*p1\\s*(?:->|-|,|to)\\s*r1\\s*(?:->|-|,|to)\\s*p2\\s*(?:->|-|,|to)\\s*r2\\s*(?:->|-|,|to)\\s*p3\\s*(?:->|-|,|to)\\s*r3\\b",
+    "\\bp2\\s*(?:->|-|,|to)\\s*r2\\s*(?:->|-|,|to)\\s*p3\\s*(?:->|-|,|to)\\s*r3\\s*(?:->|-|,|to)\\s*p2\\b",
+    "\\br2\\s*(?:->|-|,|to)\\s*p3\\s*(?:->|-|,|to)\\s*r3\\s*(?:->|-|,|to)\\s*p2\\s*(?:->|-|,|to)\\s*r2\\b",
+    "\\bp3\\s*(?:->|-|,|to)\\s*r3\\s*(?:->|-|,|to)\\s*p2\\s*(?:->|-|,|to)\\s*r2\\s*(?:->|-|,|to)\\s*p3\\b",
+    "\\br3\\s*(?:->|-|,|to)\\s*p2\\s*(?:->|-|,|to)\\s*r2\\s*(?:->|-|,|to)\\s*p3\\s*(?:->|-|,|to)\\s*r3\\b",
+    "\\bp1\\s*(?:->|-|,|to)\\s*p2\\s*(?:->|-|,|to)\\s*p3\\s*(?:->|-|,|to)\\s*p1\\b",
+    "\\bp2\\s*(?:->|-|,|to)\\s*p3\\s*(?:->|-|,|to)\\s*p1\\s*(?:->|-|,|to)\\s*p2\\b",
+    "\\bp3\\s*(?:->|-|,|to)\\s*p1\\s*(?:->|-|,|to)\\s*p2\\s*(?:->|-|,|to)\\s*p3\\b"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "deadlock_because_no_free_instance",
+   "description": "Concludes deadlock: both R3 instances are held by blocked processes, nothing is free, no process can proceed.",
+   "all": [
+    "deadlocked|(?:yes|is in|are in|are all in|a real|a true|a genuine|is a|'s a|there is a|there's a)[^.\\n]{0,12}deadlock"
+   ],
+   "any": [
+    "(?:both|two|2|all)[^.\\n]{0,30}(?:instances?|copies|units|dots)[^.\\n]{0,50}(?:held|taken|allocated|assigned|in use|busy|occupied|used)",
+    "r3[^.\\n]{0,60}(?:fully|both|all)[^.\\n]{0,30}(?:held|taken|allocated|assigned|in use|busy|occupied|used)",
+    "(?:no|zero|none|nothing)[^.\\n]{0,30}(?:free|available|spare|idle|left|unused)",
+    "(?:available|free)\\w*[^.\\n]{0,20}(?:=|is|are|:)\\s*(?:\\(?\\s*0\\s*,\\s*0\\s*,\\s*0\\s*\\)?|0|zero|none|nothing)",
+    "(?:no|none of the|neither|nobody|no one)[^.\\n]{0,40}(?:can|could|is able to)\\s*(?:ever\\s*)?(?:proceed|finish|continue|run|progress|complete|release)",
+    "(?:can't|cannot|can not|never)[^.\\n]{0,20}(?:proceed|finish|continue|progress|complete|release)"
+   ],
+   "min_any": 1
+  }
+ ],
+ "source_url": "https://commons.wikimedia.org/wiki/File:GrafoDeadlock.png",
+ "license": "CC BY-SA 4.0",
+ "author": "A.gr209"
+}

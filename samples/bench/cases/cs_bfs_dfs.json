@@ -1,0 +1,65 @@
+{
+ "id": "cs_bfs_dfs",
+ "topic": "graph algorithms",
+ "image": "images/cs_bfs_dfs.png",
+ "question": "In which order does breadth-first search visit the nodes if it starts at A and takes neighbours in alphabetical order? How would depth-first search from A differ?",
+ "reference_answer": "Edges: A-B, A-C, A-E, B-D, B-F, C-G, E-F. BFS uses a FIFO queue: visit A, enqueue its neighbours B, C, E (distance 1); dequeue B -> enqueue D, F; dequeue C -> enqueue G; dequeue E (its neighbour F is already discovered); then D, F, G (distance 2). BFS order: A, B, C, E, D, F, G. DFS (stack / recursion, going as deep as possible before backtracking): A -> B -> D (dead end, back to B) -> F -> E (via the bottom edge F-E) -> back up to A -> C -> G. DFS order: A, B, D, F, E, C, G.",
+ "checks": [
+  {
+   "name": "bfs_order",
+   "description": "States the BFS order A, B, C, E, D, F, G.",
+   "any": [
+    "\\ba(?:\\s|,|;|/|->|-|\\band\\b|\\bthen\\b|\\bfirst\\b|\\bnext\\b|\\bfinally\\b|\\blast\\b)+b(?:\\s|,|;|/|->|-|\\band\\b|\\bthen\\b|\\bfirst\\b|\\bnext\\b|\\bfinally\\b|\\blast\\b)+c(?:\\s|,|;|/|->|-|\\band\\b|\\bthen\\b|\\bfirst\\b|\\bnext\\b|\\bfinally\\b|\\blast\\b)+e(?:\\s|,|;|/|->|-|\\band\\b|\\bthen\\b|\\bfirst\\b|\\bnext\\b|\\bfinally\\b|\\blast\\b)+d(?:\\s|,|;|/|->|-|\\band\\b|\\bthen\\b|\\bfirst\\b|\\bnext\\b|\\bfinally\\b|\\blast\\b)+f(?:\\s|,|;|/|->|-|\\band\\b|\\bthen\\b|\\bfirst\\b|\\bnext\\b|\\bfinally\\b|\\blast\\b)+g\\b",
+    "\\babcedfg\\b"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "bfs_queue",
+   "description": "Explains that BFS uses a (FIFO) queue.",
+   "any": [
+    "\\bqueue",
+    "\\bfifo\\b",
+    "first[- ]in,? first[- ]out"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "bfs_levels",
+   "description": "Explains the levels: A's neighbours B, C, E (distance 1) come before D, F, G (distance 2).",
+   "any": [
+    "(?:level|layer|distance|depth|hops?|ring|wave|round)s?\\s*(?:1|one)\\b[^\\n]{0,40}\\bb\\b[^.\\n]{0,15}\\bc\\b[^.\\n]{0,15}\\be\\b",
+    "\\bb\\b[^.\\n]{0,15}\\bc\\b[^.\\n]{0,15}\\be\\b[^.\\n]{0,60}(?:level|layer|distance|depth|hops?|one (?:edge|step)|1 (?:edge|step)|neighbou?rs|adjacent|directly)",
+    "(?:neighbou?rs|adjacent)[^.\\n]{0,40}\\bb\\b[^.\\n]{0,15}\\bc\\b[^.\\n]{0,15}\\be\\b",
+    "(?:level|layer|distance|depth|hops?)s?\\s*(?:2|two)\\b[^\\n]{0,40}\\bd\\b[^.\\n]{0,15}\\bf\\b[^.\\n]{0,15}\\bg\\b",
+    "\\bd\\b[^.\\n]{0,15}\\bf\\b[^.\\n]{0,15}\\bg\\b[^.\\n]{0,60}(?:level|layer|distance|depth|hops?|two (?:edges|steps)|2 (?:edges|steps)|second|next)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "dfs_order",
+   "description": "States the DFS order A, B, D, F, E, C, G.",
+   "any": [
+    "\\ba(?:\\s|,|;|/|->|-|\\band\\b|\\bthen\\b|\\bfirst\\b|\\bnext\\b|\\bfinally\\b|\\blast\\b)+b(?:\\s|,|;|/|->|-|\\band\\b|\\bthen\\b|\\bfirst\\b|\\bnext\\b|\\bfinally\\b|\\blast\\b)+d(?:\\s|,|;|/|->|-|\\band\\b|\\bthen\\b|\\bfirst\\b|\\bnext\\b|\\bfinally\\b|\\blast\\b)+f(?:\\s|,|;|/|->|-|\\band\\b|\\bthen\\b|\\bfirst\\b|\\bnext\\b|\\bfinally\\b|\\blast\\b)+e(?:\\s|,|;|/|->|-|\\band\\b|\\bthen\\b|\\bfirst\\b|\\bnext\\b|\\bfinally\\b|\\blast\\b)+c(?:\\s|,|;|/|->|-|\\band\\b|\\bthen\\b|\\bfirst\\b|\\bnext\\b|\\bfinally\\b|\\blast\\b)+g\\b",
+    "\\babdfecg\\b"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "dfs_mechanism",
+   "description": "Explains how DFS differs: a stack / recursion, going deep first and backtracking.",
+   "any": [
+    "\\bstack",
+    "\\blifo\\b",
+    "backtrack",
+    "recurs",
+    "dead[- ]end",
+    "as deep as|as far as possible|goes? deep|going deep|deeper"
+   ],
+   "min_any": 1
+  }
+ ],
+ "source_url": "https://commons.wikimedia.org/wiki/File:Graph.traversal.example.svg",
+ "license": "CC BY-SA 3.0",
+ "author": "Miles"
+}

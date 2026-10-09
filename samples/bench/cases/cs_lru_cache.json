@@ -1,0 +1,69 @@
+{
+ "id": "cs_lru_cache",
+ "topic": "operating systems",
+ "image": "images/cs_lru_cache.png",
+ "question": "This LRU example has 4 slots and the access sequence A B C D E D F (the number in brackets is the time of last use). Why does E replace A, why does F replace B, and how many hits and misses are there?",
+ "reference_answer": "A, B, C, D fill the four empty slots (4 misses). E (t=4) misses with the cache full, so the least recently used block is evicted: A, last used at 0. D at t=5 is a hit: nothing is evicted, D's time of last use is updated from 3 to 5. F (t=6) misses; now the least recently used is B (1) (C=2, E=4, D=5), so F replaces B. Final contents E(4), F(6), C(2), D(5). Total: 6 misses (A, B, C, D, E, F) and 1 hit (D), hit ratio 1/7.",
+ "checks": [
+  {
+   "name": "e_evicts_a",
+   "description": "E replaces A because A (time 0) is the least recently used.",
+   "any": [
+    "\\be\\b[^.\\n]{0,60}(?:replac|evict|kick|swap|remov|throw|push|overwrit|drop)\\w*[^.\\n]{0,40}\\ba\\b(?=\\s*(?:[,.;:()]|$|-|which|that|was|is|has|had|with|since|because|as|at|from|out|\\(0))",
+    "\\ba\\b(?=\\s*(?:[,.;:()]|$|-|which|that|was|is|has|had|with|since|because|as|at|from|out|\\(0))[^.\\n]{0,60}(?:replaced|evicted|kicked|removed|thrown|pushed|swapped|dropped)[^.\\n]{0,30}\\be\\b",
+    "(?:replac|evict|kick|swap|remov|throw|push|overwrit|drop)\\w*[^.\\n]{0,30}a\\s*\\(\\s*0\\s*\\)",
+    "a\\s*\\(\\s*0\\s*\\)[^.\\n]{0,60}(?:least|oldest|lowest|smallest|evict|replac)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "d_hit_updated",
+   "description": "The second access to D is a hit and D's last-use time is updated (3 -> 5).",
+   "all": [
+    "\\bhit\\b"
+   ],
+   "any": [
+    "d\\s*\\(\\s*5\\s*\\)",
+    "\\bd\\b[^.\\n]{0,40}\\b3\\s*(?:->|to)\\s*5\\b",
+    "(?:updat|refresh|renew|bump|move|reset)\\w*[^.\\n]{0,40}\\bd\\b",
+    "\\bd\\b[^.\\n]{0,40}(?:most recently|mru|updat|refresh|renew|now 5|becomes 5|to 5)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "f_evicts_b",
+   "description": "F replaces B, which (time 1) is now the least recently used.",
+   "any": [
+    "\\bf\\b[^.\\n]{0,60}(?:replac|evict|kick|swap|remov|throw|push|overwrit|drop)\\w*[^.\\n]{0,40}\\bb\\b",
+    "\\bb\\b[^.\\n]{0,60}(?:replaced|evicted|kicked|removed|thrown|pushed|swapped|dropped)[^.\\n]{0,30}\\bf\\b",
+    "(?:replac|evict|kick|swap|remov|throw|push|overwrit|drop)\\w*[^.\\n]{0,30}b\\s*\\(\\s*1\\s*\\)",
+    "b\\s*\\(\\s*1\\s*\\)[^.\\n]{0,60}(?:least|oldest|lowest|smallest|evict|replac)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "six_misses",
+   "description": "6 misses (A, B, C, D, E, F).",
+   "any": [
+    "(?:6|six)\\s*(?:\\w+\\s*)?(?:misses|faults|page faults)",
+    "(?:misses|faults)[^.\\n]{0,20}(?:=|:|is|are|total|of)?\\s*(?:6|six)\\b"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "one_hit",
+   "description": "1 hit (the second D), hit ratio 1/7.",
+   "any": [
+    "(?:\\b1|\\bone|a single|only one|just one) (?:cache )?hit\\b",
+    "\\bhits?\\b[^.\\n]{0,15}(?:=|:|is)?\\s*(?:1|one)\\b",
+    "only hit",
+    "1\\s*/\\s*7",
+    "hit (?:ratio|rate)"
+   ],
+   "min_any": 1
+  }
+ ],
+ "source_url": "https://commons.wikimedia.org/wiki/File:Lruexample.png",
+ "license": "CC BY-SA 4.0",
+ "author": "Advaitjavadekar"
+}

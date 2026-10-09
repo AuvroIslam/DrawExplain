@@ -1,0 +1,62 @@
+{
+ "id": "cs_sjf_gantt",
+ "topic": "operating systems",
+ "image": "images/cs_sjf_gantt.png",
+ "question": "This chart shows non-preemptive Shortest Job First. Why do P9, P8 and P7 run in that order, why does P12 wait so long, and what is the average waiting time?",
+ "reference_answer": "When P6 finishes at t=9, P7 (burst 3), P8 (2) and P9 (1), all arrived at 7, are waiting; SJF picks the shortest burst first: P9 9-10, P8 10-12, P7 12-15, so they wait 2, 3 and 5. P12 (burst 3, arrives 13) is passed over at t=18 by the shorter P13 (1) and P14 (2), which arrived at 17, so it runs 21-24 and waits 21-13 = 8. Waiting times P1..P14: 0, 1, 2, 0, 1, 3, 5, 3, 2, 2, 3, 8, 1, 2; total 33, average 33/14 = 2.36 time units.",
+ "checks": [
+  {
+   "name": "order_p9_p8_p7",
+   "description": "At t=9 the shortest waiting job runs first: P9 (1), then P8 (2), then P7 (3).",
+   "any": [
+    "\\bp9\\W+(?:then\\s+)?p8\\W+(?:then\\s+|and\\s+(?:then\\s+)?)?p7\\b",
+    "\\bp9\\b[^.\\n]{0,60}(?:shortest|smallest|first)",
+    "(?:shortest|smallest)[^.\\n]{0,60}\\bp9\\b"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "waits_p7_p8_p9",
+   "description": "P9 waits 2, P8 waits 3, P7 waits 5.",
+   "all": [
+    "(?:9\\s*-\\s*7\\s*=\\s*2\\b|\\bp9\\b[^.\\n\\d]{0,25}(?<![\\w./])2(?![\\d/]|[.,]\\d)|\\bp9\\b[^.\\n]{0,40}wait\\w*[^.\\n\\d]{0,12}(?<![\\w./])2(?![\\d/]|[.,]\\d))",
+    "(?:10\\s*-\\s*7\\s*=\\s*3\\b|\\bp8\\b[^.\\n\\d]{0,25}(?<![\\w./])3(?![\\d/]|[.,]\\d)|\\bp8\\b[^.\\n]{0,40}wait\\w*[^.\\n\\d]{0,12}(?<![\\w./])3(?![\\d/]|[.,]\\d))",
+    "(?:12\\s*-\\s*7\\s*=\\s*5\\b|\\bp7\\b[^.\\n\\d]{0,25}(?<![\\w./])5(?![\\d/]|[.,]\\d)|\\bp7\\b[^.\\n]{0,40}wait\\w*[^.\\n\\d]{0,12}(?<![\\w./])5(?![\\d/]|[.,]\\d))"
+   ]
+  },
+  {
+   "name": "p12_waits_8",
+   "description": "P12 waits 8 (runs 21-24) because the shorter P13 and P14 arrive at 17 and go first.",
+   "all": [
+    "(?:21\\s*-\\s*13\\s*=\\s*8\\b|\\bp12\\b[^.\\n\\d]{0,25}(?<![\\w./])8(?![\\d/]|[.,]\\d)|\\bp12\\b[^.\\n]{0,40}wait\\w*[^.\\n\\d]{0,12}(?<![\\w./])8(?![\\d/]|[.,]\\d))"
+   ],
+   "any": [
+    "\\bp13\\b",
+    "\\bp14\\b",
+    "shorter"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "total_33",
+   "description": "Total waiting time 33.",
+   "any": [
+    "(?<![\\w./])33(?![\\d/]|[.,]\\d)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "average_2_36",
+   "description": "Average waiting time 33/14 = 2.36.",
+   "any": [
+    "33\\s*/\\s*14",
+    "(?<![\\w./])2\\.3[56]",
+    "(?<![\\w./])2\\.4(?!\\d)"
+   ],
+   "min_any": 1
+  }
+ ],
+ "source_url": "https://commons.wikimedia.org/wiki/File:Shortest_job_first.png",
+ "license": "CC0 1.0",
+ "author": "Maxtremus"
+}

@@ -1,0 +1,62 @@
+{
+ "id": "math_ohm_internal_resistance",
+ "topic": "physics",
+ "image": "images/math_ohm_internal_resistance.jpg",
+ "question": "How do we get the 1.5 A current and the 7.5 V across R in this circuit?",
+ "reference_answer": "The battery (ε = 12 V) has internal resistance r = 3 Ω in series with R = 5 Ω, total 8 Ω. I = ε/(R + r) = 12/8 = 1.5 A. Inside the battery Ir = 1.5 × 3 = 4.5 V is lost; across R, IR = 1.5 × 5 = 7.5 V, and 4.5 V + 7.5 V = 12 V (the drops add up to the EMF).",
+ "checks": [
+  {
+   "name": "total_resistance",
+   "description": "Adds the series resistances: r + R = 3 + 5 = 8 Ω.",
+   "any": [
+    "3\\s*(?:\\s*(?:ω|ohms?\\b))?\\s*\\+\\s*5\\s*(?:\\s*(?:ω|ohms?\\b))?\\s*=\\s*8(?![\\d/]|[.,]\\d)",
+    "5\\s*(?:\\s*(?:ω|ohms?\\b))?\\s*\\+\\s*3\\s*(?:\\s*(?:ω|ohms?\\b))?\\s*=\\s*8(?![\\d/]|[.,]\\d)",
+    "(?<![\\w.,])8\\s*(?:ω|ohms?\\b)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "current",
+   "description": "Ohm's law for the whole loop: I = ε/(R + r) = 12/8 = 1.5 A.",
+   "any": [
+    "12\\s*(?:v\\s*)?(?:/|÷|divided by|over)\\s*\\(?\\s*(?:8|3\\s*\\+\\s*5|5\\s*\\+\\s*3)(?![\\d/]|[.,]\\d)",
+    "\\b(?:i|current)\\s*=\\s*(?:ε|e|emf|v|u)\\s*/\\s*\\(\\s*r\\s*\\+\\s*r\\s*\\)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "internal_drop",
+   "description": "Voltage lost inside the battery: Ir = 1.5 × 3 = 4.5 V.",
+   "any": [
+    "1[.,]5\\s*(?:a\\s*)?\\s*(?:×|x|\\*|·|⋅|times)\\s*3\\s*(?:\\s*(?:ω|ohms?\\b))?\\s*=\\s*4[.,]5",
+    "3\\s*(?:\\s*(?:ω|ohms?\\b))?\\s*(?:×|x|\\*|·|⋅|times)\\s*1[.,]5\\s*(?:a\\s*)?=\\s*4[.,]5",
+    "(?:internal|inside|lost|wasted)[^\\n]{0,80}4[.,]5\\s*v",
+    "4[.,]5\\s*v[^\\n]{0,80}(?:internal|inside|lost|wasted)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "terminal_voltage",
+   "description": "Voltage across R by Ohm's law: IR = 1.5 × 5 = 7.5 V.",
+   "any": [
+    "1[.,]5\\s*(?:a\\s*)?\\s*(?:×|x|\\*|·|⋅|times)\\s*5\\s*(?:\\s*(?:ω|ohms?\\b))?\\s*=\\s*7[.,]5",
+    "5\\s*(?:\\s*(?:ω|ohms?\\b))?\\s*(?:×|x|\\*|·|⋅|times)\\s*1[.,]5\\s*(?:a\\s*)?=\\s*7[.,]5"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "kirchhoff",
+   "description": "The drops add up to the EMF: 4.5 V + 7.5 V = 12 V (or 12 − 4.5 = 7.5).",
+   "any": [
+    "4[.,]5\\s*(?:v\\s*)?\\+\\s*7[.,]5\\s*(?:v\\s*)?=\\s*12",
+    "7[.,]5\\s*(?:v\\s*)?\\+\\s*4[.,]5\\s*(?:v\\s*)?=\\s*12",
+    "12\\s*(?:v\\s*)?-\\s*4[.,]5\\s*(?:v\\s*)?=\\s*7[.,]5",
+    "(?:add|adds|sum|total|together)[^\\n]{0,50}(?:to|up to|is|=|back to|make|makes|give|gives)\\s*(?:the\\s*)?(?:full\\s*|whole\\s*)?(?:emf\\s*(?:of\\s*)?|ε\\s*(?:=\\s*)?|battery'?s?\\s*)?12\\s*v"
+   ],
+   "min_any": 1
+  }
+ ],
+ "source_url": "https://commons.wikimedia.org/wiki/File:Basic_electric_circuit_with_potentials.jpg",
+ "license": "CC BY-SA 4.0",
+ "author": "Frankemann"
+}

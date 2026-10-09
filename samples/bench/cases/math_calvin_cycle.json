@@ -1,0 +1,61 @@
+{
+ "id": "math_calvin_cycle",
+ "topic": "biology",
+ "image": "images/math_calvin_cycle.png",
+ "question": "How many ATP and NADPH does this cycle use to fix 3 CO₂, and what happens to the 6 GAP?",
+ "reference_answer": "3 CO₂ + 3 ribulose-1,5-bisphosphate (C5, by RuBisCO) give 6 3-phosphoglycerate (C3). 6 ATP make 6 1,3-bisphosphoglycerate, 6 NADPH reduce them to 6 GAP (releasing 6 Pi). One GAP leaves the cycle as the net product (sugar); the other 5 GAP (15 C) are rebuilt into 3 ribulose-5-phosphate, which 3 ATP turn back into 3 RuBP. Total per 3 CO₂: 9 ATP and 6 NADPH.",
+ "checks": [
+  {
+   "name": "fixation",
+   "description": "Fixation: 3 CO₂ (with 3 ribulose-1,5-bisphosphate) give 6 3-phosphoglycerate.",
+   "any": [
+    "(?<![\\w./,])(?:3|three)\\s*(?:x\\s*|×\\s*)?(?:molecules of\\s*)?co2[^\\n]{0,160}?(?<![\\w./,])(?:6|six)\\s*(?:x\\s*|×\\s*)?(?:molecules of\\s*)?(?:3-p-glycerat\\w*|3-?pga\\b|\\bpga\\b|3-?phosphoglycer\\w*|phosphoglycer\\w*|3-pg\\b)",
+    "(?<![\\w./,])(?:6|six)\\s*(?:x\\s*|×\\s*)?(?:molecules of\\s*)?(?:3-p-glycerat\\w*|3-?pga\\b|\\bpga\\b|3-?phosphoglycer\\w*|phosphoglycer\\w*|3-pg\\b)[^\\n]{0,160}?(?<![\\w./,])(?:3|three)\\s*(?:x\\s*|×\\s*)?(?:molecules of\\s*)?co2",
+    "(?:ribulose|rubp|rubisco)[^\\n]{0,160}?(?<![\\w./,])(?:6|six)\\s*(?:x\\s*|×\\s*)?(?:molecules of\\s*)?(?:3-p-glycerat\\w*|3-?pga\\b|\\bpga\\b|3-?phosphoglycer\\w*|phosphoglycer\\w*|3-pg\\b)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "reduction_cost",
+   "description": "Reduction phase uses 6 ATP and 6 NADPH.",
+   "all": [
+    "(?<![\\w./,])(?:6|six)\\s*(?:molecules of\\s*)?atp",
+    "(?<![\\w./,])(?:6|six)\\s*(?:molecules of\\s*)?nadph"
+   ]
+  },
+  {
+   "name": "regeneration_cost",
+   "description": "Regenerating RuBP uses 3 more ATP.",
+   "any": [
+    "(?<![\\w./,])(?:3|three)\\s*(?:more\\s*|additional\\s*|extra\\s*|molecules of\\s*)?atp"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "totals",
+   "description": "Total per 3 CO₂: 9 ATP (and 6 NADPH).",
+   "any": [
+    "(?<![\\w./,])(?:9|nine)\\s*(?:molecules of\\s*)?atp",
+    "atp[^.\\n]{0,40}(?<![\\w./,])(?:9|nine)(?![\\d/]|[.,]\\d)",
+    "6\\s*\\+\\s*3\\s*=\\s*9(?![\\d/]|[.,]\\d)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "gap_split",
+   "description": "Of the 6 GAP, 5 are recycled (into 3 ribulose-5-phosphate / RuBP) and 1 leaves as the net product.",
+   "all": [
+    "(?<![\\w./,])(?:5|five)\\s*(?:x\\s*|×\\s*)?(?:molecules of\\s*|of the\\s*(?:6|six)\\s*|of them\\s*)?(?:gap\\b|g3p|g-3-p|ga3p|glyceraldehyde|triose|pgal|molecules|are recycled|go back|return)"
+   ],
+   "any": [
+    "(?<![\\w./,])(?:1|one|a single|the sixth|the 6th|the remaining|the other|the last)\\s*(?:x\\s*|×\\s*)?(?:molecule of\\s*|of the\\s*(?:6|six)\\s*|of them\\s*)?(?:gap\\b|g3p|g-3-p|ga3p|glyceraldehyde|triose|pgal)[^.\\n]{0,100}(?:leave|exit|out\\b|product|export|sugar|glucose|net|gain|profit|spare|extra|left over|kept|harvest|output)",
+    "(?:leave|leaves|exit|output|product|export|net|spare|extra|gain|profit)[^.\\n]{0,60}(?<![\\w./,])(?:1|one|a single)\\s*(?:x\\s*|×\\s*)?(?:molecule of\\s*)?(?:gap\\b|g3p|g-3-p|ga3p|glyceraldehyde|triose|pgal)",
+    "(?:sixth|6th|remaining|single|one)\\s*(?:gap\\b|g3p|g-3-p|ga3p|glyceraldehyde|triose|pgal)[^.\\n]{0,20}(?:leaves|exits|is exported|is the (?:net )?product)"
+   ],
+   "min_any": 1
+  }
+ ],
+ "source_url": "https://commons.wikimedia.org/wiki/File:Calvin_cycle.svg",
+ "license": "CC BY-SA 3.0",
+ "author": "Yikrazuul"
+}
