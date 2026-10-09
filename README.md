@@ -25,10 +25,15 @@ the model produces a **symbolic plan** and deterministic code produces the geome
 | Layer | Decides | Done by |
 |---|---|---|
 | What | which thing to point at, why, when in the narration | LLM (gpt-5.5) choosing **region ids** + a cue phrase |
-| Where | pixel-exact boxes, down to one word | computer vision: OCR + OpenCV |
+| Facts | the values an algorithm on the page computes | **deterministic solvers** on the problem read off the page |
+| Where | pixel-exact boxes, down to one word | computer vision: OCR + OpenCV (+ SAM 2.1 on a GPU) |
 | Check | is this the right thing? how sure are we? | grounding fusion with self-consistency gating |
 | How | ellipse padding, arrows on box edges, labels in free space | geometry engine |
 | Draw | marker strokes, handwriting, timing | Excalidraw board synced to ElevenLabs word timestamps |
+
+The same rule holds for the facts: a language model asked to "run Dijkstra" on a slide skips
+relaxations and invents shortcuts, so StudyLens reads the graph off the page, checks it against the
+pixels and runs the algorithm in code; the model only teaches the trace.
 
 ## Pipeline
 
@@ -39,9 +44,13 @@ flowchart LR
   C --> C1[RapidOCR text lines<br/>+ word spans + label rescue]
   C --> C2[OpenCV colour-edge shapes<br/>figures, text blocks]
   C --> C3[Ink mask + free-space map]
+  C1 -.-> L[GPU, optional<br/>formula OCR to LaTeX]
   C1 & C2 --> D[Set-of-Mark image<br/>regions R1..Rn]
-  D --> E[LLM lesson plan<br/>strict JSON: ids + own box + cue]
+  D --> S[Algorithm on the page?<br/>extract, check vs pixels,<br/>run solver in code]
+  S --> E[LLM lesson plan<br/>strict JSON: ids + own box + cue]
+  D --> E
   E --> F[Grounding fusion<br/>self-consistency gating]
+  F -.-> M[GPU, optional<br/>SAM 2.1 for unsure targets]
   C3 --> G[Geometry engine]
   F --> G --> H[Validator] --> I[Excalidraw board<br/>pen animation + voice]
 ```
@@ -69,6 +78,15 @@ returns the region ids *and* its own independent box estimate, a cue phrase from
 drawing appears when that phrase is spoken) and, for algorithms or worked examples, the intermediate
 values to write on the board ("1 + 3 = 4").
 
+**Solver-backed simulation.** When the page (or the question) shows an algorithm or protocol, a
+separate call first extracts the problem as JSON: nodes and weighted edges, the array, the protocol
+parameters. The extraction is checked against the pixels: each node name against the OCR'd letters,
+each edge against the drawn line and the OCR'd weight beside it; when they disagree the pixels win.
+Code then runs the algorithm (Dijkstra, BFS, DFS, Prim, Kruskal, bubble / insertion / selection /
+merge sort, binary search, TCP slow start, AIMD and timeout) and every iteration with every changed
+value goes into the prompt as a **verified simulation**. The model writes the narration and chooses
+where to draw; the numbers come from code. Other pages skip this step (a keyword check, no extra call).
+
 **Grounding fusion.** Two independent signals are cross-checked per target:
 - agreement between the chosen regions and the model's own estimate gives a **consensus** (CV box used);
 - disagreement is arbitrated: snap to the region the estimate really covers, keep ids whose text
@@ -79,6 +97,14 @@ values to write on the board ("1 + 3 = 4").
   response itself (share of targets where estimate and ids agree). gpt-5.5 agrees with itself ~100% of
   the time, gpt-4.1-mini rarely; low agreement switches arbitration off so a guessing model cannot
   drag correct regions off target. This one rule lifted gpt-4.1-mini from 63% to 81% tight hits.
+
+**GPU perception (optional).** A small service on Modal (`backend/gpu/modal_app.py`, one T4, scales to
+zero) adds two models the CPU pipeline cannot run fast enough: **SAM 2.1** segments the targets that
+fusion is unsure about (box prompt -> mask -> tight box and outline), and **Qwen2-VL-2B** re-reads
+lines that look like formulas as LaTeX (`S = ut + 12at2` from OCR becomes `s=ut+\frac{1}{2}at^2`),
+in the background while the CPU stages run. Both results are checked before use (mask vs CPU box,
+LaTeX vs OCR text); a cold, slow or failing service is skipped, so the app behaves exactly as without
+it.
 
 **Geometry and validation.** Ellipses are padded to clear the target's corners, arrows start and end on
 box edges and bend toward empty space, underlines follow word spans, labels are sized from the page's
@@ -119,13 +145,42 @@ grounded by consensus between the chosen regions and the model's own boxes; 5 of
 margin flowchart of the procedure (slow start, AIMD, CUBIC, ...); the Dijkstra lesson traces the
 algorithm with the correct tentative distances.
 
+**Lesson quality.** `backend/scripts/eval_lessons.py` makes real lessons (gpt-5.5, cache off, fresh
+server per run) and scores each one with fact checks written before any lesson was run: the values an
+algorithm computes, the order, the final answer. Every failed verdict was read by hand.
+
+| version | what changed | 3 core algorithm pages (3 runs each) | 17 new real pages (2 runs each) |
+|---|---|---|---|
+| L0 | teach by doing | 0.73 (3/9 runs fully correct) | - |
+| L2 | + "simulate, don't shortcut" (one general rule) | 0.89 (5/9) | 0.85 (22/34) |
+| L3 | + solver-backed simulation, GPU perception | **1.00 (9/9)** | 0.84 (18/34) |
+
+- On the Dijkstra slide L0 compared a few routes by eye (0.47); L3 runs the real algorithm on the graph
+  read off the slide (all 9 vertices, 14 edges, every relaxation including G 9→4) in 3 of 3 runs.
+- On TCP congestion control (rules, no numbers on the slide) only L3 walks a concrete timeline.
+- The 17 new pages (Wikimedia Commons: graph algorithms, BST, TCP handshake, Go-Back-N, CPU scheduling,
+  LRU, deadlock, math, circuits, biology) show no difference between L2 and L3: small clean graphs are
+  traced correctly without the solver, and the misses are reading errors (Gantt bars, arrow directions)
+  in both. Per-topic tables: [`samples/eval/lessons_summary.md`](samples/eval/lessons_summary.md).
+- GPU: SAM 2.1 lifts the low-confidence targets it refines from 0.48 to 0.63 IoU (hit@0.75 26% -> 47%,
+  paired, same model calls); formula OCR turned 14 of 27 formula lines into correct LaTeX and rejected
+  all 3 misreads ([`samples/eval/latex_ocr.md`](samples/eval/latex_ocr.md)).
+- Every measurement in order, with what went wrong along the way: [`docs/RESULTS_LOG.md`](docs/RESULTS_LOG.md).
+
 ## Features
 
 | How it sees: regions, grounding, confidence | Follow-up: circle it and ask |
 |---|---|
 | ![How it sees](docs/screenshots/how-it-sees.png) | ![Follow-up question](docs/screenshots/follow-up.png) |
 
-- **Teach me this:** 4-8 narrated steps; each drawing appears when its cue phrase is spoken.
+- **Explain, with or without your question:** type a question first ("how do I get the shortest path
+  from A to E?") or just press Explain; 4-8 narrated steps, each drawing appears when its cue phrase is
+  spoken.
+- **Simulations, not summaries:** an algorithm or procedure on the page is run step by step on the
+  page's own example (every changed value written next to its node), with code-verified numbers for
+  graph searches, spanning trees, sorts, binary search and TCP congestion control.
+- **PDF reader mode:** read a PDF lecture like a book; turning pages scans nothing. Explain scans only
+  the page you are on, and earlier pages and lessons are context ("Builds on pages 1-3").
 - **Follow-up questions:** circle the confusing part with the pen and ask; answers are drawn in purple.
 - **Margin sketches:** for a process or algorithm the tutor sketches a small flowchart beside the page.
   The model writes Mermaid and Excalidraw's converter lays it out, so the model never places anything.
@@ -134,7 +189,6 @@ algorithm with the correct tentative distances.
 
 - **Tap quiz:** "Tap the device that forwards packets" checked against the grounded box.
 - **How it sees:** the Set-of-Mark regions, each drawing's grounding type and confidence, timings.
-- **PDF lectures:** upload a PDF and pick a page.
 - **Save notes:** export the annotated page as a PNG.
 
 ## Run it locally
@@ -147,6 +201,7 @@ starts both servers and opens the app.
 # .env in the repo root
 OPENAI_API_KEY=...
 ELEVENLABS_API_KEY=...        # optional: browser voice is used without it
+GPU_URL=... GPU_KEY=...       # optional: the GPU service (deploy steps in backend/gpu/modal_app.py)
 
 cd backend
 python -m venv .venv && .venv/Scripts/python -m pip install -r requirements.txt   # (bin/ on macOS/Linux)
@@ -157,34 +212,42 @@ npm install && npm run dev     # http://localhost:5173 (proxies /api to :8000)
 ```
 
 Deployment: the API runs from the root `Dockerfile` on Render (`render.yaml`; set `OPENAI_API_KEY`,
-`ELEVENLABS_API_KEY` and `CORS_ORIGIN_REGEX`), the frontend on Vercel with `VITE_API_BASE` pointing at it.
+`ELEVENLABS_API_KEY`, `CORS_ORIGIN_REGEX` and optionally `GPU_URL` / `GPU_KEY`), the frontend on Vercel
+with `VITE_API_BASE` pointing at it.
 
 Command-line tools (from `backend/`):
 
 ```bash
 python scripts/run_pipeline.py path/to/slide.png     # perception + lesson + preview PNGs
 python scripts/perceive_debug.py path/to/slide.png   # Set-of-Mark image + regions vs ground truth
-python scripts/eval_grounding.py                     # the evaluation above (responses are cached)
-python -m pytest                                     # 53 tests, no network
+python scripts/eval_grounding.py [--gpu]             # grounding evaluation (responses are cached)
+python scripts/eval_lessons.py --list                # lesson-quality benchmark: cases, then --version ...
+python scripts/eval_latex.py image.png ...           # formula OCR on the GPU vs the CPU OCR
+python -m pytest                                     # 82 tests, no network
 ```
 
 ## Repository
 
 ```
-backend/app/perception/   rectify, preprocess (ink), ocr, textspan, rescue, regions, freespace, som, pipeline
-backend/app/tutor/        prompts, llm, planner, grounding (fusion), geometry, validator
+backend/app/perception/   rectify, preprocess (ink), ocr, textspan, rescue, regions, freespace, som,
+                          gpu (client of the GPU service), pipeline
+backend/app/tutor/        prompts, llm, planner, context (earlier pages), grounding (fusion), geometry,
+                          validator, solvers/ (extract, cross-check vs pixels, algorithms)
 backend/app/tts/          ElevenLabs with word timestamps, disk cache
-backend/app/main.py       FastAPI API
-backend/scripts/          run_pipeline, perceive_debug, make_samples, eval_grounding, plot_eval
+backend/app/main.py       FastAPI API (images, PDF documents, lessons, streaming, follow-ups, TTS)
+backend/gpu/modal_app.py  GPU service: SAM 2.1 + formula OCR on Modal
+backend/scripts/          run_pipeline, perceive_debug, make_samples, eval_grounding, eval_lessons, eval_latex
 frontend/src/board/       Excalidraw board engine: pen strokes, overlays, quiz taps
-frontend/src/             app shell, lesson player, voice sync, follow-ups, quiz
-samples/                  synthetic slides with ground truth, evaluation results
+frontend/src/             app shell, reader mode, lesson player, voice sync, follow-ups, quiz
+samples/                  synthetic slides with ground truth, benchmark cases, evaluation results
+docs/RESULTS_LOG.md       every measurement, in the order it was taken
 CONTRACT.md               data contract and API
 ```
 
 ## Built with
 
 OpenAI gpt-5.5 / gpt-5.4-mini (planning), RapidOCR (PP-OCRv4 ONNX), OpenCV, NumPy, Pillow,
-PyMuPDF, FastAPI, ElevenLabs (voice with timestamps), React, Vite and
+PyMuPDF, FastAPI, ElevenLabs (voice with timestamps), SAM 2.1 (Meta, through Ultralytics) and
+Qwen2-VL-2B-Instruct on Modal (GPU service), React, Vite and
 [Excalidraw](https://github.com/excalidraw/excalidraw) (MIT), whose hand-drawn rendering and
 "model plans, code draws" approach to AI drawing inspired the board.

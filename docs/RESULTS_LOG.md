@@ -115,4 +115,109 @@ gpt-5.5 became the lesson model.
 
 ## 7. Upgrade results (solver-backed simulation, GPU perception)
 
-Pending: filled in from `eval_lessons.py` (lesson pass rates per version) and `eval_grounding.py --gpu`.
+### 7.1 Lesson quality on the three core cases (L3 = solver-backed simulation)
+
+L3 (`12e5b41`): on a page that shows an algorithm or protocol, the problem is read off the page as JSON
+(graph, array, protocol parameters), cross-checked against the pixels (edge weights against the OCR'd
+labels next to each drawn line; pixels win) and run by deterministic code (Dijkstra, BFS, DFS, Prim,
+Kruskal, sorts, binary search, TCP congestion window). The trace goes into the prompt as a VERIFIED
+SIMULATION block; the model teaches it and draws it. Same 3 cases x 3 runs, same checks as section 4.
+
+| case | L0 | L2 | **L3** |
+|---|---|---|---|
+| dijkstra_AtoE | 0.47 (0/3 all) | 0.93 (2/3 all) | **1.00 (3/3 all)** |
+| tcp_cwnd | 0.73 (0/3 all) | 0.73 (0/3 all) | **1.00 (3/3 all)** |
+| flowchart_invalid_twice | 1.00 (3/3 all) | 1.00 (3/3 all) | **1.00 (3/3 all)** |
+| **all** | 0.73 (3/9) | 0.89 (5/9) | **1.00 (9/9)** |
+
+- Dijkstra: every L3 run read 9/9 nodes and 14/14 edges off the slide, all 14 weights confirmed by
+  the OCR'd labels. The extraction call takes 5-6 s before the lesson call, so it delays the first step
+  by that much.
+- TCP: the slide states the rules but no threshold; the solver assumes one (flagged as an example on the
+  board) and the lesson walks a concrete timeline (1, 2, 4, 8, then +1 per RTT, timeout: threshold
+  halved, window back to 1). L0 and L2 never produced a concrete threshold in 6 runs.
+- One checker fix during this round: the TCP "timeout" check missed "resets CongWin to 1 MSS" and the
+  board label `cwnd 12→1` (a false negative found by reading the lesson). The regex was widened and all
+  versions were re-scored from their saved lessons: that was the only verdict that changed (L0/L2: none).
+- In these runs the GPU service was not used (each run is a fresh process, which treats the GPU as cold
+  and skips it); the L3 gain here is the solver alone.
+- Two L3 runs first failed in perception (section 7.5) and were re-run after the fix (`0b90f8e`).
+
+### 7.2 Broad benchmark: 17 new real pages, L2 vs L3
+
+17 bench cases on real, openly licensed images (Wikimedia Commons; sources, licenses and edits in
+`samples/bench/SOURCES.md`), each with a student question, a reference answer worked out by hand and
+5 regex fact checks written before any lesson was run (`samples/bench/cases/*.json`). 2 runs per case
+and version, L2 and L3 at the same time; per-case tables and every lesson in
+`samples/eval/lessons_summary.md` and `samples/eval/lessons/<version>/transcripts.md`.
+
+| topic | cases | L2 | L3 |
+|---|---|---|---|
+| graph algorithms (BFS/DFS, Prim, Dijkstra) | 3 | 0.93 (4/6 all) | 0.93 (4/6 all) |
+| data structures (BST insert) | 1 | 1.00 (2/2 all) | 1.00 (2/2 all) |
+| networking (TCP handshake, Go-Back-N vs Selective Repeat) | 2 | 0.85 (2/4 all) | 0.85 (1/4 all) |
+| operating systems (SJF Gantt chart, LRU cache, deadlock graph) | 3 | 0.60 (2/6 all) | 0.53 (2/6 all) |
+| math (quadratic, unit circle, Pythagoras, tangent line) | 4 | 0.80 (5/8 all) | 0.85 (4/8 all) |
+| physics (two circuits, kinematics) | 3 | 0.97 (5/6 all) | 0.93 (4/6 all) |
+| biology (Calvin cycle) | 1 | 1.00 (2/2 all) | 0.90 (1/2 all) |
+| **all bench** | 17 | **0.85 (22/34 all)** | **0.84 (18/34 all)** |
+| all 20 cases (core + bench) | 20 | 0.86 (27/43 all) | 0.87 (27/43 all) |
+
+What it says:
+- Outside the hard core pages, L3 is neither better nor worse. The solver ran on the three graph pages
+  (Prim: 11/11 edges verified; BFS: 7/7 vertices; Dijkstra: 6 of 7 weights confirmed), but these small,
+  clean graphs were already traced correctly by L2's simulate rule (BFS/DFS, Dijkstra 1.00 in both).
+  Elsewhere no solver applies, and the versions differ by 1-3 checks in 34 runs: run-to-run noise.
+- The failures are mostly reading errors, the same in both versions: misread Gantt bars (SJF: P7 read
+  as waiting 6 instead of 5, average 2.21 instead of 2.36), a missed assignment arrow in the deadlock
+  graph (3 of 4 runs concluded "no deadlock"), grid squares not counted (Pythagoras). Then facts the
+  lessons leave out: Selective Repeat's cumulative Ack 5 after recovery (0 of 4 runs), why Prim skips
+  the other edges (0 of 4), the general kinematics formula next to its substitution.
+- Checker audit: every failed verdict of both versions was read against the lesson. One more false
+  negative was found and fixed (Pythagoras: "4 by 4 ... 3 by 3" was not accepted); re-scoring both
+  versions changed exactly that verdict.
+- Next target: the SJF chart prints every process as "P7(7, 3)" (arrival, burst), so code can compute
+  the waiting times instead of the model reading them off the bars (section 7.6).
+
+### 7.3 SAM 2.1 on the GPU: paired ablation (`samples/eval/results_gpu.md`)
+
+Same run, same perception, same cached model responses; the only difference is SAM on or off. SAM is
+called only for targets the CPU pipeline is unsure about (no consensus, figures); confident targets are
+never touched.
+
+| targets | n | mean IoU | hit@0.75 | hit@0.9 |
+|---|---|---|---|---|
+| low-confidence targets SAM refined | 19 | 0.483 -> **0.628** | 26% -> **47%** | 11% -> **32%** |
+| all fused targets | 481 | 0.800 -> 0.806 | 77% -> 78% | 60% -> 61% |
+
+SAM was asked about 30 targets and its mask was accepted for 19: 14 improved (up to +0.81 IoU, e.g. a
+free-body weight arrow 0.11 -> 0.92, a nucleolus 0.64 -> 0.96), 3 lost at most 0.024, 2 stayed at 0
+(the model had chosen the wrong region; SAM cannot fix a wrong choice). This run flattened the photo set,
+so its absolute photo numbers are not comparable with section 3 (see its notes); the paired difference
+is unaffected.
+
+### 7.4 Formula OCR on the GPU (`samples/eval/latex_ocr.md`)
+
+Lines that look like formulas are re-read by Qwen2-VL-2B on the GPU (pix2tex misread 2 of 4 kinematics
+formulas in the first test) while the CPU stages continue; the LaTeX is appended to the region text
+only when it adds something and agrees with the OCR text. 12 images, 27 formula lines: **14 LaTeX kept,
+all improvements** (`S = ut + 12at2` -> `s=ut+\frac{1}{2}at^2`, `11π` -> `\frac{11\pi}{6}`,
+`F=mxa` -> `F=m\times a`; one kept line has an I/l slip), 10 dropped as identical to the OCR, 3 dropped
+as misreads (a box-coordinate hallucination, an empty array, an invented `=7π/12`). GPU time 0.4-2 s
+per image when warm (hidden behind the CPU stages); a cold container needs ~25 s, so the API skips the
+GPU until it is warm.
+
+### 7.5 Robustness: a native OpenCV failure under load
+
+- Symptom: 2 of 9 L3 lessons failed in perception with `cv2.error: Unknown C++ exception from OpenCV
+  code` on the first colour conversion, again on the next call. Only seen while 3 lesson processes and
+  the GPU grounding evaluation ran at once (one perception process peaks at ~1 GB commit; this PC had
+  ~9 GB commit free). An earlier server process had shown the same and failed until restarted.
+- Not reproducible in isolation: 50 fresh processes racing 6 threads on the first conversion, 12 building
+  the OCR engine alongside OpenCV work, 30 fresh app processes scanning PDF pages 3 at a time (15 of them
+  under an 8-thread perception load): 0 failures.
+- Fix (`0b90f8e`), without a reproduction, so it removes every candidate: OpenCV runs sequentially
+  (`cv2.setNumThreads(1)`; its native thread pool saved < 0.1 s per page, measured page times
+  2.07 -> 2.10 s and 3.14 -> 3.00 s), a native OpenCV failure is retried once on a fresh thread
+  (unit-tested), and the server finishes its warm-up before it accepts requests. The two failed lessons
+  then ran 5/5 each; no failure since.
