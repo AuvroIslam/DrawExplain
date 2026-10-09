@@ -21,7 +21,7 @@ def prepare_image(data: bytes) -> "Image.Image":
     return _prepare(data)
 
 
-def perceive(image: "Image.Image", image_id: str) -> PerceptionResult:
+def perceive(image: "Image.Image", image_id: str, flatten: bool = True) -> PerceptionResult:
     from app.perception.pipeline import perceive as _perceive
 
-    return _perceive(image, image_id)
+    return _perceive(image, image_id, flatten=flatten)

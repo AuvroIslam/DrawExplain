@@ -145,6 +145,18 @@ def _edges(ink: InkInfo, W: int, H: int) -> np.ndarray:
     return e
 
 
+def _drop_pockets(shapes: list[_Proto]) -> list[_Proto]:
+    """A 'shape' whose border cuts through >= 2 smaller shapes is the empty pocket enclosed by
+    connectors between them (graph faces, flowchart loops), not a drawn shape."""
+    out = []
+    for s in shapes:
+        cut = sum(1 for o in shapes if o is not s and _area(o.box) < _area(s.box)
+                  and 0 < _inter(o.box, s.box) < 0.9 * _area(o.box))
+        if cut < 2:
+            out.append(s)
+    return out
+
+
 def _dedupe(protos: list[_Proto], thr: float) -> list[_Proto]:
     """Drop near-duplicates; outline shapes (they keep their contour) win over filled ones."""
     kept: list[_Proto] = []
@@ -258,6 +270,7 @@ def build_regions(ink: InkInfo, lines: list[TextLine], W: int, H: int) -> list[R
 
     shapes = _dedupe(_outline_shapes(closed, W, H, k) + _filled_shapes(ink, lines, W, H), 0.85)
     shapes = [s for s in shapes if not any(_iou(s.box, ln.box) > 0.6 for ln in lines)]
+    shapes = _drop_pockets(shapes)
     texts = [_Proto("text", ln.box, ln.text, ln.score, "ocr") for ln in lines]
     figures = [f for f in _figures(ink, lines, shapes, W, H) if all(_iou(f.box, s.box) <= 0.7 for s in shapes)]
 

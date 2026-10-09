@@ -12,6 +12,7 @@ from app.perception.ocr import run_ocr
 from app.perception.preprocess import analyse_ink, prepare_image
 from app.perception.rectify import rectify
 from app.perception.regions import TextLine, build_regions
+from app.perception.rescue import rescue_labels
 from app.perception.som import render_marks
 from app.perception.textspan import refine_line
 from app.perception.types import PerceptionResult
@@ -57,6 +58,13 @@ def perceive(image: Image.Image, image_id: str, flatten: bool = True) -> Percept
             text, box = ln.text, ln.box
         lines.append(TextLine(box=box, text=text, score=ln.score))
     lap("text")
+    try:
+        rescued = rescue_labels(rgb, ink, lines)
+    except Exception:  # the rescue pass is best effort
+        log.exception("label rescue failed")
+        rescued = []
+    lines += rescued
+    lap("rescue")
     regions = build_regions(ink, lines, W, H)
     lap("regions")
     freespace = FreeSpace(ink.ink)

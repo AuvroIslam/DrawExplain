@@ -48,6 +48,15 @@ def warmup() -> None:
         _get_engine()
 
 
+def recognize(crops_bgr: list[np.ndarray]) -> list[tuple[str, float]]:
+    """Recognition only (no detection) on already-cropped text images, batched. Thread-safe."""
+    if not crops_bgr:
+        return []
+    with _lock:
+        res, _ = _get_engine().text_rec(crops_bgr)
+    return [(str(t), float(s)) for t, s in res]
+
+
 def run_ocr(rgb: np.ndarray, invert: bool = False) -> list[OcrLine]:
     """OCR an RGB uint8 image. `invert` helps light-on-dark slides. Thread-safe (one engine, locked)."""
     bgr = np.ascontiguousarray(rgb[..., ::-1])
