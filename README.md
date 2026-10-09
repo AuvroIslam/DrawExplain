@@ -234,7 +234,7 @@ python scripts/perceive_debug.py path/to/slide.png   # Set-of-Mark image + regio
 python scripts/eval_grounding.py [--gpu]             # grounding evaluation (responses are cached)
 python scripts/eval_lessons.py --list                # lesson-quality benchmark: cases, then --version ...
 python scripts/eval_latex.py image.png ...           # formula OCR on the GPU vs the CPU OCR
-python -m pytest                                     # 82 tests, no network
+python -m pytest                                     # 89 tests, no network
 ```
 
 ## Repository

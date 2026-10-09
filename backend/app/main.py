@@ -98,7 +98,9 @@ async def _unhandled(request: Request, exc: Exception) -> JSONResponse:
 
 @app.get("/api/health")
 def health() -> dict[str, Any]:
-    return {"ok": True, "model": config.OPENAI_MODEL, "tts": bool(config.ELEVENLABS_API_KEY)}
+    # RENDER_GIT_COMMIT is set by Render on every deploy: shows which commit is live
+    commit = (os.getenv("RENDER_GIT_COMMIT") or os.getenv("GIT_COMMIT") or "")[:7] or None
+    return {"ok": True, "model": config.OPENAI_MODEL, "tts": bool(config.ELEVENLABS_API_KEY), "commit": commit}
 
 
 # ---------------------------------------------------------------- images

@@ -157,6 +157,7 @@ def test_health(client: TestClient) -> None:
     assert body["ok"] is True
     assert body["model"] == config.OPENAI_MODEL
     assert body["tts"] is bool(config.ELEVENLABS_API_KEY)
+    assert "commit" in body
 
 
 def test_upload_returns_perception_and_serves_files(client: TestClient, calls: Calls) -> None:
