@@ -32,7 +32,9 @@ METRICS = {
     "hit90": ("Pixel-tight drawings", "IoU ≥ 0.9 with the ground-truth box"),
     "mean_iou": ("How well drawing boxes match the target", "mean IoU with the ground-truth box"),
 }
-SET_ORDER = ["clean", "photo", "dark", "small", "fixtures", "quick"]
+SET_ORDER = ["clean", "photo", "dark", "small", "fixtures"]  # "quick" is one slide: too small to plot
+SET_LABELS = {"clean": "clean slides", "photo": "phone photos", "dark": "dark slides", "small": "small text",
+              "fixtures": "hard cases", "all": "all images"}
 
 
 def _value(rs: list[dict], metric: str) -> float:
@@ -65,13 +67,14 @@ def main() -> None:
         for mi, method in enumerate(methods):
             color, _ = STYLE[method]
             for si, s in enumerate(sets):
-                rs = [r for r in recs if r["model"] == model and r["method"] == method and (s == "all" or r["set"] == s)]
+                rs = [r for r in recs if r["model"] == model and r["method"] == method
+                      and (r["set"] == s if s != "all" else r["set"] in SET_ORDER)]
                 v = _value(rs, args.metric)
                 x = si + (mi - (len(methods) - 1) / 2) * width
                 ax.bar(x, v, width=width, color=color, edgecolor=SURFACE, linewidth=2, zorder=3)
                 ax.text(x, v + 0.015, f"{v:.0%}" if args.metric != "mean_iou" else f"{v:.2f}", ha="center",
                         va="bottom", fontsize=9, color=INK_2, zorder=4)
-        ax.set_xticks(range(len(sets)), [s if s != "all" else "all sets" for s in sets], color=INK_2)
+        ax.set_xticks(range(len(sets)), [SET_LABELS[s] for s in sets], color=INK_2)
         ax.axvline(len(sets) - 1.5, color=GRID, linewidth=1, zorder=1)
         ax.set_ylim(0, 1.1)
         ax.set_yticks([0, 0.25, 0.5, 0.75, 1.0], ["0%", "25%", "50%", "75%", "100%"] if args.metric != "mean_iou"
