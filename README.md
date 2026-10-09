@@ -86,7 +86,9 @@ Code then runs the algorithm (Dijkstra, BFS, DFS, Prim, Kruskal, bubble / insert
 merge sort, binary search, TCP slow start, AIMD and timeout, CPU scheduling FCFS / SJF / SRTF / round
 robin / priority, page replacement FIFO / LRU / OPT) and every iteration with every changed value
 goes into the prompt as a **verified simulation**. For a scheduling chart, a process counts as
-verified only when its name, arrival and burst are printed on one row of the page. The model writes the narration and chooses
+verified only when its name, arrival and burst are printed on one row of the page, and when nobody
+names the algorithm, code tries every scheduler and keeps the one that reproduces the run order drawn
+on the chart. The model writes the narration and chooses
 where to draw; the numbers come from code. Other pages skip this step (a keyword check, no extra call).
 
 **Grounding fusion.** Two independent signals are cross-checked per target:

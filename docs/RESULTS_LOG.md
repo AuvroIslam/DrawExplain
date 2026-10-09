@@ -213,6 +213,16 @@ How to read it:
   concluded "no deadlock"), Selective Repeat's cumulative Ack 5 (0 of 6), why Prim skips the remaining
   edges (0 of 6).
 
+Production check (live API on Render, same SJF chart, question "Why does P12 wait so long, and what is
+the average waiting time?"): no simulation ran, and two lessons gave averages of 32/14 and 34/14 (the
+exact value is 33/14 = 2.36). Cause: the benchmark question names the algorithm ("non-preemptive
+Shortest Job First"); this one does not, the chart does not either, so the extraction returned no
+variant and the solver was skipped. Fix (`420c645`): the extraction also reads the run order drawn on
+the chart, and code runs every scheduler the data allows and keeps the one that reproduces that order.
+On the real chart the model read the order exactly (P1..P6, P9, P8, P7, P10, P11, P13, P14, P12), only
+SJF reproduces it, and the simulation is verified by the 14 printed rows and by the drawn order. A named
+algorithm that the drawing contradicts is no longer marked verified.
+
 Checker audit, second round (every failed verdict of L4, and the L2/L3 failures re-read with the same
 rule: widen a check only when the lesson states the checked fact in other words, never when the fact is
 missing, wrong or ambiguous). Widened: Go-Back-N "refuses frames 3 through 8", DFS "dives",
