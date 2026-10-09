@@ -183,11 +183,11 @@ export interface Health {
 
 /** Marker palette shared by the board and the UI. */
 export const PALETTE: Record<Color, string> = {
-  red: "#e03131",
-  blue: "#1971c2",
-  green: "#2f9e44",
-  orange: "#f08c00",
-  purple: "#9c36b5",
+  red: "#c92a2a",
+  blue: "#1864ab",
+  green: "#2b8a3e",
+  orange: "#d9480f",
+  purple: "#862e9c",
 };
 
 /** Ink of a step's margin sketch: the colour its annotations use most (orange reads poorly as text), else blue. */

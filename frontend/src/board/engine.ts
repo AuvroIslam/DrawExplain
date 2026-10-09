@@ -118,8 +118,8 @@ const SKETCH_MS = { lead: 600, piece: 150, glide: 650 };
 const SKETCH_ID = "sketch";
 /** Sketch box beside the page (fractions of the page): starts at 1.06 x width, fits 0.6 x width by 0.85 x height. */
 const SKETCH_BOX = { gap: 0.06, w: 0.6, h: 0.85, belowH: 0.45 };
-const DIM = 0.3;
-const HIGHLIGHT_OPACITY = 30;
+const DIM = 0.55; // earlier steps stay readable
+const HIGHLIGHT_OPACITY = 40;
 const REGION_COLORS: Record<RegionKind, string> = {
   text: "#1971c2",
   text_block: "#0c8599",

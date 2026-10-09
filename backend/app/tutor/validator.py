@@ -91,7 +91,7 @@ def sanitize_steps(raw_steps: Any, warnings: list[str], *, max_steps: int = MAX_
     out: list[dict] = []
     for si, s in enumerate(steps, start):
         narration = _clean(s.get("narration"))
-        title = _clean(s.get("title")) or f"Step {si}"
+        title = re.sub(r"^(?:step\s*)?\d+\s*[.):-]\s*", "", _clean(s.get("title")), flags=re.I) or f"Step {si}"  # the UI numbers steps
         if not narration:
             warnings.append(f"step {si}: empty narration; using the title")
             narration = title

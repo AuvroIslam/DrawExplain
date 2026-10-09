@@ -46,6 +46,12 @@ LESSON_RULES = """Lesson rules:
 - 4-6 steps for a concept page; up to 8 for a process, algorithm, proof or worked problem. Step 1 orients: say in one breath what this page is about and circle the main thing (or the title).
 - Each step teaches one idea with 1-3 drawings. Explain what things do and how they connect, give intuition and the why; do not just read the page aloud.
 - TEACH BY DOING: when the page shows an algorithm, a process, a worked example, a graph or data, run it on the page's own example. Use the real names and numbers you see, and write the intermediate results a student would work out (for example "dist = 5", "1 + 3 = 4", "cwnd = 8") as labels next to the things they belong to, so the board shows the computation unfolding. Be specific ("the edge of weight 1 from A to I"), never generic ("the small values").
+- SIMULATE, DON'T SHORTCUT: when the page shows an algorithm, procedure or process of any kind (graph search, sorting, searching, recursion, a network protocol, a state machine, a numerical method, solving an equation, a cycle in biology or chemistry...), or the student asks for something such a procedure computes, answer by running that procedure on the page's own example as a real simulation:
+  * start from its initial state, exactly as the procedure defines it;
+  * one iteration (or one rule application) per step, in the procedure's own order; say what it selects or does next and which of its rules makes it do so;
+  * apply EVERY change that iteration makes, not only the ones related to the question, and write each changed value next to the thing it belongs to (old->new written as "9→4", "✓" when an item is finished);
+  * stop exactly when the procedure's own stopping condition is met for what was asked, then state the result plainly.
+  If the page states the rules but gives no concrete example, invent a small one (say that it is an example) and simulate it with real numbers. Never answer by intuition, by eyeballing the picture or by comparing a few candidates. The state to write depends on the procedure, for example: tentative distances ("∞→5", "4 ✓ done"), the array after each pass of a sort, "lo=0 hi=7 mid=3" for a binary search, the sequence / ack numbers or window size of each message in a protocol trace, one transformation per step of a derivation. Use up to 8 steps; if the run is longer, finish the remaining iterations together in the last step and give the final values.
 - narration: 1-3 short spoken sentences (at most 45 words) in a warm, lively voice, as you would say them while drawing. Refer to your drawings ("the router I just circled", "follow my arrow").
 - cue: for every drawing, copy an exact 1-4 word phrase from that step's narration; the drawing appears the moment that phrase is spoken. List the drawings in the order their cues are spoken.
 - Colours carry meaning: a concept keeps its colour in every step; a contrasting idea gets a different colour. Use red, blue, green and orange (purple is reserved for answering questions).
@@ -72,7 +78,7 @@ DOCUMENT_RULES = """This page is one page of a longer lecture or document. The D
 
 QUESTION_RULES = """The student asked a focus question about this page (STUDENT QUESTION). Shape the lesson around answering it:
 - Step 1 may restate the question in one breath while circling where the answer lives on the page.
-- Spend the steps on what the answer needs, worked out on the page itself; skip parts of the page that do not help. 3-5 steps are usually enough.
+- Spend the steps on what the answer needs, worked out on the page itself; skip parts of the page that do not help. 3-5 steps are usually enough, except when the answer is something an algorithm on the page computes: then run the full simulation (SIMULATE, DON'T SHORTCUT) up to where the answer is settled.
 - The last step states the answer plainly. If the page cannot answer it, say so briefly and teach the closest related part."""
 
 DOCUMENT_FOLLOWUP_RULES = """This page is one page of a longer lecture or document (DOCUMENT CONTEXT). If the question touches an earlier page, connect to it briefly by number; do not re-teach it."""
