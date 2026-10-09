@@ -1,0 +1,32 @@
+# secrets
+.env
+,env
+*.env
+
+# python
+__pycache__/
+*.pyc
+.venv/
+backend/.venv/
+backend/data/
+.pytest_cache/
+
+# node
+node_modules/
+frontend/dist/
+
+# misc
+.DS_Store
+*.log
+
+# local workflow scripts
+.workflows/
+
+# personal research notes (not part of the project)
+hackathon1.md
+hackathon-winning-ideas.md
+ai-for-images-hackathon-winners.csv
+
+# generated outputs
+frontend/screenshots/
+samples/eval/cache/

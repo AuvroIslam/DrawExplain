@@ -1,0 +1,14 @@
+{
+  "image": "network_basic.png",
+  "width": 1280,
+  "height": 720,
+  "note": "Ground truth boxes are [x0, y0, x1, y1] in pixels. Shape boxes are the rounded rectangles (outline width 4px).",
+  "elements": [
+    {"name": "Laptop", "kind": "shape", "box": [80, 300, 280, 400]},
+    {"name": "Switch", "kind": "shape", "box": [380, 300, 580, 400]},
+    {"name": "Router", "kind": "shape", "box": [680, 300, 880, 400]},
+    {"name": "Internet", "kind": "shape", "box": [980, 280, 1220, 420]},
+    {"name": "title: How Packets Travel Across Networks", "kind": "text", "box": [61, 42, 625, 75]},
+    {"name": "caption: A router forwards packets between different networks", "kind": "text", "box": [80, 521, 685, 550]}
+  ]
+}
