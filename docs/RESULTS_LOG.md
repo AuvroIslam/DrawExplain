@@ -277,7 +277,10 @@ when nobody names the algorithm, the one whose run order shares the longest comm
 drawing wins if it is clearly closest (here SJF 13/14 vs FCFS 12/14); its numbers are used but the
 simulation is marked unverified. A drawing that resembles no algorithm still gives no simulation. A
 named algorithm always runs as named, and the drawing only verifies it, because with 3-4 processes a
-misread drawing can match the wrong algorithm by chance.
+misread drawing can match the wrong algorithm by chance. Live after `cb94a25` (the API's
+`/api/health` now reports the deployed commit): the same question gets "Simulation computed by code:
+CPU scheduling, shortest job first", and the board reads P9 wait 2, P7 wait 5, P12 wait 8,
+avg wait = 33/14 = 2.36, all exact (before the fixes: 32/14, 34/14, and P12 = 9).
 
 Checker audit, second round (every failed verdict of L4, and the L2/L3 failures re-read with the same
 rule: widen a check only when the lesson states the checked fact in other words, never when the fact is
