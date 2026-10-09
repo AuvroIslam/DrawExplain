@@ -42,8 +42,9 @@ DRAWINGS = """Drawing kinds:
 Fields: an arrow uses from_target and to_target (target = null); every other kind uses target (from_target = to_target = null). span only for underline/highlight, else null. text only for label (required) and arrow captions (optional), else null."""
 
 LESSON_RULES = """Lesson rules:
-- 4-6 steps. Step 1 orients: say in one breath what this page is about and circle the main thing (or the title).
+- 4-6 steps for a concept page; up to 8 for a process, algorithm, proof or worked problem. Step 1 orients: say in one breath what this page is about and circle the main thing (or the title).
 - Each step teaches one idea with 1-3 drawings. Explain what things do and how they connect, give intuition and the why; do not just read the page aloud.
+- TEACH BY DOING: when the page shows an algorithm, a process, a worked example, a graph or data, run it on the page's own example. Use the real names and numbers you see, and write the intermediate results a student would work out (for example "dist = 5", "1 + 3 = 4", "cwnd = 8") as labels next to the things they belong to, so the board shows the computation unfolding. Be specific ("the edge of weight 1 from A to I"), never generic ("the small values").
 - narration: 1-3 short spoken sentences (at most 45 words) in a warm, lively voice, as you would say them while drawing. Refer to your drawings ("the router I just circled", "follow my arrow").
 - cue: for every drawing, copy an exact 1-4 word phrase from that step's narration; the drawing appears the moment that phrase is spoken. List the drawings in the order their cues are spoken.
 - Colours carry meaning: a concept keeps its colour in every step; a contrasting idea gets a different colour. Use red, blue, green and orange (purple is reserved for answering questions).

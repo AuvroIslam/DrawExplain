@@ -129,6 +129,12 @@ class GeometryBuilder:
         self.H = float(max(1, pr.height))
         self.diag = math.hypot(self.W, self.H)
         self.placed: list[Box] = []
+        texts = [r for r in pr.perception.regions if r.kind == "text"]
+        self.text_boxes = [r.box for r in texts]  # labels keep off printed text
+        heights = sorted(r.box.h * self.H for r in texts)
+        # handwriting a little larger than the page's own text, so dense pages get smaller notes
+        page_text = heights[len(heights) // 2] if heights else 0.045 * self.H / 1.25
+        self.font_px = min(0.045 * self.H, 60.0, max(20.0, 1.25 * page_text))
 
     # ---- conversions
     def px(self, b: Box) -> PxBox:
@@ -154,8 +160,8 @@ class GeometryBuilder:
 
     # ---- text
     def text_size(self, text: str) -> tuple[float, float]:
-        """Normalized (w, h) of handwritten text: font ~4.5% of the image height, 22..60 px."""
-        font = min(60.0, max(22.0, 0.045 * self.H))
+        """Normalized (w, h) of handwritten text (font sized from the page's own text height)."""
+        font = self.font_px
         chars = max(2, len(text.strip()))
         w_px = 0.52 * font * chars + 0.5 * font
         h_px = 1.3 * font
@@ -329,7 +335,7 @@ class GeometryBuilder:
 
     def place(self, target: Box, w: float, h: float, avoid: list[Box] | None = None) -> Box:
         """Free-space placement via perception's map; own candidate search if that fails."""
-        blockers = [*(avoid or []), *self.placed]
+        blockers = [*(avoid or []), *self.placed, *(b for b in self.text_boxes if b not in (avoid or []))]
         box = None
         try:
             box = self.pr.freespace.place_near(target, w, h, blockers)

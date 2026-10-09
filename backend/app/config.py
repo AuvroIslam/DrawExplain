@@ -11,8 +11,8 @@ ROOT_DIR = BACKEND_DIR.parent
 load_dotenv(ROOT_DIR / ".env")
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
-# gpt-5.4-mini: ~2s and 0.95 mean IoU on raw boxes in our probe; gpt-5.5 is slower but strongest.
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-5.4-mini")
+# gpt-5.5 traces worked examples correctly (gpt-5.4-mini mis-traced Dijkstra) at similar latency.
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-5.5")
 OPENAI_REASONING_EFFORT = os.getenv("OPENAI_REASONING_EFFORT", "low")
 
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", "")

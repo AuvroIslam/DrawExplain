@@ -30,3 +30,7 @@ ai-for-images-hackathon-winners.csv
 # generated outputs
 frontend/screenshots/
 samples/eval/cache/
+
+# third-party course slides used for local testing (not ours to publish)
+samples/real/
+*.pdf
