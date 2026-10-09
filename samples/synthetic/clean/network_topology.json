@@ -1,0 +1,206 @@
+{
+ "image": "network_topology.png",
+ "width": 1280,
+ "height": 720,
+ "template": "network_topology",
+ "set": "clean",
+ "seed": 7,
+ "note": "Network diagram: device cards with icons, Internet cloud, arrows, callout, caption. Variant: clean. Boxes are [x0, y0, x1, y1] pixels of this file.",
+ "elements": [
+  {
+   "name": "title",
+   "kind": "text",
+   "query": "the slide title",
+   "box": [
+    60,
+    46,
+    540,
+    83
+   ]
+  },
+  {
+   "name": "subtitle",
+   "kind": "text",
+   "query": "the subtitle under the title",
+   "box": [
+    60,
+    115,
+    613,
+    136
+   ]
+  },
+  {
+   "name": "footer",
+   "kind": "text",
+   "query": "the course name in the footer",
+   "box": [
+    60,
+    690,
+    339,
+    705
+   ]
+  },
+  {
+   "name": "slide number",
+   "kind": "text",
+   "query": "the slide number",
+   "box": [
+    1204,
+    691,
+    1220,
+    702
+   ]
+  },
+  {
+   "name": "Laptop",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the Laptop",
+   "box": [
+    60,
+    196,
+    210,
+    308
+   ]
+  },
+  {
+   "name": "Switch",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the Switch",
+   "box": [
+    270,
+    196,
+    420,
+    308
+   ]
+  },
+  {
+   "name": "Router",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the Router",
+   "box": [
+    480,
+    196,
+    630,
+    308
+   ]
+  },
+  {
+   "name": "Firewall",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the Firewall",
+   "box": [
+    690,
+    196,
+    840,
+    308
+   ]
+  },
+  {
+   "name": "Internet",
+   "kind": "shape",
+   "shape": "cloud",
+   "query": "the Internet cloud",
+   "box": [
+    912,
+    157,
+    1210,
+    346
+   ]
+  },
+  {
+   "name": "DNS Server",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the DNS Server",
+   "box": [
+    850,
+    450,
+    1000,
+    562
+   ]
+  },
+  {
+   "name": "Web Server",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the Web Server",
+   "box": [
+    1070,
+    450,
+    1220,
+    562
+   ]
+  },
+  {
+   "name": "DNS lookup",
+   "kind": "text",
+   "query": "the 'DNS lookup' label",
+   "box": [
+    880,
+    378,
+    968,
+    394
+   ]
+  },
+  {
+   "name": "HTTPS",
+   "kind": "text",
+   "query": "the 'HTTPS' label on the arrow to the Web Server",
+   "box": [
+    1150,
+    387,
+    1198,
+    399
+   ]
+  },
+  {
+   "name": "key idea box",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the Key idea box",
+   "box": [
+    60,
+    400,
+    760,
+    556
+   ]
+  },
+  {
+   "name": "note: switch",
+   "kind": "text",
+   "query": "the note line explaining what a switch does",
+   "box": [
+    84,
+    461,
+    622,
+    480
+   ]
+  },
+  {
+   "name": "note: router",
+   "kind": "text",
+   "query": "the note line explaining what a router does",
+   "box": [
+    84,
+    499,
+    598,
+    519
+   ]
+  },
+  {
+   "name": "caption",
+   "kind": "text",
+   "query": "the figure caption",
+   "box": [
+    60,
+    602,
+    613,
+    620
+   ]
+  }
+ ]
+}

@@ -1,0 +1,193 @@
+{
+ "image": "cell_organelles.png",
+ "width": 1280,
+ "height": 720,
+ "template": "cell_organelles",
+ "set": "clean",
+ "seed": 7,
+ "note": "Biology diagram: cell with organelles and leader-line labels (parts and labels both in GT). Variant: clean. Boxes are [x0, y0, x1, y1] pixels of this file.",
+ "elements": [
+  {
+   "name": "title",
+   "kind": "text",
+   "query": "the slide title",
+   "box": [
+    60,
+    43,
+    582,
+    79
+   ]
+  },
+  {
+   "name": "footer",
+   "kind": "text",
+   "query": "the course name in the footer",
+   "box": [
+    60,
+    689,
+    217,
+    704
+   ]
+  },
+  {
+   "name": "slide number",
+   "kind": "text",
+   "query": "the slide number",
+   "box": [
+    1211,
+    689,
+    1220,
+    701
+   ]
+  },
+  {
+   "name": "Cell membrane",
+   "kind": "shape",
+   "shape": "ellipse",
+   "query": "the cell membrane",
+   "box": [
+    230,
+    128,
+    810,
+    618
+   ]
+  },
+  {
+   "name": "Nucleus",
+   "kind": "shape",
+   "shape": "ellipse",
+   "query": "the nucleus",
+   "box": [
+    440,
+    282,
+    620,
+    432
+   ]
+  },
+  {
+   "name": "Nucleolus",
+   "kind": "shape",
+   "shape": "ellipse",
+   "query": "the nucleolus",
+   "box": [
+    500,
+    330,
+    548,
+    372
+   ]
+  },
+  {
+   "name": "Mitochondrion",
+   "kind": "shape",
+   "shape": "capsule",
+   "query": "the mitochondrion",
+   "box": [
+    338,
+    440,
+    482,
+    536
+   ]
+  },
+  {
+   "name": "Golgi apparatus",
+   "kind": "shape",
+   "shape": "arcs",
+   "query": "the Golgi apparatus",
+   "box": [
+    301,
+    250,
+    419,
+    321
+   ]
+  },
+  {
+   "name": "Ribosomes",
+   "kind": "shape",
+   "shape": "dots",
+   "query": "the cluster of ribosome dots",
+   "box": [
+    634,
+    210,
+    706,
+    260
+   ]
+  },
+  {
+   "name": "label: Ribosome",
+   "kind": "text",
+   "query": "the label 'Ribosome'",
+   "box": [
+    900,
+    187,
+    1009,
+    205
+   ]
+  },
+  {
+   "name": "label: Nucleus",
+   "kind": "text",
+   "query": "the label 'Nucleus'",
+   "box": [
+    900,
+    297,
+    988,
+    315
+   ]
+  },
+  {
+   "name": "label: Cytoplasm",
+   "kind": "text",
+   "query": "the label 'Cytoplasm'",
+   "box": [
+    900,
+    421,
+    1014,
+    444
+   ]
+  },
+  {
+   "name": "label: Cell membrane",
+   "kind": "text",
+   "query": "the label 'Cell membrane'",
+   "box": [
+    900,
+    551,
+    1064,
+    569
+   ]
+  },
+  {
+   "name": "label: Mitochondrion",
+   "kind": "text",
+   "query": "the label 'Mitochondrion'",
+   "box": [
+    60,
+    581,
+    212,
+    599
+   ]
+  },
+  {
+   "name": "label: Golgi apparatus",
+   "kind": "text",
+   "query": "the label 'Golgi apparatus'",
+   "box": [
+    60,
+    205,
+    231,
+    228
+   ]
+  },
+  {
+   "name": "caption",
+   "kind": "text",
+   "query": "the 'not to scale' note",
+   "box": [
+    996,
+    634,
+    1220,
+    649
+   ]
+  }
+ ]
+}
