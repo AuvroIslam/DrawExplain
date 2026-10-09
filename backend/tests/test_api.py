@@ -305,7 +305,9 @@ def test_lesson_and_followup_flow(client: TestClient, calls: Calls) -> None:
     assert calls.followup[-1]["lesson"] is None
     assert sel.x + sel.w <= 1.0 and sel.w > 0 and sel.h >= 0.0199
 
-    assert client.post("/api/followups", json={"image_id": image_id, "lesson_id": "0123456789ab", "question": "x"}).status_code == 404
+    # an unknown lesson (still streaming, or lost on restart) is answered without lesson context
+    assert client.post("/api/followups", json={"image_id": image_id, "lesson_id": "0123456789ab", "question": "x"}).status_code == 200
+    assert calls.followup[-1]["lesson"] is None
     assert client.post("/api/followups", json={"image_id": image_id, "question": "   "}).status_code == 400
     assert client.post("/api/followups", json={"image_id": image_id, "question": "x" * 1001}).status_code == 400
     assert client.post("/api/lessons", json={"image_id": image_id, "model": "bad model; rm -rf"}).status_code == 400

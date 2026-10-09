@@ -87,13 +87,14 @@ Ground-truth JSON files in `samples/` use **pixel** boxes `[x0, y0, x1, y1]` of 
 | Method | Path | Body | Returns |
 |---|---|---|---|
 | GET | `/api/health` | | `{ok, model, tts}` |
-| POST | `/api/images` | multipart `file` (png/jpg/webp, <= 15 MB) | `Perception` (with `image_url`, `marked_url`) |
+| POST | `/api/images` | multipart `file` (png/jpg/webp or PDF, <= 15 MB) + optional form `page` (PDF, 1-based) | `Perception` (with `image_url`, `marked_url`; `source_pages` for PDFs) |
 | GET | `/api/images/{image_id}/original.png` | | processed image |
 | GET | `/api/images/{image_id}/marked.png` | | Set-of-Mark debug image |
 | GET | `/api/samples` | | `SampleInfo[]` (images under `samples/`) |
 | GET | `/api/samples/file/{name:path}` | | the sample image |
 | POST | `/api/samples/load` | `LoadSampleRequest {name}` | `Perception` (as if uploaded) |
 | POST | `/api/lessons` | `LessonRequest {image_id, model?}` | `Lesson` |
+| POST | `/api/lessons/stream` | `LessonRequest` | NDJSON events: `meta`, `header`, `step` (one per step, grounded), `lesson` (full), or `error` |
 | POST | `/api/followups` | `FollowupRequest {image_id, lesson_id?, question, selection?, model?}` | `FollowupResponse` |
 | POST | `/api/tts` | `TTSRequest {text, voice_id?}` | `TTSResponse {audio_url, duration, words[]}` |
 | GET | `/api/audio/{name}` | | cached mp3 |

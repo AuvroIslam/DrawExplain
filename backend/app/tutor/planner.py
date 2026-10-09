@@ -71,6 +71,19 @@ class _StepBuilder:
         self.builder = GeometryBuilder(pr)
         self.drawn: list[Box] = []  # everything already on the board; later labels keep off it
 
+    def seed(self, steps: list[Step]) -> None:
+        """Start from a board that already shows these steps (a follow-up keeps off the lesson's drawings)."""
+        for step in steps:
+            for a in step.annotations:
+                geo = a.geometry
+                if a.kind == "arrow":
+                    self.drawn.extend(self.builder.path_boxes(geo))
+                elif geo.box is not None and a.kind != "label":
+                    self.drawn.append(geo.box)
+                if geo.label_box is not None:
+                    self.drawn.append(geo.label_box)
+                    self.builder.placed.append(geo.label_box)
+
     def build(self, si: int, raw: dict) -> Step:
         """Turn one sanitized step dict into a Step with grounded geometry (ids are set later)."""
         pr, resolve, warnings, builder, drawn = self.pr, self.resolve, self.warnings, self.builder, self.drawn
@@ -283,7 +296,10 @@ def answer_followup(
     raw_steps = sanitize_steps(data.get("steps"), warnings, max_steps=2, default_color="purple")
     resolve = _Resolver(pr, selection)
     resolve.calibrate(_all_targets(raw_steps))
-    steps = _build_steps(pr, raw_steps, resolve, warnings)
+    sb = _StepBuilder(pr, resolve, warnings)
+    if lesson is not None:
+        sb.seed(lesson.steps)  # the lesson's drawings are still on the board
+    steps = [sb.build(si, raw) for si, raw in enumerate(raw_steps, 1)]
     steps = finalize_steps(steps, warnings, prefix=f"q{uuid.uuid4().hex[:4]}")
     t2 = time.perf_counter()
     return FollowupResponse(

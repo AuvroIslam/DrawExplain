@@ -222,9 +222,9 @@ def create_followup(req: FollowupRequest) -> FollowupResponse:
     if req.lesson_id:
         try:
             lesson = lessons.get(req.lesson_id)
-        except KeyError:
-            raise HTTPException(404, "Unknown lesson_id") from None
-        if lesson.image_id != pr.perception.image_id:
+        except KeyError:  # still streaming or lost on restart: answer without the lesson context
+            log.info("follow-up for unknown lesson %s; answering without lesson context", req.lesson_id)
+        if lesson is not None and lesson.image_id != pr.perception.image_id:
             raise HTTPException(400, "lesson_id belongs to a different image")
     question = req.question.strip()
     if not question:
