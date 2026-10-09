@@ -1,0 +1,615 @@
+{
+ "version": "L3",
+ "note": "",
+ "case": "math_quadratic",
+ "topic": "math",
+ "run": 1,
+ "question": "Where does this parabola cross the x-axis? Solve its equation step by step.",
+ "source": "math_quadratic_roots.png",
+ "page": null,
+ "backend": {
+  "path": "D:\\BananaHack\\backend",
+  "commit": "0b90f8e",
+  "subject": "Harden perception against native OpenCV failures",
+  "dirty": true
+ },
+ "started": "2026-10-09T22:37:58+06:00",
+ "finished": "2026-10-09T22:38:38+06:00",
+ "jobs": 2,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "D:\\BananaHack\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L3_math_quadratic_1_f88ea_b7\\data",
+ "perceive_s": 19.102,
+ "perception": {
+  "image_id": "e5d7f560f799",
+  "width": 1280,
+  "height": 1280,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.18,
+   "ink": 0.129,
+   "ocr": 6.881,
+   "text": 0.127,
+   "rescue": 2.807,
+   "regions": 0.095,
+   "freespace": 0.005,
+   "som": 0.019,
+   "latex": 8.691,
+   "total": 18.933,
+   "prepare": 0.045
+  },
+  "regions": 13
+ },
+ "regions": {
+  "R4": "3- -=x²--x÷ 2",
+  "R5": "2",
+  "R6": "1",
+  "R7": "3",
+  "R8": "1",
+  "R9": "0",
+  "R10": "0",
+  "R11": "4",
+  "R12": "1",
+  "R13": "3"
+ },
+ "request": {
+  "image_id": "e5d7f560f799",
+  "question": "Where does this parabola cross the x-axis? Solve its equation step by step."
+ },
+ "lesson_s": 17.882,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "2f1fa58e0b11",
+  "image_id": "e5d7f560f799",
+  "title": "Finding the x-intercepts",
+  "summary": "We’ll find where the parabola crosses the x-axis by setting y = 0 and solving the quadratic. The graph confirms the two solutions: x = -1 and x = 2.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "The question lives on the x-axis",
+    "narration": "We’re looking for where this red parabola crosses the x-axis, so I’ll circle the two crossing spots. At those points, the height is zero: y = 0.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R8"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "two crossing spots",
+      "geometry": {
+       "box": {
+        "x": 0.364140625,
+        "y": 0.458671875,
+        "w": 0.15609375000000003,
+        "h": 0.32484374999999993
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.902,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R9"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "two crossing spots",
+      "geometry": {
+       "box": {
+        "x": 0.44730468749999996,
+        "y": 0.4412890625,
+        "w": 0.352265625,
+        "h": 0.3986718750000001
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.901,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a3",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R8",
+       "R9"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "y = 0 here",
+      "cue": "height is zero",
+      "geometry": {
+       "box": {
+        "x": 0.384375,
+        "y": 0.49296875,
+        "w": 0.36953125,
+        "h": 0.29531250000000003
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.16733398437500002,
+        "y": 0.810498046875,
+        "w": 0.19482421875,
+        "h": 0.04443359375
+       },
+       "leader": [
+        {
+         "x": 0.3029418280225042,
+         "y": 0.8086112154811467
+        },
+        {
+         "x": 0.37839507782954673,
+         "y": 0.760996027040193
+        }
+       ]
+      },
+      "confidence": 0.912,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Set the formula equal to zero",
+    "narration": "Now we use the printed equation, y = x² - x - 2. Since x-axis crossings have y = 0, replace y with 0.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "highlight",
+      "color": "blue",
+      "target_ids": [
+       "R4"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "y = x²- x- 2",
+      "text": null,
+      "cue": "printed equation",
+      "geometry": {
+       "box": {
+        "x": 0.47109375,
+        "y": 0.0809375,
+        "w": 0.34296874999999993,
+        "h": 0.0678125
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.972,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R4"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "0 = x²-x-2",
+      "cue": "replace y with 0",
+      "geometry": {
+       "box": {
+        "x": 0.4734375,
+        "y": 0.0875,
+        "w": 0.33828125000000003,
+        "h": 0.0546875
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.545166015625,
+        "y": 0.020849609374999994,
+        "w": 0.19482421875,
+        "h": 0.04443359375
+       },
+       "leader": [
+        {
+         "x": 0.642578125,
+         "y": 0.06881873703093275
+        },
+        {
+         "x": 0.642578125,
+         "y": 0.08042893218813453
+        }
+       ]
+      },
+      "confidence": 0.972,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Factor the quadratic",
+    "narration": "To solve 0 = x² - x - 2, find two numbers that multiply to -2 and add to -1. Those are -2 and +1, so the factors are x - 2 and x + 1.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "box",
+      "color": "green",
+      "target_ids": [
+       "R4"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "0 = x²",
+      "geometry": {
+       "box": {
+        "x": 0.4671875,
+        "y": 0.08125,
+        "w": 0.35078124999999993,
+        "h": 0.0671875
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.972,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "(x-2)(x+1)=0",
+      "cue": "factors are",
+      "geometry": {
+       "box": {
+        "x": 0.625,
+        "y": 0.14453125,
+        "w": 0.12265625000000002,
+        "h": 0.06953124999999999
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.51728515625,
+        "y": 0.2696044921875,
+        "w": 0.23037109374999998,
+        "h": 0.04443359375
+       },
+       "leader": [
+        {
+         "x": 0.6446306816060059,
+         "y": 0.2664154228707699
+        },
+        {
+         "x": 0.6666355360272481,
+         "y": 0.22044063863346017
+        }
+       ]
+      },
+      "confidence": 0.565,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Use the zero-product rule",
+    "narration": "If two factors multiply to zero, at least one factor must be zero. So set each factor equal to zero and solve: x - 2 = 0 gives x = 2, and x + 1 = 0 gives x = -1.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R9"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "x = 2",
+      "cue": "x = 2",
+      "geometry": {
+       "box": {
+        "x": 0.49296875,
+        "y": 0.49296875,
+        "w": 0.2609375,
+        "h": 0.29531250000000003
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.570458984375,
+        "y": 0.3929931640625,
+        "w": 0.10595703125,
+        "h": 0.04443359375
+       },
+       "leader": [
+        {
+         "x": 0.6234375,
+         "y": 0.4409622917184327
+        },
+        {
+         "x": 0.6234375,
+         "y": 0.48589768218813456
+        }
+       ]
+      },
+      "confidence": 0.901,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R8"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "x = -1",
+      "cue": "x = -1",
+      "geometry": {
+       "box": {
+        "x": 0.384375,
+        "y": 0.50078125,
+        "w": 0.11562499999999998,
+        "h": 0.24062499999999998
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.23842773437500003,
+        "y": 0.7636230468749999,
+        "w": 0.12373046874999999,
+        "h": 0.04443359375
+       },
+       "leader": [
+        {
+         "x": 0.32173541964914476,
+         "y": 0.7609441695126584
+        },
+        {
+         "x": 0.3797604074600093,
+         "y": 0.6935744830453987
+        }
+       ]
+      },
+      "confidence": 0.902,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [
+       "R8",
+       "R9"
+      ],
+      "span": null,
+      "text": "solutions",
+      "cue": "set each factor",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.6747114242217183,
+         "y": 0.22502795373050244
+        },
+        {
+         "x": 0.6729097681368554,
+         "y": 0.36134891232549016
+        },
+        {
+         "x": 0.609434029842634,
+         "y": 0.48200329626949756
+        }
+       ],
+       "label_box": {
+        "x": 0.6843955444595159,
+        "y": 0.3176861749127451,
+        "w": 0.17705078125000007,
+        "h": 0.04443359375
+       },
+       "leader": null
+      },
+      "confidence": 0.565,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Answer: two x-intercepts",
+    "narration": "So the parabola crosses the x-axis at x = -1 and x = 2. As coordinate points, the intercepts are (-1, 0) and (2, 0).",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "box",
+      "color": "red",
+      "target_ids": [
+       "R8",
+       "R9"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "crosses the x-axis",
+      "geometry": {
+       "box": {
+        "x": 0.36075,
+        "y": 0.46934375,
+        "w": 0.41678125,
+        "h": 0.34256250000000005
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.912,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R8",
+       "R9"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "(-1,0), (2,0)",
+      "cue": "coordinate points",
+      "geometry": {
+       "box": {
+        "x": 0.384375,
+        "y": 0.49296875,
+        "w": 0.36953125,
+        "h": 0.29531250000000003
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.08068847656250003,
+        "y": 0.3929931640625,
+        "w": 0.24814453125,
+        "h": 0.04443359375
+       },
+       "leader": [
+        {
+         "x": 0.24368055446479547,
+         "y": 0.4392867868508179
+        },
+        {
+         "x": 0.37836158433945755,
+         "y": 0.5226040363538501
+        }
+       ]
+      },
+      "confidence": 0.912,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart LR\nA[Set y=0] --> B[Factor quadratic]\nB --> C[Set factors zero]\nC --> D[Get x values]\nD --> E[Plot intercepts]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the left x-axis crossing.",
+    "answer_ids": [
+     "R8"
+    ],
+    "answer_box": {
+     "x": 0.384375,
+     "y": 0.50078125,
+     "w": 0.11562499999999998,
+     "h": 0.24062499999999998
+    },
+    "explanation": "This is where the parabola hits the x-axis at x = -1, so the point is (-1, 0)."
+   },
+   {
+    "question": "Tap the right x-axis crossing.",
+    "answer_ids": [
+     "R9"
+    ],
+    "answer_box": {
+     "x": 0.49296875,
+     "y": 0.49296875,
+     "w": 0.2609375,
+     "h": 0.29531250000000003
+    },
+    "explanation": "This is where the parabola hits the x-axis at x = 2, so the point is (2, 0)."
+   },
+   {
+    "question": "Tap the printed equation used to solve.",
+    "answer_ids": [
+     "R4"
+    ],
+    "answer_box": {
+     "x": 0.4734375,
+     "y": 0.0875,
+     "w": 0.33828125000000003,
+     "h": 0.0546875
+    },
+    "explanation": "Setting this equation equal to zero gives x² - x - 2 = 0, whose roots are the x-intercepts."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 13.029,
+   "ground": 2.231,
+   "total": 17.847,
+   "input_tokens": 6458.0,
+   "output_tokens": 1512.0,
+   "approx_agreement": 1.0
+  },
+  "warnings": [
+   "step 2 drawing 1: span 'y = x²- x- 2' not found in R4; using the whole target"
+  ],
+  "question": "Where does this parabola cross the x-axis? Solve its equation step by step.",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 2,
+  "cache_hits": 0,
+  "input_tokens": 11726,
+  "output_tokens": 1581,
+  "seconds": 15.611
+ },
+ "checks": {
+  "set_zero": {
+   "pass": true,
+   "evidence": "y = 0 | set y=0"
+  },
+  "method": {
+   "pass": true,
+   "evidence": "(x-2)(x+1) | multiply to -2 and add to -1"
+  },
+  "root_2": {
+   "pass": true,
+   "evidence": "x = 2 | -1 and x = 2 | (2, 0)"
+  },
+  "root_minus_1": {
+   "pass": true,
+   "evidence": "x = -1 | -1 and x = 2 | (-1, 0)"
+  },
+  "graph_link": {
+   "pass": true,
+   "evidence": "(-1, 0) | (2, 0) | crosses the x-axis at x = -1 and x = 2"
+  }
+ },
+ "passed": 5,
+ "total": 5,
+ "score": 1.0,
+ "all_passed": true,
+ "checked_text": "we're looking for where this red parabola crosses the x-axis, so i'll circle the two crossing spots. at those points, the height is zero: y = 0.\ny = 0 here\n\nnow we use the printed equation, y = x2 - x - 2. since x-axis crossings have y = 0, replace y with 0.\n0 = x2-x-2\n\nto solve 0 = x2 - x - 2, find two numbers that multiply to -2 and add to -1. those are -2 and +1, so the factors are x - 2 and x + 1.\n(x-2)(x+1)=0\n\nif two factors multiply to zero, at least one factor must be zero. so set each factor equal to zero and solve: x - 2 = 0 gives x = 2, and x + 1 = 0 gives x = -1.\nx = 2\nx = -1\nsolutions\n\nso the parabola crosses the x-axis at x = -1 and x = 2. as coordinate points, the intercepts are (-1, 0) and (2, 0).\n(-1,0), (2,0)\nset y=0 -> factor quadratic\nfactor quadratic -> set factors zero\nset factors zero -> get x values\nget x values -> plot intercepts"
+}

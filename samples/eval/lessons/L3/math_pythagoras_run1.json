@@ -1,0 +1,787 @@
+{
+ "version": "L3",
+ "note": "",
+ "case": "math_pythagoras",
+ "topic": "math",
+ "run": 1,
+ "question": "How does this picture prove the Pythagorean theorem?",
+ "source": "math_pythagoras_squares.jpg",
+ "page": null,
+ "backend": {
+  "path": "D:\\BananaHack\\backend",
+  "commit": "0b90f8e",
+  "subject": "Harden perception against native OpenCV failures",
+  "dirty": true
+ },
+ "started": "2026-10-09T22:37:51+06:00",
+ "finished": "2026-10-09T22:38:20+06:00",
+ "jobs": 2,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "D:\\BananaHack\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L3_math_pythagoras_1_tehk_s15\\data",
+ "perceive_s": 3.509,
+ "perception": {
+  "image_id": "11c63d5148bd",
+  "width": 1000,
+  "height": 909,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.201,
+   "ink": 0.093,
+   "ocr": 2.885,
+   "text": 0.002,
+   "rescue": 0.079,
+   "regions": 0.082,
+   "freespace": 0.003,
+   "som": 0.015,
+   "total": 3.361,
+   "prepare": 0.051
+  },
+  "regions": 41
+ },
+ "regions": {
+  "R23": "a",
+  "R28": "a",
+  "R36": "β"
+ },
+ "request": {
+  "image_id": "11c63d5148bd",
+  "question": "How does this picture prove the Pythagorean theorem?"
+ },
+ "lesson_s": 21.225,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "38e918885b5a",
+  "image_id": "11c63d5148bd",
+  "title": "Pythagoras by Area Shuffling",
+  "summary": "This picture proves the Pythagorean theorem by placing three squares on the sides of a right triangle, then using the two acute angles to show the big tilted square has the right orientation. The area of the tilted square on the hypotenuse equals the combined areas of the two leg-squares.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Find the theorem in the picture",
+    "narration": "Great question: this picture is an area proof of Pythagoras. The green triangle is the right triangle, and the three colored grids are squares built on its three sides.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "green triangle",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 1.0,
+        "h": 1.0
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.85,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "box",
+      "color": "red",
+      "target_ids": [
+       "R22"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "three colored grids",
+      "geometry": {
+       "box": {
+        "x": 0.084,
+        "y": 0.39383938393839385,
+        "w": 0.106,
+        "h": 0.11441144114411445
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.85,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a3",
+      "kind": "box",
+      "color": "orange",
+      "target_ids": [
+       "R38"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "three colored grids",
+      "geometry": {
+       "box": {
+        "x": 0.536,
+        "y": 0.6886688668866887,
+        "w": 0.11099999999999999,
+        "h": 0.12211221122112204
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.6,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s1a4",
+      "kind": "box",
+      "color": "blue",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "three colored grids",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 0.95364,
+        "h": 1.0
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.85,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "The side labels set the angles",
+    "narration": "Now watch the angles: α and β are the two sharp angles of the right triangle. Because a right triangle has 180 degrees total, α plus β must make 90 degrees.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R23"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "α and β",
+      "geometry": {
+       "box": {
+        "x": 0.456,
+        "y": 0.38063806380638066,
+        "w": 0.16199999999999998,
+        "h": 0.17821782178217815
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.85,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R36"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "α and β",
+      "geometry": {
+       "box": {
+        "x": 0.463,
+        "y": 0.6402640264026402,
+        "w": 0.03999999999999998,
+        "h": 0.06160616061606161
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.85,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "α+β=90°",
+      "cue": "make 90 degrees",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 0.883,
+        "h": 1.0
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.8266533,
+        "y": 0.004,
+        "w": 0.16934669999999996,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8818838444027851,
+         "y": 0.0625
+        },
+        {
+         "x": 0.883,
+         "y": 0.06139115352439032
+        }
+       ]
+      },
+      "confidence": 0.85,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Why the tilted shape is a square",
+    "narration": "Here is the key geometry move: at the hypotenuse square’s corner, the neighboring triangle angles are α and β. Since α plus β is 90 degrees, the remaining corner is also a right angle, so the tilted red shape is truly a square.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R36"
+      ],
+      "to_ids": [
+       "R18"
+      ],
+      "span": null,
+      "text": "angle matches",
+      "cue": "α and β",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.4932938839282667,
+         "y": 0.6400948596877786
+        },
+        {
+         "x": 0.5558835333463414,
+         "y": 0.5363792884035878
+        },
+        {
+         "x": 0.5688669935854446,
+         "y": 0.41271042084027426
+        }
+       ],
+       "label_box": {
+        "x": 0.6824232360515986,
+        "y": 0.6842416243998138,
+        "w": 0.2969703,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.6,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s3a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R18"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "all corners 90°",
+      "cue": "truly a square",
+      "geometry": {
+       "box": {
+        "x": 0.546,
+        "y": 0.3388338833883388,
+        "w": 0.07399999999999995,
+        "h": 0.06270627062706269
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.6564885,
+        "y": 0.4746651540154015,
+        "w": 0.33951149999999997,
+        "h": 0.05850000000000005
+       },
+       "leader": [
+        {
+         "x": 0.7700179452512765,
+         "y": 0.4730036776305861
+        },
+        {
+         "x": 0.626044271479141,
+         "y": 0.39385142252985356
+        }
+       ]
+      },
+      "confidence": 0.6,
+      "grounding": "id_only"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Read the side areas from the grids",
+    "narration": "The left square is 4 by 4, so its area is 16. The bottom square is 3 by 3, so its area is 9.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R22"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "4² = 16",
+      "cue": "4 by 4",
+      "geometry": {
+       "box": {
+        "x": 0.092,
+        "y": 0.40264026402640263,
+        "w": 0.09,
+        "h": 0.09680968096809683
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.092,
+        "y": 0.5286999449944995,
+        "w": 0.1693467,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.1645414253056864,
+         "y": 0.5252589452626875
+        },
+        {
+         "x": 0.15751744468918855,
+         "y": 0.5063319444581235
+        }
+       ]
+      },
+      "confidence": 0.85,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R38"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "3² = 9",
+      "cue": "3 by 3",
+      "geometry": {
+       "box": {
+        "x": 0.544,
+        "y": 0.6974697469746974,
+        "w": 0.09499999999999997,
+        "h": 0.10451045104510448
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.77194125,
+        "y": 0.7434801980198019,
+        "w": 0.14807609999999993,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.7685741003934314,
+         "y": 0.7657326776966665
+        },
+        {
+         "x": 0.6457342992131371,
+         "y": 0.7546278164002932
+        }
+       ]
+      },
+      "confidence": 0.6,
+      "grounding": "id_only"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "See the hypotenuse area",
+    "narration": "Follow the tilted square: it is a 5 by 5 grid, so its area is 25. That matches 16 plus 9, exactly the Pythagorean relationship.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "box",
+      "color": "blue",
+      "target_ids": [
+       "R18"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "tilted square",
+      "geometry": {
+       "box": {
+        "x": 0.538,
+        "y": 0.33003300330033003,
+        "w": 0.08999999999999997,
+        "h": 0.08030803080308024
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.6,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s5a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R18"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "5² = 25",
+      "cue": "5 by 5",
+      "geometry": {
+       "box": {
+        "x": 0.546,
+        "y": 0.3388338833883388,
+        "w": 0.07399999999999995,
+        "h": 0.06270627062706269
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.24371205000000004,
+        "y": 0.1340838833883388,
+        "w": 0.1693467,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.3671068386837643,
+         "y": 0.1947918241175322
+        },
+        {
+         "x": 0.540564511243833,
+         "y": 0.3357117219287266
+        }
+       ]
+      },
+      "confidence": 0.6,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s5a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "16 + 9 = 25",
+      "cue": "16 plus 9",
+      "geometry": {
+       "box": {
+        "x": 0.65,
+        "y": 0.72,
+        "w": 0.21999999999999997,
+        "h": 0.07999999999999996
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.7415708999999999,
+        "y": 0.8292499999999999,
+        "w": 0.2544291000000001,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8338725695218027,
+         "y": 0.8268880635957985
+        },
+        {
+         "x": 0.8093939759310138,
+         "y": 0.8047238728084026
+        }
+       ]
+      },
+      "confidence": 0.3,
+      "grounding": "llm_only"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "The proof idea",
+    "narration": "So the picture proves Pythagoras by areas: the two leg-squares together equal the hypotenuse-square. In symbols, a² plus b² equals c².",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "arrow",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [
+       "R22"
+      ],
+      "to_ids": [
+       "R18"
+      ],
+      "span": null,
+      "text": "part of total",
+      "cue": "two leg-squares",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.19266731368104398,
+         "y": 0.4409528344962021
+        },
+        {
+         "x": 0.3707764766517183,
+         "y": 0.45512722980356146
+        },
+        {
+         "x": 0.535332686318956,
+         "y": 0.37882891946394726
+        }
+       ],
+       "label_box": {
+        "x": 0.07641793832585914,
+        "y": 0.22115839332581144,
+        "w": 0.2969703,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.6,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s6a2",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R38"
+      ],
+      "to_ids": [
+       "R18"
+      ],
+      "span": null,
+      "text": "part of total",
+      "cue": "together equal",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.5900634281227591,
+         "y": 0.6855798488774847
+        },
+        {
+         "x": 0.5573298421978734,
+         "y": 0.5503095672854849
+        },
+        {
+         "x": 0.5839684559352118,
+         "y": 0.4134300521126144
+        }
+       ],
+       "label_box": {
+        "x": 0.6990297,
+        "y": 0.3385565988242606,
+        "w": 0.2969703,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.6,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s6a3",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R18"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "a²+b²=c²",
+      "cue": "In symbols",
+      "geometry": {
+       "box": {
+        "x": 0.546,
+        "y": 0.3388338833883388,
+        "w": 0.07399999999999995,
+        "h": 0.06270627062706269
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.75294125,
+        "y": 0.1340838833883388,
+        "w": 0.1906173,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8079860933007953,
+         "y": 0.19473330957243326
+        },
+        {
+         "x": 0.6255124625452186,
+         "y": 0.33703399520449073
+        }
+       ]
+      },
+      "confidence": 0.6,
+      "grounding": "id_only"
+     }
+    ],
+    "sketch": "flowchart LR\nA[Right triangle] --> B[Build 3 squares]\nB --> C[Use α+β]\nC --> D[Hypotenuse square]\nD --> E[Compare areas]\nE --> F[a²+b²=c²]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the green right triangle.",
+    "answer_ids": [
+     "R1"
+    ],
+    "answer_box": {
+     "x": 0.0,
+     "y": 0.0,
+     "w": 0.883,
+     "h": 1.0
+    },
+    "explanation": "That triangle is the original right triangle whose side-squares are being compared."
+   },
+   {
+    "question": "Tap the square with area 3².",
+    "answer_ids": [
+     "R38"
+    ],
+    "answer_box": {
+     "x": 0.544,
+     "y": 0.6974697469746974,
+     "w": 0.09499999999999997,
+     "h": 0.10451045104510448
+    },
+    "explanation": "The bottom yellow grid is 3 by 3, so it represents one leg squared."
+   },
+   {
+    "question": "Tap the hypotenuse square.",
+    "answer_ids": [
+     "R18"
+    ],
+    "answer_box": {
+     "x": 0.546,
+     "y": 0.3388338833883388,
+     "w": 0.07399999999999995,
+     "h": 0.06270627062706269
+    },
+    "explanation": "The tilted square is built on the slanted side of the triangle, the hypotenuse, and its area is c²."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 17.452,
+   "ground": 3.735,
+   "total": 21.187,
+   "input_tokens": 5167.0,
+   "output_tokens": 2045.0,
+   "approx_agreement": 0.458
+  },
+  "warnings": [
+   "step 3: dropped a arrow with no usable geometry"
+  ],
+  "question": "How does this picture prove the Pythagorean theorem?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 5167,
+  "output_tokens": 2045,
+  "seconds": 17.452
+ },
+ "checks": {
+  "areas": {
+   "pass": true,
+   "evidence": "9 | 16 | 25"
+  },
+  "sides_3_4_5": {
+   "pass": true,
+   "evidence": "4 by 4, so its area is 16. the bottom square is 3 by 3"
+  },
+  "sum_9_16_25": {
+   "pass": true,
+   "evidence": "16 + 9 = 25 | 16 + 9 = 25"
+  },
+  "theorem": {
+   "pass": true,
+   "evidence": "a2 plus b2 equals c2"
+  },
+  "rearrangement": {
+   "pass": false,
+   "evidence": "MISSING any: 0 of 4 matched, need 1"
+  }
+ },
+ "passed": 4,
+ "total": 5,
+ "score": 0.8,
+ "all_passed": false,
+ "checked_text": "great question: this picture is an area proof of pythagoras. the green triangle is the right triangle, and the three colored grids are squares built on its three sides.\n\nnow watch the angles: α and β are the two sharp angles of the right triangle. because a right triangle has 180 degrees total, α plus β must make 90 degrees.\nα+β=90°\n\nhere is the key geometry move: at the hypotenuse square's corner, the neighboring triangle angles are α and β. since α plus β is 90 degrees, the remaining corner is also a right angle, so the tilted red shape is truly a square.\nangle matches\nall corners 90°\n\nthe left square is 4 by 4, so its area is 16. the bottom square is 3 by 3, so its area is 9.\n42 = 16\n32 = 9\n\nfollow the tilted square: it is a 5 by 5 grid, so its area is 25. that matches 16 plus 9, exactly the pythagorean relationship.\n52 = 25\n16 + 9 = 25\n\nso the picture proves pythagoras by areas: the two leg-squares together equal the hypotenuse-square. in symbols, a2 plus b2 equals c2.\npart of total\npart of total\na2+b2=c2\nright triangle -> build 3 squares\nbuild 3 squares -> use α+β\nuse α+β -> hypotenuse square\nhypotenuse square -> compare areas\ncompare areas -> a2+b2=c2"
+}

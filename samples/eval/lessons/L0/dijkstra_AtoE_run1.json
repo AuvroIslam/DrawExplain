@@ -1,0 +1,778 @@
+{
+ "version": "L0",
+ "note": "teach-by-doing rule only (no simulation rule)",
+ "case": "dijkstra_AtoE",
+ "run": 1,
+ "question": "how to get the shortest path from A to E",
+ "source": "dijkstra-slides.pdf",
+ "page": 3,
+ "backend": {
+  "path": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt\\L0\\backend",
+  "commit": "3da1980",
+  "subject": "Add PDF reader mode with page context",
+  "dirty": false
+ },
+ "started": "2026-10-09T19:49:20+06:00",
+ "finished": "2026-10-09T19:50:25+06:00",
+ "dry_run": false,
+ "ok": true,
+ "app_file": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt\\L0\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\tmp\\eval_L0_dijkstra_AtoE_1_zb_tnw0y\\data",
+ "perceive_s": 40.353,
+ "perception": {
+  "image_id": "6b6bc1594edb",
+  "width": 1599,
+  "height": 1199,
+  "doc_id": "c26327999053",
+  "page": 3,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.357,
+   "ink": 0.259,
+   "ocr": 36.806,
+   "text": 0.066,
+   "rescue": 1.593,
+   "regions": 0.284,
+   "freespace": 0.006,
+   "som": 0.068,
+   "total": 39.44,
+   "prepare": 0.06
+  },
+  "regions": 49
+ },
+ "regions": {
+  "R1": "Dijkstra's Algorithm",
+  "R2": "(calculating the cheapest path from a source vertex to all other vertices)",
+  "R3": "B",
+  "R4": "5",
+  "R5": "B",
+  "R6": "7",
+  "R9": "A",
+  "R10": "A",
+  "R11": "C",
+  "R12": "C",
+  "R13": "18",
+  "R20": "8",
+  "R21": "1",
+  "R22": "6",
+  "R24": "H",
+  "R26": "D",
+  "R27": "H",
+  "R28": "9",
+  "R29": "11",
+  "R30": "D",
+  "R35": "3",
+  "R36": "2",
+  "R37": "2",
+  "R38": "20",
+  "R39": "G",
+  "R40": "E",
+  "R41": "G",
+  "R42": "E",
+  "R44": "F",
+  "R46": "F",
+  "R47": "1",
+  "R48": "4",
+  "R49": "Let's trace through the algorithm to see how it works."
+ },
+ "request": {
+  "image_id": "6b6bc1594edb",
+  "question": "how to get the shortest path from A to E"
+ },
+ "lesson_s": 20.606,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "1409a0314101",
+  "image_id": "6b6bc1594edb",
+  "title": "Shortest Path from A to E",
+  "summary": "This page sets up Dijkstra’s algorithm on a weighted graph. To answer your question, we trace from A toward E by repeatedly keeping the cheapest known distance and improving neighbors.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Find the problem on the graph",
+    "narration": "You asked how to get the shortest path from A to E; that answer lives in this weighted graph. I’ll circle A as the source and E as the destination we’re trying to reach.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "weighted graph",
+      "geometry": {
+       "box": {
+        "x": 0.15691056910569104,
+        "y": 0.06839032527105923,
+        "w": 0.6855534709193245,
+        "h": 0.1201000834028357
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R9"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "circle A",
+      "geometry": {
+       "box": {
+        "x": 0.3508505315822389,
+        "y": 0.2994245204336948,
+        "w": 0.06815509693558475,
+        "h": 0.09339449541284395
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a3",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R40"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "E as the",
+      "geometry": {
+       "box": {
+        "x": 0.5809943714821764,
+        "y": 0.5829941618015012,
+        "w": 0.06815509693558475,
+        "h": 0.09339449541284406
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Initialize distances from A",
+    "narration": "Dijkstra starts with A at distance zero. From A, the first possible costs are B = 5, I = 1, G = 9, and H = 18, so I is the cheapest next step.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R9"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "dist = 0",
+      "cue": "distance zero",
+      "geometry": {
+       "box": {
+        "x": 0.3608505315822389,
+        "y": 0.3127606338615513,
+        "w": 0.04815509693558473,
+        "h": 0.06672226855713093
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.42221701063164474,
+        "y": 0.32850291909924934,
+        "w": 0.09471544715447155,
+        "h": 0.03523769808173477
+       },
+       "leader": [
+        {
+         "x": 0.4222170106316447,
+         "y": 0.34612176814011675
+        },
+        {
+         "x": 0.4090056285178236,
+         "y": 0.34612176814011675
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R9"
+      ],
+      "to_ids": [
+       "R25"
+      ],
+      "span": null,
+      "text": "cost 1",
+      "cue": "I = 1",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.416568950655563,
+         "y": 0.3826132362881166
+        },
+        {
+         "x": 0.45236974054142065,
+         "y": 0.4073165141814669
+        },
+        {
+         "x": 0.47586381982598797,
+         "y": 0.4509981064975381
+        }
+       ],
+       "label_box": {
+        "x": 0.46625679022067906,
+        "y": 0.38182756484719715,
+        "w": 0.0735772357723577,
+        "h": 0.03523769808173477
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R25"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "best so far",
+      "cue": "cheapest next step",
+      "geometry": {
+       "box": {
+        "x": 0.4834271419637273,
+        "y": 0.4553794829024187,
+        "w": 0.048155096935584785,
+        "h": 0.06422018348623859
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.44429330831769853,
+        "y": 0.6076939115929942,
+        "w": 0.12642276422764231,
+        "h": 0.035237698081734825
+       },
+       "leader": [
+        {
+         "x": 0.5075046904315197,
+         "y": 0.6035266888865576
+        },
+        {
+         "x": 0.5075046904315197,
+         "y": 0.5279341118015304
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Relax through I",
+    "narration": "Now we lock in I with total distance 1. From I to E costs 2 more, so A to I to E gives 1 + 2 = 3, which is already very strong.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "circle",
+      "color": "orange",
+      "target_ids": [
+       "R25"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "lock in I",
+      "geometry": {
+       "box": {
+        "x": 0.4734271419637273,
+        "y": 0.44204336947456213,
+        "w": 0.0681550969355848,
+        "h": 0.09089241034195161
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R25"
+      ],
+      "to_ids": [
+       "R40"
+      ],
+      "span": null,
+      "text": "+2",
+      "cue": "I to E",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.5386836738366813,
+         "y": 0.5287075986590448
+        },
+        {
+         "x": 0.5666661046966062,
+         "y": 0.5513555018111466
+        },
+        {
+         "x": 0.5838929365448072,
+         "y": 0.5884733854944164
+        }
+       ],
+       "label_box": {
+        "x": 0.5602248597279152,
+        "y": 0.4971122796795517,
+        "w": 0.031300813008130035,
+        "h": 0.03523769808173477
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R40"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "dist = 3",
+      "cue": "1 + 2 = 3",
+      "geometry": {
+       "box": {
+        "x": 0.5909943714821764,
+        "y": 0.5963302752293578,
+        "w": 0.04815509693558473,
+        "h": 0.06672226855713093
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.6523608505315822,
+        "y": 0.6120725604670558,
+        "w": 0.09471544715447155,
+        "h": 0.035237698081734825
+       },
+       "leader": [
+        {
+         "x": 0.6523608505315822,
+         "y": 0.6296914095079232
+        },
+        {
+         "x": 0.6391494684177611,
+         "y": 0.6296914095079232
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Check if anything beats 3",
+    "narration": "Dijkstra still checks other unsettled routes, because a later path might beat E’s current 3. But the next cheapest alternatives from A are B at 5 and G at 4 through I, both already exceed 3 before reaching E.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [
+       "R9"
+      ],
+      "to_ids": [
+       "R3"
+      ],
+      "span": null,
+      "text": "5",
+      "cue": "B at 5",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.4184367100953388,
+         "y": 0.3303782082911956
+        },
+        {
+         "x": 0.44347821497073153,
+         "y": 0.32692014954055415
+        },
+        {
+         "x": 0.46461519734681256,
+         "y": 0.30868189373601324
+        }
+       ],
+       "label_box": {
+        "x": 0.39423754400819255,
+        "y": 0.2653643830126923,
+        "w": 0.03130081300813009,
+        "h": 0.03523769808173477
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [
+       "R25"
+      ],
+      "to_ids": [
+       "R39"
+      ],
+      "span": null,
+      "text": "1+3=4",
+      "cue": "G at 4",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.47588289613111384,
+         "y": 0.524174201159225
+        },
+        {
+         "x": 0.44002274429367016,
+         "y": 0.5490952291749156
+        },
+        {
+         "x": 0.4165498743504371,
+         "y": 0.5930067829942363
+        }
+       ],
+       "label_box": {
+        "x": 0.47990036526753554,
+        "y": 0.5488386904840383,
+        "w": 0.0630081300813008,
+        "h": 0.035237698081734825
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R40"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "smaller wins",
+      "cue": "exceed 3",
+      "geometry": {
+       "box": {
+        "x": 0.5909943714821764,
+        "y": 0.5963302752293578,
+        "w": 0.04815509693558473,
+        "h": 0.06672226855713093
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.5909943714821764,
+        "y": 0.6806713928273561,
+        "w": 0.13699186991869916,
+        "h": 0.035237698081734825
+       },
+       "leader": [
+        {
+         "x": 0.64808193665874,
+         "y": 0.6806713928273561
+        },
+        {
+         "x": 0.636673566875954,
+         "y": 0.6630525437864887
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Answer: A → I → E",
+    "narration": "So the shortest path from A to E on this page is A to I to E, with total cost 3. The key Dijkstra idea is: always expand the smallest known distance next.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R9"
+      ],
+      "to_ids": [
+       "R25"
+      ],
+      "span": null,
+      "text": "1",
+      "cue": "A to I",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.416568950655563,
+         "y": 0.3826132362881166
+        },
+        {
+         "x": 0.45236974054142065,
+         "y": 0.4073165141814669
+        },
+        {
+         "x": 0.47586381982598797,
+         "y": 0.4509981064975381
+        }
+       ],
+       "label_box": {
+        "x": 0.5191023186759637,
+        "y": 0.2837249793592906,
+        "w": 0.031300813008130035,
+        "h": 0.03523769808173477
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R25"
+      ],
+      "to_ids": [
+       "R40"
+      ],
+      "span": null,
+      "text": "+2",
+      "cue": "to E",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.5386836738366813,
+         "y": 0.5287075986590448
+        },
+        {
+         "x": 0.5666661046966062,
+         "y": 0.5513555018111466
+        },
+        {
+         "x": 0.5838929365448072,
+         "y": 0.5884733854944164
+        }
+       ],
+       "label_box": {
+        "x": 0.6337864607285406,
+        "y": 0.5247394690039887,
+        "w": 0.031300813008130035,
+        "h": 0.035237698081734825
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R9",
+       "R25",
+       "R40"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "total = 3",
+      "cue": "total cost 3",
+      "geometry": {
+       "box": {
+        "x": 0.3608505315822389,
+        "y": 0.3127606338615513,
+        "w": 0.2782989368355222,
+        "h": 0.3502919099249374
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.6523608505315822,
+        "y": 0.3127606338615513,
+        "w": 0.10528455284552851,
+        "h": 0.03523769808173477
+       },
+       "leader": [
+        {
+         "x": 0.6793667672219911,
+         "y": 0.3500787997616312
+        },
+        {
+         "x": 0.6445644400925521,
+         "y": 0.37682136683114836
+        }
+       ]
+      },
+      "confidence": 0.978,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart LR\nA[Start A] --> B[Pick smallest]\nB --> C[Relax neighbors]\nC --> D[Update distances]\nD --> E[Reach E]\nE --> F[Path cost 3]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the source vertex A.",
+    "answer_ids": [
+     "R9"
+    ],
+    "answer_box": {
+     "x": 0.3608505315822389,
+     "y": 0.3127606338615513,
+     "w": 0.04815509693558473,
+     "h": 0.06672226855713093
+    },
+    "explanation": "A is the starting point, so its Dijkstra distance begins at 0."
+   },
+   {
+    "question": "Tap the intermediate vertex on the shortest A-to-E path.",
+    "answer_ids": [
+     "R25"
+    ],
+    "answer_box": {
+     "x": 0.4834271419637273,
+     "y": 0.4553794829024187,
+     "w": 0.048155096935584785,
+     "h": 0.06422018348623859
+    },
+    "explanation": "The best route goes through I because A to I costs 1 and I to E costs 2."
+   },
+   {
+    "question": "Tap the destination vertex E.",
+    "answer_ids": [
+     "R40"
+    ],
+    "answer_box": {
+     "x": 0.5909943714821764,
+     "y": 0.5963302752293578,
+     "w": 0.04815509693558473,
+     "h": 0.06672226855713093
+    },
+    "explanation": "E is the target, reached with total shortest distance 3 via A → I → E."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 20.516,
+   "ground": 0.07,
+   "total": 20.585,
+   "input_tokens": 7546.0,
+   "output_tokens": 1789.0,
+   "approx_agreement": 1.0
+  },
+  "warnings": [],
+  "question": "how to get the shortest path from A to E",
+  "context_pages": [
+   1,
+   2
+  ]
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 7546,
+  "output_tokens": 1789,
+  "seconds": 20.515
+ },
+ "checks": {
+  "init": {
+   "pass": false,
+   "evidence": "MISSING | a: dist = 0"
+  },
+  "relax_A": {
+   "pass": true,
+   "evidence": "b = 5 | g = 9 | h = 18 | i = 1"
+  },
+  "relax_I_all": {
+   "pass": false,
+   "evidence": "MISSING | MISSING | e gives 1 + 2 = 3"
+  },
+  "order": {
+   "pass": false,
+   "evidence": "I settled: lock in i | E final: MISSING"
+  },
+  "answer": {
+   "pass": true,
+   "evidence": "a to i to e | total cost 3"
+  }
+ },
+ "passed": 2,
+ "total": 5,
+ "score": 0.4,
+ "all_passed": false,
+ "checked_text": "you asked how to get the shortest path from a to e; that answer lives in this weighted graph. i'll circle a as the source and e as the destination we're trying to reach.\n\ndijkstra starts with a at distance zero. from a, the first possible costs are b = 5, i = 1, g = 9, and h = 18, so i is the cheapest next step.\na: dist = 0\na -> ?: cost 1\nbest so far\n\nnow we lock in i with total distance 1. from i to e costs 2 more, so a to i to e gives 1 + 2 = 3, which is already very strong.\n? -> e: +2\ne: dist = 3\n\ndijkstra still checks other unsettled routes, because a later path might beat e's current 3. but the next cheapest alternatives from a are b at 5 and g at 4 through i, both already exceed 3 before reaching e.\na -> b: 5\n? -> g: 1+3=4\ne: smaller wins\n\nso the shortest path from a to e on this page is a to i to e, with total cost 3. the key dijkstra idea is: always expand the smallest known distance next.\na -> ?: 1\n? -> e: +2\na+e: total = 3\nstart a -> pick smallest\npick smallest -> relax neighbors\nrelax neighbors -> update distances\nupdate distances -> reach e\nreach e -> path cost 3",
+ "jobs": 3
+}

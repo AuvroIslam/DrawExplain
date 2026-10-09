@@ -1,0 +1,618 @@
+{
+ "version": "L2",
+ "note": "",
+ "case": "math_unit_circle",
+ "topic": "math",
+ "run": 2,
+ "question": "What is sin(150°) and why?",
+ "source": "math_unit_circle.png",
+ "page": null,
+ "backend": {
+  "path": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend",
+  "commit": "6dbe976",
+  "subject": "Simulate procedures faithfully, deepen board colours",
+  "dirty": false
+ },
+ "started": "2026-10-09T22:39:57+06:00",
+ "finished": "2026-10-09T22:40:26+06:00",
+ "jobs": 2,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L2_math_unit_circle_2_wsttu28m\\data",
+ "perceive_s": 12.054,
+ "perception": {
+  "image_id": "9b661fe64025",
+  "width": 1280,
+  "height": 1280,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.243,
+   "ink": 0.126,
+   "ocr": 9.37,
+   "text": 0.028,
+   "rescue": 1.98,
+   "regions": 0.072,
+   "freespace": 0.005,
+   "som": 0.041,
+   "total": 11.866,
+   "prepare": 0.051
+  },
+  "regions": 80
+ },
+ "regions": {
+  "R2": "y\n(0, 1)",
+  "R3": "y",
+  "R9": "(0, 1)",
+  "R11": "1/2",
+  "R12": "1209 57 135° 6 150° 180° T",
+  "R16": "2\n90°",
+  "R17": "2",
+  "R18": "π3π4\n6",
+  "R19": "π3π4",
+  "R25": "90°",
+  "R26": "57\n6",
+  "R27": "57",
+  "R28": "1209\n135°\n150°",
+  "R29": "1209",
+  "R31": "o09",
+  "R32": "6",
+  "R34": "135°",
+  "R35": "6",
+  "R36": "150°",
+  "R37": "30°",
+  "R38": "(-1,0)",
+  "R39": "180°",
+  "R40": "0°",
+  "R41": "0",
+  "R42": "(1,0)",
+  "R43": "T",
+  "R44": "210° 2259 240°",
+  "R45": "210°\n2259\n240°",
+  "R46": "210°",
+  "R47": "3309\n315°\n300°",
+  "R48": "3309",
+  "R49": "2259",
+  "R50": "315°",
+  "R51": "11π\n9",
+  "R52": "11π",
+  "R54": "240°",
+  "R55": "300°",
+  "R56": "9",
+  "R60": "(V,",
+  "R62": "270°\n3π\n2",
+  "R63": "270°",
+  "R64": "2",
+  "R65": "2",
+  "R69": "3π",
+  "R71": "2",
+  "R73": "Z-T",
+  "R76": "(0, -1)",
+  "R78": "7%"
+ },
+ "request": {
+  "image_id": "9b661fe64025",
+  "question": "What is sin(150°) and why?"
+ },
+ "lesson_s": 13.796,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "7d7257697aad",
+  "image_id": "9b661fe64025",
+  "title": "Why sin(150°) = 1/2",
+  "summary": "On the unit circle, sine is the y-coordinate. Since 150° is in Quadrant II with reference angle 30°, its y-value matches sin(30°), so sin(150°)=1/2.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Find the angle on the circle",
+    "narration": "We’re answering: what is sin(150°)? I’ll circle the 150° ray because the sine value lives at the point where this ray hits the unit circle.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R36"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "150° ray",
+      "geometry": {
+       "box": {
+        "x": 0.30712890625,
+        "y": 0.361875,
+        "w": 0.08964843750000001,
+        "h": 0.07312499999999994
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.981,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "hits the unit circle",
+      "geometry": {
+       "box": {
+        "x": 0.21187499999999998,
+        "y": 0.31890625,
+        "w": 0.04734375000000002,
+        "h": 0.04812500000000003
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Sine means y-coordinate",
+    "narration": "On this chart, each outside ordered pair is (cos θ, sin θ). So for 150°, we only need the second coordinate—the height above the x-axis.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R15",
+       "R24"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "ordered pair",
+      "geometry": {
+       "box": {
+        "x": 0.03583984375,
+        "y": 0.21005859375,
+        "w": 0.20566406250000002,
+        "h": 0.1634765625
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R15",
+       "R24"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "(cos, sin)",
+      "cue": "cos θ, sin θ",
+      "geometry": {
+       "box": {
+        "x": 0.0625,
+        "y": 0.23125,
+        "w": 0.15234375,
+        "h": 0.12109375
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.010421874999999997,
+        "y": 0.38159375,
+        "w": 0.25649999999999995,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.13867187499999997,
+         "y": 0.3780582160940672
+        },
+        {
+         "x": 0.13867187499999997,
+         "y": 0.35941481781186546
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [
+       "R15",
+       "R24"
+      ],
+      "span": null,
+      "text": "read point",
+      "cue": "for 150°",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.221875,
+         "y": 0.33574691280241936
+        },
+        {
+         "x": 0.21880506552419354,
+         "y": 0.3330461189516129
+        },
+        {
+         "x": 0.21484375,
+         "y": 0.33203282510080645
+        }
+       ],
+       "label_box": {
+        "x": 0.2138947202620968,
+        "y": 0.12403049395161292,
+        "w": 0.25650000000000006,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Use the reference angle",
+    "narration": "Now look: 150° is 30° short of 180°, so its reference angle is 30°. That means its height matches the 30° point, just mirrored to the left.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R39"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "180°",
+      "geometry": {
+       "box": {
+        "x": 0.25525390625,
+        "y": 0.44859375,
+        "w": 0.09808593749999994,
+        "h": 0.05203124999999997
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R37"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "30°",
+      "geometry": {
+       "box": {
+        "x": 0.6009374999999999,
+        "y": 0.36578125,
+        "w": 0.07000000000000006,
+        "h": 0.07
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.975,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R36"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "180−150=30°",
+      "cue": "reference angle",
+      "geometry": {
+       "box": {
+        "x": 0.31875,
+        "y": 0.371875,
+        "w": 0.06640625,
+        "h": 0.05312499999999998
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.004,
+        "y": 0.498125,
+        "w": 0.2799,
+        "h": 0.05849999999999994
+       },
+       "leader": [
+        {
+         "x": 0.19414137876640564,
+         "y": 0.49626224195997815
+        },
+        {
+         "x": 0.3127399642316094,
+         "y": 0.4227450526705397
+        }
+       ]
+      },
+      "confidence": 0.981,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Read the matching height",
+    "narration": "At 30°, the point is labeled with y-coordinate 1/2. Mirroring into Quadrant II keeps the same height, so the sine stays positive 1/2.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "circle",
+      "color": "orange",
+      "target_ids": [
+       "R23",
+       "R21"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "At 30°",
+      "geometry": {
+       "box": {
+        "x": 0.747578125,
+        "y": 0.225390625,
+        "w": 0.18140625,
+        "h": 0.14765625
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "highlight",
+      "color": "orange",
+      "target_ids": [
+       "R21"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "1/2",
+      "text": null,
+      "cue": "y-coordinate 1/2",
+      "geometry": {
+       "box": {
+        "x": 0.84921875,
+        "y": 0.23665625,
+        "w": 0.05859375,
+        "h": 0.08137499999999998
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.978,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "same height",
+      "cue": "same height",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.7324362915010153,
+         "y": 0.34296875
+        },
+        {
+         "x": 0.496484375,
+         "y": 0.39959720996024367
+        },
+        {
+         "x": 0.26053245849898476,
+         "y": 0.34296875
+        }
+       ],
+       "label_box": {
+        "x": 0.647421875,
+        "y": 0.5222204799801218,
+        "w": 0.27990000000000004,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Final answer",
+    "narration": "So the answer is sin(150°)=1/2. Big idea: sine is height on the unit circle, and 150° has the same height as 30° in Quadrant II.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "sin=1/2",
+      "cue": "sin(150°)=1/2",
+      "geometry": {
+       "box": {
+        "x": 0.221875,
+        "y": 0.32890625,
+        "w": 0.02734375,
+        "h": 0.02812500000000001
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.27846875,
+        "y": 0.24115625000000002,
+        "w": 0.18629999999999997,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.3136483957050178,
+         "y": 0.3013198670390071
+        },
+        {
+         "x": 0.25545810200081714,
+         "y": 0.3323507702797471
+        }
+       ]
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": "flowchart LR\nA[150° angle] --> B[Reference 30°]\nB --> C[Same height]\nC --> D[Quadrant II]\nD --> E[sin positive]\nE --> F[sin = 1/2]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the 150° label.",
+    "answer_ids": [
+     "R36"
+    ],
+    "answer_box": {
+     "x": 0.31875,
+     "y": 0.371875,
+     "w": 0.06640625,
+     "h": 0.05312499999999998
+    },
+    "explanation": "This is the angle whose sine we are finding."
+   },
+   {
+    "question": "Tap the ordered pair for 30°.",
+    "answer_ids": [
+     "R23",
+     "R21"
+    ],
+    "answer_box": {
+     "x": 0.77109375,
+     "y": 0.24453125,
+     "w": 0.13437500000000002,
+     "h": 0.10937499999999997
+    },
+    "explanation": "Its y-coordinate is 1/2, the height that 150° shares."
+   },
+   {
+    "question": "Tap the point at 150° on the circle.",
+    "answer_ids": [],
+    "answer_box": {
+     "x": 0.221875,
+     "y": 0.32890625,
+     "w": 0.02734375,
+     "h": 0.02812500000000001
+    },
+    "explanation": "The sine of 150° is the y-coordinate of this point."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 13.714,
+   "ground": 0.052,
+   "total": 13.766,
+   "input_tokens": 7378.0,
+   "output_tokens": 1480.0,
+   "approx_agreement": 1.0
+  },
+  "warnings": [
+   "step 4 drawing 2: span '1/2' not found in R21; using the whole target"
+  ],
+  "question": "What is sin(150°) and why?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 7378,
+  "output_tokens": 1480,
+  "seconds": 13.713
+ },
+ "checks": {
+  "value_half": {
+   "pass": true,
+   "evidence": "sin(150°)=1/2 | sin(150°)=1/2"
+  },
+  "y_coordinate": {
+   "pass": true,
+   "evidence": "y-coordinate | height, so the sine stays positive 1/2"
+  },
+  "point_150": {
+   "pass": false,
+   "evidence": "MISSING any: 0 of 3 matched, need 1"
+  },
+  "reference_30": {
+   "pass": true,
+   "evidence": "reference angle | 180-150 | same height as 30°"
+  },
+  "quadrant_sign": {
+   "pass": true,
+   "evidence": "above the x-axis | quadrant ii"
+  }
+ },
+ "passed": 4,
+ "total": 5,
+ "score": 0.8,
+ "all_passed": false,
+ "checked_text": "we're answering: what is sin(150°)? i'll circle the 150° ray because the sine value lives at the point where this ray hits the unit circle.\n\non this chart, each outside ordered pair is (cos θ, sin θ). so for 150°, we only need the second coordinate-the height above the x-axis.\n(cos, sin)\nread point\n\nnow look: 150° is 30° short of 180°, so its reference angle is 30°. that means its height matches the 30° point, just mirrored to the left.\n180-150=30°\n\nat 30°, the point is labeled with y-coordinate 1/2. mirroring into quadrant ii keeps the same height, so the sine stays positive 1/2.\nsame height\n\nso the answer is sin(150°)=1/2. big idea: sine is height on the unit circle, and 150° has the same height as 30° in quadrant ii.\nsin=1/2\n150° angle -> reference 30°\nreference 30° -> same height\nsame height -> quadrant ii\nquadrant ii -> sin positive\nsin positive -> sin = 1/2"
+}

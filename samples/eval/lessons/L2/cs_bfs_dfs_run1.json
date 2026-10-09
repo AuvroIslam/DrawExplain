@@ -1,0 +1,1000 @@
+{
+ "version": "L2",
+ "note": "",
+ "case": "cs_bfs_dfs",
+ "topic": "graph algorithms",
+ "run": 1,
+ "question": "In which order does breadth-first search visit the nodes if it starts at A and takes neighbours in alphabetical order? How would depth-first search from A differ?",
+ "source": "cs_bfs_dfs.png",
+ "page": null,
+ "backend": {
+  "path": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend",
+  "commit": "6dbe976",
+  "subject": "Simulate procedures faithfully, deepen board colours",
+  "dirty": false
+ },
+ "started": "2026-10-09T23:23:32+06:00",
+ "finished": "2026-10-09T23:24:05+06:00",
+ "jobs": 2,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L2_cs_bfs_dfs_1_scvarwnv\\data",
+ "perceive_s": 9.047,
+ "perception": {
+  "image_id": "c52f92511e90",
+  "width": 1280,
+  "height": 1037,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.162,
+   "ink": 0.083,
+   "ocr": 8.512,
+   "text": 0.007,
+   "rescue": 0.012,
+   "regions": 0.063,
+   "freespace": 0.004,
+   "som": 0.025,
+   "total": 8.869,
+   "prepare": 0.041
+  },
+  "regions": 14
+ },
+ "regions": {
+  "R1": "A",
+  "R2": "A",
+  "R3": "B",
+  "R4": "C",
+  "R5": "E",
+  "R6": "B",
+  "R7": "C",
+  "R8": "E",
+  "R9": "D",
+  "R10": "F",
+  "R11": "G",
+  "R12": "D",
+  "R13": "F",
+  "R14": "G"
+ },
+ "request": {
+  "image_id": "c52f92511e90",
+  "question": "In which order does breadth-first search visit the nodes if it starts at A and takes neighbours in alphabetical order? How would depth-first search from A differ?"
+ },
+ "lesson_s": 21.991,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "ea394aab9cef",
+  "image_id": "c52f92511e90",
+  "title": "BFS vs DFS from A",
+  "summary": "We’ll run breadth-first search on the graph starting at A, using alphabetical neighbor order, then compare it with depth-first search on the same graph. The key difference is that BFS finishes one layer at a time, while DFS follows one branch as far as it can before backtracking.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Start at A",
+    "narration": "This graph question lives at A: both searches start there, and alphabetical order decides ties. I’ll mark A as visited first.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "lives at A",
+      "geometry": {
+       "box": {
+        "x": 0.5094921875,
+        "y": 0.0,
+        "w": 0.234140625,
+        "h": 0.2700337512054002
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "visit 1",
+      "cue": "visited first",
+      "geometry": {
+       "box": {
+        "x": 0.53984375,
+        "y": 0.017357762777242044,
+        "w": 0.17343750000000002,
+        "h": 0.21504339440694312
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.77252392578125,
+        "y": 0.09562945998071361,
+        "w": 0.150932109375,
+        "h": 0.05850000000000001
+       },
+       "leader": [
+        {
+         "x": 0.7693064411761839,
+         "y": 0.12487945998071359
+        },
+        {
+         "x": 0.7197162192101324,
+         "y": 0.12487945998071359
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "BFS layer 1: A’s neighbors",
+    "narration": "For BFS, we visit A’s direct neighbors next: B, C, then E in alphabetical order. These are the whole first layer around A.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [
+       "R1"
+      ],
+      "to_ids": [
+       "R3"
+      ],
+      "span": null,
+      "text": "next",
+      "cue": "B, C",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.5325579456473537,
+         "y": 0.2407378593612502
+        },
+        {
+         "x": 0.5051290324704469,
+         "y": 0.2958840895881071
+        },
+        {
+         "x": 0.46041080435264636,
+         "y": 0.32965751190200915
+        }
+       ],
+       "label_box": {
+        "x": 0.4114350631102235,
+        "y": 0.19700496668412104,
+        "w": 0.09405914062499998,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [
+       "R1"
+      ],
+      "to_ids": [
+       "R4"
+      ],
+      "span": null,
+      "text": "next",
+      "cue": "then E",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.6265625,
+         "y": 0.24510975597140897
+        },
+        {
+         "x": 0.6187210281766908,
+         "y": 0.2854387656702025
+        },
+        {
+         "x": 0.6265625,
+         "y": 0.32576777536899604
+        }
+       ],
+       "label_box": {
+        "x": 0.6510263344008455,
+        "y": 0.2796528447444552,
+        "w": 0.09405914062499998,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [
+       "R1"
+      ],
+      "to_ids": [
+       "R5"
+      ],
+      "span": null,
+      "text": "next",
+      "cue": "alphabetical order",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.7205561064687998,
+         "y": 0.24107329679311612
+        },
+        {
+         "x": 0.7653940975796957,
+         "y": 0.2750516592290304
+        },
+        {
+         "x": 0.7928543728545085,
+         "y": 0.3304475987466127
+        }
+       ],
+       "label_box": {
+        "x": 0.789434238933175,
+        "y": 0.25115605349944736,
+        "w": 0.09405914062499998,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a4",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R3"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "visit 2",
+      "cue": "first layer",
+      "geometry": {
+       "box": {
+        "x": 0.2796875,
+        "y": 0.33847637415621984,
+        "w": 0.17343750000000002,
+        "h": 0.21407907425265188
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.10505832031249998,
+        "y": 0.41626591128254575,
+        "w": 0.15093210937499998,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.2592079142925662,
+         "y": 0.44551591128254575
+        },
+        {
+         "x": 0.2732525307898676,
+         "y": 0.4455159112825458
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "BFS layer 2: expand in queue order",
+    "narration": "Now BFS expands the queue in order: from B we add D and F, from C we add G, and E only points to F which is already discovered. So BFS order is A, B, C, E, D, F, G.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R3"
+      ],
+      "to_ids": [
+       "R9"
+      ],
+      "span": null,
+      "text": "add",
+      "cue": "D and F",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.272407163415662,
+         "y": 0.5615417847906968
+        },
+        {
+         "x": 0.22766915578024113,
+         "y": 0.5953871932485136
+        },
+        {
+         "x": 0.200249086584338,
+         "y": 0.6506086491533726
+        }
+       ],
+       "label_box": {
+        "x": 0.12851258570262059,
+        "y": 0.5714812051102741,
+        "w": 0.075101484375,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R3"
+      ],
+      "to_ids": [
+       "R10"
+      ],
+      "span": null,
+      "text": "add",
+      "cue": "D and F",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.36640625,
+         "y": 0.5652640471960956
+        },
+        {
+         "x": 0.35847102817669085,
+         "y": 0.6060752169720347
+        },
+        {
+         "x": 0.36640625,
+         "y": 0.6468863867479738
+        }
+       ],
+       "label_box": {
+        "x": 0.3908232094008454,
+        "y": 0.5768252169720347,
+        "w": 0.07510148437500003,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R4"
+      ],
+      "to_ids": [
+       "R11"
+      ],
+      "span": null,
+      "text": "add",
+      "cue": "add G",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.6265625,
+         "y": 0.5652640471960956
+        },
+        {
+         "x": 0.6186272781766908,
+         "y": 0.6060752169720347
+        },
+        {
+         "x": 0.6265625,
+         "y": 0.6468863867479738
+        }
+       ],
+       "label_box": {
+        "x": 0.6509794594008455,
+        "y": 0.5768252169720347,
+        "w": 0.07510148437499997,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a4",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R9"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "visit 5",
+      "cue": "BFS order",
+      "geometry": {
+       "box": {
+        "x": 0.01953125,
+        "y": 0.6595949855351977,
+        "w": 0.1734375,
+        "h": 0.21407907425265194
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.030783945312500005,
+        "y": 0.9029240597878496,
+        "w": 0.15093210937499998,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.10625,
+         "y": 0.8989526226668423
+        },
+        {
+         "x": 0.10625,
+         "y": 0.8816169340298644
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "DFS: go deep before wide",
+    "narration": "Depth-first search differs right away: from A it chooses B first, then keeps going to B’s alphabetically earliest unvisited neighbor, D. After D ends, it backtracks to B and visits F.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R1"
+      ],
+      "to_ids": [
+       "R3"
+      ],
+      "span": null,
+      "text": "DFS 2",
+      "cue": "chooses B",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.5325579456473537,
+         "y": 0.2407378593612502
+        },
+        {
+         "x": 0.5051290324704469,
+         "y": 0.2958840895881071
+        },
+        {
+         "x": 0.46041080435264636,
+         "y": 0.32965751190200915
+        }
+       ],
+       "label_box": {
+        "x": 0.35940533654772344,
+        "y": 0.2612908876098684,
+        "w": 0.11301679687499999,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R3"
+      ],
+      "to_ids": [
+       "R9"
+      ],
+      "span": null,
+      "text": "DFS 3",
+      "cue": "neighbor, D",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.272407163415662,
+         "y": 0.5615417847906968
+        },
+        {
+         "x": 0.22766915578024113,
+         "y": 0.5953871932485136
+        },
+        {
+         "x": 0.200249086584338,
+         "y": 0.6506086491533726
+        }
+       ],
+       "label_box": {
+        "x": 0.1236693435151206,
+        "y": 0.5071952841845268,
+        "w": 0.11301679687499999,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R3"
+      ],
+      "to_ids": [
+       "R10"
+      ],
+      "span": null,
+      "text": "DFS 4",
+      "cue": "visits F",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.36640625,
+         "y": 0.5652640471960956
+        },
+        {
+         "x": 0.35847102817669085,
+         "y": 0.6060752169720347
+        },
+        {
+         "x": 0.36640625,
+         "y": 0.6468863867479738
+        }
+       ],
+       "label_box": {
+        "x": 0.4856114906508454,
+        "y": 0.5768252169720347,
+        "w": 0.11301679687499999,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a4",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R9"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "dead end",
+      "cue": "D ends",
+      "geometry": {
+       "box": {
+        "x": 0.01953125,
+        "y": 0.6595949855351977,
+        "w": 0.1734375,
+        "h": 0.21407907425265194
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.2166658203125,
+        "y": 0.9029240597878496,
+        "w": 0.169889765625,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.2644388596583428,
+         "y": 0.9006763754369419
+        },
+        {
+         "x": 0.19827393814802932,
+         "y": 0.8446113106331524
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "DFS continues through F to E",
+    "narration": "At F, the unvisited neighbor is E, so DFS follows the bottom connection across to E. Notice how DFS reaches E before C, unlike BFS.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R10"
+      ],
+      "to_ids": [
+       "R5"
+      ],
+      "span": null,
+      "text": "DFS 5",
+      "cue": "neighbor is E",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.46233120784641546,
+         "y": 0.707343980927551
+        },
+        {
+         "x": 0.6462998907803226,
+         "y": 0.6544855130277064
+        },
+        {
+         "x": 0.7907937921535846,
+         "y": 0.5043235678866251
+        }
+       ],
+       "label_box": {
+        "x": 0.6317436953901613,
+        "y": 0.41962372279164994,
+        "w": 0.11301679687499999,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R5"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "before C",
+      "cue": "before C",
+      "geometry": {
+       "box": {
+        "x": 0.8,
+        "y": 0.3394406943105111,
+        "w": 0.171875,
+        "h": 0.21215043394406946
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.826110234375,
+        "y": 0.2078156943105111,
+        "w": 0.16988976562500002,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.9070572418995125,
+         "y": 0.27024391997527897
+        },
+        {
+         "x": 0.8996659195310576,
+         "y": 0.3315842429809754
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "box",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "bottom connection",
+      "geometry": {
+       "box": {
+        "x": 0.29053125,
+        "y": 0.49265188042430086,
+        "w": 0.6689375,
+        "h": 0.5073481195756991
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "Final orders",
+    "narration": "After E, DFS backtracks to A, then visits C and finally G. Final answer: BFS is A, B, C, E, D, F, G; DFS is A, B, D, F, E, C, G.",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R1",
+       "R3",
+       "R4",
+       "R5",
+       "R9",
+       "R10",
+       "R11"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "Final answer",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 1.0,
+        "h": 1.0
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R1",
+       "R3",
+       "R4",
+       "R5",
+       "R9",
+       "R10",
+       "R11"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "BFS: layers",
+      "cue": "BFS is",
+      "geometry": {
+       "box": {
+        "x": 0.01953125,
+        "y": 0.017357762777242044,
+        "w": 0.95234375,
+        "h": 0.8563162970106076
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.01953125,
+        "y": 0.9375,
+        "w": 0.22676273437499997,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.15536795996884362,
+         "y": 0.9344876064714436
+        },
+        {
+         "x": 0.19350215410072963,
+         "y": 0.8796988468449625
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R1",
+       "R3",
+       "R4",
+       "R5",
+       "R9",
+       "R10",
+       "R11"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "DFS: branches",
+      "cue": "DFS is",
+      "geometry": {
+       "box": {
+        "x": 0.01953125,
+        "y": 0.017357762777242044,
+        "w": 0.95234375,
+        "h": 0.8563162970106076
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.7071969531250001,
+        "y": 0.9029240597878496,
+        "w": 0.26467804687499996,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8167556080825141,
+         "y": 0.8999309163640653
+        },
+        {
+         "x": 0.8024340811256485,
+         "y": 0.8796603466354185
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart LR\nA[Start A] --> B[Choose alphabetically]\nB --> C{BFS?}\nC -->|yes| D[Visit by layers]\nC -->|no| E[Go deep]\nD --> F[BFS order]\nE --> G[DFS order]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the node that BFS visits third.",
+    "answer_ids": [
+     "R4"
+    ],
+    "answer_box": {
+     "x": 0.53984375,
+     "y": 0.33847637415621984,
+     "w": 0.17343750000000002,
+     "h": 0.21407907425265188
+    },
+    "explanation": "BFS visits A first, then A’s neighbors alphabetically: B second, C third, E fourth."
+   },
+   {
+    "question": "Tap the node DFS reaches before C by following the bottom connection.",
+    "answer_ids": [
+     "R5"
+    ],
+    "answer_box": {
+     "x": 0.8,
+     "y": 0.3394406943105111,
+     "w": 0.171875,
+     "h": 0.21215043394406946
+    },
+    "explanation": "DFS goes A, B, D, back to B, F, then across to E before returning to visit C."
+   },
+   {
+    "question": "Tap the node that makes BFS add both D and F.",
+    "answer_ids": [
+     "R3"
+    ],
+    "answer_box": {
+     "x": 0.2796875,
+     "y": 0.33847637415621984,
+     "w": 0.17343750000000002,
+     "h": 0.21407907425265188
+    },
+    "explanation": "When BFS expands B, its unvisited alphabetical neighbors are D and F."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 21.866,
+   "ground": 0.106,
+   "total": 21.972,
+   "input_tokens": 5814.0,
+   "output_tokens": 2605.0,
+   "approx_agreement": 1.0
+  },
+  "warnings": [
+   "step 2: 6 drawings; kept the first 4",
+   "step 3: 6 drawings; kept the first 4"
+  ],
+  "question": "In which order does breadth-first search visit the nodes if it starts at A and takes neighbours in alphabetical order? How would depth-first search from A differ?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 5814,
+  "output_tokens": 2605,
+  "seconds": 21.865
+ },
+ "checks": {
+  "bfs_order": {
+   "pass": true,
+   "evidence": "a, b, c, e, d, f, g"
+  },
+  "bfs_queue": {
+   "pass": true,
+   "evidence": "queue"
+  },
+  "bfs_levels": {
+   "pass": true,
+   "evidence": "neighbors next: b, c, then e"
+  },
+  "dfs_order": {
+   "pass": true,
+   "evidence": "a, b, d, f, e, c, g"
+  },
+  "dfs_mechanism": {
+   "pass": true,
+   "evidence": "backtrack | dead end"
+  }
+ },
+ "passed": 5,
+ "total": 5,
+ "score": 1.0,
+ "all_passed": true,
+ "checked_text": "this graph question lives at a: both searches start there, and alphabetical order decides ties. i'll mark a as visited first.\nvisit 1\n\nfor bfs, we visit a's direct neighbors next: b, c, then e in alphabetical order. these are the whole first layer around a.\nnext\nnext\nnext\nvisit 2\n\nnow bfs expands the queue in order: from b we add d and f, from c we add g, and e only points to f which is already discovered. so bfs order is a, b, c, e, d, f, g.\nadd\nadd\nadd\nvisit 5\n\ndepth-first search differs right away: from a it chooses b first, then keeps going to b's alphabetically earliest unvisited neighbor, d. after d ends, it backtracks to b and visits f.\ndfs 2\ndfs 3\ndfs 4\ndead end\n\nat f, the unvisited neighbor is e, so dfs follows the bottom connection across to e. notice how dfs reaches e before c, unlike bfs.\ndfs 5\nbefore c\n\nafter e, dfs backtracks to a, then visits c and finally g. final answer: bfs is a, b, c, e, d, f, g; dfs is a, b, d, f, e, c, g.\nbfs: layers\ndfs: branches\nstart a -> choose alphabetically\nchoose alphabetically -> bfs?\nbfs? -> (yes) visit by layers\nbfs? -> (no) go deep\nvisit by layers -> bfs order\ngo deep -> dfs order"
+}

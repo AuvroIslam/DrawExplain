@@ -1,0 +1,839 @@
+{
+ "version": "L2",
+ "note": "",
+ "case": "cs_deadlock_rag",
+ "topic": "operating systems",
+ "run": 1,
+ "question": "Is there a deadlock in this resource-allocation graph? R3 has two instances, so does the cycle really mean deadlock?",
+ "source": "cs_deadlock_rag.png",
+ "page": null,
+ "backend": {
+  "path": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend",
+  "commit": "6dbe976",
+  "subject": "Simulate procedures faithfully, deepen board colours",
+  "dirty": false
+ },
+ "started": "2026-10-09T23:04:50+06:00",
+ "finished": "2026-10-09T23:05:16+06:00",
+ "jobs": 2,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L2_cs_deadlock_rag_1_clf96h_m\\data",
+ "perceive_s": 4.527,
+ "perception": {
+  "image_id": "556928a900f4",
+  "width": 1006,
+  "height": 1132,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.164,
+   "ink": 0.063,
+   "ocr": 3.569,
+   "text": 0.007,
+   "rescue": 0.484,
+   "regions": 0.049,
+   "freespace": 0.004,
+   "som": 0.02,
+   "total": 4.361,
+   "prepare": 0.05
+  },
+  "regions": 25
+ },
+ "regions": {
+  "R1": "R1",
+  "R2": "R2",
+  "R9": "P2",
+  "R11": "P1",
+  "R20": "P3",
+  "R25": "R3"
+ },
+ "request": {
+  "image_id": "556928a900f4",
+  "question": "Is there a deadlock in this resource-allocation graph? R3 has two instances, so does the cycle really mean deadlock?"
+ },
+ "lesson_s": 18.148,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "b0cefd16a594",
+  "image_id": "556928a900f4",
+  "title": "Deadlock with Multi-Instance R3",
+  "summary": "This resource-allocation graph has a cycle, but because R3 has two instances we must simulate whether any process can finish and release resources. Here, the cycle really does imply deadlock for P1, P2, and P3 because no needed R3 instance can be freed.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Locate the possible deadlock",
+    "narration": "Great question: R3 has two dots, so a cycle alone is not always enough. I’ll circle the cycle suspects, then we’ll test whether anyone can actually finish.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R11",
+       "R12"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "cycle suspects",
+      "geometry": {
+       "box": {
+        "x": 0.09058151093439364,
+        "y": 0.4218418727915194,
+        "w": 0.2750994035785288,
+        "h": 0.13953180212014138
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.946,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R9",
+       "R10"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "cycle suspects",
+      "geometry": {
+       "box": {
+        "x": 0.46314612326043725,
+        "y": 0.38447438162544173,
+        "w": 0.25362823061630235,
+        "h": 0.18246466431095404
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.937,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a3",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R20",
+       "R17"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "cycle suspects",
+      "geometry": {
+       "box": {
+        "x": 0.7726640159045726,
+        "y": 0.4256183745583039,
+        "w": 0.22007952286282317,
+        "h": 0.17173144876325092
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.945,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Read what is allocated",
+    "narration": "Solid dots inside boxes are resource instances, and an arrow from a dot to a process means allocated. So P1 owns one R3, P2 owns R1, and P3 owns one R2.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [
+       "R22"
+      ],
+      "to_ids": [
+       "R12"
+      ],
+      "span": null,
+      "text": "allocated",
+      "cue": "P1 owns",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.2368414434914138,
+         "y": 0.7544220290726006
+        },
+        {
+         "x": 0.27999235796246785,
+         "y": 0.657579881929209
+        },
+        {
+         "x": 0.2689854655578875,
+         "y": 0.5538818578531945
+        }
+       ],
+       "label_box": {
+        "x": 0.057655689543758076,
+        "y": 0.5902740399045339,
+        "w": 0.1802186878727634,
+        "h": 0.0401943462897526
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [
+       "R7"
+      ],
+      "to_ids": [
+       "R10"
+      ],
+      "span": null,
+      "text": "allocated",
+      "cue": "P2 owns",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.277533261086414,
+         "y": 0.23479290315823284
+        },
+        {
+         "x": 0.35606847909846456,
+         "y": 0.3555716701975465
+        },
+        {
+         "x": 0.487731235022983,
+         "y": 0.43151810611738556
+        }
+       ],
+       "label_box": {
+        "x": 0.39792889240361934,
+        "y": 0.2787717146261584,
+        "w": 0.18021868787276335,
+        "h": 0.04019434628975266
+       },
+       "leader": null
+      },
+      "confidence": 0.98,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [
+       "R8"
+      ],
+      "to_ids": [
+       "R17"
+      ],
+      "span": null,
+      "text": "allocated",
+      "cue": "P3 owns",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.68745347816848,
+         "y": 0.2363415691855286
+        },
+        {
+         "x": 0.7246704324110357,
+         "y": 0.3512178752901102
+        },
+        {
+         "x": 0.8165011490465846,
+         "y": 0.43857009159185656
+        }
+       ],
+       "label_box": {
+        "x": 0.7669024018363217,
+        "y": 0.278744980047882,
+        "w": 0.1802186878727634,
+        "h": 0.04019434628975266
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Read what is being requested",
+    "narration": "Now the process-to-resource arrows are requests. P1 is waiting for R1, P2 is waiting for R2 and R3, and P3 is waiting for R3.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R12"
+      ],
+      "to_ids": [
+       "R7"
+      ],
+      "span": null,
+      "text": "requests",
+      "cue": "P1 is waiting",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.26895859503749375,
+         "y": 0.43728482884631703
+        },
+        {
+         "x": 0.22595132120040162,
+         "y": 0.3408785389072397
+        },
+        {
+         "x": 0.23686361456205185,
+         "y": 0.23762683193106812
+        }
+       ],
+       "label_box": {
+        "x": 0.048725447592532556,
+        "y": 0.31907001150308983,
+        "w": 0.1621272365805169,
+        "h": 0.04019434628975266
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R10"
+      ],
+      "to_ids": [
+       "R8"
+      ],
+      "span": null,
+      "text": "requests",
+      "cue": "P2 is waiting",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.5717749873835057,
+         "y": 0.420930030777617
+        },
+        {
+         "x": 0.5810141016020186,
+         "y": 0.32180152233240555
+        },
+        {
+         "x": 0.6398720443725455,
+         "y": 0.23719717770294838
+        }
+       ],
+       "label_box": {
+        "x": 0.6219973375670599,
+        "y": 0.3201322099294537,
+        "w": 0.16212723658051686,
+        "h": 0.04019434628975266
+       },
+       "leader": null
+      },
+      "confidence": 0.98,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R17"
+      ],
+      "to_ids": [
+       "R23"
+      ],
+      "span": null,
+      "text": "requests",
+      "cue": "P3 is waiting",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.7914066514854382,
+         "y": 0.5347679217226295
+        },
+        {
+         "x": 0.576256630244767,
+         "y": 0.6126157452998152
+        },
+        {
+         "x": 0.4242991139221164,
+         "y": 0.768762547560118
+        }
+       ],
+       "label_box": {
+        "x": 0.5109911381840138,
+        "y": 0.566598617179075,
+        "w": 0.16212723658051686,
+        "h": 0.0401943462897526
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Test R3’s two instances",
+    "narration": "Here is the key point: R3 has two instances, but both are already allocated. One goes to P1, and the other goes to P2, so P3 cannot grab a free R3.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R22",
+       "R23"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "two instances",
+      "geometry": {
+       "box": {
+        "x": 0.14704274353876737,
+        "y": 0.750684628975265,
+        "w": 0.30730616302186886,
+        "h": 0.10375441696113075
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R21",
+       "R25"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "available = 0",
+      "cue": "already allocated",
+      "geometry": {
+       "box": {
+        "x": 0.1481113320079523,
+        "y": 0.7287985865724381,
+        "w": 0.3210735586481113,
+        "h": 0.20318021201413428
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.18235586481113322,
+        "y": 0.9520759717314488,
+        "w": 0.25258449304174957,
+        "h": 0.0401943462897526
+       },
+       "leader": [
+        {
+         "x": 0.30864811133200803,
+         "y": 0.9487314103804756
+        },
+        {
+         "x": 0.30864811133200803,
+         "y": 0.938667921288519
+        }
+       ]
+      },
+      "confidence": 0.982,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [
+       "R23"
+      ],
+      "to_ids": [
+       "R10"
+      ],
+      "span": null,
+      "text": "allocated",
+      "cue": "other goes",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.3980604919455509,
+         "y": 0.7545455211599437
+        },
+        {
+         "x": 0.48154765804717314,
+         "y": 0.6657087975779856
+        },
+        {
+         "x": 0.51057174822686,
+         "y": 0.5528749735397029
+        }
+       ],
+       "label_box": {
+        "x": 0.2591346723668881,
+        "y": 0.5941176496723851,
+        "w": 0.1802186878727634,
+        "h": 0.0401943462897526
+       },
+       "leader": null
+      },
+      "confidence": 0.98,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Try to finish a process",
+    "narration": "To break deadlock, some process must get all its requests and finish. But P1 needs R1 held by P2, P2 needs R2 held by P3 and R3, and P3 needs R3 with none free.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R12"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "blocked: needs R1",
+      "cue": "P1 needs R1",
+      "geometry": {
+       "box": {
+        "x": 0.22664015904572565,
+        "y": 0.44787985865724383,
+        "w": 0.1033797216699801,
+        "h": 0.09540636042402822
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.005069582504970194,
+        "y": 0.6437720848056537,
+        "w": 0.32495029821073557,
+        "h": 0.0401943462897526
+       },
+       "leader": [
+        {
+         "x": 0.1826754288202538,
+         "y": 0.6408852691441289
+        },
+        {
+         "x": 0.24312544986876747,
+         "y": 0.5490598504043218
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R10"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "blocked: needs R2,R3",
+      "cue": "P2 needs R2",
+      "geometry": {
+       "box": {
+        "x": 0.4960238568588469,
+        "y": 0.43109540636042404,
+        "w": 0.10238568588469182,
+        "h": 0.11219081272084802
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.09418489065606361,
+        "y": 0.3708038869257951,
+        "w": 0.37922465208747513,
+        "h": 0.04019434628975266
+       },
+       "leader": [
+        {
+         "x": 0.34225750647370456,
+         "y": 0.4122705000828975
+        },
+        {
+         "x": 0.48906278631207994,
+         "y": 0.4659333647918689
+        }
+       ]
+      },
+      "confidence": 0.98,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R17"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "blocked: needs R3",
+      "cue": "P3 needs R3",
+      "geometry": {
+       "box": {
+        "x": 0.8011928429423459,
+        "y": 0.44787985865724383,
+        "w": 0.1033797216699801,
+        "h": 0.09540636042402822
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.6710497017892645,
+        "y": 0.6437720848056537,
+        "w": 0.3249502982107355,
+        "h": 0.0401943462897526
+       },
+       "leader": [
+        {
+         "x": 0.8362193435900792,
+         "y": 0.6404448631683989
+        },
+        {
+         "x": 0.8466299821685788,
+         "y": 0.5499406623557819
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "Answer: yes, deadlock",
+    "narration": "So yes: this graph is deadlocked, even though R3 has two instances. Multi-instance resources make a cycle only a warning, but here the availability test confirms nobody can finish.",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "box",
+      "color": "red",
+      "target_ids": [
+       "R5",
+       "R6",
+       "R12",
+       "R10",
+       "R17",
+       "R21"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "deadlocked",
+      "geometry": {
+       "box": {
+        "x": 0.0017097415506958239,
+        "y": 0.056289752650176675,
+        "w": 0.969741550695825,
+        "h": 0.8803533568904593
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a2",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R5",
+       "R6",
+       "R12",
+       "R10",
+       "R17",
+       "R21"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "deadlock confirmed",
+      "cue": "confirms",
+      "geometry": {
+       "box": {
+        "x": 0.06858846918489066,
+        "y": 0.1157243816254417,
+        "w": 0.8359840954274353,
+        "h": 0.7614840989399293
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.3150596421471173,
+        "y": 0.004,
+        "w": 0.343041749502982,
+        "h": 0.040194346289752644
+       },
+       "leader": [
+        {
+         "x": 0.48658051689860826,
+         "y": 0.047538907640725846
+        },
+        {
+         "x": 0.48658051689860826,
+         "y": 0.1090352589234953
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart TD\nA[Count available]\nB[Find finishable process]\nC[Release its resources]\nD[Repeat]\nE[None finishable]\nF[Deadlock]\nA --> B\nB -->|yes| C\nC --> D\nD --> B\nB -->|no| E\nE --> F"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the resource with two instances.",
+    "answer_ids": [
+     "R21",
+     "R25"
+    ],
+    "answer_box": {
+     "x": 0.1481113320079523,
+     "y": 0.7287985865724381,
+     "w": 0.3210735586481113,
+     "h": 0.20318021201413428
+    },
+    "explanation": "R3 is the bottom green box and it contains two dark instance dots."
+   },
+   {
+    "question": "Tap the process waiting for R3 on the right.",
+    "answer_ids": [
+     "R20",
+     "R17"
+    ],
+    "answer_box": {
+     "x": 0.8011928429423459,
+     "y": 0.44787985865724383,
+     "w": 0.16302186878727642,
+     "h": 0.12720848056537098
+    },
+    "explanation": "The dotted request arrow from P3 points down-left into an R3 instance."
+   },
+   {
+    "question": "Tap the R3 instance allocated to P2.",
+    "answer_ids": [
+     "R23"
+    ],
+    "answer_box": {
+     "x": 0.32803180914512925,
+     "y": 0.7641342756183745,
+     "w": 0.08648111332007952,
+     "h": 0.07685512367491165
+    },
+    "explanation": "The dotted allocation arrow starts at this R3 dot and points upward to P2."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 18.016,
+   "ground": 0.053,
+   "total": 18.068,
+   "input_tokens": 5554.0,
+   "output_tokens": 2106.0,
+   "approx_agreement": 1.0
+  },
+  "warnings": [],
+  "question": "Is there a deadlock in this resource-allocation graph? R3 has two instances, so does the cycle really mean deadlock?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 5554,
+  "output_tokens": 2106,
+  "seconds": 18.015
+ },
+ "checks": {
+  "p1_holds_r3_waits_r1": {
+   "pass": true,
+   "evidence": "p1 owns one r3 | p1 is waiting for r1"
+  },
+  "p2_holds_r1_waits_r2": {
+   "pass": true,
+   "evidence": "p2 owns r1 | p2 is waiting for r2"
+  },
+  "p3_holds_r2_waits_r3": {
+   "pass": true,
+   "evidence": "p3 owns one r2 | p3 is waiting for r3"
+  },
+  "cycle": {
+   "pass": false,
+   "evidence": "cycl | MISSING any: 0 of 13 matched, need 1"
+  },
+  "deadlock_because_no_free_instance": {
+   "pass": true,
+   "evidence": "deadlocked | two instances, but both are already allocated | r3 has two instances, but both are already allocated | not grab a free"
+  }
+ },
+ "passed": 4,
+ "total": 5,
+ "score": 0.8,
+ "all_passed": false,
+ "checked_text": "great question: r3 has two dots, so a cycle alone is not always enough. i'll circle the cycle suspects, then we'll test whether anyone can actually finish.\n\nsolid dots inside boxes are resource instances, and an arrow from a dot to a process means allocated. so p1 owns one r3, p2 owns r1, and p3 owns one r2.\nallocated\nallocated\nallocated\n\nnow the process-to-resource arrows are requests. p1 is waiting for r1, p2 is waiting for r2 and r3, and p3 is waiting for r3.\nrequests\nrequests\nrequests\n\nhere is the key point: r3 has two instances, but both are already allocated. one goes to p1, and the other goes to p2, so p3 cannot grab a free r3.\navailable = 0\nallocated\n\nto break deadlock, some process must get all its requests and finish. but p1 needs r1 held by p2, p2 needs r2 held by p3 and r3, and p3 needs r3 with none free.\nblocked: needs r1\nblocked: needs r2,r3\nblocked: needs r3\n\nso yes: this graph is deadlocked, even though r3 has two instances. multi-instance resources make a cycle only a warning, but here the availability test confirms nobody can finish.\ndeadlock confirmed\ncount available\nfind finishable process\nrelease its resources\nrepeat\nnone finishable\ndeadlock\ncount available -> find finishable process\nfind finishable process -> (yes) release its resources\nrelease its resources -> repeat\nrepeat -> find finishable process\nfind finishable process -> (no) none finishable\nnone finishable -> deadlock"
+}

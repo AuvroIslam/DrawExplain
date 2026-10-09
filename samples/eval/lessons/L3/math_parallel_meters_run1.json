@@ -1,0 +1,929 @@
+{
+ "version": "L3",
+ "note": "",
+ "case": "math_parallel_meters",
+ "topic": "physics",
+ "run": 1,
+ "question": "Suppose the battery gives 12 V, R1 = 4 Ω, R2 = 2 Ω and R3 = 4 Ω. What do the ammeters A1, A2, A3 and the voltmeters V3 and V4 read?",
+ "source": "math_parallel_meters.png",
+ "page": null,
+ "backend": {
+  "path": "D:\\BananaHack\\backend",
+  "commit": "0b90f8e",
+  "subject": "Harden perception against native OpenCV failures",
+  "dirty": true
+ },
+ "started": "2026-10-09T22:39:13+06:00",
+ "finished": "2026-10-09T22:39:40+06:00",
+ "jobs": 2,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "D:\\BananaHack\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L3_math_parallel_meters_1_kbf73zz0\\data",
+ "perceive_s": 4.449,
+ "perception": {
+  "image_id": "10056ee50a90",
+  "width": 689,
+  "height": 1000,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.216,
+   "ink": 0.069,
+   "ocr": 3.793,
+   "text": 0.005,
+   "rescue": 0.133,
+   "regions": 0.047,
+   "freespace": 0.002,
+   "som": 0.017,
+   "total": 4.282,
+   "prepare": 0.07
+  },
+  "regions": 34
+ },
+ "regions": {
+  "R1": "A 1",
+  "R4": "A",
+  "R9": "1",
+  "R10": "V",
+  "R11": "V",
+  "R12": "A 2",
+  "R13": "A",
+  "R17": "2",
+  "R19": "A 3",
+  "R20": "V 2",
+  "R21": "V",
+  "R22": "A",
+  "R23": "2",
+  "R24": "3",
+  "R29": "V 3",
+  "R30": "V 4",
+  "R31": "V",
+  "R32": "V",
+  "R33": "3",
+  "R34": "4"
+ },
+ "request": {
+  "image_id": "10056ee50a90",
+  "question": "Suppose the battery gives 12 V, R1 = 4 Ω, R2 = 2 Ω and R3 = 4 Ω. What do the ammeters A1, A2, A3 and the voltmeters V3 and V4 read?"
+ },
+ "lesson_s": 18.414,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "641e9faa87e4",
+  "image_id": "10056ee50a90",
+  "title": "Circuit Meter Readings",
+  "summary": "This circuit has a 12 V supply feeding parallel branches: one branch contains R1, and the lower branch contains R2 and R3 in series. We compute branch currents first, then use series voltage division for V3 and V4.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Orient the circuit",
+    "narration": "We’re answering the meter question by treating the battery as 12 volts across these two rails. I’ll circle the source and the two resistor paths where the readings come from.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R5",
+       "R6"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "battery",
+      "geometry": {
+       "box": {
+        "x": 0.35134252539912925,
+        "y": 0.207,
+        "w": 0.17830188679245274,
+        "h": 0.07699999999999999
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.96,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "box",
+      "color": "blue",
+      "target_ids": [
+       "R14"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "resistor paths",
+      "geometry": {
+       "box": {
+        "x": 0.3164005805515239,
+        "y": 0.4875,
+        "w": 0.22060957910014506,
+        "h": 0.064
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a3",
+      "kind": "box",
+      "color": "green",
+      "target_ids": [
+       "R25",
+       "R26",
+       "R27",
+       "R28"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "resistor paths",
+      "geometry": {
+       "box": {
+        "x": 0.193033381712627,
+        "y": 0.78,
+        "w": 0.45428156748911463,
+        "h": 0.049000000000000155
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.98,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Use the 12 V across each branch",
+    "narration": "Because the R1 branch and the lower branch connect across the same left and right rails, each branch gets the full 12 volts. So V2 would be 12 volts across R1, even before finding currents.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "arrow",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [
+       "R5",
+       "R6"
+      ],
+      "to_ids": [
+       "R14"
+      ],
+      "span": null,
+      "text": "12 V",
+      "cue": "full 12 volts",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.438570722797688,
+         "y": 0.2837092132542815
+        },
+        {
+         "x": 0.4686818256459613,
+         "y": 0.38559077734956293
+        },
+        {
+         "x": 0.4284016692229067,
+         "y": 0.4857907867457185
+        }
+       ],
+       "label_box": {
+        "x": 0.49516964217791165,
+        "y": 0.3791703886747814,
+        "w": 0.1404208998548621,
+        "h": 0.048750000000000016
+       },
+       "leader": null
+      },
+      "confidence": 0.96,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "arrow",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [
+       "R5",
+       "R6"
+      ],
+      "to_ids": [
+       "R25",
+       "R26",
+       "R27",
+       "R28"
+      ],
+      "span": null,
+      "text": "12 V",
+      "cue": "12 volts",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.4391044862230941,
+         "y": 0.28371200190636253
+        },
+        {
+         "x": 0.3439776663587985,
+         "y": 0.5295136177574337
+        },
+        {
+         "x": 0.42112695547120244,
+         "y": 0.7782879980936375
+        }
+       ],
+       "label_box": {
+        "x": 0.14947412466247995,
+        "y": 0.41456930887871685,
+        "w": 0.1404208998548621,
+        "h": 0.048750000000000016
+       },
+       "leader": null
+      },
+      "confidence": 0.96,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R20"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "across R1",
+      "cue": "V2",
+      "geometry": {
+       "box": {
+        "x": 0.3483309143686502,
+        "y": 0.597,
+        "w": 0.14804063860667632,
+        "h": 0.10199999999999998
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.2813860667634252,
+        "y": 0.723375,
+        "w": 0.28193033381712634,
+        "h": 0.04874999999999996
+       },
+       "leader": [
+        {
+         "x": 0.4223512336719884,
+         "y": 0.7203390477194132
+        },
+        {
+         "x": 0.4223512336719884,
+         "y": 0.7050719045611735
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Find A2 through R1",
+    "narration": "Now run Ohm’s law on R1: current is voltage divided by resistance. For R1, that is 12 divided by 4, so A2 reads 3 amps.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R12"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "A2",
+      "geometry": {
+       "box": {
+        "x": 0.12939042089985486,
+        "y": 0.4489249999999999,
+        "w": 0.19985486211901315,
+        "h": 0.14715000000000011
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R14"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "12/4 = 3 A",
+      "cue": "12 divided by 4",
+      "geometry": {
+       "box": {
+        "x": 0.32801161103047893,
+        "y": 0.4955,
+        "w": 0.1973875181422351,
+        "h": 0.04799999999999999
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.56077648766328,
+        "y": 0.567875,
+        "w": 0.3102322206095791,
+        "h": 0.04874999999999996
+       },
+       "leader": [
+        {
+         "x": 0.6148609172409277,
+         "y": 0.5668337503712532
+        },
+        {
+         "x": 0.5303854478487295,
+         "y": 0.5455824992574936
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R12"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "A2 = 3 A",
+      "cue": "3 amps",
+      "geometry": {
+       "box": {
+        "x": 0.15529753265602322,
+        "y": 0.468,
+        "w": 0.14804063860667635,
+        "h": 0.10900000000000004
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.04970972423802611,
+        "y": 0.3583125,
+        "w": 0.25362844702467346,
+        "h": 0.048750000000000016
+       },
+       "leader": [
+        {
+         "x": 0.18683752749879945,
+         "y": 0.41000064135946235
+        },
+        {
+         "x": 0.20651946350083064,
+         "y": 0.46212371728107526
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Find lower-branch current A3",
+    "narration": "The bottom path has R2 and R3 in series, so their resistances add. That makes 2 plus 4 equals 6 ohms, and 12 divided by 6 gives A3 as 2 amps.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "box",
+      "color": "green",
+      "target_ids": [
+       "R25",
+       "R26",
+       "R27",
+       "R28"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "series",
+      "geometry": {
+       "box": {
+        "x": 0.193033381712627,
+        "y": 0.78,
+        "w": 0.45428156748911463,
+        "h": 0.049000000000000155
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.98,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R25",
+       "R26",
+       "R27",
+       "R28"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "2+4=6 Ω",
+      "cue": "2 plus 4",
+      "geometry": {
+       "box": {
+        "x": 0.204644412191582,
+        "y": 0.788,
+        "w": 0.4310595065312046,
+        "h": 0.03300000000000003
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.7241473149492017,
+        "y": 0.780125,
+        "w": 0.22532656023222064,
+        "h": 0.04874999999999996
+       },
+       "leader": [
+        {
+         "x": 0.7197409981413836,
+         "y": 0.8045
+        },
+        {
+         "x": 0.6445165523384231,
+         "y": 0.8045
+        }
+       ]
+      },
+      "confidence": 0.98,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R19"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "A3 = 2 A",
+      "cue": "2 amps",
+      "geometry": {
+       "box": {
+        "x": 0.06676342525399129,
+        "y": 0.61,
+        "w": 0.14804063860667635,
+        "h": 0.10899999999999999
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.013969521044992717,
+        "y": 0.840875,
+        "w": 0.25362844702467346,
+        "h": 0.04874999999999996
+       },
+       "leader": [
+        {
+         "x": 0.14078374455732945,
+         "y": 0.8378390477194132
+        },
+        {
+         "x": 0.14078374455732948,
+         "y": 0.7250719045611734
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Add currents for A1",
+    "narration": "A1 sits before the current splits, so it reads the total current supplied by the battery. Add the two branch currents: 3 amps plus 2 amps equals 5 amps.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "circle",
+      "color": "orange",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "A1",
+      "geometry": {
+       "box": {
+        "x": 0.15021770682148042,
+        "y": 0.174625,
+        "w": 0.19593613933236573,
+        "h": 0.14174999999999996
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [
+       "R12"
+      ],
+      "to_ids": [
+       "R1"
+      ],
+      "span": null,
+      "text": "3 A",
+      "cue": "3 amps",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.23369114846275751,
+         "y": 0.4582956340336413
+        },
+        {
+         "x": 0.21259213242361147,
+         "y": 0.3821519047718954
+        },
+        {
+         "x": 0.24394871048627656,
+         "y": 0.30770436596635864
+        }
+       ],
+       "label_box": {
+        "x": 0.016435348801023625,
+        "y": 0.26688845238594766,
+        "w": 0.11211901306240929,
+        "h": 0.048750000000000016
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R19"
+      ],
+      "to_ids": [
+       "R1"
+      ],
+      "span": null,
+      "text": "2 A",
+      "cue": "2 amps",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.1572059994206331,
+         "y": 0.6004330110980812
+        },
+        {
+         "x": 0.14373394530476166,
+         "y": 0.44779319742935103
+        },
+        {
+         "x": 0.23227618048798893,
+         "y": 0.30756698890191875
+        }
+       ],
+       "label_box": {
+        "x": 0.013032873217344781,
+        "y": 0.42652159871467554,
+        "w": 0.11211901306240929,
+        "h": 0.048750000000000016
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a4",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "A1 = 5 A",
+      "cue": "5 amps",
+      "geometry": {
+       "box": {
+        "x": 0.17561683599419448,
+        "y": 0.193,
+        "w": 0.14513788098693758,
+        "h": 0.10499999999999998
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.12137155297532654,
+        "y": 0.119875,
+        "w": 0.25362844702467346,
+        "h": 0.04875
+       },
+       "leader": [
+        {
+         "x": 0.24818577648766327,
+         "y": 0.17166095228058678
+        },
+        {
+         "x": 0.24818577648766327,
+         "y": 0.18692809543882646
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "Split voltage over R2 and R3",
+    "narration": "Finally, V3 and V4 measure voltage drops in the same 2 amp series branch. So R2 drops 2 times 2 equals 4 volts, and R3 drops 2 times 4 equals 8 volts.",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R29"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "V3",
+      "geometry": {
+       "box": {
+        "x": 0.18525036284470245,
+        "y": 0.8575375000000001,
+        "w": 0.22238751814223515,
+        "h": 0.14242500000000002
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a2",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R30"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "V4",
+      "geometry": {
+       "box": {
+        "x": 0.45449927431059506,
+        "y": 0.85815,
+        "w": 0.1998548621190131,
+        "h": 0.13770000000000004
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R29"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "V3 = 4 V",
+      "cue": "4 volts",
+      "geometry": {
+       "box": {
+        "x": 0.21407837445573294,
+        "y": 0.876,
+        "w": 0.16473149492017417,
+        "h": 0.10550000000000004
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.5556966618287373,
+        "y": 0.705375,
+        "w": 0.25362844702467346,
+        "h": 0.04874999999999996
+       },
+       "leader": [
+        {
+         "x": 0.6316943226463191,
+         "y": 0.7559436455926336
+        },
+        {
+         "x": 0.38586633789616526,
+         "y": 0.8826568817470635
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a4",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R30"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "V4 = 8 V",
+      "cue": "8 volts",
+      "geometry": {
+       "box": {
+        "x": 0.48040638606676345,
+        "y": 0.876,
+        "w": 0.14804063860667638,
+        "h": 0.10199999999999998
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.6638243831640058,
+        "y": 0.92925,
+        "w": 0.25362844702467346,
+        "h": 0.04874999999999996
+       },
+       "leader": [
+        {
+         "x": 0.6594758720727946,
+         "y": 0.9388407838385462
+        },
+        {
+         "x": 0.6371440468558621,
+         "y": 0.9363236166547049
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart LR\nA[12 V supply] --> B[parallel branches]\nB --> C[R1: 4 ohm]\nB --> D[R2+R3: 6 ohm]\nC --> E[A2 = 3 A]\nD --> F[A3 = 2 A]\nE --> G[A1 = 5 A]\nF --> G"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the ammeter that reads the total current.",
+    "answer_ids": [
+     "R1"
+    ],
+    "answer_box": {
+     "x": 0.17561683599419448,
+     "y": 0.193,
+     "w": 0.14513788098693758,
+     "h": 0.10499999999999998
+    },
+    "explanation": "A1 is before the branches split, so it measures the sum of both branch currents."
+   },
+   {
+    "question": "Tap the voltmeter that reads 4 V.",
+    "answer_ids": [
+     "R29"
+    ],
+    "answer_box": {
+     "x": 0.21407837445573294,
+     "y": 0.876,
+     "w": 0.16473149492017417,
+     "h": 0.10550000000000004
+    },
+    "explanation": "V3 is across R2, and the 2 A branch current through 2 Ω gives 4 V."
+   },
+   {
+    "question": "Tap the branch whose resistance is 6 Ω total.",
+    "answer_ids": [
+     "R25",
+     "R26",
+     "R27",
+     "R28"
+    ],
+    "answer_box": {
+     "x": 0.204644412191582,
+     "y": 0.788,
+     "w": 0.4310595065312046,
+     "h": 0.03300000000000003
+    },
+    "explanation": "R2 and R3 are in series, so their resistances add: 2 Ω + 4 Ω = 6 Ω."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 18.272,
+   "ground": 0.053,
+   "total": 18.325,
+   "input_tokens": 4612.0,
+   "output_tokens": 2276.0,
+   "approx_agreement": 1.0
+  },
+  "warnings": [],
+  "question": "Suppose the battery gives 12 V, R1 = 4 Ω, R2 = 2 Ω and R3 = 4 Ω. What do the ammeters A1, A2, A3 and the voltmeters V3 and V4 read?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 4612,
+  "output_tokens": 2276,
+  "seconds": 18.272
+ },
+ "checks": {
+  "topology": {
+   "pass": true,
+   "evidence": "parallel | r2 and r3 in series | r2 and r3 in series | 2+4=6"
+  },
+  "a2_r1_branch": {
+   "pass": true,
+   "evidence": "a2 = 3 a | 12/4 = 3"
+  },
+  "a3_r2r3_branch": {
+   "pass": true,
+   "evidence": "a3 = 2 a"
+  },
+  "a1_total": {
+   "pass": true,
+   "evidence": "a1 = 5 a"
+  },
+  "v3_v4_split": {
+   "pass": true,
+   "evidence": "v3 = 4 v | v4 = 8 v"
+  }
+ },
+ "passed": 5,
+ "total": 5,
+ "score": 1.0,
+ "all_passed": true,
+ "checked_text": "we're answering the meter question by treating the battery as 12 volts across these two rails. i'll circle the source and the two resistor paths where the readings come from.\n\nbecause the r1 branch and the lower branch connect across the same left and right rails, each branch gets the full 12 volts. so v2 would be 12 volts across r1, even before finding currents.\n12 v\n12 v\nacross r1\n\nnow run ohm's law on r1: current is voltage divided by resistance. for r1, that is 12 divided by 4, so a2 reads 3 amps.\n12/4 = 3 a\na2 = 3 a\n\nthe bottom path has r2 and r3 in series, so their resistances add. that makes 2 plus 4 equals 6 ohms, and 12 divided by 6 gives a3 as 2 amps.\n2+4=6 ω\na3 = 2 a\n\na1 sits before the current splits, so it reads the total current supplied by the battery. add the two branch currents: 3 amps plus 2 amps equals 5 amps.\n3 a\n2 a\na1 = 5 a\n\nfinally, v3 and v4 measure voltage drops in the same 2 amp series branch. so r2 drops 2 times 2 equals 4 volts, and r3 drops 2 times 4 equals 8 volts.\nv3 = 4 v\nv4 = 8 v\n12 v supply -> parallel branches\nparallel branches -> r1: 4 ohm\nparallel branches -> r2+r3: 6 ohm\nr1: 4 ohm -> a2 = 3 a\nr2+r3: 6 ohm -> a3 = 2 a\na2 = 3 a -> a1 = 5 a\na3 = 2 a -> a1 = 5 a"
+}

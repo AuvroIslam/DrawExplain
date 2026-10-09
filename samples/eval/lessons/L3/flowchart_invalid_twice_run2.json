@@ -1,0 +1,704 @@
+{
+ "version": "L3",
+ "note": "solver-backed simulation + GPU perception",
+ "case": "flowchart_invalid_twice",
+ "run": 2,
+ "question": "What happens if the input is invalid twice?",
+ "source": "flowchart_loop.png",
+ "page": null,
+ "backend": {
+  "path": "D:\\BananaHack\\backend",
+  "commit": "6085db5",
+  "subject": "Add results log of all measurements",
+  "dirty": true
+ },
+ "started": "2026-10-09T20:34:58+06:00",
+ "finished": "2026-10-09T20:35:48+06:00",
+ "jobs": 3,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "D:\\BananaHack\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L3_flowchart_invalid_twice_2_5glx8lf5\\data",
+ "perceive_s": 17.57,
+ "perception": {
+  "image_id": "cf12d0e1db09",
+  "width": 1280,
+  "height": 720,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.237,
+   "ink": 0.099,
+   "ocr": 16.348,
+   "text": 0.116,
+   "rescue": 0.314,
+   "regions": 0.097,
+   "freespace": 0.002,
+   "som": 0.038,
+   "total": 17.253,
+   "prepare": 0.048
+  },
+  "regions": 37
+ },
+ "regions": {
+  "R1": "Flowchart: Input Validation Loop",
+  "R2": "Keep asking fori nput untilit p asses the check",
+  "R3": "Valid?",
+  "R4": "Start",
+  "R6": "Read input",
+  "R8": "Yes",
+  "R9": "Process data",
+  "R11": "End",
+  "R13": "Start",
+  "R15": "Read input",
+  "R17": "Valid?",
+  "R19": "Process data",
+  "R21": "End",
+  "R24": "No",
+  "R25": "Symbol key Star t/End Input/ Output Process step Decision",
+  "R26": "Symbol key",
+  "R27": "Show error",
+  "R29": "Show error",
+  "R30": "Star t/End",
+  "R31": "Input/ Output",
+  "R32": "Process step",
+  "R33": "Decision",
+  "R34": "The loop repeats until the user enters valid input.",
+  "R36": "CS 1101-Programming Fundamentals",
+  "R37": "7"
+ },
+ "request": {
+  "image_id": "cf12d0e1db09",
+  "question": "What happens if the input is invalid twice?"
+ },
+ "lesson_s": 17.881,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "e6cd2b3d6514",
+  "image_id": "cf12d0e1db09",
+  "title": "Invalid Twice in the Validation Loop",
+  "summary": "If the input is invalid twice, the flowchart follows the “No” branch twice: each time it shows an error and loops back to read input again. It only processes data after a later input passes the “Valid?” decision.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Find the loop we care about",
+    "narration": "Great question—if input is invalid twice, the answer lives in this loop around the Valid? decision. I’m circling the decision, because every attempt must pass through that check.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "orange",
+      "target_ids": [
+       "R3"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "Valid? decision",
+      "geometry": {
+       "box": {
+        "x": 0.38232421875,
+        "y": 0.27513888888888893,
+        "w": 0.1845703125,
+        "h": 0.27749999999999997
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "underline",
+      "color": "blue",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "Input Validation Loop",
+      "text": null,
+      "cue": "this loop",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.18690625,
+         "y": 0.11499999999999999
+        },
+        {
+         "x": 0.46153125,
+         "y": 0.11499999999999999
+        }
+       ],
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "First invalid input",
+    "narration": "First attempt: we read input, ask Valid?, and the answer is No. So the flow goes down to Show error before trying again.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [
+       "R6"
+      ],
+      "to_ids": [
+       "R3"
+      ],
+      "span": null,
+      "text": "attempt 1",
+      "cue": "First attempt",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.3599596120423417,
+         "y": 0.4158337534004692
+        },
+        {
+         "x": 0.37847313031383745,
+         "y": 0.4076017457521456
+        },
+        {
+         "x": 0.39707163795765826,
+         "y": 0.41520420249435697
+        }
+       ],
+       "label_box": {
+        "x": 0.26747875265691873,
+        "y": 0.32197702851644605,
+        "w": 0.0809375,
+        "h": 0.036111111111111094
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "arrow",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [
+       "R3"
+      ],
+      "to_ids": [
+       "R27"
+      ],
+      "span": null,
+      "text": "invalid",
+      "cue": "answer is No",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.47428258880160434,
+         "y": 0.5329843034153005
+        },
+        {
+         "x": 0.46763428340008995,
+         "y": 0.5811934938186325
+        },
+        {
+         "x": 0.4740177160764444,
+         "y": 0.6295156965846995
+        }
+       ],
+       "label_box": {
+        "x": 0.39136096791955716,
+        "y": 0.5631661913537606,
+        "w": 0.06468750000000001,
+        "h": 0.036111111111111094
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R27"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "error #1",
+      "cue": "Show error",
+      "geometry": {
+       "box": {
+        "x": 0.4,
+        "y": 0.6458333333333334,
+        "w": 0.14765624999999993,
+        "h": 0.10555555555555551
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.43742187499999996,
+        "y": 0.7694444444444445,
+        "w": 0.07281250000000006,
+        "h": 0.036111111111111094
+       },
+       "leader": [
+        {
+         "x": 0.473828125,
+         "y": 0.7694444444444445
+        },
+        {
+         "x": 0.473828125,
+         "y": 0.7513888888888889
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Loop back and try again",
+    "narration": "After showing the error, the arrow loops back to Read input. That means the program does not stop; it asks again.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R27"
+      ],
+      "to_ids": [
+       "R6"
+      ],
+      "span": null,
+      "text": "ask again",
+      "cue": "loops back",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.4283122183922539,
+         "y": 0.6358305502728407
+        },
+        {
+         "x": 0.3825888603979446,
+         "y": 0.5343608608933791
+        },
+        {
+         "x": 0.3159412538299683,
+         "y": 0.48083611639382595
+        }
+       ],
+       "label_box": {
+        "x": 0.2815765482545279,
+        "y": 0.5282915415578006,
+        "w": 0.0809375,
+        "h": 0.036111111111111094
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R34"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "The loop repeats",
+      "text": null,
+      "cue": "does not stop",
+      "geometry": {
+       "box": {
+        "x": 0.03671875,
+        "y": 0.8456111111111112,
+        "w": 0.11640625000000002,
+        "h": 0.030999999999999917
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Second invalid input",
+    "narration": "Now the second attempt follows the same rule: Read input, test Valid?, then No again. So we show the error a second time and loop back again.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [
+       "R6"
+      ],
+      "to_ids": [
+       "R3"
+      ],
+      "span": null,
+      "text": "attempt 2",
+      "cue": "second attempt",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.3599596120423417,
+         "y": 0.4158337534004692
+        },
+        {
+         "x": 0.37847313031383745,
+         "y": 0.4076017457521456
+        },
+        {
+         "x": 0.39707163795765826,
+         "y": 0.41520420249435697
+        }
+       ],
+       "label_box": {
+        "x": 0.24208812765691873,
+        "y": 0.2768381396275572,
+        "w": 0.0809375,
+        "h": 0.036111111111111094
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "arrow",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [
+       "R3"
+      ],
+      "to_ids": [
+       "R27"
+      ],
+      "span": null,
+      "text": "invalid again",
+      "cue": "No again",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.47428258880160434,
+         "y": 0.5329843034153005
+        },
+        {
+         "x": 0.46763428340008995,
+         "y": 0.5811934938186325
+        },
+        {
+         "x": 0.4740177160764444,
+         "y": 0.6295156965846995
+        }
+       ],
+       "label_box": {
+        "x": 0.48573596791955714,
+        "y": 0.6076106357982052,
+        "w": 0.11343750000000002,
+        "h": 0.036111111111111094
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R27"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "error #2",
+      "cue": "second time",
+      "geometry": {
+       "box": {
+        "x": 0.4,
+        "y": 0.6458333333333334,
+        "w": 0.14765624999999993,
+        "h": 0.10555555555555551
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.31703125000000004,
+        "y": 0.5916666666666667,
+        "w": 0.0728125,
+        "h": 0.036111111111111094
+       },
+       "leader": [
+        {
+         "x": 0.3805408403659656,
+         "y": 0.6297336293422372
+        },
+        {
+         "x": 0.397048202080569,
+         "y": 0.6419216302044146
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "When it finally becomes valid",
+    "narration": "Only when a later input is valid does the flow take the Yes arrow to Process data, then End. So invalid twice means two errors, two retries, and no processing yet.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R3"
+      ],
+      "to_ids": [
+       "R9"
+      ],
+      "span": null,
+      "text": "valid later",
+      "cue": "Yes arrow",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.552147126032968,
+         "y": 0.4151819929294638
+        },
+        {
+         "x": 0.5749485488766221,
+         "y": 0.4253136719211598
+        },
+        {
+         "x": 0.597852873967032,
+         "y": 0.415944231794322
+        }
+       ],
+       "label_box": {
+        "x": 0.570286774438311,
+        "y": 0.47391061436374854,
+        "w": 0.09718749999999998,
+        "h": 0.03611111111111115
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R9"
+      ],
+      "to_ids": [
+       "R11"
+      ],
+      "span": null,
+      "text": "finish",
+      "cue": "then End",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.7677725298753428,
+         "y": 0.4173611111111111
+        },
+        {
+         "x": 0.7921875,
+         "y": 0.4069440571912574
+        },
+        {
+         "x": 0.816602470124657,
+         "y": 0.4173611111111111
+        }
+       ],
+       "label_box": {
+        "x": 0.76390625,
+        "y": 0.34965258415118433,
+        "w": 0.05656249999999996,
+        "h": 0.036111111111111094
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R3"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "repeat until yes",
+      "cue": "invalid twice",
+      "geometry": {
+       "box": {
+        "x": 0.40625,
+        "y": 0.3111111111111111,
+        "w": 0.13671875,
+        "h": 0.2055555555555555
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.405703125,
+        "y": 0.22986111111111113,
+        "w": 0.13781249999999995,
+        "h": 0.036111111111111094
+       },
+       "leader": [
+        {
+         "x": 0.474609375,
+         "y": 0.2710715443751905
+        },
+        {
+         "x": 0.474609375,
+         "y": 0.3009124668051746
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart LR\nA[Read input] --> B[Valid?]\nB -->|No| C[Show error]\nC --> A\nB -->|Yes| D[Process data]\nD --> E[End]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the decision that checks whether the input is valid.",
+    "answer_ids": [
+     "R3"
+    ],
+    "answer_box": {
+     "x": 0.40625,
+     "y": 0.3111111111111111,
+     "w": 0.13671875,
+     "h": 0.2055555555555555
+    },
+    "explanation": "This diamond is the decision point that sends valid input right and invalid input downward."
+   },
+   {
+    "question": "Tap the step that happens after an invalid input.",
+    "answer_ids": [
+     "R27"
+    ],
+    "answer_box": {
+     "x": 0.4,
+     "y": 0.6458333333333334,
+     "w": 0.14765624999999993,
+     "h": 0.10555555555555551
+    },
+    "explanation": "The No arrow from the decision leads directly to Show error."
+   },
+   {
+    "question": "Tap the step that happens only after the input is valid.",
+    "answer_ids": [
+     "R9"
+    ],
+    "answer_box": {
+     "x": 0.60703125,
+     "y": 0.3638888888888889,
+     "w": 0.15156249999999993,
+     "h": 0.10694444444444445
+    },
+    "explanation": "Process data is reached by following the Yes arrow from Valid?."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 17.769,
+   "ground": 0.084,
+   "total": 17.853,
+   "input_tokens": 5162.0,
+   "output_tokens": 1626.0,
+   "approx_agreement": 1.0
+  },
+  "warnings": [],
+  "question": "What happens if the input is invalid twice?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 5162,
+  "output_tokens": 1626,
+  "seconds": 17.768
+ },
+ "checks": {
+  "path": {
+   "pass": true,
+   "evidence": "read input, ask valid"
+  },
+  "no_branch": {
+   "pass": true,
+   "evidence": "invalid twice means two error"
+  },
+  "loop_back": {
+   "pass": true,
+   "evidence": "loops back to read input"
+  },
+  "twice": {
+   "pass": true,
+   "evidence": "second"
+  },
+  "exit": {
+   "pass": true,
+   "evidence": "only when a later input is valid does the flow take the yes arrow to process"
+  }
+ },
+ "passed": 5,
+ "total": 5,
+ "score": 1.0,
+ "all_passed": true,
+ "checked_text": "great question-if input is invalid twice, the answer lives in this loop around the valid? decision. i'm circling the decision, because every attempt must pass through that check.\n\nfirst attempt: we read input, ask valid?, and the answer is no. so the flow goes down to show error before trying again.\nattempt 1\ninvalid\nerror #1\n\nafter showing the error, the arrow loops back to read input. that means the program does not stop; it asks again.\nask again\n\nnow the second attempt follows the same rule: read input, test valid?, then no again. so we show the error a second time and loop back again.\nattempt 2\ninvalid again\nerror #2\n\nonly when a later input is valid does the flow take the yes arrow to process data, then end. so invalid twice means two errors, two retries, and no processing yet.\nvalid later\nfinish\nrepeat until yes\nread input -> valid?\nvalid? -> (no) show error\nshow error -> read input\nvalid? -> (yes) process data\nprocess data -> end"
+}

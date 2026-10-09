@@ -1,0 +1,813 @@
+{
+ "version": "L2",
+ "note": "",
+ "case": "cs_gbn_vs_sr",
+ "topic": "networking",
+ "run": 1,
+ "question": "In both timelines frame 2 is damaged. What does the receiver do with the frames that arrive after it, and which frames does the sender retransmit, in (a) Go-Back-N versus (b) Selective Repeat?",
+ "source": "cs_gbn_vs_sr.png",
+ "page": null,
+ "backend": {
+  "path": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend",
+  "commit": "6dbe976",
+  "subject": "Simulate procedures faithfully, deepen board colours",
+  "dirty": false
+ },
+ "started": "2026-10-09T23:04:07+06:00",
+ "finished": "2026-10-09T23:04:54+06:00",
+ "jobs": 2,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L2_cs_gbn_vs_sr_1_ol9dqn3q\\data",
+ "perceive_s": 25.622,
+ "perception": {
+  "image_id": "7c858b22317e",
+  "width": 1280,
+  "height": 800,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.166,
+   "ink": 0.065,
+   "ocr": 16.875,
+   "text": 0.065,
+   "rescue": 8.235,
+   "regions": 0.035,
+   "freespace": 0.002,
+   "som": 0.02,
+   "total": 25.463,
+   "prepare": 0.046
+  },
+  "regions": 79
+ },
+ "regions": {
+  "R3": "Timeout interval",
+  "R8": "1",
+  "R9": "2",
+  "R10": "3",
+  "R11": "4",
+  "R12": "5",
+  "R13": "6",
+  "R14": "7",
+  "R15": "8",
+  "R16": "2",
+  "R17": "3",
+  "R18": "4",
+  "R19": "5",
+  "R20": "6",
+  "R21": "7",
+  "R22": "8",
+  "R23": "9",
+  "R24": "1",
+  "R25": "E",
+  "R26": "D",
+  "R27": "D",
+  "R28": "D",
+  "R29": "D",
+  "R30": "D",
+  "R31": "D",
+  "R32": "2",
+  "R33": "3",
+  "R34": "4",
+  "R35": "5",
+  "R36": "6",
+  "R37": "7",
+  "R38": "8",
+  "R40": "Error",
+  "R41": "Frames discarded by data link layer",
+  "R42": "Time",
+  "R44": "(a)",
+  "R46": "1",
+  "R47": "2",
+  "R48": "3",
+  "R49": "4",
+  "R50": "5",
+  "R51": "2",
+  "R52": "6",
+  "R53": "7",
+  "R54": "8",
+  "R55": "9",
+  "R56": "10",
+  "R57": "12",
+  "R58": "13",
+  "R59": "14",
+  "R60": "15",
+  "R61": "2",
+  "R62": "6",
+  "R63": "0",
+  "R64": "1",
+  "R65": "E",
+  "R66": "3",
+  "R67": "4",
+  "R68": "5",
+  "R69": "7",
+  "R70": "8",
+  "R71": "9",
+  "R72": "10",
+  "R73": "12",
+  "R74": "13",
+  "R75": "14",
+  "R76": "Error",
+  "R78": "Frames buffered by data link layer",
+  "R79": "(b)"
+ },
+ "request": {
+  "image_id": "7c858b22317e",
+  "question": "In both timelines frame 2 is damaged. What does the receiver do with the frames that arrive after it, and which frames does the sender retransmit, in (a) Go-Back-N versus (b) Selective Repeat?"
+ },
+ "lesson_s": 18.856,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "95c09071e26f",
+  "image_id": "7c858b22317e",
+  "title": "Frame 2 Error: Go-Back-N vs Selective Repeat",
+  "summary": "The page compares what happens after frame 2 is damaged in two sliding-window protocols. Go-Back-N discards later frames and retransmits a whole run; Selective Repeat buffers later frames and retransmits only the missing damaged frame.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Orient: the same error, two policies",
+    "narration": "We’re answering your frame 2 question by comparing the top timeline, Go-Back-N, with the bottom timeline, Selective Repeat. I’ll circle the damaged spot in both: same error, different receiver behavior.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R40"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "damaged spot",
+      "geometry": {
+       "box": {
+        "x": 0.10796874999999999,
+        "y": 0.31775,
+        "w": 0.05750000000000001,
+        "h": 0.060750000000000026
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.956,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R76"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "in both",
+      "geometry": {
+       "box": {
+        "x": 0.11968749999999999,
+        "y": 0.8665,
+        "w": 0.05828125000000002,
+        "h": 0.05699999999999994
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.948,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a3",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R44"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "Go-Back-N",
+      "cue": "top timeline",
+      "geometry": {
+       "box": {
+        "x": 0.371875,
+        "y": 0.46625,
+        "w": 0.02031250000000001,
+        "h": 0.025000000000000022
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.40297851562500003,
+        "y": 0.461484375,
+        "w": 0.08599609375,
+        "h": 0.03453125000000001
+       },
+       "leader": [
+        {
+         "x": 0.402978515625,
+         "y": 0.47875
+        },
+        {
+         "x": 0.3921875,
+         "y": 0.47875
+        }
+       ]
+      },
+      "confidence": 0.97,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a4",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R79"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "Selective Repeat",
+      "cue": "bottom timeline",
+      "geometry": {
+       "box": {
+        "x": 0.371875,
+        "y": 0.96,
+        "w": 0.02031250000000001,
+        "h": 0.025000000000000022
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.40297851562500003,
+        "y": 0.955234375,
+        "w": 0.14642578125,
+        "h": 0.03453125000000001
+       },
+       "leader": [
+        {
+         "x": 0.402978515625,
+         "y": 0.9725
+        },
+        {
+         "x": 0.3921875,
+         "y": 0.9725
+        }
+       ]
+      },
+      "confidence": 0.7,
+      "grounding": "id_only"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Go-Back-N receiver discards later frames",
+    "narration": "In the top case, after frame 2 is damaged, the receiver is still waiting for 2. So frames 3 through 8 arrive out of order and get thrown away by the data link layer.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "highlight",
+      "color": "orange",
+      "target_ids": [
+       "R41"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "Frames discarded by data link layer",
+      "text": null,
+      "cue": "thrown away",
+      "geometry": {
+       "box": {
+        "x": 0.18671875,
+        "y": 0.3381,
+        "w": 0.278125,
+        "h": 0.03254999999999997
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.989,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "box",
+      "color": "orange",
+      "target_ids": [
+       "R26",
+       "R27",
+       "R28",
+       "R29",
+       "R30",
+       "R31"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "frames 3 through 8",
+      "geometry": {
+       "box": {
+        "x": 0.20546875,
+        "y": 0.26,
+        "w": 0.23906250000000004,
+        "h": 0.04375000000000001
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.962,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R26",
+       "R27",
+       "R28",
+       "R29",
+       "R30",
+       "R31"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "not delivered",
+      "cue": "out of order",
+      "geometry": {
+       "box": {
+        "x": 0.21171875,
+        "y": 0.27,
+        "w": 0.2265625,
+        "h": 0.023749999999999993
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.4652587890625,
+        "y": 0.3369140625,
+        "w": 0.12052734375000002,
+        "h": 0.03453125000000001
+       },
+       "leader": [
+        {
+         "x": 0.47476374416176786,
+         "y": 0.3358770338361083
+        },
+        {
+         "x": 0.36368489581848207,
+         "y": 0.29582405732778344
+        }
+       ]
+      },
+      "confidence": 0.962,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Go-Back-N sender retransmits from 2 onward",
+    "narration": "When the timeout interval ends, the sender goes back to the missing frame 2. Follow my blue box: it retransmits 2, then 3, 4, 5, 6, 7, and 8 before continuing with 9.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "highlight",
+      "color": "blue",
+      "target_ids": [
+       "R3"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "Timeout interval",
+      "text": null,
+      "cue": "timeout interval",
+      "geometry": {
+       "box": {
+        "x": 0.184375,
+        "y": 0.0123,
+        "w": 0.140625,
+        "h": 0.027899999999999994
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.946,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "box",
+      "color": "blue",
+      "target_ids": [
+       "R16",
+       "R17",
+       "R18",
+       "R19",
+       "R20",
+       "R21",
+       "R22"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "retransmits 2",
+      "geometry": {
+       "box": {
+        "x": 0.390625,
+        "y": 0.06625,
+        "w": 0.2789062499999999,
+        "h": 0.04125000000000001
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.948,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [
+       "R9"
+      ],
+      "to_ids": [
+       "R16"
+      ],
+      "span": null,
+      "text": "timeout",
+      "cue": "goes back",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.1172464811320566,
+         "y": 0.086875
+        },
+        {
+         "x": 0.25234375,
+         "y": 0.13875235124529028
+        },
+        {
+         "x": 0.3874410188679434,
+         "y": 0.086875
+        }
+       ],
+       "label_box": {
+        "x": 0.21797851562499998,
+        "y": 0.13757930062264515,
+        "w": 0.06873046875,
+        "h": 0.034531249999999986
+       },
+       "leader": null
+      },
+      "confidence": 0.7,
+      "grounding": "id_only"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Selective Repeat receiver buffers later frames",
+    "narration": "Now the bottom case: frame 2 is still the hole, but the receiver accepts good later frames. Frames 3, 4, and 5 are buffered instead of discarded, waiting until 2 is repaired.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R78"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "Frames buffered by data link layer",
+      "text": null,
+      "cue": "buffered instead",
+      "geometry": {
+       "box": {
+        "x": 0.18984375,
+        "y": 0.8845000000000001,
+        "w": 0.2671875,
+        "h": 0.030999999999999917
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.984,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "box",
+      "color": "green",
+      "target_ids": [
+       "R66",
+       "R67",
+       "R68"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "Frames 3, 4, and 5",
+      "geometry": {
+       "box": {
+        "x": 0.21875,
+        "y": 0.80375,
+        "w": 0.10390624999999998,
+        "h": 0.04500000000000004
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.956,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R66",
+       "R67",
+       "R68"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "kept safe",
+      "cue": "accepts good",
+      "geometry": {
+       "box": {
+        "x": 0.225,
+        "y": 0.81375,
+        "w": 0.09140625,
+        "h": 0.025000000000000022
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.227705078125,
+        "y": 0.925078125,
+        "w": 0.08599609375000003,
+        "h": 0.03453125000000001
+       },
+       "leader": [
+        {
+         "x": 0.270703125,
+         "y": 0.9203611344339717
+        },
+        {
+         "x": 0.270703125,
+         "y": 0.8481839811320566
+        }
+       ]
+      },
+      "confidence": 0.956,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Selective Repeat retransmits only frame 2",
+    "narration": "The NAK points exactly at the missing frame, so Selective Repeat resends only frame 2. Once that 2 arrives, the buffered 3, 4, and 5 can be delivered in order.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "circle",
+      "color": "purple",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "NAK points",
+      "geometry": {
+       "box": {
+        "x": 0.22853515624999998,
+        "y": 0.6221562500000001,
+        "w": 0.08121093750000002,
+        "h": 0.15693749999999984
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     },
+     {
+      "id": "s5a2",
+      "kind": "circle",
+      "color": "purple",
+      "target_ids": [
+       "R51"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "only frame 2",
+      "geometry": {
+       "box": {
+        "x": 0.2728125,
+        "y": 0.6065,
+        "w": 0.02937500000000004,
+        "h": 0.05324999999999991
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.7,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s5a3",
+      "kind": "arrow",
+      "color": "purple",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [
+       "R51"
+      ],
+      "span": null,
+      "text": "resend 2",
+      "cue": "resends only",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.269140625,
+         "y": 0.700625
+        },
+        {
+         "x": 0.2833828125,
+         "y": 0.6704000000000001
+        },
+        {
+         "x": 0.2875,
+         "y": 0.633125
+        }
+       ],
+       "label_box": {
+        "x": 0.24216992187500003,
+        "y": 0.5402781250000002,
+        "w": 0.07736328124999997,
+        "h": 0.03453125000000001
+       },
+       "leader": null
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "Answer recap",
+    "narration": "So the answer is: Go-Back-N discards everything after damaged 2 and retransmits 2 through 8 here. Selective Repeat buffers later good frames and retransmits only 2.",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "box",
+      "color": "red",
+      "target_ids": [
+       "R41",
+       "R78"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "the answer is",
+      "geometry": {
+       "box": {
+        "x": 0.1671875,
+        "y": 0.30625,
+        "w": 0.3171875,
+        "h": 0.6412500000000001
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart TD\nA[Frame 2 damaged]\nB{Protocol?}\nC[Go-Back-N]\nD[Discard later]\nE[Retransmit 2-8]\nF[Selective Repeat]\nG[Buffer later]\nH[Retransmit 2]\nA --> B\nB --> C\nC --> D\nD --> E\nB --> F\nF --> G\nG --> H"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the caption that says the later frames are discarded.",
+    "answer_ids": [
+     "R41"
+    ],
+    "answer_box": {
+     "x": 0.1890625,
+     "y": 0.34125,
+     "w": 0.2734375,
+     "h": 0.026249999999999996
+    },
+    "explanation": "That caption belongs to the Go-Back-N timeline, where out-of-order frames after the damaged frame 2 are thrown away."
+   },
+   {
+    "question": "Tap the retransmitted frame 2 in the Selective Repeat timeline.",
+    "answer_ids": [
+     "R51"
+    ],
+    "answer_box": {
+     "x": 0.2828125,
+     "y": 0.6225,
+     "w": 0.009375000000000022,
+     "h": 0.02124999999999999
+    },
+    "explanation": "Selective Repeat retransmits only the missing damaged frame, so this second 2 is the repair transmission."
+   },
+   {
+    "question": "Tap the caption that says the later frames are buffered.",
+    "answer_ids": [
+     "R78"
+    ],
+    "answer_box": {
+     "x": 0.1921875,
+     "y": 0.8875,
+     "w": 0.2625,
+     "h": 0.025000000000000022
+    },
+    "explanation": "That caption shows the Selective Repeat receiver keeping good out-of-order frames instead of discarding them."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 18.741,
+   "ground": 0.091,
+   "total": 18.832,
+   "input_tokens": 5740.0,
+   "output_tokens": 2089.0,
+   "approx_agreement": 0.75
+  },
+  "warnings": [],
+  "question": "In both timelines frame 2 is damaged. What does the receiver do with the frames that arrive after it, and which frames does the sender retransmit, in (a) Go-Back-N versus (b) Selective Repeat?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 5740,
+  "output_tokens": 2089,
+  "seconds": 18.741
+ },
+ "checks": {
+  "gbn_discards_3_to_8": {
+   "pass": true,
+   "evidence": "3 through 8 arrive out of order and get thrown"
+  },
+  "gbn_timeout_resends_from_2": {
+   "pass": true,
+   "evidence": "timeout | retransmits 2 through 8"
+  },
+  "sr_buffers_3_to_5": {
+   "pass": true,
+   "evidence": "buffered 3, 4, and 5 | 3, 4, and 5 are buffer"
+  },
+  "sr_nak_only_2": {
+   "pass": true,
+   "evidence": "nak | only frame 2 | only frame 2"
+  },
+  "sr_ack_5": {
+   "pass": false,
+   "evidence": "MISSING any: 0 of 5 matched, need 1"
+  }
+ },
+ "passed": 4,
+ "total": 5,
+ "score": 0.8,
+ "all_passed": false,
+ "checked_text": "we're answering your frame 2 question by comparing the top timeline, go-back-n, with the bottom timeline, selective repeat. i'll circle the damaged spot in both: same error, different receiver behavior.\ngo-back-n\nselective repeat\n\nin the top case, after frame 2 is damaged, the receiver is still waiting for 2. so frames 3 through 8 arrive out of order and get thrown away by the data link layer.\nnot delivered\n\nwhen the timeout interval ends, the sender goes back to the missing frame 2. follow my blue box: it retransmits 2, then 3, 4, 5, 6, 7, and 8 before continuing with 9.\ntimeout\n\nnow the bottom case: frame 2 is still the hole, but the receiver accepts good later frames. frames 3, 4, and 5 are buffered instead of discarded, waiting until 2 is repaired.\nkept safe\n\nthe nak points exactly at the missing frame, so selective repeat resends only frame 2. once that 2 arrives, the buffered 3, 4, and 5 can be delivered in order.\nresend 2\n\nso the answer is: go-back-n discards everything after damaged 2 and retransmits 2 through 8 here. selective repeat buffers later good frames and retransmits only 2.\nframe 2 damaged\nprotocol?\ngo-back-n\ndiscard later\nretransmit 2-8\nselective repeat\nbuffer later\nretransmit 2\nframe 2 damaged -> protocol?\nprotocol? -> go-back-n\ngo-back-n -> discard later\ndiscard later -> retransmit 2-8\nprotocol? -> selective repeat\nselective repeat -> buffer later\nbuffer later -> retransmit 2"
+}

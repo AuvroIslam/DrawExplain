@@ -1,0 +1,669 @@
+{
+ "version": "L2",
+ "note": "",
+ "case": "math_quadratic",
+ "topic": "math",
+ "run": 2,
+ "question": "Where does this parabola cross the x-axis? Solve its equation step by step.",
+ "source": "math_quadratic_roots.png",
+ "page": null,
+ "backend": {
+  "path": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend",
+  "commit": "6dbe976",
+  "subject": "Simulate procedures faithfully, deepen board colours",
+  "dirty": false
+ },
+ "started": "2026-10-09T22:39:51+06:00",
+ "finished": "2026-10-09T22:40:14+06:00",
+ "jobs": 2,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L2_math_quadratic_2_irto7xh0\\data",
+ "perceive_s": 5.143,
+ "perception": {
+  "image_id": "0dfba93c4400",
+  "width": 1280,
+  "height": 1280,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.229,
+   "ink": 0.1,
+   "ocr": 2.799,
+   "text": 0.006,
+   "rescue": 1.702,
+   "regions": 0.113,
+   "freespace": 0.005,
+   "som": 0.023,
+   "total": 4.977,
+   "prepare": 0.05
+  },
+  "regions": 13
+ },
+ "regions": {
+  "R4": "3- -=x²--x÷ 2",
+  "R5": "2",
+  "R6": "1",
+  "R7": "3",
+  "R8": "1",
+  "R9": "0",
+  "R10": "0",
+  "R11": "4",
+  "R12": "1",
+  "R13": "3"
+ },
+ "request": {
+  "image_id": "0dfba93c4400",
+  "question": "Where does this parabola cross the x-axis? Solve its equation step by step."
+ },
+ "lesson_s": 14.782,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "ff89eb300e7e",
+  "image_id": "0dfba93c4400",
+  "title": "Finding the x-intercepts",
+  "summary": "We solve where the parabola crosses the x-axis by setting y = 0 in the displayed equation. Factoring gives the two x-values that match the red curve’s crossings on the graph.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Start at the equation",
+    "narration": "We’re finding where this red parabola crosses the x-axis, so the answer lives in the equation and on the horizontal axis. I’ll circle the formula first, then we’ll turn crossing into an algebra problem.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R4"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "circle the formula",
+      "geometry": {
+       "box": {
+        "x": 0.41423828124999995,
+        "y": 0.07109375,
+        "w": 0.4566796875000002,
+        "h": 0.08749999999999998
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.973,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "underline",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "x-axis",
+      "text": null,
+      "cue": "horizontal axis",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.0,
+         "y": 0.50734375
+        },
+        {
+         "x": 1.0,
+         "y": 0.50734375
+        }
+       ],
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.3,
+      "grounding": "llm_only"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Crossing means y equals zero",
+    "narration": "At an x-axis crossing, the height y is exactly 0. So I replace y in the circled equation with 0, giving us the equation to solve.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R4"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "y",
+      "text": null,
+      "cue": "height y",
+      "geometry": {
+       "box": {
+        "x": 0.47109375,
+        "y": 0.0809375,
+        "w": 0.34296874999999993,
+        "h": 0.0678125
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.909,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "y = 0 here",
+      "cue": "exactly 0",
+      "geometry": {
+       "box": {
+        "x": 0.4609375,
+        "y": 0.4765625,
+        "w": 0.13828125000000002,
+        "h": 0.05234375000000002
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.40439453125,
+        "y": 0.409912109375,
+        "w": 0.19482421875,
+        "h": 0.04443359375
+       },
+       "leader": [
+        {
+         "x": 0.5120168162635437,
+         "y": 0.4576278941141352
+        },
+        {
+         "x": 0.5169700386995723,
+         "y": 0.46999811802172964
+        }
+       ]
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "0 = x²−x−2",
+      "cue": "replace y",
+      "geometry": {
+       "box": {
+        "x": 0.621875,
+        "y": 0.1484375,
+        "w": 0.12968749999999996,
+        "h": 0.040624999999999994
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.5567382812499999,
+        "y": 0.300146484375,
+        "w": 0.19482421875,
+        "h": 0.04443359375
+       },
+       "leader": [
+        {
+         "x": 0.6595939780136452,
+         "y": 0.2966878300885634
+        },
+        {
+         "x": 0.6809456151245687,
+         "y": 0.1959798085728732
+        }
+       ]
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Factor the quadratic",
+    "narration": "Now we factor x² − x − 2. We need two numbers that multiply to −2 and add to −1: that’s −2 and +1.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "highlight",
+      "color": "orange",
+      "target_ids": [
+       "R4"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "x² − x − 2",
+      "text": null,
+      "cue": "factor x²",
+      "geometry": {
+       "box": {
+        "x": 0.47109375,
+        "y": 0.0809375,
+        "w": 0.34296874999999993,
+        "h": 0.0678125
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.95,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "−2·1=−2",
+      "cue": "multiply to −2",
+      "geometry": {
+       "box": {
+        "x": 0.621875,
+        "y": 0.1984375,
+        "w": 0.12968749999999996,
+        "h": 0.040624999999999994
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.458154296875,
+        "y": 0.196533203125,
+        "w": 0.14150390624999998,
+        "h": 0.04443359375
+       },
+       "leader": [
+        {
+         "x": 0.6031937370309327,
+         "y": 0.21875
+        },
+        {
+         "x": 0.6148039321881346,
+         "y": 0.21875
+        }
+       ]
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "−2+1=−1",
+      "cue": "add to −1",
+      "geometry": {
+       "box": {
+        "x": 0.5984375,
+        "y": 0.2484375,
+        "w": 0.21562499999999996,
+        "h": 0.040624999999999994
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.8362792968749999,
+        "y": 0.311279296875,
+        "w": 0.14150390624999998,
+        "h": 0.04443359375
+       },
+       "leader": [
+        {
+         "x": 0.8347708169918981,
+         "y": 0.3101942128723874
+        },
+        {
+         "x": 0.7759700081730665,
+         "y": 0.29123266800522524
+        }
+       ]
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Use the zero product property",
+    "narration": "So the equation becomes 0 = (x − 2)(x + 1). A product is zero only when one factor is zero, so we solve each small equation.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "0=(x−2)(x+1)",
+      "cue": "equation becomes",
+      "geometry": {
+       "box": {
+        "x": 0.621875,
+        "y": 0.2984375,
+        "w": 0.12968749999999996,
+        "h": 0.04062500000000002
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.621875,
+        "y": 0.39460449218750004,
+        "w": 0.23037109374999998,
+        "h": 0.04443359375
+       },
+       "leader": [
+        {
+         "x": 0.7240416935339566,
+         "y": 0.39145914848491936
+        },
+        {
+         "x": 0.7003746555089476,
+         "y": 0.34535318740516124
+        }
+       ]
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     },
+     {
+      "id": "s4a2",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [
+       "R9"
+      ],
+      "span": null,
+      "text": "x=2",
+      "cue": "one factor",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.6241471624232229,
+         "y": 0.3464699255741182
+        },
+        {
+         "x": 0.6077618744176436,
+         "y": 0.4140233631655918
+        },
+        {
+         "x": 0.6238210221364876,
+         "y": 0.48165507442588185
+        }
+       ],
+       "label_box": {
+        "x": 0.6427772802237495,
+        "y": 0.440947228457796,
+        "w": 0.07041015625000002,
+        "h": 0.04443359375
+       },
+       "leader": null
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     },
+     {
+      "id": "s4a3",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [
+       "R8"
+      ],
+      "span": null,
+      "text": "x=−1",
+      "cue": "each small equation",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.6691832814622656,
+         "y": 0.3407922176100787
+        },
+        {
+         "x": 0.56413725432925,
+         "y": 0.42140495546160084
+        },
+        {
+         "x": 0.5071201762265425,
+         "y": 0.5409128385696965
+        }
+       ],
+       "label_box": {
+        "x": 0.37218941346182705,
+        "y": 0.2709236636507443,
+        "w": 0.08818359375000001,
+        "h": 0.04443359375
+       },
+       "leader": null
+      },
+      "confidence": 0.3,
+      "grounding": "llm_only"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Match the graph crossings",
+    "narration": "Here are the two crossings on the red curve: x = −1 and x = 2. That means the parabola crosses the x-axis at the points (−1, 0) and (2, 0).",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R8"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "two crossings",
+      "geometry": {
+       "box": {
+        "x": 0.364140625,
+        "y": 0.458671875,
+        "w": 0.15609375000000003,
+        "h": 0.32484374999999993
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.901,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R9"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "red curve",
+      "geometry": {
+       "box": {
+        "x": 0.44730468749999996,
+        "y": 0.4412890625,
+        "w": 0.352265625,
+        "h": 0.3986718750000001
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.901,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "(−1,0), (2,0)",
+      "cue": "at the points",
+      "geometry": {
+       "box": {
+        "x": 0.49609375,
+        "y": 0.53046875,
+        "w": 0.13046875000000002,
+        "h": 0.06406250000000002
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.136865234375,
+        "y": 0.540283203125,
+        "w": 0.24814453125,
+        "h": 0.04443359375
+       },
+       "leader": [
+        {
+         "x": 0.38854529953093275,
+         "y": 0.5625
+        },
+        {
+         "x": 0.48902268218813455,
+         "y": 0.5625
+        }
+       ]
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": "flowchart LR\nA[Set y=0] --> B[Factor quadratic]\nB --> C[Set factors zero]\nC --> D[Get x-values]\nD --> E[Plot crossings]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the displayed equation we set equal to zero.",
+    "answer_ids": [
+     "R4"
+    ],
+    "answer_box": {
+     "x": 0.4734375,
+     "y": 0.0875,
+     "w": 0.33828125000000003,
+     "h": 0.0546875
+    },
+    "explanation": "This formula defines the parabola, so setting y = 0 finds its x-axis crossings."
+   },
+   {
+    "question": "Tap the left x-axis crossing of the red curve.",
+    "answer_ids": [
+     "R8"
+    ],
+    "answer_box": {
+     "x": 0.384375,
+     "y": 0.50078125,
+     "w": 0.11562499999999998,
+     "h": 0.24062499999999998
+    },
+    "explanation": "The red curve meets the x-axis at x = −1 on the left."
+   },
+   {
+    "question": "Tap the right x-axis crossing of the red curve.",
+    "answer_ids": [
+     "R9"
+    ],
+    "answer_box": {
+     "x": 0.49296875,
+     "y": 0.49296875,
+     "w": 0.2609375,
+     "h": 0.29531250000000003
+    },
+    "explanation": "The red curve meets the x-axis again at x = 2 on the right."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 14.727,
+   "ground": 0.036,
+   "total": 14.763,
+   "input_tokens": 6458.0,
+   "output_tokens": 1626.0,
+   "approx_agreement": 0.909
+  },
+  "warnings": [
+   "step 1 drawing 2: span 'x-axis' not found in target; using the whole target",
+   "step 2 drawing 1: span 'y' not found in R4; using the whole target",
+   "step 3 drawing 1: span 'x² − x − 2' not found in R4; using the whole target"
+  ],
+  "question": "Where does this parabola cross the x-axis? Solve its equation step by step.",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 6458,
+  "output_tokens": 1626,
+  "seconds": 14.727
+ },
+ "checks": {
+  "set_zero": {
+   "pass": true,
+   "evidence": "y = 0 | set y=0"
+  },
+  "method": {
+   "pass": true,
+   "evidence": "(x - 2)(x + 1) | multiply to -2 and add to -1"
+  },
+  "root_2": {
+   "pass": true,
+   "evidence": "x=2 | -1 and x = 2 | (2, 0)"
+  },
+  "root_minus_1": {
+   "pass": true,
+   "evidence": "x=-1 | -1 and x = 2 | (-1, 0)"
+  },
+  "graph_link": {
+   "pass": true,
+   "evidence": "(-1, 0) | (2, 0) | crosses the x-axis at the points (-1, 0) and (2"
+  }
+ },
+ "passed": 5,
+ "total": 5,
+ "score": 1.0,
+ "all_passed": true,
+ "checked_text": "we're finding where this red parabola crosses the x-axis, so the answer lives in the equation and on the horizontal axis. i'll circle the formula first, then we'll turn crossing into an algebra problem.\n\nat an x-axis crossing, the height y is exactly 0. so i replace y in the circled equation with 0, giving us the equation to solve.\ny = 0 here\n0 = x2-x-2\n\nnow we factor x2 - x - 2. we need two numbers that multiply to -2 and add to -1: that's -2 and +1.\n-2·1=-2\n-2+1=-1\n\nso the equation becomes 0 = (x - 2)(x + 1). a product is zero only when one factor is zero, so we solve each small equation.\n0=(x-2)(x+1)\nx=2\nx=-1\n\nhere are the two crossings on the red curve: x = -1 and x = 2. that means the parabola crosses the x-axis at the points (-1, 0) and (2, 0).\n(-1,0), (2,0)\nset y=0 -> factor quadratic\nfactor quadratic -> set factors zero\nset factors zero -> get x-values\nget x-values -> plot crossings"
+}

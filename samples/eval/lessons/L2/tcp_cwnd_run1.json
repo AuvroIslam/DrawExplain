@@ -1,0 +1,664 @@
+{
+ "version": "L2",
+ "note": "+ general simulate-don't-shortcut rule",
+ "case": "tcp_cwnd",
+ "run": 1,
+ "question": "How does the congestion window change from the start until a timeout?",
+ "source": "L11 TCP Error Control & Congestion Control.pptx.pdf",
+ "page": 31,
+ "backend": {
+  "path": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt\\L2\\backend",
+  "commit": "6dbe976",
+  "subject": "Simulate procedures faithfully, deepen board colours",
+  "dirty": false
+ },
+ "started": "2026-10-09T19:49:20+06:00",
+ "finished": "2026-10-09T19:50:28+06:00",
+ "dry_run": false,
+ "ok": true,
+ "app_file": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt\\L2\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\tmp\\eval_L2_tcp_cwnd_1_01etobi_\\data",
+ "perceive_s": 47.942,
+ "perception": {
+  "image_id": "de2b2c0e26b8",
+  "width": 1600,
+  "height": 900,
+  "doc_id": "1ffd8b4b56ef",
+  "page": 31,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.59,
+   "ink": 0.369,
+   "ocr": 45.704,
+   "text": 0.155,
+   "rescue": 0.01,
+   "regions": 0.069,
+   "freespace": 0.004,
+   "som": 0.019,
+   "total": 46.92,
+   "prepare": 0.301
+  },
+  "regions": 15
+ },
+ "regions": {
+  "R1": "Congestion control in TcP",
+  "R2": "1. Slow Start (SS) (Exponential Increase)\nstart with the congestion window (CongWin) = 1MSS\nfor each successfully received ACK increase the cwnd size by 1 until the CongWin\n= threshold value;\n2. Additive Increase (Al) (Congestion Avoidance)\nafter that, for each successfully received AcK, increase the window size by 1/n\nsegments up to a size of the receiver window. n=current CongWin size\n3. Multiplicative Decrease (MD)\nif a time-out occurs the (TCP Tahoe, TCP Reno)\nThreshold =% (CongWin) , CongWin =1 MSS, ·\nif 3 d u plicated ACKs r eceived (TCP Reno)\nThreshol d =%(CongW i n), CongWin = threshold",
+  "R3": "1. Slow Start (SS) (Exponential Increase)",
+  "R4": "start with the congestion window (CongWin) = 1MSS",
+  "R5": "for each successfully received ACK increase the cwnd size by 1 until the CongWin",
+  "R6": "= threshold value;",
+  "R7": "2. Additive Increase (Al) (Congestion Avoidance)",
+  "R8": "after that, for each successfully received AcK, increase the window size by 1/n",
+  "R9": "segments up to a size of the receiver window. n=current CongWin size",
+  "R10": "3. Multiplicative Decrease (MD)",
+  "R11": "if a time-out occurs the (TCP Tahoe, TCP Reno)",
+  "R12": "Threshold =% (CongWin) , CongWin =1 MSS, ·",
+  "R13": "if 3 d u plicated ACKs r eceived (TCP Reno)",
+  "R14": "Threshol d =%(CongW i n), CongWin = threshold",
+  "R15": "31"
+ },
+ "request": {
+  "image_id": "de2b2c0e26b8",
+  "question": "How does the congestion window change from the start until a timeout?"
+ },
+ "lesson_s": 15.703,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "d6e308f03560",
+  "image_id": "de2b2c0e26b8",
+  "title": "CongWin: Start to Timeout",
+  "summary": "This page lays out TCP’s congestion-window story: grow fast in Slow Start, grow gently in Additive Increase, then cut back when a timeout signals congestion.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Orient: the path we’ll follow",
+    "narration": "Your question lives in these three rules: start small, grow, then timeout cuts back. I’m circling the roadmap so we can track CongWin from birth to loss.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "these three rules",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.04322222222222222,
+        "w": 0.559578125,
+        "h": 0.10133333333333333
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "box",
+      "color": "blue",
+      "target_ids": [
+       "R3",
+       "R7",
+       "R10"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "track CongWin",
+      "geometry": {
+       "box": {
+        "x": 0.01205,
+        "y": 0.18586666666666668,
+        "w": 0.6408999999999999,
+        "h": 0.5271555555555556
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "begin at 1 MSS",
+    "narration": "At the start, TCP is deliberately cautious: CongWin equals 1 MSS. That means only one segment’s worth is allowed in flight before ACKs prove the path can handle more.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R4"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "(CongWin) = 1MSS",
+      "text": null,
+      "cue": "1 MSS",
+      "geometry": {
+       "box": {
+        "x": 0.47125,
+        "y": 0.2804888888888889,
+        "w": 0.21125,
+        "h": 0.052355555555555544
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.932,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R4"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "start: cwnd=1",
+      "cue": "one segment’s",
+      "geometry": {
+       "box": {
+        "x": 0.113125,
+        "y": 0.28555555555555556,
+        "w": 0.5675,
+        "h": 0.04222222222222222
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.697078125,
+        "y": 0.27741666666666664,
+        "w": 0.18376875000000004,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.6970781250000002,
+         "y": 0.30666666666666664
+        },
+        {
+         "x": 0.680625,
+         "y": 0.30666666666666664
+        }
+       ]
+      },
+      "confidence": 0.932,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Slow Start grows fast",
+    "narration": "Now every successful ACK adds 1 to cwnd, so within a round trip the window roughly doubles. This is the exponential part: 1 becomes 2, then 4, then 8, until the threshold.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "underline",
+      "color": "green",
+      "target_ids": [
+       "R5"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "for each successfully received ACK increase the cwnd size by 1",
+      "text": null,
+      "cue": "every successful ACK",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.099475,
+         "y": 0.39027777777777783
+        },
+        {
+         "x": 0.776775,
+         "y": 0.39027777777777783
+        }
+       ],
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R3"
+      ],
+      "to_ids": [
+       "R6"
+      ],
+      "span": null,
+      "text": "until threshold",
+      "cue": "until the threshold",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.2673072364939378,
+         "y": 0.28177853187075635
+        },
+        {
+         "x": 0.25208950346060577,
+         "y": 0.3416206782140216
+        },
+        {
+         "x": 0.223251974032378,
+         "y": 0.38266591257368804
+        }
+       ],
+       "label_box": {
+        "x": 0.14363767936188185,
+        "y": 0.12550478355145528,
+        "w": 0.21009375,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R3",
+       "R4",
+       "R5",
+       "R6"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "1→2→4→8",
+      "cue": "1 becomes 2",
+      "geometry": {
+       "box": {
+        "x": 0.035,
+        "y": 0.2222222222222222,
+        "w": 0.9400000000000001,
+        "h": 0.21111111111111114
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.8702062500000001,
+        "y": 0.13447222222222222,
+        "w": 0.10479375000000002,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8674054497953978,
+         "y": 0.18540665111883584
+        },
+        {
+         "x": 0.7792930794136071,
+         "y": 0.22002163124931629
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "after threshold, growth slows",
+    "narration": "After Slow Start reaches the threshold, TCP switches to Additive Increase. Each ACK adds only 1/n, so over one RTT the total gain is about one MSS, not doubling anymore.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "circle",
+      "color": "orange",
+      "target_ids": [
+       "R7"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "Additive Increase",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.43555555555555553,
+        "w": 0.7375,
+        "h": 0.08222222222222225
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "highlight",
+      "color": "orange",
+      "target_ids": [
+       "R8"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "increase the window size by 1/n",
+      "text": null,
+      "cue": "adds only 1/n",
+      "geometry": {
+       "box": {
+        "x": 0.596875,
+        "y": 0.5117333333333334,
+        "w": 0.3387500000000001,
+        "h": 0.05097777777777779
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R9"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "+1 per RTT",
+      "cue": "one RTT",
+      "geometry": {
+       "box": {
+        "x": 0.113125,
+        "y": 0.5688888888888889,
+        "w": 0.748125,
+        "h": 0.0411111111111111
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.71696875,
+        "y": 0.63925,
+        "w": 0.14428125000000003,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.714130995923768,
+         "y": 0.6488675788230762
+        },
+        {
+         "x": 0.5713669391081911,
+         "y": 0.6114860812919007
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "timeout triggers the cut",
+    "narration": "When a timeout occurs, TCP treats that as strong congestion evidence. The threshold becomes half of the old CongWin, and CongWin itself is reset all the way to 1 MSS.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "highlight",
+      "color": "red",
+      "target_ids": [
+       "R11"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "if a time-out occurs",
+      "text": null,
+      "cue": "timeout occurs",
+      "geometry": {
+       "box": {
+        "x": 0.111875,
+        "y": 0.690711111111111,
+        "w": 0.20625000000000004,
+        "h": 0.03857777777777782
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "highlight",
+      "color": "red",
+      "target_ids": [
+       "R12"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "Threshold = ½ (CongWin)",
+      "text": null,
+      "cue": "half of the old",
+      "geometry": {
+       "box": {
+        "x": 0.145,
+        "y": 0.7458666666666667,
+        "w": 0.238125,
+        "h": 0.042711111111111144
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.962,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "highlight",
+      "color": "red",
+      "target_ids": [
+       "R12"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "CongWin = 1 MSS",
+      "text": null,
+      "cue": "reset all the way",
+      "geometry": {
+       "box": {
+        "x": 0.4125,
+        "y": 0.7483555555555556,
+        "w": 0.17437500000000006,
+        "h": 0.03995555555555563
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.945,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "Answer: the full change",
+    "narration": "So the answer is: CongWin starts at 1 MSS, rises exponentially until the threshold, then rises additively, and on timeout drops back to 1 MSS while the threshold is set to half the previous CongWin.",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [
+       "R4"
+      ],
+      "to_ids": [
+       "R12"
+      ],
+      "span": null,
+      "text": "grow then reset",
+      "cue": "starts at 1 MSS",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.39525172002044145,
+         "y": 0.34404719730705663
+        },
+        {
+         "x": 0.36048693255321984,
+         "y": 0.5352787943379879
+        },
+        {
+         "x": 0.378329401813093,
+         "y": 0.7337305804707211
+        }
+       ],
+       "label_box": {
+        "x": 0.41852155923499357,
+        "y": 0.616875508280105,
+        "w": 0.21009374999999997,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.932,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart LR\nA[Start 1 MSS] --> B[Slow Start]\nB --> C[Reach threshold]\nC --> D[Additive Increase]\nD --> E[Timeout]\nE --> F[Back to 1 MSS]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the rule that says CongWin starts at 1 MSS.",
+    "answer_ids": [
+     "R4"
+    ],
+    "answer_box": {
+     "x": 0.113125,
+     "y": 0.28555555555555556,
+     "w": 0.5675,
+     "h": 0.04222222222222222
+    },
+    "explanation": "This is the initial congestion window before any ACK-driven growth."
+   },
+   {
+    "question": "Tap the phrase that says the window grows by 1 for each ACK.",
+    "answer_ids": [
+     "R5"
+    ],
+    "answer_box": {
+     "x": 0.1125,
+     "y": 0.34555555555555556,
+     "w": 0.8625,
+     "h": 0.0411111111111111
+    },
+    "explanation": "That rule creates the fast Slow Start growth."
+   },
+   {
+    "question": "Tap the timeout reset formula.",
+    "answer_ids": [
+     "R12"
+    ],
+    "answer_box": {
+     "x": 0.146875,
+     "y": 0.75,
+     "w": 0.4600000000000001,
+     "h": 0.0344444444444445
+    },
+    "explanation": "This line shows threshold is halved and CongWin is reset to 1 MSS after timeout."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 15.445,
+   "ground": 0.238,
+   "total": 15.683,
+   "input_tokens": 6721.0,
+   "output_tokens": 1754.0,
+   "approx_agreement": 1.0
+  },
+  "warnings": [],
+  "question": "How does the congestion window change from the start until a timeout?",
+  "context_pages": [
+   26,
+   27,
+   28,
+   29,
+   30
+  ]
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 6721,
+  "output_tokens": 1754,
+  "seconds": 15.435
+ },
+ "checks": {
+  "starts_at_1": {
+   "pass": true,
+   "evidence": "start, tcp is deliberately cautious: congwin equals 1 mss"
+  },
+  "doubling": {
+   "pass": true,
+   "evidence": "1 becomes 2, then 4, then 8"
+  },
+  "concrete_threshold": {
+   "pass": false,
+   "evidence": "MISSING"
+  },
+  "additive": {
+   "pass": true,
+   "evidence": "+1 per rtt"
+  },
+  "timeout": {
+   "pass": true,
+   "evidence": "threshold becomes half | congwin, and congwin itself is reset all the way to 1"
+  }
+ },
+ "passed": 4,
+ "total": 5,
+ "score": 0.8,
+ "all_passed": false,
+ "checked_text": "your question lives in these three rules: start small, grow, then timeout cuts back. i'm circling the roadmap so we can track congwin from birth to loss.\n\nat the start, tcp is deliberately cautious: congwin equals 1 mss. that means only one segment's worth is allowed in flight before acks prove the path can handle more.\nstart: cwnd=1\n\nnow every successful ack adds 1 to cwnd, so within a round trip the window roughly doubles. this is the exponential part: 1 becomes 2, then 4, then 8, until the threshold.\nuntil threshold\n1 -> 2 -> 4 -> 8\n\nafter slow start reaches the threshold, tcp switches to additive increase. each ack adds only 1/n, so over one rtt the total gain is about one mss, not doubling anymore.\n+1 per rtt\n\nwhen a timeout occurs, tcp treats that as strong congestion evidence. the threshold becomes half of the old congwin, and congwin itself is reset all the way to 1 mss.\n\nso the answer is: congwin starts at 1 mss, rises exponentially until the threshold, then rises additively, and on timeout drops back to 1 mss while the threshold is set to half the previous congwin.\ngrow then reset\nstart 1 mss -> slow start\nslow start -> reach threshold\nreach threshold -> additive increase\nadditive increase -> timeout\ntimeout -> back to 1 mss",
+ "jobs": 3
+}

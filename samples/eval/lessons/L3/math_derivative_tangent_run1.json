@@ -1,0 +1,640 @@
+{
+ "version": "L3",
+ "note": "",
+ "case": "math_derivative_tangent",
+ "topic": "math",
+ "run": 1,
+ "question": "The curve is f(x) = x² and the tangent touches it at a = 1. How do I find the tangent line y = mx + b?",
+ "source": "math_derivative_tangent.png",
+ "page": null,
+ "backend": {
+  "path": "D:\\BananaHack\\backend",
+  "commit": "0b90f8e",
+  "subject": "Harden perception against native OpenCV failures",
+  "dirty": true
+ },
+ "started": "2026-10-09T22:37:08+06:00",
+ "finished": "2026-10-09T22:37:51+06:00",
+ "jobs": 2,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "D:\\BananaHack\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L3_math_derivative_tangent_1_wwhpec78\\data",
+ "perceive_s": 20.087,
+ "perception": {
+  "image_id": "be4182a14281",
+  "width": 1000,
+  "height": 1000,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.16,
+   "ink": 0.066,
+   "ocr": 12.687,
+   "text": 0.234,
+   "rescue": 2.101,
+   "regions": 1.411,
+   "freespace": 0.003,
+   "som": 0.049,
+   "latex_lines": 1.0,
+   "latex": 3.188,
+   "total": 19.898,
+   "prepare": 0.058
+  },
+  "regions": 80
+ },
+ "regions": {
+  "R10": "2-4",
+  "R17": "1-6",
+  "R28": "0:8-",
+  "R29": "(a,f(a))",
+  "R42": "y=f(x)",
+  "R53": "6",
+  "R55": "0!8",
+  "R57": "0!8",
+  "R59": "1!6",
+  "R60": "2!4",
+  "R61": "3",
+  "R65": "[LaTeX: y=mx+b,\\text{where}m=f^{\\prime}(a)]",
+  "R69": "0.8-"
+ },
+ "request": {
+  "image_id": "be4182a14281",
+  "question": "The curve is f(x) = x² and the tangent touches it at a = 1. How do I find the tangent line y = mx + b?"
+ },
+ "lesson_s": 19.706,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "3e70925ca218",
+  "image_id": "be4182a14281",
+  "title": "Finding the Tangent to x² at 1",
+  "summary": "We use the tangent point and derivative slope: for f(x)=x² at a=1, the point is (1,1) and the slope is f′(1)=2. Then we solve y=mx+b to get the tangent line y=2x−1.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Where the tangent information lives",
+    "narration": "Great question—this picture is about a curve y=f(x) and its tangent line at the point (a,f(a)). I’ll circle the touch point first, because that one point gives us both x=1 and y=1 here.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R29"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "touch point",
+      "geometry": {
+       "box": {
+        "x": 0.678675,
+        "y": 0.475,
+        "w": 0.13364999999999982,
+        "h": 0.04800000000000004
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.7,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s1a2",
+      "kind": "highlight",
+      "color": "red",
+      "target_ids": [
+       "R29"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "(a,f(a))",
+      "text": null,
+      "cue": "a,f(a",
+      "geometry": {
+       "box": {
+        "x": 0.69,
+        "y": 0.48164,
+        "w": 0.11099999999999988,
+        "h": 0.03472000000000003
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Compute the point on f(x)=x²",
+    "narration": "Since the question says a=1, plug 1 into f(x)=x². That gives f(1)=1²=1, so the tangent touches the curve at (1,1).",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R29"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "a=1",
+      "cue": "a=1",
+      "geometry": {
+       "box": {
+        "x": 0.696,
+        "y": 0.485,
+        "w": 0.09899999999999998,
+        "h": 0.028000000000000025
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.7107374999999999,
+        "y": 0.5349375000000001,
+        "w": 0.06952499999999995,
+        "h": 0.043875
+       },
+       "leader": [
+        {
+         "x": 0.7454999999999999,
+         "y": 0.5314019660940673
+        },
+        {
+         "x": 0.7455,
+         "y": 0.5200710678118655
+        }
+       ]
+      },
+      "confidence": 0.7,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s2a2",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R29"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "f(1)=1",
+      "cue": "f(1)=1",
+      "geometry": {
+       "box": {
+        "x": 0.696,
+        "y": 0.485,
+        "w": 0.09899999999999998,
+        "h": 0.028000000000000025
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.6844125,
+        "y": 0.4191875,
+        "w": 0.12217500000000003,
+        "h": 0.043875
+       },
+       "leader": [
+        {
+         "x": 0.7455,
+         "y": 0.46659803390593274
+        },
+        {
+         "x": 0.7455,
+         "y": 0.47792893218813454
+        }
+       ]
+      },
+      "confidence": 0.7,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R29"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "point=(1,1)",
+      "cue": "1,1",
+      "geometry": {
+       "box": {
+        "x": 0.696,
+        "y": 0.485,
+        "w": 0.09899999999999998,
+        "h": 0.028000000000000025
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.786075,
+        "y": 0.5349375000000001,
+        "w": 0.20992500000000003,
+        "h": 0.043875
+       },
+       "leader": [
+        {
+         "x": 0.8325862570654545,
+         "y": 0.5336310547292842
+        },
+        {
+         "x": 0.7872762169706028,
+         "y": 0.515612890541432
+        }
+       ]
+      },
+      "confidence": 0.7,
+      "grounding": "id_only"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Use the derivative for the slope",
+    "narration": "Now follow the formula on the page: the tangent has y=mx+b, where m=f′(a). For f(x)=x², the derivative is f′(x)=2x, so m=f′(1)=2.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "highlight",
+      "color": "blue",
+      "target_ids": [
+       "R65"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "y=mx+b",
+      "text": null,
+      "cue": "y=mx+b",
+      "geometry": {
+       "box": {
+        "x": 0.444,
+        "y": 0.7074400000000001,
+        "w": 0.31,
+        "h": 0.04711999999999994
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "highlight",
+      "color": "blue",
+      "target_ids": [
+       "R65"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "where m=f'(a)",
+      "text": null,
+      "cue": "m=f′(a",
+      "geometry": {
+       "box": {
+        "x": 0.444,
+        "y": 0.7074400000000001,
+        "w": 0.31,
+        "h": 0.04711999999999994
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.953,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R65"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "m=2",
+      "cue": "m=f′(1)=2",
+      "geometry": {
+       "box": {
+        "x": 0.447,
+        "y": 0.712,
+        "w": 0.304,
+        "h": 0.038000000000000034
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.681475,
+        "y": 0.7719374999999999,
+        "w": 0.06952500000000006,
+        "h": 0.043875
+       },
+       "leader": [
+        {
+         "x": 0.6783592634898905,
+         "y": 0.7735607309259142
+        },
+        {
+         "x": 0.64065910721505,
+         "y": 0.7533419670851584
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Solve for b using the point",
+    "narration": "We know the line has slope 2 and passes through (1,1). Substitute into y=mx+b: 1=2(1)+b, so b=-1.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "slope 2",
+      "geometry": {
+       "box": {
+        "x": 0.12544999999999998,
+        "y": 0.7621,
+        "w": 0.7910999999999999,
+        "h": 0.2379
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     },
+     {
+      "id": "s4a2",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R29"
+      ],
+      "to_ids": [
+       "R65"
+      ],
+      "span": null,
+      "text": "plug in",
+      "cue": "Substitute",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.7306188174076778,
+         "y": 0.5225661048561009
+        },
+        {
+         "x": 0.6954127986276393,
+         "y": 0.6261296368674979
+        },
+        {
+         "x": 0.6170385101785292,
+         "y": 0.7024338951438991
+        }
+       ],
+       "label_box": {
+        "x": 0.5169582312103714,
+        "y": 0.597377318433749,
+        "w": 0.139725,
+        "h": 0.043875
+       },
+       "leader": null
+      },
+      "confidence": 0.7,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s4a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R65"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "1=2(1)+b",
+      "cue": "1=2(1)+b",
+      "geometry": {
+       "box": {
+        "x": 0.447,
+        "y": 0.712,
+        "w": 0.304,
+        "h": 0.038000000000000034
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.7729375,
+        "y": 0.712,
+        "w": 0.15727500000000005,
+        "h": 0.043875
+       },
+       "leader": [
+        {
+         "x": 0.7694022051810786,
+         "y": 0.7329818132345616
+        },
+        {
+         "x": 0.7580705896378428,
+         "y": 0.7328500241791989
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Final tangent line",
+    "narration": "So the tangent line is y=2x−1. Big idea: the derivative gives the slope, and the touch point lets us find the intercept.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "y=2x−1",
+      "cue": "y=2x−1",
+      "geometry": {
+       "box": {
+        "x": 0.228,
+        "y": 0.817,
+        "w": 0.586,
+        "h": 0.18300000000000005
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.228,
+        "y": 0.71828125,
+        "w": 0.122175,
+        "h": 0.043875
+       },
+       "leader": [
+        {
+         "x": 0.32218166099331175,
+         "y": 0.7642326637806532
+        },
+        {
+         "x": 0.3891785025259112,
+         "y": 0.8128471724386934
+        }
+       ]
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     },
+     {
+      "id": "s5a2",
+      "kind": "box",
+      "color": "orange",
+      "target_ids": [
+       "R65"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "derivative gives",
+      "geometry": {
+       "box": {
+        "x": 0.439,
+        "y": 0.704,
+        "w": 0.32,
+        "h": 0.05400000000000005
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart LR\nA[Choose a=1] --> B[Find point]\nB --> C[Compute derivative]\nC --> D[Get slope]\nD --> E[Solve for b]\nE --> F[Line y=2x-1]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the tangent point on the curve.",
+    "answer_ids": [
+     "R29"
+    ],
+    "answer_box": {
+     "x": 0.696,
+     "y": 0.485,
+     "w": 0.09899999999999998,
+     "h": 0.028000000000000025
+    },
+    "explanation": "That is the point where the tangent line touches the curve, so it supplies (1,1)."
+   },
+   {
+    "question": "Tap the formula that says the slope comes from the derivative.",
+    "answer_ids": [
+     "R65"
+    ],
+    "answer_box": {
+     "x": 0.447,
+     "y": 0.712,
+     "w": 0.304,
+     "h": 0.038000000000000034
+    },
+    "explanation": "This tells us to use m=f′(a), so for f(x)=x² at a=1 the slope is 2."
+   },
+   {
+    "question": "Tap the purple tangent line.",
+    "answer_ids": [],
+    "answer_box": {
+     "x": 0.228,
+     "y": 0.817,
+     "w": 0.586,
+     "h": 0.18300000000000005
+    },
+    "explanation": "This is the line we computed: y=2x−1."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 16.793,
+   "ground": 2.548,
+   "total": 19.341,
+   "input_tokens": 5882.0,
+   "output_tokens": 1624.0,
+   "approx_agreement": 0.571
+  },
+  "warnings": [
+   "step 3 drawing 1: span 'y=mx+b' not found in R65; using the whole target",
+   "step 3 drawing 2: span \"where m=f'(a)\" not found in R65; using the whole target"
+  ],
+  "question": "The curve is f(x) = x² and the tangent touches it at a = 1. How do I find the tangent line y = mx + b?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 5882,
+  "output_tokens": 1624,
+  "seconds": 16.793
+ },
+ "checks": {
+  "point": {
+   "pass": true,
+   "evidence": "(1,1) | f(1)=12=1"
+  },
+  "derivative": {
+   "pass": true,
+   "evidence": "f′(x)=2x | derivative is f′(x)=2x"
+  },
+  "slope": {
+   "pass": true,
+   "evidence": "m=f′(1)=2 | f′(1)=2"
+  },
+  "intercept": {
+   "pass": true,
+   "evidence": "b=-1"
+  },
+  "equation": {
+   "pass": true,
+   "evidence": "y=2x-1"
+  }
+ },
+ "passed": 5,
+ "total": 5,
+ "score": 1.0,
+ "all_passed": true,
+ "checked_text": "great question-this picture is about a curve y=f(x) and its tangent line at the point (a,f(a)). i'll circle the touch point first, because that one point gives us both x=1 and y=1 here.\n\nsince the question says a=1, plug 1 into f(x)=x2. that gives f(1)=12=1, so the tangent touches the curve at (1,1).\na=1\nf(1)=1\npoint=(1,1)\n\nnow follow the formula on the page: the tangent has y=mx+b, where m=f′(a). for f(x)=x2, the derivative is f′(x)=2x, so m=f′(1)=2.\nm=2\n\nwe know the line has slope 2 and passes through (1,1). substitute into y=mx+b: 1=2(1)+b, so b=-1.\nplug in\n1=2(1)+b\n\nso the tangent line is y=2x-1. big idea: the derivative gives the slope, and the touch point lets us find the intercept.\ny=2x-1\nchoose a=1 -> find point\nfind point -> compute derivative\ncompute derivative -> get slope\nget slope -> solve for b\nsolve for b -> line y=2x-1"
+}

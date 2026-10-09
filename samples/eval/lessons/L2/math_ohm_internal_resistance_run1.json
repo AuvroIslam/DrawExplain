@@ -1,0 +1,709 @@
+{
+ "version": "L2",
+ "note": "",
+ "case": "math_ohm_internal_resistance",
+ "topic": "physics",
+ "run": 1,
+ "question": "How do we get the 1.5 A current and the 7.5 V across R in this circuit?",
+ "source": "math_ohm_internal_resistance.jpg",
+ "page": null,
+ "backend": {
+  "path": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend",
+  "commit": "6dbe976",
+  "subject": "Simulate procedures faithfully, deepen board colours",
+  "dirty": false
+ },
+ "started": "2026-10-09T22:38:34+06:00",
+ "finished": "2026-10-09T22:38:59+06:00",
+ "jobs": 2,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L2_math_ohm_internal_resistance_1_2qn2zt41\\data",
+ "perceive_s": 4.782,
+ "perception": {
+  "image_id": "ae1736fbf5d5",
+  "width": 1000,
+  "height": 931,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.163,
+   "ink": 0.06,
+   "ocr": 4.035,
+   "text": 0.02,
+   "rescue": 0.314,
+   "regions": 0.033,
+   "freespace": 0.003,
+   "som": 0.011,
+   "total": 4.638,
+   "prepare": 0.047
+  },
+  "regions": 24
+ },
+ "regions": {
+  "R1": "5\n1,5 A",
+  "R2": "1",
+  "R3": "5",
+  "R4": "A",
+  "R6": "1,5 A",
+  "R7": "R",
+  "R11": "12 V",
+  "R12": "3Q",
+  "R13": "5 Q",
+  "R14": "V",
+  "R15": "12v↑",
+  "R17": "Ir= 4,5 V ε= 12 V",
+  "R20": "Ir= 4,5 V",
+  "R21": "7,5 V+",
+  "R23": "ε= 12 V",
+  "R24": "IR = 7,5 V"
+ },
+ "request": {
+  "image_id": "ae1736fbf5d5",
+  "question": "How do we get the 1.5 A current and the 7.5 V across R in this circuit?"
+ },
+ "lesson_s": 16.595,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "bb7396e75ad7",
+  "image_id": "ae1736fbf5d5",
+  "title": "Finding the Current and R Voltage",
+  "summary": "The circuit uses a 12 V source with internal resistance 3 Ω in series with an external resistor 5 Ω. The current is the emf divided by the total series resistance, then the voltage across R is found with Ohm’s law.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Where the answer lives",
+    "narration": "We’re answering your question right here: this series circuit makes the 1.5 A current, and that same current gives the 7.5 V across R. I’ll circle the two results first.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R6"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "1.5 A current",
+      "geometry": {
+       "box": {
+        "x": 0.50675,
+        "y": 0.03329752953813104,
+        "w": 0.14849999999999997,
+        "h": 0.04511278195488721
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.938,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R24"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "7.5 V across R",
+      "geometry": {
+       "box": {
+        "x": 0.6853250000000001,
+        "y": 0.7022556390977444,
+        "w": 0.2983499999999999,
+        "h": 0.09280343716433948
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Total resistance in series",
+    "narration": "The battery’s internal resistance r and the outside resistor R are in one loop, so the current has to pass through both. Series resistances add: 3 Ω plus 5 Ω gives 8 Ω total.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "circle",
+      "color": "orange",
+      "target_ids": [
+       "R8"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "internal resistance r",
+      "geometry": {
+       "box": {
+        "x": 0.388425,
+        "y": 0.24060150375939848,
+        "w": 0.12014999999999998,
+        "h": 0.0644468313641246
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "circle",
+      "color": "orange",
+      "target_ids": [
+       "R10"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "outside resistor R",
+      "geometry": {
+       "box": {
+        "x": 0.626425,
+        "y": 0.24060150375939848,
+        "w": 0.12015000000000009,
+        "h": 0.0644468313641246
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R12",
+       "R13"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "3+5=8 Ω",
+      "cue": "8 Ω total",
+      "geometry": {
+       "box": {
+        "x": 0.413,
+        "y": 0.3351235230934479,
+        "w": 0.314,
+        "h": 0.03866809881847477
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.5535547000000001,
+        "y": 0.40304162191192267,
+        "w": 0.17344530000000002,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.6114891339885843,
+         "y": 0.40040790080638394
+        },
+        {
+         "x": 0.5922129986843231,
+         "y": 0.3790590641230001
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Use emf over total resistance",
+    "narration": "Now the source pushes with ε = 12 V across the whole series path. So Ohm’s law for the whole loop is I = 12 V divided by 8 Ω, which gives 1.5 A.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R23"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "ε= 12 V",
+      "text": null,
+      "cue": "ε = 12 V",
+      "geometry": {
+       "box": {
+        "x": 0.293,
+        "y": 0.6671965628356605,
+        "w": 0.198,
+        "h": 0.0759183673469388
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.986,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R23"
+      ],
+      "to_ids": [
+       "R6"
+      ],
+      "span": null,
+      "text": "÷ 8 Ω",
+      "cue": "12 V divided",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.403234430815898,
+         "y": 0.6665603155950515
+        },
+        {
+         "x": 0.554422986296211,
+         "y": 0.39476665569849745
+        },
+        {
+         "x": 0.5742990679434073,
+         "y": 0.07887470051665639
+        }
+       ],
+       "label_box": {
+        "x": 0.5956742428379318,
+        "y": 0.4633117650135881,
+        "w": 0.1298745,
+        "h": 0.05849999999999994
+       },
+       "leader": null
+      },
+      "confidence": 0.792,
+      "grounding": "cv_snap"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R6"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "I=1.5 A",
+      "cue": "gives 1.5 A",
+      "geometry": {
+       "box": {
+        "x": 0.526,
+        "y": 0.04403866809881848,
+        "w": 0.10999999999999999,
+        "h": 0.023630504833512346
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.66323175,
+        "y": 0.026603920515574656,
+        "w": 0.17344530000000002,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.6598160134396079,
+         "y": 0.055853920515574654
+        },
+        {
+         "x": 0.6428314731207844,
+         "y": 0.055853920515574654
+        }
+       ]
+      },
+      "confidence": 0.938,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Voltage across the external resistor",
+    "narration": "For the voltage across R only, use only the 5 Ω resistor. The same series current flows through it, so IR = 1.5 A times 5 Ω equals 7.5 V.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "highlight",
+      "color": "blue",
+      "target_ids": [
+       "R13"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "5 Ω",
+      "text": null,
+      "cue": "5 Ω resistor",
+      "geometry": {
+       "box": {
+        "x": 0.648,
+        "y": 0.3304833512352309,
+        "w": 0.029000000000000026,
+        "h": 0.04794844253490871
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [
+       "R6"
+      ],
+      "to_ids": [
+       "R24"
+      ],
+      "span": null,
+      "text": "× 5 Ω",
+      "cue": "same series current",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.5893214306490855,
+         "y": 0.07859599450299536
+        },
+        {
+         "x": 0.6342073029652376,
+         "y": 0.4233815810881382
+        },
+        {
+         "x": 0.8198901972578911,
+         "y": 0.7087294619953936
+        }
+       ],
+       "label_box": {
+        "x": 0.7434859334593629,
+        "y": 0.37927215466866626,
+        "w": 0.1298745,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.938,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R24"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "1.5×5=7.5",
+      "cue": "equals 7.5 V",
+      "geometry": {
+       "box": {
+        "x": 0.724,
+        "y": 0.719656283566058,
+        "w": 0.22099999999999997,
+        "h": 0.0580021482277121
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.72599195,
+        "y": 0.8069084317937701,
+        "w": 0.21701609999999993,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8345,
+         "y": 0.8032395418255724
+        },
+        {
+         "x": 0.8345,
+         "y": 0.7849962117301659
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Check with the internal drop",
+    "narration": "The graph also checks the missing voltage: inside the battery, the internal resistor drops Ir = 4.5 V. Together, 4.5 V plus 7.5 V uses up the full 12 V.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "highlight",
+      "color": "orange",
+      "target_ids": [
+       "R20"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "Ir= 4,5 V",
+      "text": null,
+      "cue": "Ir = 4.5 V",
+      "geometry": {
+       "box": {
+        "x": 0.485,
+        "y": 0.5058216970998926,
+        "w": 0.20999999999999996,
+        "h": 0.07858216970998932
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.985,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R20"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "1.5×3=4.5",
+      "cue": "internal resistor drops",
+      "geometry": {
+       "box": {
+        "x": 0.488,
+        "y": 0.5177228786251342,
+        "w": 0.20399999999999996,
+        "h": 0.055853920515574695
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.71923175,
+        "y": 0.5163998388829215,
+        "w": 0.21701610000000005,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.7158160134396077,
+         "y": 0.5456498388829215
+        },
+        {
+         "x": 0.6988314731207844,
+         "y": 0.5456498388829215
+        }
+       ]
+      },
+      "confidence": 0.789,
+      "grounding": "cv_snap"
+     },
+     {
+      "id": "s5a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R23"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "4.5+7.5=12",
+      "cue": "full 12 V",
+      "geometry": {
+       "box": {
+        "x": 0.296,
+        "y": 0.677765843179377,
+        "w": 0.192,
+        "h": 0.05477980665950588
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.27259925,
+        "y": 0.7617956498388829,
+        "w": 0.23880149999999994,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.392,
+         "y": 0.7581267598706852
+        },
+        {
+         "x": 0.392,
+         "y": 0.7398834297752787
+        }
+       ]
+      },
+      "confidence": 0.792,
+      "grounding": "cv_snap"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "Answer in one chain",
+    "narration": "So the recipe is: add series resistances, find the loop current, then multiply by R for the terminal voltage. That is why this page shows 1.5 A and IR = 7.5 V.",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "box",
+      "color": "purple",
+      "target_ids": [
+       "R5",
+       "R16"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "the recipe",
+      "geometry": {
+       "box": {
+        "x": 0.09128,
+        "y": 0.0,
+        "w": 0.88044,
+        "h": 1.0
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart LR\nA[12 V emf] --> B[3+5 ohm]\nB --> C[I=1.5 A]\nC --> D[V_R=IR]\nD --> E[7.5 V]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the internal resistance value.",
+    "answer_ids": [
+     "R12"
+    ],
+    "answer_box": {
+     "x": 0.413,
+     "y": 0.3351235230934479,
+     "w": 0.07600000000000001,
+     "h": 0.03866809881847477
+    },
+    "explanation": "This 3 Ω is inside the dashed battery box, so it is the source’s internal resistance."
+   },
+   {
+    "question": "Tap the external resistor value used for 7.5 V.",
+    "answer_ids": [
+     "R13"
+    ],
+    "answer_box": {
+     "x": 0.651,
+     "y": 0.3351235230934479,
+     "w": 0.07599999999999996,
+     "h": 0.03866809881847477
+    },
+    "explanation": "The voltage across R is found by multiplying the current by this 5 Ω resistance."
+   },
+   {
+    "question": "Tap the graph label showing the voltage across R.",
+    "answer_ids": [
+     "R24"
+    ],
+    "answer_box": {
+     "x": 0.724,
+     "y": 0.719656283566058,
+     "w": 0.22099999999999997,
+     "h": 0.0580021482277121
+    },
+    "explanation": "This label is the potential drop across the external resistor R."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 16.519,
+   "ground": 0.052,
+   "total": 16.571,
+   "input_tokens": 5094.0,
+   "output_tokens": 1853.0,
+   "approx_agreement": 1.0
+  },
+  "warnings": [
+   "step 6 drawing 1: cue 'whole recipe' not in narration; using 'the recipe'"
+  ],
+  "question": "How do we get the 1.5 A current and the 7.5 V across R in this circuit?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 5094,
+  "output_tokens": 1853,
+  "seconds": 16.519
+ },
+ "checks": {
+  "total_resistance": {
+   "pass": true,
+   "evidence": "3+5=8 | 8 ω"
+  },
+  "current": {
+   "pass": true,
+   "evidence": "12 v divided by 8"
+  },
+  "internal_drop": {
+   "pass": true,
+   "evidence": "1.5×3=4.5 | inside the battery, the internal resistor drops ir = 4.5 v. together, 4.5 v"
+  },
+  "terminal_voltage": {
+   "pass": true,
+   "evidence": "1.5×5=7.5"
+  },
+  "kirchhoff": {
+   "pass": true,
+   "evidence": "4.5+7.5=12"
+  }
+ },
+ "passed": 5,
+ "total": 5,
+ "score": 1.0,
+ "all_passed": true,
+ "checked_text": "we're answering your question right here: this series circuit makes the 1.5 a current, and that same current gives the 7.5 v across r. i'll circle the two results first.\n\nthe battery's internal resistance r and the outside resistor r are in one loop, so the current has to pass through both. series resistances add: 3 ω plus 5 ω gives 8 ω total.\n3+5=8 ω\n\nnow the source pushes with ε = 12 v across the whole series path. so ohm's law for the whole loop is i = 12 v divided by 8 ω, which gives 1.5 a.\n÷ 8 ω\ni=1.5 a\n\nfor the voltage across r only, use only the 5 ω resistor. the same series current flows through it, so ir = 1.5 a times 5 ω equals 7.5 v.\n× 5 ω\n1.5×5=7.5\n\nthe graph also checks the missing voltage: inside the battery, the internal resistor drops ir = 4.5 v. together, 4.5 v plus 7.5 v uses up the full 12 v.\n1.5×3=4.5\n4.5+7.5=12\n\nso the recipe is: add series resistances, find the loop current, then multiply by r for the terminal voltage. that is why this page shows 1.5 a and ir = 7.5 v.\n12 v emf -> 3+5 ohm\n3+5 ohm -> i=1.5 a\ni=1.5 a -> v_r=ir\nv_r=ir -> 7.5 v"
+}

@@ -1,0 +1,650 @@
+{
+ "version": "L2",
+ "note": "",
+ "case": "math_pythagoras",
+ "topic": "math",
+ "run": 1,
+ "question": "How does this picture prove the Pythagorean theorem?",
+ "source": "math_pythagoras_squares.jpg",
+ "page": null,
+ "backend": {
+  "path": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend",
+  "commit": "6dbe976",
+  "subject": "Simulate procedures faithfully, deepen board colours",
+  "dirty": false
+ },
+ "started": "2026-10-09T22:37:49+06:00",
+ "finished": "2026-10-09T22:38:10+06:00",
+ "jobs": 2,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L2_math_pythagoras_1_tel_j5h8\\data",
+ "perceive_s": 3.298,
+ "perception": {
+  "image_id": "5eaa186c489b",
+  "width": 1000,
+  "height": 909,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.161,
+   "ink": 0.059,
+   "ocr": 2.735,
+   "text": 0.002,
+   "rescue": 0.112,
+   "regions": 0.066,
+   "freespace": 0.003,
+   "som": 0.018,
+   "total": 3.154,
+   "prepare": 0.053
+  },
+  "regions": 41
+ },
+ "regions": {
+  "R23": "a",
+  "R28": "a",
+  "R36": "β"
+ },
+ "request": {
+  "image_id": "5eaa186c489b",
+  "question": "How does this picture prove the Pythagorean theorem?"
+ },
+ "lesson_s": 15.319,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "7674f98174b2",
+  "image_id": "5eaa186c489b",
+  "title": "Pythagoras by Rearranging Squares",
+  "summary": "This picture proves the Pythagorean theorem by building squares on the three sides of a right triangle, then showing the two smaller squares can be cut and rearranged to exactly fill the largest square.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Spot the right triangle",
+    "narration": "This picture proves Pythagoras by focusing on the pale green right triangle in the middle. The red square sits on one side, the yellow square sits on another, and the tilted big square sits on the hypotenuse.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "pale green right",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 0.9695499999999999,
+        "h": 1.0
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.916,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R28"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "α",
+      "text": null,
+      "cue": "in the middle",
+      "geometry": {
+       "box": {
+        "x": 0.48,
+        "y": 0.510979097909791,
+        "w": 0.027000000000000024,
+        "h": 0.0286468646864686
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.938,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a3",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R36"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "β",
+      "text": null,
+      "cue": "in the middle",
+      "geometry": {
+       "box": {
+        "x": 0.47,
+        "y": 0.6465126512651265,
+        "w": 0.026000000000000023,
+        "h": 0.049108910891089264
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.966,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Name the three side-squares",
+    "narration": "A square drawn on a side has area side squared. So this left red block represents one leg squared, the bottom yellow block represents the other leg squared, and the tilted square represents the hypotenuse squared.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "box",
+      "color": "red",
+      "target_ids": [
+       "R22"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "left red block",
+      "geometry": {
+       "box": {
+        "x": 0.085,
+        "y": 0.38943894389438943,
+        "w": 0.107,
+        "h": 0.11551155115511552
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.907,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "box",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "bottom yellow block",
+      "geometry": {
+       "box": {
+        "x": 0.32039999999999996,
+        "y": 0.6495049504950495,
+        "w": 0.3611999999999999,
+        "h": 0.3504950495049505
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     },
+     {
+      "id": "s2a3",
+      "kind": "box",
+      "color": "blue",
+      "target_ids": [
+       "R8"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "tilted square",
+      "geometry": {
+       "box": {
+        "x": 0.6355599999999999,
+        "y": 0.20523652365236525,
+        "w": 0.2528800000000001,
+        "h": 0.45421342134213427
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.923,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "The cut-up pieces match the grid",
+    "narration": "Now watch the trick: the red-and-yellow small squares are already chopped into unit grid pieces. Those same colored pieces appear inside the tilted hypotenuse square, just rotated and slid, not stretched.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "arrow",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [
+       "R22"
+      ],
+      "to_ids": [
+       "R18",
+       "R24",
+       "R31"
+      ],
+      "span": null,
+      "text": "slide/rotate",
+      "cue": "same colored pieces",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.194730087126183,
+         "y": 0.45481506577657493
+        },
+        {
+         "x": 0.35996593301068713,
+         "y": 0.5228459328963252
+        },
+        {
+         "x": 0.535269912873817,
+         "y": 0.5009652948681852
+        }
+       ],
+       "label_box": {
+        "x": 0.05419501650534364,
+        "y": 0.5362187166753591,
+        "w": 0.2756997,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.907,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [
+       "R2",
+       "R4",
+       "R5",
+       "R17",
+       "R20"
+      ],
+      "span": null,
+      "text": "same area",
+      "cue": "just rotated",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.5661579053546876,
+         "y": 0.6644774915538233
+        },
+        {
+         "x": 0.5769307458286999,
+         "y": 0.5894859625879707
+        },
+        {
+         "x": 0.6174684054174763,
+         "y": 0.5280417603713692
+        }
+       ],
+       "label_box": {
+        "x": 0.7233132006073909,
+        "y": 0.7457234543412901,
+        "w": 0.21188790000000002,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "no area change",
+      "cue": "not stretched",
+      "geometry": {
+       "box": {
+        "x": 0.093,
+        "y": 0.0,
+        "w": 0.746,
+        "h": 1.0
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.6777591000000001,
+        "y": 0.9375,
+        "w": 0.31824089999999994,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8136375,
+         "y": 0.9375
+        },
+        {
+         "x": 0.839,
+         "y": 0.9694185753838409
+        }
+       ]
+      },
+      "confidence": 0.916,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Why α and β matter",
+    "narration": "The angle labels tell us the pieces fit because α plus β makes a right angle. That lets the slanted cuts line up into one straight square boundary around the hypotenuse.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R28"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "α plus β",
+      "geometry": {
+       "box": {
+        "x": 0.473,
+        "y": 0.5027502750275028,
+        "w": 0.041000000000000036,
+        "h": 0.04510451045104513
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.938,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R36"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "α plus β",
+      "geometry": {
+       "box": {
+        "x": 0.463,
+        "y": 0.6402640264026402,
+        "w": 0.03999999999999998,
+        "h": 0.06160616061606161
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.966,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R36"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "α+β=90°",
+      "cue": "right angle",
+      "geometry": {
+       "box": {
+        "x": 0.473,
+        "y": 0.6512651265126512,
+        "w": 0.020000000000000018,
+        "h": 0.03960396039603964
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.17071204999999998,
+        "y": 0.8371190869086909,
+        "w": 0.1693467,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.2921388090615133,
+         "y": 0.8348332646515009
+        },
+        {
+         "x": 0.4676719790734957,
+         "y": 0.6842191314026855
+        }
+       ]
+      },
+      "confidence": 0.966,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "The area equation",
+    "narration": "So the proof is pure area conservation: the two leg-squares on the left and bottom exactly become the one hypotenuse-square. That is why a² plus b² equals c².",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "arrow",
+      "color": "purple",
+      "target_ids": [],
+      "from_ids": [
+       "R22",
+       "R38"
+      ],
+      "to_ids": [
+       "R8"
+      ],
+      "span": null,
+      "text": "equal area",
+      "cue": "exactly become",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.639,
+         "y": 0.48445261192785943
+        },
+        {
+         "x": 0.6453530303030304,
+         "y": 0.47963885277416635
+        },
+        {
+         "x": 0.653,
+         "y": 0.4785214632574369
+        }
+       ],
+       "label_box": {
+        "x": 0.7628415,
+        "y": 0.6334136052494138,
+        "w": 0.23315850000000005,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.923,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "label",
+      "color": "purple",
+      "target_ids": [
+       "R8"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "a²+b²=c²",
+      "cue": "equals c²",
+      "geometry": {
+       "box": {
+        "x": 0.653,
+        "y": 0.22442244224422442,
+        "w": 0.21799999999999997,
+        "h": 0.4158415841584158
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.8053827,
+        "y": 0.09279744224422443,
+        "w": 0.1906173,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8861268526712606,
+         "y": 0.15463276378631566
+        },
+        {
+         "x": 0.857914854796519,
+         "y": 0.21775179916004195
+        }
+       ]
+      },
+      "confidence": 0.923,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart LR\nA[leg square a²] --> C[cut pieces]\nB[leg square b²] --> C\nC --> D[rearrange]\nD --> E[hypotenuse square c²]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the pale green right triangle.",
+    "answer_ids": [
+     "R1"
+    ],
+    "answer_box": {
+     "x": 0.093,
+     "y": 0.0,
+     "w": 0.746,
+     "h": 1.0
+    },
+    "explanation": "This triangle supplies the two legs and the hypotenuse that the three squares are built on."
+   },
+   {
+    "question": "Tap the tilted big square.",
+    "answer_ids": [
+     "R8"
+    ],
+    "answer_box": {
+     "x": 0.653,
+     "y": 0.22442244224422442,
+     "w": 0.21799999999999997,
+     "h": 0.4158415841584158
+    },
+    "explanation": "This square is built on the hypotenuse, so its area represents c²."
+   },
+   {
+    "question": "Tap the β angle label.",
+    "answer_ids": [
+     "R36"
+    ],
+    "answer_box": {
+     "x": 0.473,
+     "y": 0.6512651265126512,
+     "w": 0.020000000000000018,
+     "h": 0.03960396039603964
+    },
+    "explanation": "Together with α, β helps show the pieces fit around right angles when rearranged."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 15.251,
+   "ground": 0.031,
+   "total": 15.282,
+   "input_tokens": 5167.0,
+   "output_tokens": 1651.0,
+   "approx_agreement": 0.9
+  },
+  "warnings": [
+   "step 1 drawing 2: span 'α' not found in R28; using the whole target"
+  ],
+  "question": "How does this picture prove the Pythagorean theorem?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 5167,
+  "output_tokens": 1651,
+  "seconds": 15.25
+ },
+ "checks": {
+  "areas": {
+   "pass": false,
+   "evidence": "MISSING all[1] | MISSING all[2] | MISSING all[3]"
+  },
+  "sides_3_4_5": {
+   "pass": false,
+   "evidence": "MISSING any: 0 of 6 matched, need 1"
+  },
+  "sum_9_16_25": {
+   "pass": false,
+   "evidence": "MISSING any: 0 of 5 matched, need 1"
+  },
+  "theorem": {
+   "pass": true,
+   "evidence": "a2 plus b2 equals c2"
+  },
+  "rearrangement": {
+   "pass": true,
+   "evidence": "red square sits on one side, the yellow square sits on another, and the tilted big square sits on the hypotenuse | yellow block represents the other leg squared, and the tilted square represents the hypotenuse"
+  }
+ },
+ "passed": 2,
+ "total": 5,
+ "score": 0.4,
+ "all_passed": false,
+ "checked_text": "this picture proves pythagoras by focusing on the pale green right triangle in the middle. the red square sits on one side, the yellow square sits on another, and the tilted big square sits on the hypotenuse.\n\na square drawn on a side has area side squared. so this left red block represents one leg squared, the bottom yellow block represents the other leg squared, and the tilted square represents the hypotenuse squared.\n\nnow watch the trick: the red-and-yellow small squares are already chopped into unit grid pieces. those same colored pieces appear inside the tilted hypotenuse square, just rotated and slid, not stretched.\nslide/rotate\nsame area\nno area change\n\nthe angle labels tell us the pieces fit because α plus β makes a right angle. that lets the slanted cuts line up into one straight square boundary around the hypotenuse.\nα+β=90°\n\nso the proof is pure area conservation: the two leg-squares on the left and bottom exactly become the one hypotenuse-square. that is why a2 plus b2 equals c2.\nequal area\na2+b2=c2\nleg square a2 -> cut pieces\nleg square b2 -> cut pieces\ncut pieces -> rearrange\nrearrange -> hypotenuse square c2"
+}

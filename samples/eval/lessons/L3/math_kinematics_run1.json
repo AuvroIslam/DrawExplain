@@ -1,0 +1,795 @@
+{
+ "version": "L3",
+ "note": "",
+ "case": "math_kinematics",
+ "topic": "physics",
+ "run": 1,
+ "question": "For the example at the bottom, how far does the object travel in the 5 seconds? Check it with the v–t graph.",
+ "source": "math_kinematics_slide.png",
+ "page": null,
+ "backend": {
+  "path": "D:\\BananaHack\\backend",
+  "commit": "0b90f8e",
+  "subject": "Harden perception against native OpenCV failures",
+  "dirty": true
+ },
+ "started": "2026-10-09T22:38:38+06:00",
+ "finished": "2026-10-09T22:39:13+06:00",
+ "jobs": 2,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "D:\\BananaHack\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L3_math_kinematics_1_609r2mzc\\data",
+ "perceive_s": 8.304,
+ "perception": {
+  "image_id": "92030fcc06f2",
+  "width": 1280,
+  "height": 720,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.222,
+   "ink": 0.091,
+   "ocr": 4.66,
+   "text": 0.146,
+   "rescue": 0.483,
+   "regions": 0.045,
+   "freespace": 0.002,
+   "som": 0.012,
+   "latex_lines": 2.0,
+   "latex": 2.467,
+   "total": 8.129,
+   "prepare": 0.057
+  },
+  "regions": 21
+ },
+ "regions": {
+  "R1": "Motion with Constant Acceleration",
+  "R3": "Acceleration is the rate of change of velocity",
+  "R4": "Key equations v =u + at S = ut + 12at2 v2 = u2 + 2as F = ma",
+  "R5": "Key equations",
+  "R6": "With constant acceleration, velocity grows linearly",
+  "R7": "v =u + at\nS = ut + 12at2\nv2 = u2 + 2as",
+  "R8": "v =u + at",
+  "R9": "Displacement is the area under the v-t graph",
+  "R10": "S = ut + 12at2 [LaTeX: s=ut+\\frac{1}{2}at^2]",
+  "R11": "A net force F on a mass m gives a = F / m",
+  "R12": "v2 = u2 + 2as [LaTeX: v^2=u^2+2as]",
+  "R14": "area =s",
+  "R15": "F = ma",
+  "R16": "area =s",
+  "R17": "t",
+  "R18": "Example: u = 0, a = 2 m/s²,t = 5 s → v= u + at = 10 m/s",
+  "R20": "PHY 1101-M echanics",
+  "R21": "14"
+ },
+ "request": {
+  "image_id": "92030fcc06f2",
+  "question": "For the example at the bottom, how far does the object travel in the 5 seconds? Check it with the v–t graph."
+ },
+ "lesson_s": 21.285,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "290f666207b1",
+  "image_id": "92030fcc06f2",
+  "title": "Finding Distance from Constant Acceleration",
+  "summary": "The bottom example gives u = 0, a = 2 m/s², and t = 5 s. We compute the displacement with the equation s = ut + ½at², then check it as the triangular area under the v–t graph.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Locate the given example",
+    "narration": "We’re answering the bottom example: how far in 5 seconds? I’ll circle the given numbers first, then we’ll use the distance equation and check the v–t graph area.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R18"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "bottom example",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.8252777777777779,
+        "w": 0.59509765625,
+        "h": 0.07166666666666655
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "highlight",
+      "color": "blue",
+      "target_ids": [
+       "R18"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "u = 0",
+      "text": null,
+      "cue": "given numbers",
+      "geometry": {
+       "box": {
+        "x": 0.12890625,
+        "y": 0.8457777777777779,
+        "w": 0.044531249999999994,
+        "h": 0.029277777777777625
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.91,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a3",
+      "kind": "highlight",
+      "color": "blue",
+      "target_ids": [
+       "R18"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "a = 2 m/s²",
+      "text": null,
+      "cue": "given numbers",
+      "geometry": {
+       "box": {
+        "x": 0.17890625,
+        "y": 0.8392222222222222,
+        "w": 0.08984375,
+        "h": 0.03961111111111104
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.919,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a4",
+      "kind": "highlight",
+      "color": "blue",
+      "target_ids": [
+       "R18"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "t = 5 s",
+      "text": null,
+      "cue": "given numbers",
+      "geometry": {
+       "box": {
+        "x": 0.27109375,
+        "y": 0.8457777777777779,
+        "w": 0.0546875,
+        "h": 0.029277777777777625
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.912,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Choose the displacement equation",
+    "narration": "Because the question asks distance traveled, we use s, not just final velocity. This equation adds the starting-motion part and the extra distance caused by acceleration.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R10"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "use s",
+      "geometry": {
+       "box": {
+        "x": 0.601796875,
+        "y": 0.3794444444444444,
+        "w": 0.21515625000000005,
+        "h": 0.08277777777777778
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R10"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "distance formula",
+      "cue": "distance traveled",
+      "geometry": {
+       "box": {
+        "x": 0.6296875,
+        "y": 0.3972222222222222,
+        "w": 0.15937500000000004,
+        "h": 0.04722222222222222
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.38488281249999995,
+        "y": 0.5121527777777778,
+        "w": 0.20671875,
+        "h": 0.054166666666666696
+       },
+       "leader": [
+        {
+         "x": 0.5415703892188185,
+         "y": 0.5106821975330356
+        },
+        {
+         "x": 0.6597851288204275,
+         "y": 0.4473856049339288
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R18"
+      ],
+      "to_ids": [
+       "R10"
+      ],
+      "span": null,
+      "text": "plug in",
+      "cue": "This equation",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.3108528293906669,
+         "y": 0.8348229798936073
+        },
+        {
+         "x": 0.4689920907348678,
+         "y": 0.5652714448512692
+        },
+        {
+         "x": 0.6787210566503427,
+         "y": 0.4526770201063927
+        }
+       ],
+       "label_box": {
+        "x": 0.4772020168776863,
+        "y": 0.6399273890923013,
+        "w": 0.09703125000000007,
+        "h": 0.054166666666666696
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Compute the distance",
+    "narration": "Now plug in: s = 0×5 + ½×2×5². The first term is zero, and the acceleration term gives 25 meters.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R10"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "0×5=0",
+      "cue": "first term",
+      "geometry": {
+       "box": {
+        "x": 0.6296875,
+        "y": 0.3972222222222222,
+        "w": 0.15937500000000004,
+        "h": 0.04722222222222222
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.5189453125,
+        "y": 0.39374999999999993,
+        "w": 0.07265624999999998,
+        "h": 0.054166666666666696
+       },
+       "leader": [
+        {
+         "x": 0.5944699312110446,
+         "y": 0.42083333333333334
+        },
+        {
+         "x": 0.6239507625779106,
+         "y": 0.42083333333333334
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R10"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "½·2·25=25",
+      "cue": "acceleration term",
+      "geometry": {
+       "box": {
+        "x": 0.6296875,
+        "y": 0.3972222222222222,
+        "w": 0.15937500000000004,
+        "h": 0.04722222222222222
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.43210937499999996,
+        "y": 0.5798611111111112,
+        "w": 0.12140625,
+        "h": 0.054166666666666696
+       },
+       "leader": [
+        {
+         "x": 0.5269096519224352,
+         "y": 0.5776417774083289
+        },
+        {
+         "x": 0.6767357334685622,
+         "y": 0.44888311185000906
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R18"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "s = 25 m",
+      "cue": "25 meters",
+      "geometry": {
+       "box": {
+        "x": 0.05625,
+        "y": 0.8430555555555556,
+        "w": 0.45859375,
+        "h": 0.036111111111111094
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.405625,
+        "y": 0.7618055555555555,
+        "w": 0.10921875000000003,
+        "h": 0.054166666666666696
+       },
+       "leader": [
+        {
+         "x": 0.40283118585093447,
+         "y": 0.8126214735500012
+        },
+        {
+         "x": 0.3348063782981311,
+         "y": 0.8407454249930206
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Check with the v–t graph",
+    "narration": "Now we check it on the graph: displacement is area under the v–t line. Here u = 0, final v = 10 m/s, and time is 5 s, so the area is a triangle.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "circle",
+      "color": "purple",
+      "target_ids": [
+       "R14"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "area under",
+      "geometry": {
+       "box": {
+        "x": 0.03850585937500002,
+        "y": 0.5365798611111111,
+        "w": 0.35384765625,
+        "h": 0.2803125000000001
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.903,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "arrow",
+      "color": "purple",
+      "target_ids": [],
+      "from_ids": [
+       "R14"
+      ],
+      "to_ids": [
+       "R14"
+      ],
+      "span": null,
+      "text": "displacement",
+      "cue": "displacement is",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.25994453119713806,
+         "y": 0.9044122642540965
+        },
+        {
+         "x": 0.2565465296149809,
+         "y": 0.8435799284594659
+        },
+        {
+         "x": 0.2379884666842178,
+         "y": 0.7921155135236813
+        }
+       ],
+       "label_box": {
+        "x": 0.18851562499999994,
+        "y": 0.9159722222222222,
+        "w": 0.15796875000000002,
+        "h": 0.054166666666666696
+       },
+       "leader": null
+      },
+      "confidence": 0.903,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "label",
+      "color": "purple",
+      "target_ids": [
+       "R14"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "triangle area",
+      "cue": "a triangle",
+      "geometry": {
+       "box": {
+        "x": 0.084375,
+        "y": 0.5729166666666666,
+        "w": 0.262109375,
+        "h": 0.20763888888888893
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.1303515625,
+        "y": 0.4916666666666666,
+        "w": 0.17015625000000004,
+        "h": 0.054166666666666696
+       },
+       "leader": [
+        {
+         "x": 0.2154296875,
+         "y": 0.5458333333333333
+        },
+        {
+         "x": 0.2154296875,
+         "y": 0.5729166666666666
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Triangle area confirms it",
+    "narration": "The triangle has base 5 s and height 10 m/s. Area = ½×5×10 = 25 m, so the graph agrees: the object travels 25 meters.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "label",
+      "color": "purple",
+      "target_ids": [
+       "R17"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "base = 5 s",
+      "cue": "base 5 s",
+      "geometry": {
+       "box": {
+        "x": 0.37265625,
+        "y": 0.7708333333333334,
+        "w": 0.006249999999999978,
+        "h": 0.018055555555555602
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.394140625,
+        "y": 0.6895833333333333,
+        "w": 0.13359375000000007,
+        "h": 0.054166666666666696
+       },
+       "leader": [
+        {
+         "x": 0.42179495835825476,
+         "y": 0.7457143428289406
+        },
+        {
+         "x": 0.38420026185491923,
+         "y": 0.7736133632717827
+        }
+       ]
+      },
+      "confidence": 0.942,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "label",
+      "color": "purple",
+      "target_ids": [
+       "R13"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "height = 10 m/s",
+      "cue": "height 10",
+      "geometry": {
+       "box": {
+        "x": 0.0703125,
+        "y": 0.5402777777777777,
+        "w": 0.021093749999999994,
+        "h": 0.19305555555555554
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.004,
+        "y": 0.4184027777777777,
+        "w": 0.19453125000000002,
+        "h": 0.054166666666666696
+       },
+       "leader": [
+        {
+         "x": 0.09784252508081832,
+         "y": 0.47757949303163355
+        },
+        {
+         "x": 0.09222383708881707,
+         "y": 0.5302576806033995
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "box",
+      "color": "purple",
+      "target_ids": [
+       "R14"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "Area",
+      "geometry": {
+       "box": {
+        "x": 0.07503125,
+        "y": 0.5563055555555556,
+        "w": 0.28079687499999995,
+        "h": 0.2408611111111112
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a4",
+      "kind": "label",
+      "color": "purple",
+      "target_ids": [
+       "R14"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "½·5·10=25 m",
+      "cue": "25 m",
+      "geometry": {
+       "box": {
+        "x": 0.084375,
+        "y": 0.5729166666666666,
+        "w": 0.262109375,
+        "h": 0.20763888888888893
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.42265624999999996,
+        "y": 0.9159722222222222,
+        "w": 0.14578124999999997,
+        "h": 0.054166666666666696
+       },
+       "leader": [
+        {
+         "x": 0.46453100236237715,
+         "y": 0.91356743294683
+        },
+        {
+         "x": 0.3296866711227034,
+         "y": 0.78536513410634
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart LR\nA[Given u,a,t] --> B[Find final v]\nB --> C[Use s formula]\nC --> D[Check graph area]\nD --> E[25 m]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the equation used to calculate displacement directly.",
+    "answer_ids": [
+     "R10"
+    ],
+    "answer_box": {
+     "x": 0.6296875,
+     "y": 0.3972222222222222,
+     "w": 0.15937500000000004,
+     "h": 0.04722222222222222
+    },
+    "explanation": "This formula gives displacement when acceleration is constant."
+   },
+   {
+    "question": "Tap the graph label that says displacement equals area.",
+    "answer_ids": [
+     "R14"
+    ],
+    "answer_box": {
+     "x": 0.084375,
+     "y": 0.5729166666666666,
+     "w": 0.262109375,
+     "h": 0.20763888888888893
+    },
+    "explanation": "On a velocity–time graph, the area under the line is displacement."
+   },
+   {
+    "question": "Tap the example values at the bottom.",
+    "answer_ids": [
+     "R18"
+    ],
+    "answer_box": {
+     "x": 0.05625,
+     "y": 0.8430555555555556,
+     "w": 0.45859375,
+     "h": 0.036111111111111094
+    },
+    "explanation": "These give u = 0, a = 2 m/s², and t = 5 s for the calculation."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 15.261,
+   "ground": 2.305,
+   "total": 21.251,
+   "input_tokens": 5113.0,
+   "output_tokens": 1808.0,
+   "approx_agreement": 1.0
+  },
+  "warnings": [],
+  "question": "For the example at the bottom, how far does the object travel in the 5 seconds? Check it with the v–t graph.",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 2,
+  "cache_hits": 0,
+  "input_tokens": 9036,
+  "output_tokens": 1883,
+  "seconds": 18.918
+ },
+ "checks": {
+  "formula": {
+   "pass": false,
+   "evidence": "MISSING any: 0 of 3 matched, need 1"
+  },
+  "substitution": {
+   "pass": true,
+   "evidence": "1/2×2×52 | 0×5 + 1/2"
+  },
+  "final_velocity": {
+   "pass": true,
+   "evidence": "v = 10 | 10 m/s"
+  },
+  "distance_25": {
+   "pass": true,
+   "evidence": "s = 25 | 25 meters | travels 25"
+  },
+  "graph_area": {
+   "pass": true,
+   "evidence": "area = 1/2×5×10 = 25 | 1/2×5×10 | area = 1/2×5×10 = 25 m, so the graph agrees: the object travels 25"
+  }
+ },
+ "passed": 4,
+ "total": 5,
+ "score": 0.8,
+ "all_passed": false,
+ "checked_text": "we're answering the bottom example: how far in 5 seconds? i'll circle the given numbers first, then we'll use the distance equation and check the v-t graph area.\n\nbecause the question asks distance traveled, we use s, not just final velocity. this equation adds the starting-motion part and the extra distance caused by acceleration.\ndistance formula\nplug in\n\nnow plug in: s = 0×5 + 1/2×2×52. the first term is zero, and the acceleration term gives 25 meters.\n0×5=0\n1/2·2·25=25\ns = 25 m\n\nnow we check it on the graph: displacement is area under the v-t line. here u = 0, final v = 10 m/s, and time is 5 s, so the area is a triangle.\ndisplacement\ntriangle area\n\nthe triangle has base 5 s and height 10 m/s. area = 1/2×5×10 = 25 m, so the graph agrees: the object travels 25 meters.\nbase = 5 s\nheight = 10 m/s\n1/2·5·10=25 m\ngiven u,a,t -> find final v\nfind final v -> use s formula\nuse s formula -> check graph area\ncheck graph area -> 25 m"
+}

@@ -1,0 +1,750 @@
+{
+ "version": "L2",
+ "note": "",
+ "case": "cs_prim_mst",
+ "topic": "graph algorithms",
+ "run": 1,
+ "question": "Using Prim's algorithm starting from A, which edges are added to the minimum spanning tree, in what order, and what is the total weight?",
+ "source": "cs_prim_mst.png",
+ "page": null,
+ "backend": {
+  "path": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend",
+  "commit": "6dbe976",
+  "subject": "Simulate procedures faithfully, deepen board colours",
+  "dirty": false
+ },
+ "started": "2026-10-09T23:24:05+06:00",
+ "finished": "2026-10-09T23:24:32+06:00",
+ "jobs": 2,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L2_cs_prim_mst_1_woaswdf3\\data",
+ "perceive_s": 4.087,
+ "perception": {
+  "image_id": "8aa96885d7a9",
+  "width": 1280,
+  "height": 1073,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.206,
+   "ink": 0.076,
+   "ocr": 3.564,
+   "text": 0.011,
+   "rescue": 0.007,
+   "regions": 0.044,
+   "freespace": 0.004,
+   "som": 0.021,
+   "total": 3.933,
+   "prepare": 0.057
+  },
+  "regions": 28
+ },
+ "regions": {
+  "R1": "A",
+  "R3": "C",
+  "R4": "7",
+  "R8": "8",
+  "R9": "B",
+  "R11": "5",
+  "R12": "5",
+  "R13": "9",
+  "R14": "7",
+  "R15": "15",
+  "R16": "E",
+  "R17": "8 6",
+  "R18": "D",
+  "R19": "8",
+  "R20": "9",
+  "R21": "6",
+  "R25": "F",
+  "R26": "11",
+  "R28": "G"
+ },
+ "request": {
+  "image_id": "8aa96885d7a9",
+  "question": "Using Prim's algorithm starting from A, which edges are added to the minimum spanning tree, in what order, and what is the total weight?"
+ },
+ "lesson_s": 17.798,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "199be14a1a06",
+  "image_id": "8aa96885d7a9",
+  "title": "Prim’s Algorithm from A",
+  "summary": "We will run Prim’s algorithm on the graph starting at A. At each step, we add the cheapest edge that connects the growing tree to one new vertex, then total the chosen weights.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Start at A",
+    "narration": "We’re answering the Prim’s question by growing a tree from A. I’ll circle A as the starting island, and the rule is: always take the cheapest edge leaving our current tree.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R2"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "circle A",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 1.0,
+        "h": 0.921062441752097
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.9,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R2"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "start",
+      "cue": "starting island",
+      "geometry": {
+       "box": {
+        "x": 0.08125,
+        "y": 0.049394221808014914,
+        "w": 0.81796875,
+        "h": 0.7418452935694315
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.4317642578125,
+        "y": 0.9374895153774464,
+        "w": 0.11694023437499995,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.490234375,
+         "y": 0.9335979772014191
+        },
+        {
+         "x": 0.490234375,
+         "y": 0.7990225917295012
+        }
+       ]
+      },
+      "confidence": 0.9,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Pick A–D first",
+    "narration": "From A, the available edges are A–D with 5 and A–B with 7. The smaller one is 5, so Prim adds A–D first.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R12"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "5",
+      "text": null,
+      "cue": "A–D with 5",
+      "geometry": {
+       "box": {
+        "x": 0.0671875,
+        "y": 0.29073625349487414,
+        "w": 0.02578125000000002,
+        "h": 0.04853681267474369
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.968,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "highlight",
+      "color": "orange",
+      "target_ids": [
+       "R4"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "7",
+      "text": null,
+      "cue": "A–B with 7",
+      "geometry": {
+       "box": {
+        "x": 0.26328125,
+        "y": 0.08301957129543336,
+        "w": 0.025000000000000022,
+        "h": 0.04738117427772598
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.96,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R2"
+      ],
+      "to_ids": [
+       "R17"
+      ],
+      "span": null,
+      "text": "add 5",
+      "cue": "adds A–D",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.490234375,
+         "y": 0.42031686859273065
+        },
+        {
+         "x": 0.459140625,
+         "y": 0.5050512581547064
+        },
+        {
+         "x": 0.463671875,
+         "y": 0.5973904939422181
+        }
+       ],
+       "label_box": {
+        "x": 0.35579414062500003,
+        "y": 0.4136106710158435,
+        "w": 0.11694023437500001,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.9,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Pick D–F next",
+    "narration": "Now the tree is A and D, so we compare edges leaving either one: A–B 7, D–B 9, D–F 6, and D–E 15. The cheapest is D–F with 6, so F joins next.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R21"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "6",
+      "text": null,
+      "cue": "D–F 6",
+      "geometry": {
+       "box": {
+        "x": 0.28046875,
+        "y": 0.6439515377446412,
+        "w": 0.02656249999999999,
+        "h": 0.048536812674743635
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.949,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "highlight",
+      "color": "orange",
+      "target_ids": [
+       "R15"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "15",
+      "text": null,
+      "cue": "D–E 15",
+      "geometry": {
+       "box": {
+        "x": 0.478125,
+        "y": 0.45953401677539607,
+        "w": 0.051562499999999956,
+        "h": 0.047381174277725924
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.969,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R17"
+      ],
+      "to_ids": [
+       "R22"
+      ],
+      "span": null,
+      "text": "add 6",
+      "cue": "F joins",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.463671875,
+         "y": 0.5973904939422181
+        },
+        {
+         "x": 0.48927343749999996,
+         "y": 0.6435321528424977
+        },
+        {
+         "x": 0.49453125,
+         "y": 0.6985088536812675
+        }
+       ],
+       "label_box": {
+        "x": 0.4795,
+        "y": 0.7975827120223672,
+        "w": 0.11694023437499995,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.9,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Pick A–B, then B–E",
+    "narration": "With A, D, and F inside, the crossing edges include A–B 7, D–B 9, F–E 8, F–G 11, and D–E 15. The cheapest is A–B 7; after B joins, B–E 7 beats F–E 8 and B–C 8.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R2"
+      ],
+      "to_ids": [
+       "R10"
+      ],
+      "span": null,
+      "text": "add 7",
+      "cue": "A–B 7",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.490234375,
+         "y": 0.42031686859273065
+        },
+        {
+         "x": 0.47279687499999995,
+         "y": 0.3336439888164026
+        },
+        {
+         "x": 0.490234375,
+         "y": 0.24697110904007455
+        }
+       ],
+       "label_box": {
+        "x": 0.5107228515625,
+        "y": 0.3684857875116496,
+        "w": 0.11694023437500001,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.9,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R14"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "7",
+      "text": null,
+      "cue": "B–E 7",
+      "geometry": {
+       "box": {
+        "x": 0.6484375,
+        "y": 0.31787511649580613,
+        "w": 0.02499999999999991,
+        "h": 0.047381174277726035
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.953,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R10"
+      ],
+      "to_ids": [
+       "R17"
+      ],
+      "span": null,
+      "text": "add 7",
+      "cue": "B–E 7",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.48717490559690113,
+         "y": 0.2873324224089531
+        },
+        {
+         "x": 0.4586002449248906,
+         "y": 0.3882551177456267
+        },
+        {
+         "x": 0.47153520078607764,
+         "y": 0.4936554620272072
+        }
+       ],
+       "label_box": {
+        "x": 0.28605059827694,
+        "y": 0.25215773128660646,
+        "w": 0.11694023437500001,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.9,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Pick E–C, then E–G",
+    "narration": "Now C and G are still outside. The cheapest way to reach C is E–C with 5, and then the cheapest way to reach G is E–G with 9, not F–G 11.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R11"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "5",
+      "text": null,
+      "cue": "E–C with 5",
+      "geometry": {
+       "box": {
+        "x": 0.871875,
+        "y": 0.2759366262814539,
+        "w": 0.025000000000000022,
+        "h": 0.04738117427772609
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.947,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R17"
+      ],
+      "to_ids": [
+       "R5"
+      ],
+      "span": null,
+      "text": "add 5",
+      "cue": "reach C",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.5544399149231349,
+         "y": 0.4976193665816267
+        },
+        {
+         "x": 0.7464314326998,
+         "y": 0.36981486377752787
+        },
+        {
+         "x": 0.8688855453481829,
+         "y": 0.15198454767746
+        }
+       ],
+       "label_box": {
+        "x": 0.8563332142302293,
+        "y": 0.34171661175828866,
+        "w": 0.11694023437500001,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.9,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R17"
+      ],
+      "to_ids": [
+       "R27"
+      ],
+      "span": null,
+      "text": "add 9",
+      "cue": "reach G",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.6459185384632579,
+         "y": 0.6937701055750994
+        },
+        {
+         "x": 0.7608838477228931,
+         "y": 0.7189725177234383
+        },
+        {
+         "x": 0.8537379389275944,
+         "y": 0.8036736435927877
+        }
+       ],
+       "label_box": {
+        "x": 0.6968859260216598,
+        "y": 0.8856889948489378,
+        "w": 0.11694023437500001,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.9,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "Final MST and total",
+    "narration": "So the edges added in order are A–D, D–F, A–B, B–E, E–C, and E–G. The total is 5 + 6 + 7 + 7 + 5 + 9 = 39.",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "box",
+      "color": "green",
+      "target_ids": [
+       "R2"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "edges added",
+      "geometry": {
+       "box": {
+        "x": 0.0315,
+        "y": 0.0,
+        "w": 0.91746875,
+        "h": 0.8505871388630009
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "total = 39",
+      "cue": "total is",
+      "geometry": {
+       "box": {
+        "x": 0.6234375,
+        "y": 0.3662628145386766,
+        "w": 0.059374999999999956,
+        "h": 0.04939422180801489
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.7809808593750001,
+        "y": 0.5619070363466915,
+        "w": 0.21501914062499994,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8514459803451201,
+         "y": 0.5596477711873138
+        },
+        {
+         "x": 0.68747290801396,
+         "y": 0.42017556666544686
+        }
+       ]
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": "flowchart TD\nA[Start A] --> B[Choose min crossing]\nB --> C[Add new vertex]\nC --> D[Update crossing edges]\nD -->|repeat| B\nD --> E[All vertices reached]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the starting vertex for Prim’s algorithm.",
+    "answer_ids": [
+     "R2"
+    ],
+    "answer_box": {
+     "x": 0.08125,
+     "y": 0.049394221808014914,
+     "w": 0.81796875,
+     "h": 0.7418452935694315
+    },
+    "explanation": "The question says to start Prim’s algorithm from A, so A is the initial tree."
+   },
+   {
+    "question": "Tap the first edge weight chosen.",
+    "answer_ids": [
+     "R12"
+    ],
+    "answer_box": {
+     "x": 0.06953125,
+     "y": 0.2954333643988816,
+     "w": 0.02109375000000001,
+     "h": 0.03914259086672878
+    },
+    "explanation": "From A, the edge weights are 5 to D and 7 to B, so 5 is chosen first."
+   },
+   {
+    "question": "Tap the edge weight that connects B to E in the MST.",
+    "answer_ids": [
+     "R14"
+    ],
+    "answer_box": {
+     "x": 0.65078125,
+     "y": 0.32246039142590865,
+     "w": 0.020312499999999956,
+     "h": 0.03821062441752099
+    },
+    "explanation": "After B is in the tree, B–E with weight 7 is the cheapest crossing edge to add E."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 17.675,
+   "ground": 0.102,
+   "total": 17.777,
+   "input_tokens": 6055.0,
+   "output_tokens": 1984.0,
+   "approx_agreement": 1.0
+  },
+  "warnings": [],
+  "question": "Using Prim's algorithm starting from A, which edges are added to the minimum spanning tree, in what order, and what is the total weight?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 6055,
+  "output_tokens": 1984,
+  "seconds": 17.675
+ },
+ "checks": {
+  "edges_ad_df_ab": {
+   "pass": true,
+   "evidence": "a-d | d-f | a-b"
+  },
+  "edges_be_ce_eg": {
+   "pass": true,
+   "evidence": "b-e | e-c | e-g"
+  },
+  "prim_order": {
+   "pass": true,
+   "evidence": "a-d with 5 and a-b with 7. the smaller one is 5, so prim adds a-d first.\nadd 5\n\nnow the tree is a and d, so we compare edges leaving either one: a-b 7, d-b 9, d-f 6, and d-e 15. the cheapest is d-f with 6, so f joins next.\nadd 6\n\nwith a, d, and f inside, the crossing edges include a-b 7, d-b 9, f-e 8, f-g 11, and d-e 15. the cheapest is a-b 7; after b joins, b-e 7 beats f-e 8 and b-c 8.\nadd 7\nadd 7\n\nnow c and g are still outside. the cheapest way to reach c is e-c with 5, and then the cheapest way to reach g is e-g"
+  },
+  "total_39": {
+   "pass": true,
+   "evidence": "39"
+  },
+  "skips_cycle_edges": {
+   "pass": false,
+   "evidence": "MISSING any: 0 of 4 matched, need 1"
+  }
+ },
+ "passed": 4,
+ "total": 5,
+ "score": 0.8,
+ "all_passed": false,
+ "checked_text": "we're answering the prim's question by growing a tree from a. i'll circle a as the starting island, and the rule is: always take the cheapest edge leaving our current tree.\nstart\n\nfrom a, the available edges are a-d with 5 and a-b with 7. the smaller one is 5, so prim adds a-d first.\nadd 5\n\nnow the tree is a and d, so we compare edges leaving either one: a-b 7, d-b 9, d-f 6, and d-e 15. the cheapest is d-f with 6, so f joins next.\nadd 6\n\nwith a, d, and f inside, the crossing edges include a-b 7, d-b 9, f-e 8, f-g 11, and d-e 15. the cheapest is a-b 7; after b joins, b-e 7 beats f-e 8 and b-c 8.\nadd 7\nadd 7\n\nnow c and g are still outside. the cheapest way to reach c is e-c with 5, and then the cheapest way to reach g is e-g with 9, not f-g 11.\nadd 5\nadd 9\n\nso the edges added in order are a-d, d-f, a-b, b-e, e-c, and e-g. the total is 5 + 6 + 7 + 7 + 5 + 9 = 39.\ntotal = 39\nstart a -> choose min crossing\nchoose min crossing -> add new vertex\nadd new vertex -> update crossing edges\nupdate crossing edges -> (repeat) choose min crossing\nupdate crossing edges -> all vertices reached"
+}

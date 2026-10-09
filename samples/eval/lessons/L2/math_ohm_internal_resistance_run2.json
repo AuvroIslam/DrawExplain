@@ -1,0 +1,692 @@
+{
+ "version": "L2",
+ "note": "",
+ "case": "math_ohm_internal_resistance",
+ "topic": "physics",
+ "run": 2,
+ "question": "How do we get the 1.5 A current and the 7.5 V across R in this circuit?",
+ "source": "math_ohm_internal_resistance.jpg",
+ "page": null,
+ "backend": {
+  "path": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend",
+  "commit": "6dbe976",
+  "subject": "Simulate procedures faithfully, deepen board colours",
+  "dirty": false
+ },
+ "started": "2026-10-09T22:40:26+06:00",
+ "finished": "2026-10-09T22:40:53+06:00",
+ "jobs": 2,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "C:\\Users\\oitij\\AppData\\Local\\Temp\\claude\\d--BananaHack\\f75772e2-6ac1-4b24-acae-2261a0ca3450\\scratchpad\\wt_L2\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L2_math_ohm_internal_resistance_2__njje5e1\\data",
+ "perceive_s": 5.519,
+ "perception": {
+  "image_id": "ae163a3aaef2",
+  "width": 1000,
+  "height": 931,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.162,
+   "ink": 0.056,
+   "ocr": 3.716,
+   "text": 0.022,
+   "rescue": 1.121,
+   "regions": 0.165,
+   "freespace": 0.002,
+   "som": 0.013,
+   "total": 5.257,
+   "prepare": 0.048
+  },
+  "regions": 24
+ },
+ "regions": {
+  "R1": "5\n1,5 A",
+  "R2": "1",
+  "R3": "5",
+  "R4": "A",
+  "R6": "1,5 A",
+  "R7": "R",
+  "R11": "12 V",
+  "R12": "3Q",
+  "R13": "5 Q",
+  "R14": "V",
+  "R15": "12v↑",
+  "R17": "Ir= 4,5 V ε= 12 V",
+  "R20": "Ir= 4,5 V",
+  "R21": "7,5 V+",
+  "R23": "ε= 12 V",
+  "R24": "IR = 7,5 V"
+ },
+ "request": {
+  "image_id": "ae163a3aaef2",
+  "question": "How do we get the 1.5 A current and the 7.5 V across R in this circuit?"
+ },
+ "lesson_s": 18.766,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "c24d0a4c9ef3",
+  "image_id": "ae163a3aaef2",
+  "title": "Finding Current and Voltage Across R",
+  "summary": "This circuit has a 12 V source with two series resistances: internal resistance r = 3 Ω and external resistor R = 5 Ω. The current is found from total series resistance, then the voltage across R is IR.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Where the answer lives",
+    "narration": "Great question — the 1.5 A comes from treating r and R as series resistors, and the 7.5 V is the drop across R. I’ll circle the two resistors and the current label we’re trying to justify.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R8"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "two resistors",
+      "geometry": {
+       "box": {
+        "x": 0.388425,
+        "y": 0.24060150375939848,
+        "w": 0.12014999999999998,
+        "h": 0.0644468313641246
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R10"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "two resistors",
+      "geometry": {
+       "box": {
+        "x": 0.626425,
+        "y": 0.24060150375939848,
+        "w": 0.12015000000000009,
+        "h": 0.0644468313641246
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a3",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R6"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "current label",
+      "geometry": {
+       "box": {
+        "x": 0.50675,
+        "y": 0.03329752953813104,
+        "w": 0.14849999999999997,
+        "h": 0.04511278195488721
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.941,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Add the series resistances",
+    "narration": "Because there is only one loop, the same current must pass through r and R. So we first add their resistances: 3 ohms plus 5 ohms gives 8 ohms total.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "highlight",
+      "color": "blue",
+      "target_ids": [
+       "R12"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "3 Ω",
+      "text": null,
+      "cue": "3 ohms",
+      "geometry": {
+       "box": {
+        "x": 0.41,
+        "y": 0.3304833512352309,
+        "w": 0.08200000000000002,
+        "h": 0.04794844253490871
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.985,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "highlight",
+      "color": "blue",
+      "target_ids": [
+       "R13"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "5 Ω",
+      "text": null,
+      "cue": "5 ohms",
+      "geometry": {
+       "box": {
+        "x": 0.648,
+        "y": 0.3304833512352309,
+        "w": 0.029000000000000026,
+        "h": 0.04794844253490871
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.984,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R8",
+       "R10"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "3+5=8 Ω",
+      "cue": "8 ohms total",
+      "geometry": {
+       "box": {
+        "x": 0.404,
+        "y": 0.2513426423200859,
+        "w": 0.32699999999999996,
+        "h": 0.04296455424274975
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.48077735,
+        "y": 0.11971764232008592,
+        "w": 0.1734452999999999,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.5675,
+         "y": 0.18188653228828378
+        },
+        {
+         "x": 0.5675,
+         "y": 0.2440048623836902
+        }
+       ]
+      },
+      "confidence": 0.988,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Use Ohm’s law for the loop",
+    "narration": "Now use the battery voltage: current equals voltage divided by total resistance. So 12 volts divided by 8 ohms gives 1.5 amps — that matches the red arrow.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R11"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "12 V",
+      "text": null,
+      "cue": "battery voltage",
+      "geometry": {
+       "box": {
+        "x": 0.23,
+        "y": 0.33263157894736844,
+        "w": 0.101,
+        "h": 0.047948442534908764
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.987,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "I=12/8=1.5 A",
+      "cue": "1.5 amps",
+      "geometry": {
+       "box": {
+        "x": 0.456,
+        "y": 0.06015037593984962,
+        "w": 0.193,
+        "h": 0.03437164339419979
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.67623175,
+        "y": 0.036022019334049415,
+        "w": 0.2823723,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.672819079224047,
+         "y": 0.07185694982092929
+        },
+        {
+         "x": 0.6558253415519061,
+         "y": 0.0726308329043654
+        }
+       ]
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     },
+     {
+      "id": "s3a3",
+      "kind": "arrow",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [
+       "R11"
+      ],
+      "to_ids": [
+       "R6"
+      ],
+      "span": null,
+      "text": "Ohm’s law",
+      "cue": "matches the",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.3078147441527131,
+         "y": 0.32926816078909066
+        },
+        {
+         "x": 0.4061745721532856,
+         "y": 0.1698109974185297
+        },
+        {
+         "x": 0.5611977558472869,
+         "y": 0.07567276294882558
+        }
+       ],
+       "label_box": {
+        "x": 0.2093243110766428,
+        "y": 0.004,
+        "w": 0.2170161,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.941,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Find voltage across R",
+    "narration": "For the external resistor R, use only its own resistance: V_R equals I times R. The same 1.5 amps through 5 ohms gives 7.5 volts, which is the IR drop shown on the graph.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "circle",
+      "color": "orange",
+      "target_ids": [
+       "R7"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "external resistor R",
+      "geometry": {
+       "box": {
+        "x": 0.658,
+        "y": 0.19763694951664876,
+        "w": 0.06900000000000006,
+        "h": 0.06981740064446831
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.983,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R10"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "V=1.5×5=7.5 V",
+      "cue": "7.5 volts",
+      "geometry": {
+       "box": {
+        "x": 0.642,
+        "y": 0.2513426423200859,
+        "w": 0.08899999999999997,
+        "h": 0.04296455424274975
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.642,
+        "y": 0.44055719656283565,
+        "w": 0.3041577,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.77637612085735,
+         "y": 0.4373926104450055
+        },
+        {
+         "x": 0.7016887965881293,
+         "y": 0.300636368798496
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "highlight",
+      "color": "orange",
+      "target_ids": [
+       "R24"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "IR = 7,5 V",
+      "text": null,
+      "cue": "IR drop",
+      "geometry": {
+       "box": {
+        "x": 0.721,
+        "y": 0.7087003222341568,
+        "w": 0.22699999999999998,
+        "h": 0.0799140708915147
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.987,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Connect to the voltage graph",
+    "narration": "The graph is showing the same energy drops around the loop: start at 12 V, lose 4.5 V in the internal resistance, then lose 7.5 V in R. Those two drops add back to the battery’s 12 V.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R23"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "ε = 12 V",
+      "text": null,
+      "cue": "start at 12 V",
+      "geometry": {
+       "box": {
+        "x": 0.293,
+        "y": 0.6671965628356605,
+        "w": 0.198,
+        "h": 0.0759183673469388
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "highlight",
+      "color": "blue",
+      "target_ids": [
+       "R20"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "Ir= 4,5 V",
+      "text": null,
+      "cue": "lose 4.5 V",
+      "geometry": {
+       "box": {
+        "x": 0.485,
+        "y": 0.5058216970998926,
+        "w": 0.20999999999999996,
+        "h": 0.07858216970998932
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "highlight",
+      "color": "orange",
+      "target_ids": [
+       "R24"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "IR = 7,5 V",
+      "text": null,
+      "cue": "lose 7.5 V",
+      "geometry": {
+       "box": {
+        "x": 0.721,
+        "y": 0.7087003222341568,
+        "w": 0.22699999999999998,
+        "h": 0.0799140708915147
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.987,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "Plain answer",
+    "narration": "So the answer is: total resistance is 8 ohms, so I = 12/8 = 1.5 A; across R, V = IR = 1.5×5 = 7.5 V. Follow this little flow whenever a battery has internal resistance in series.",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "box",
+      "color": "red",
+      "target_ids": [
+       "R6",
+       "R12",
+       "R13",
+       "R24"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "answer is",
+      "geometry": {
+       "box": {
+        "x": 0.37044,
+        "y": 0.0,
+        "w": 0.6171200000000001,
+        "h": 0.8233727175080561
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.98,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart LR\nA[12 V source] --> B[Add resistors]\nB --> C[8 ohms total]\nC --> D[I = V/R]\nD --> E[1.5 A]\nE --> F[VR = IR]\nF --> G[7.5 V]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the internal resistance r.",
+    "answer_ids": [
+     "R8"
+    ],
+    "answer_box": {
+     "x": 0.404,
+     "y": 0.2513426423200859,
+     "w": 0.08899999999999997,
+     "h": 0.04296455424274975
+    },
+    "explanation": "This 3 Ω resistor is inside the dotted battery section, so it reduces the terminal voltage."
+   },
+   {
+    "question": "Tap the external resistor R.",
+    "answer_ids": [
+     "R10"
+    ],
+    "answer_box": {
+     "x": 0.642,
+     "y": 0.2513426423200859,
+     "w": 0.08899999999999997,
+     "h": 0.04296455424274975
+    },
+    "explanation": "The 5 Ω resistor is the load, and its voltage drop is IR = 7.5 V."
+   },
+   {
+    "question": "Tap the graph label showing the voltage across R.",
+    "answer_ids": [
+     "R24"
+    ],
+    "answer_box": {
+     "x": 0.724,
+     "y": 0.719656283566058,
+     "w": 0.22099999999999997,
+     "h": 0.0580021482277121
+    },
+    "explanation": "This label shows the drop across the 5 Ω resistor: 1.5 A times 5 Ω equals 7.5 V."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 18.673,
+   "ground": 0.066,
+   "total": 18.739,
+   "input_tokens": 5094.0,
+   "output_tokens": 1913.0,
+   "approx_agreement": 1.0
+  },
+  "warnings": [
+   "step 2 drawing 1: span '3 Ω' not found in R12; using the whole target"
+  ],
+  "question": "How do we get the 1.5 A current and the 7.5 V across R in this circuit?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 5094,
+  "output_tokens": 1913,
+  "seconds": 18.672
+ },
+ "checks": {
+  "total_resistance": {
+   "pass": true,
+   "evidence": "3+5=8 | 8 ohms"
+  },
+  "current": {
+   "pass": true,
+   "evidence": "12/8"
+  },
+  "internal_drop": {
+   "pass": true,
+   "evidence": "4.5 v in the internal"
+  },
+  "terminal_voltage": {
+   "pass": true,
+   "evidence": "1.5×5=7.5"
+  },
+  "kirchhoff": {
+   "pass": true,
+   "evidence": "add back to the battery's 12 v"
+  }
+ },
+ "passed": 5,
+ "total": 5,
+ "score": 1.0,
+ "all_passed": true,
+ "checked_text": "great question - the 1.5 a comes from treating r and r as series resistors, and the 7.5 v is the drop across r. i'll circle the two resistors and the current label we're trying to justify.\n\nbecause there is only one loop, the same current must pass through r and r. so we first add their resistances: 3 ohms plus 5 ohms gives 8 ohms total.\n3+5=8 ω\n\nnow use the battery voltage: current equals voltage divided by total resistance. so 12 volts divided by 8 ohms gives 1.5 amps - that matches the red arrow.\ni=12/8=1.5 a\nohm's law\n\nfor the external resistor r, use only its own resistance: v_r equals i times r. the same 1.5 amps through 5 ohms gives 7.5 volts, which is the ir drop shown on the graph.\nv=1.5×5=7.5 v\n\nthe graph is showing the same energy drops around the loop: start at 12 v, lose 4.5 v in the internal resistance, then lose 7.5 v in r. those two drops add back to the battery's 12 v.\n\nso the answer is: total resistance is 8 ohms, so i = 12/8 = 1.5 a; across r, v = ir = 1.5×5 = 7.5 v. follow this little flow whenever a battery has internal resistance in series.\n12 v source -> add resistors\nadd resistors -> 8 ohms total\n8 ohms total -> i = v/r\ni = v/r -> 1.5 a\n1.5 a -> vr = ir\nvr = ir -> 7.5 v"
+}
