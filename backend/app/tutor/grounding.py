@@ -7,8 +7,10 @@ text and the ink mask decide (see CONTRACT.md "Grounding fusion").
 """
 from __future__ import annotations
 
+import logging
 import math
 import re
+import time
 from dataclasses import dataclass, field
 from difflib import SequenceMatcher
 from typing import Any, Sequence
@@ -16,6 +18,8 @@ from typing import Any, Sequence
 import cv2
 import numpy as np
 
+from app import config
+from app.perception import gpu
 from app.perception.types import PerceptionResult
 from app.schemas import Box, Grounding, Region
 from app.tutor.geometry import (
@@ -28,6 +32,8 @@ from app.tutor.geometry import (
     intersection_area,
     union_box,
 )
+
+log = logging.getLogger("app.tutor.grounding")
 
 CONSENSUS_IOU = 0.3
 CENTER_EXPAND = 0.10
@@ -236,14 +242,32 @@ def approx_agreement(pr: PerceptionResult, refs: Sequence[tuple[Any, Any]]) -> f
         cv = union_box(r.box for r in regions)
         n += 1
         agree += _agrees(cv, llm_box)  # type: ignore[arg-type]
-    return agree / n if n else None
+    agreement = agree / n if n else None
+    if config.GPU_ENABLED:  # optional: one batched SAM call for every target that refinement may touch
+        try:
+            sam_prefetch(pr, refs, agreement is None or agreement >= RELIABLE_AGREEMENT)
+        except Exception:  # noqa: BLE001 - refinement is an extra; grounding never depends on it
+            log.warning("SAM prefetch failed", exc_info=True)
+    return agreement
 
 
 def fuse(pr: PerceptionResult, ids: Any, approx: Any, desc: str | None = "",
          prefer_container: bool = True, trust_approx: bool = True) -> Grounded | None:
     """Resolve one target reference. None when nothing usable remains (caller drops + warns).
     prefer_container: circle a labelled shape rather than its label text (off for underline/highlight).
-    trust_approx: let the model's own box estimate overrule its region ids (see approx_agreement)."""
+    trust_approx: let the model's own box estimate overrule its region ids (see approx_agreement).
+    With the GPU service on, a low-confidence result is tightened to its SAM mask (sam_refine)."""
+    g = _fuse(pr, ids, approx, desc, prefer_container, trust_approx)
+    if g is not None and config.GPU_ENABLED:
+        try:
+            return sam_refine(pr, g)
+        except Exception:  # noqa: BLE001 - keep the CPU result
+            log.warning("SAM refinement failed", exc_info=True)
+    return g
+
+
+def _fuse(pr: PerceptionResult, ids: Any, approx: Any, desc: str | None = "",
+          prefer_container: bool = True, trust_approx: bool = True) -> Grounded | None:
     llm_box = parse_approx(approx, pr.width, pr.height)
     wanted = normalize_ids(ids)
     if prefer_container:
@@ -305,6 +329,93 @@ def fuse(pr: PerceptionResult, ids: Any, approx: Any, desc: str | None = "",
         if match is not None and match[1] >= TEXT_ONLY_MATCH:
             return Grounded(match[0].box, [match[0].id], "cv_snap", 0.5, None, _join(note, "matched by text only"))
     return None
+
+
+# ---------------------------------------------------------------- optional GPU refinement (SAM 2.1)
+#
+# Targets the CPU pipeline could only locate from the model's own estimate (llm_refined, llm_only)
+# and targets that are leftover-ink "figure" regions are sent to SAM 2.1 as box prompts (the box
+# grown a little); the mask's tight box replaces the target box when SAM is confident and the mask
+# stays a plausible part of the box. All targets of one response go in one batched call, made by
+# approx_agreement() (which every caller runs once per response before grounding its targets);
+# fuse() then only reads the cached masks, so grounding a single target never waits on the network.
+
+SAM_GROUNDINGS = ("llm_refined", "llm_only")
+SAM_FIGURES = True  # also refine targets whose regions are all "figure" (leftover ink) regions
+SAM_PROMPT_EXPAND = 0.08  # prompt with the target box grown by 8%
+SAM_MIN_SCORE = 0.75  # the mask IoU that SAM itself predicts
+# the mask box may shrink the target box to 10% of its area (a loose estimate around a small thing) or grow
+# it up to 2x (ink tightening cut off a faint or thin part); anything else is a different object
+SAM_MIN_AREA = 0.10
+SAM_MAX_AREA = 2.0
+
+
+def _sam_prompt(pr: PerceptionResult, g: Grounded | None) -> Box | None:
+    """The box to refine, or None when this result is not refined."""
+    if g is None or g.box is None or g.grounding == "user":
+        return None
+    if g.grounding in SAM_GROUNDINGS:
+        return g.box
+    if SAM_FIGURES and g.ids:
+        regions = [pr.region(i) for i in g.ids]
+        if all(r is not None and r.kind == "figure" for r in regions):
+            return g.box
+    return None
+
+
+def _sam_key(b: Box) -> tuple[float, float, float, float]:
+    return (round(b.x, 4), round(b.y, 4), round(b.w, 4), round(b.h, 4))
+
+
+def _sam_cache(pr: PerceptionResult) -> dict:
+    return pr.__dict__.setdefault("_sam_masks", {})
+
+
+def sam_prefetch(pr: PerceptionResult, refs: Sequence[tuple[Any, Any]], trust_approx: bool = True) -> int:
+    """Segment, in one GPU call, every target of a response that sam_refine may touch (each target is
+    fused both with and without label promotion, without its description, so the set is a superset).
+    Returns the number of new masks; 0 when the service is off, cold or failing."""
+    if not gpu.sam_enabled() or getattr(pr, "image", None) is None:
+        return 0
+    cache = _sam_cache(pr)
+    want: dict[tuple, Box] = {}
+    for ids, approx in refs:
+        for prefer_container in (True, False):
+            b = _sam_prompt(pr, _fuse(pr, ids, approx, "", prefer_container, trust_approx))
+            if b is not None and _sam_key(b) not in cache:
+                want.setdefault(_sam_key(b), b)
+    if not want or not gpu.ready("segment"):
+        return 0
+    W, H = pr.width, pr.height
+    prompts = [clamp_box(expand_box(b, SAM_PROMPT_EXPAND)) for b in want.values()]
+    t0 = time.perf_counter()
+    res = gpu.segment(pr.image, [[p.x * W, p.y * H, (p.x + p.w) * W, (p.y + p.h) * H] for p in prompts])
+    if res is None:
+        return 0
+    for k, r in zip(want, res):
+        cache[k] = r
+    log.info("SAM prefetch: %d boxes in %.2fs", len(res), time.perf_counter() - t0)
+    return len(res)
+
+
+def sam_refine(pr: PerceptionResult, g: Grounded) -> Grounded:
+    """g with its box tightened to the prefetched SAM mask, when there is one and it is trustworthy."""
+    cache = pr.__dict__.get("_sam_masks")
+    b = _sam_prompt(pr, g) if cache else None
+    r = cache.get(_sam_key(b)) if (cache and b is not None) else None
+    if not r or g.box is None:
+        return g
+    score = float(r.get("score") or 0.0)
+    x0, y0, x1, y1 = (float(v) for v in r["box"])
+    m = clamp_box(Box(x=x0 / pr.width, y=y0 / pr.height, w=(x1 - x0) / pr.width, h=(y1 - y0) / pr.height))
+    ratio = box_area(m) / max(box_area(g.box), 1e-9)
+    cx, cy = box_center(m)
+    if (score < SAM_MIN_SCORE or not SAM_MIN_AREA <= ratio <= SAM_MAX_AREA
+            or not contains(expand_box(g.box, 0.05), cx, cy)):
+        return g
+    conf = g.confidence + 0.15 * score if g.grounding in SAM_GROUNDINGS else g.confidence
+    return Grounded(m, list(g.ids), g.grounding, _conf(conf), g.llm_box,
+                    _join(g.note, f"SAM-refined (mask score {score:.2f})"))
 
 
 def user_selection(selection: Box, approx: Any = None, pr: PerceptionResult | None = None) -> Grounded:

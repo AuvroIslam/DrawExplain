@@ -18,6 +18,7 @@ from typing import TYPE_CHECKING
 import cv2
 import numpy as np
 
+from app.perception.gpu import strip_latex
 from app.perception.preprocess import local_text_mask, remove_specks
 from app.schemas import Box
 
@@ -576,7 +577,7 @@ def _line_span_px(rgb: np.ndarray, r: "Region", W: int, H: int, i: int, j: int
                   ) -> tuple[float, float, float, float]:
     b = r.box
     px = (b.x * W, b.y * H, (b.x + b.w) * W, (b.y + b.h) * H)
-    text = r.text or ""
+    text = strip_latex(r.text)  # spans index the OCR text, not an appended formula-OCR LaTeX
     li = analyse_line(rgb, px)
     if li is None or not li.runs:
         total = max(_em(text, 0, len(text)), 1e-6)
@@ -600,7 +601,7 @@ def span_box(pr: "PerceptionResult", region_id: str, span: str) -> Box | None:
     H, W = rgb.shape[:2]
     best: tuple["Region", tuple[int, int, float]] | None = None
     for r in lines:
-        hit = find_span(r.text or "", span)
+        hit = find_span(strip_latex(r.text), span)
         if hit is not None and (best is None or hit[2] > best[1][2] + 1e-9):
             best = (r, hit)
     parts: list[tuple[float, float, float, float]] = []
@@ -613,13 +614,13 @@ def span_box(pr: "PerceptionResult", region_id: str, span: str) -> Box | None:
             if joined:
                 joined += " "
             offsets.append(len(joined))
-            joined += r.text or ""
+            joined += strip_latex(r.text)
         hit = find_span(joined, span)
         if hit is None:
             return None
         i, j, _ = hit
         for r, off in zip(lines, offsets):
-            n = len(r.text or "")
+            n = len(strip_latex(r.text))
             a, b = max(i, off), min(j, off + n)
             if b > a:
                 parts.append(_line_span_px(rgb, r, W, H, a - off, b - off))

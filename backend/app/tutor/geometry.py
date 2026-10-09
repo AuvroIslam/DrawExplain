@@ -10,6 +10,7 @@ from typing import Iterable
 
 import numpy as np
 
+from app.perception.gpu import strip_latex
 from app.perception.types import PerceptionResult
 from app.schemas import Box, Geometry, Point, Region
 
@@ -106,7 +107,9 @@ def proportional_span(region: Region | None, span: str) -> Box | None:
     """Fallback span box for a single-line text region: slice the box by character offsets."""
     if region is None or not region.text or not span or region.kind != "text":
         return None
-    text = region.text
+    text = strip_latex(region.text)  # spans index the OCR text, not an appended formula-OCR LaTeX
+    if not text:
+        return None
     i = text.lower().find(span.strip().lower())
     if i < 0:
         return None

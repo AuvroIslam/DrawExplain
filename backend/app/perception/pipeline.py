@@ -8,6 +8,7 @@ import numpy as np
 from PIL import Image
 
 from app.perception.freespace import FreeSpace
+from app.perception.gpu import start_formula_ocr
 from app.perception.ocr import run_ocr
 from app.perception.preprocess import analyse_ink, prepare_image
 from app.perception.rectify import rectify
@@ -47,6 +48,11 @@ def perceive(image: Image.Image, image_id: str, flatten: bool = True) -> Percept
     lap("ink")
     raw_lines = run_ocr(rgb, invert=ink.dark)
     lap("ocr")
+    try:  # optional GPU formula OCR (LaTeX), read in the background while the CPU work below continues
+        formulas = start_formula_ocr(rgb, raw_lines, invert=ink.dark)
+    except Exception:
+        log.warning("formula OCR could not start", exc_info=True)
+        formulas = None
     lines: list[TextLine] = []
     for ln in raw_lines:
         cx, cy = int((ln.x0 + ln.x1) / 2), int((ln.y0 + ln.y1) / 2)
@@ -71,6 +77,13 @@ def perceive(image: Image.Image, image_id: str, flatten: bool = True) -> Percept
     lap("freespace")
     marked = render_marks(image, regions)
     lap("som")
+    if formulas is not None:
+        try:
+            if formulas.apply(regions, W, H):
+                timings["latex_lines"] = float(sum("[LaTeX:" in (r.text or "") for r in regions))
+        except Exception:  # the LaTeX is an extra; the OCR text stays
+            log.warning("formula OCR failed", exc_info=True)
+        lap("latex")
     timings["total"] = round(time.perf_counter() - t0, 3)
     perception = Perception(image_id=image_id, width=W, height=H, regions=regions, timings=timings)
     log.info("perceived %s: %dx%d, %d regions in %.2fs", image_id, W, H, len(regions), timings["total"])

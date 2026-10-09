@@ -24,4 +24,17 @@ SAMPLES_DIR = Path(os.getenv("SAMPLES_DIR", str(ROOT_DIR / "samples")))
 MAX_IMAGE_SIDE = int(os.getenv("MAX_IMAGE_SIDE", "1600"))
 LLM_CACHE = os.getenv("LLM_CACHE", "0") == "1"
 
+# Optional GPU perception service (backend/gpu/modal_app.py on Modal): SAM 2.1 masks refine
+# low-confidence drawing targets, formula OCR adds LaTeX to maths lines. On only when both are set.
+GPU_URL = os.getenv("GPU_URL", "").strip().rstrip("/")
+GPU_KEY = os.getenv("GPU_KEY", "").strip()
+GPU_ENABLED = bool(GPU_URL and GPU_KEY) and os.getenv("GPU_ENABLED", "1").strip().lower() not in ("0", "false", "no", "off")
+try:
+    GPU_TIMEOUT = float(os.getenv("GPU_TIMEOUT", "20"))  # seconds per request
+except ValueError:
+    GPU_TIMEOUT = 20.0
+GPU_SAM = os.getenv("GPU_SAM", "1") != "0"  # SAM refinement of llm_refined / llm_only / figure targets
+GPU_LATEX = os.getenv("GPU_LATEX", "1") != "0"  # formula OCR during perception
+GPU_WAIT_COLD = os.getenv("GPU_WAIT_COLD", "0") == "1"  # wait for a cold container instead of skipping it
+
 DATA_DIR.mkdir(parents=True, exist_ok=True)

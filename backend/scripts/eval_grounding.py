@@ -8,8 +8,13 @@ ways of turning the answer into a drawing box, all from the same images and call
   fused       the pipeline: ids x estimate x OCR text x ink, fused (app.tutor.grounding.fuse)
 
     python scripts/eval_grounding.py [--models gpt-5.4-mini,gpt-4.1-mini] [--sets clean,photo,...]
-                                     [--limit N] [--workers 4]
-Writes samples/eval/results.json and results.md. LLM responses are cached on disk, so re-runs are free.
+                                     [--limit N] [--workers 4] [--gpu] [--cache-only] [--name results]
+Writes samples/eval/<name>.json and <name>.md. LLM responses are cached on disk, so re-runs are free.
+  --gpu         also refine low-confidence targets with SAM 2.1 on the GPU service (GPU_URL / GPU_KEY);
+                formula OCR stays off so the prompts, and therefore the cached responses, are unchanged.
+                Fused records then carry iou_cpu (the same target without the GPU) and the SAM mask stats.
+  --cache-only  never call OpenAI: an image x model pair whose responses are not cached is skipped.
+Without --gpu the GPU service is switched off, whatever .env says.
 """
 from __future__ import annotations
 
@@ -30,6 +35,8 @@ from app.perception.rectify import transform_box  # noqa: E402
 from app.schemas import Box  # noqa: E402
 from app.tutor import prompts  # noqa: E402
 from app.tutor.geometry import box_iou, union_box  # noqa: E402
+from app.perception import gpu  # noqa: E402
+from app.tutor import grounding, llm  # noqa: E402
 from app.tutor.grounding import RELIABLE_AGREEMENT, approx_agreement, fuse, normalize_ids, parse_approx  # noqa: E402
 from app.tutor.llm import chat_json  # noqa: E402
 
@@ -64,6 +71,30 @@ def raw_parts(img: Any, queries: list[str]) -> list:
             "For each query return query (copied exactly) and approx = the tight bounding box of that thing as "
             "[x, y, w, h] = left, top, width, height in fractions (0..1) of the image width and height. "
             f"Return one entry per query, in order.\nQueries:\n{qs}"]
+
+
+class CacheMiss(RuntimeError):
+    """--cache-only: the response is not on disk and OpenAI must not be called."""
+
+
+def _no_client() -> None:
+    raise CacheMiss("not cached")
+
+
+SKIPPED: list[str] = []
+
+
+def _sam_stats(pr: Any, fused_cpu: Any, truth: Box) -> dict:
+    """What SAM said about this target (whether or not the refinement accepted it)."""
+    cache = pr.__dict__.get("_sam_masks") or {}
+    b = grounding._sam_prompt(pr, fused_cpu)
+    r = cache.get(grounding._sam_key(b)) if b is not None else None
+    if not r:
+        return {}
+    x0, y0, x1, y1 = (float(v) for v in r["box"])
+    m = Box(x=x0 / pr.width, y=y0 / pr.height, w=(x1 - x0) / pr.width, h=(y1 - y0) / pr.height)
+    return {"sam_score": round(float(r.get("score") or 0.0), 4), "sam_iou": round(box_iou(m, truth), 4),
+            "sam_ratio": round((m.w * m.h) / max(b.w * b.h, 1e-9), 4)}
 
 
 def _entries(data: dict, queries: list[str]) -> list[dict | None]:
@@ -107,9 +138,14 @@ def evaluate(item: dict, models: list[str], flatten: bool = True) -> list[dict]:
     truth = [to_board(e["box"]) for e in els]
     recs: list[dict] = []
     for model in models:
-        raw, raw_meta = chat_json(model, RAW_SYSTEM, raw_parts(pr.image, queries), RAW_SCHEMA, "raw_locate", cache=True)
-        som, som_meta = chat_json(model, prompts.LOCATE_SYSTEM, prompts.locate_parts(pr, queries),
-                                  prompts.LOCATE_SCHEMA, "locate", cache=True)
+        try:
+            raw, raw_meta = chat_json(model, RAW_SYSTEM, raw_parts(pr.image, queries), RAW_SCHEMA, "raw_locate",
+                                      cache=True)
+            som, som_meta = chat_json(model, prompts.LOCATE_SYSTEM, prompts.locate_parts(pr, queries),
+                                      prompts.LOCATE_SCHEMA, "locate", cache=True)
+        except CacheMiss:
+            SKIPPED.append(f"{item['set']}/{item['path'].name} {model}")
+            continue
         som_entries = _entries(som, queries)
         agreement = approx_agreement(pr, [(e.get("ids"), e.get("approx")) for e in som_entries if e])
         trust = agreement is None or agreement >= RELIABLE_AGREEMENT
@@ -119,6 +155,7 @@ def evaluate(item: dict, models: list[str], flatten: bool = True) -> list[dict]:
             ids = normalize_ids(s.get("ids")) if s else []
             valid = [pr.region(i) for i in ids if pr.region(i) is not None]
             fused = fuse(pr, ids, s.get("approx") if s else None, q, trust_approx=trust)
+            fused_cpu = grounding._fuse(pr, ids, s.get("approx") if s else None, q, trust_approx=trust)
             boxes = {
                 "raw": parse_approx(r.get("approx"), pr.width, pr.height) if r else None,
                 "som_approx": parse_approx(s.get("approx"), pr.width, pr.height) if s else None,
@@ -137,6 +174,9 @@ def evaluate(item: dict, models: list[str], flatten: bool = True) -> list[dict]:
                     "rectified": pr.transform is not None,
                     "llm_seconds": round(raw_s if method == "raw" else som_s, 3),
                     "perceive_seconds": round(perceive_s, 3),
+                    **({"iou_cpu": round(box_iou(fused_cpu.box, g), 4) if fused_cpu and fused_cpu.box else 0.0,
+                        "sam_refined": bool(fused and "SAM-refined" in fused.note),
+                        **_sam_stats(pr, fused_cpu, g)} if method == "fused" and config.GPU_ENABLED else {}),
                 })
     print(f"  {item['set']:8s} {item['path'].name:28s} {len(els):3d} elements, perception {perceive_s:.1f}s", flush=True)
     return recs
@@ -192,7 +232,21 @@ def main() -> None:
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--out", default=str(OUT_DIR))
     ap.add_argument("--no-flatten", action="store_true", help="ablation: skip photo rectification")
+    ap.add_argument("--gpu", action="store_true", help="refine low-confidence targets with SAM 2.1 (GPU service)")
+    ap.add_argument("--cache-only", action="store_true", help="skip pairs whose LLM responses are not cached")
+    ap.add_argument("--name", default="results", help="output file stem in --out")
     args = ap.parse_args()
+    config.GPU_LATEX = False  # formula OCR would change the prompts (and miss the response cache)
+    if args.gpu:
+        if not (config.GPU_URL and config.GPU_KEY):
+            sys.exit("--gpu needs GPU_URL and GPU_KEY (in .env or the environment)")
+        config.GPU_ENABLED = config.GPU_SAM = config.GPU_WAIT_COLD = True
+        t = time.perf_counter()
+        print(f"GPU service ready: {gpu.wait_ready(240)} ({time.perf_counter() - t:.1f}s)", flush=True)
+    else:
+        config.GPU_ENABLED = False
+    if args.cache_only:
+        llm._get_client = _no_client  # type: ignore[assignment]
     models = [m.strip() for m in args.models.split(",") if m.strip()]
     items = load_items([s.strip() for s in args.sets.split(",") if s.strip()], args.limit)
     print(f"{len(items)} images x {len(models)} models")
@@ -200,9 +254,15 @@ def main() -> None:
         recs = [r for rs in pool.map(lambda it: evaluate(it, models, not args.no_flatten), items) for r in rs]
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
-    (out / "results.json").write_text(json.dumps(recs, indent=1), encoding="utf-8")
+    (out / f"{args.name}.json").write_text(json.dumps(recs, indent=1), encoding="utf-8")
     md = to_markdown(recs, models)
-    (out / "results.md").write_text(md, encoding="utf-8")
+    if SKIPPED:
+        md += f"\nSkipped (responses not cached, --cache-only): {len(SKIPPED)} image x model pairs: " + ", ".join(SKIPPED) + "\n"
+    if args.gpu:
+        refined = [r for r in recs if r.get("sam_refined")]
+        md += (f"\nGPU (SAM 2.1): {int(gpu.stats['calls'])} requests, {gpu.stats['seconds']:.1f}s in total, "
+               f"{int(gpu.stats['failures'])} failures; {len(refined)} fused targets SAM-refined.\n")
+    (out / f"{args.name}.md").write_text(md, encoding="utf-8")
     print("\n" + md)
 
 
