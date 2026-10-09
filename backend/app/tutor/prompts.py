@@ -157,12 +157,19 @@ def _image_parts(pr: "PerceptionResult") -> list:
     ]
 
 
-def lesson_parts(pr: "PerceptionResult", context: "LessonContext | None" = None) -> list:
+def lesson_parts(pr: "PerceptionResult", context: "LessonContext | None" = None,
+                 simulation: str | None = None) -> list:
+    """simulation: a VERIFIED SIMULATION block computed by app.tutor.solvers (None keeps the prompt, and so
+    the cache key, exactly as without solvers)."""
     n = len(pr.perception.regions)
     block = context.prompt_text() if context is not None else ""
+    if simulation:
+        block = f"{block}\n\n{simulation}" if block else simulation
     ask = "Plan the whiteboard lesson for this page."
     if context is not None and context.question:
         ask = "Plan the whiteboard lesson for this page, shaped to answer the STUDENT QUESTION."
+    if simulation:
+        ask += " Teach the simulation exactly as the code computed it."
     middle = f"{block}\n\n" if block else ""
     return [
         *_image_parts(pr),

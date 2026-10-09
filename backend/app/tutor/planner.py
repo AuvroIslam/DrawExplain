@@ -9,7 +9,7 @@ from typing import Any, Iterator
 from app import config
 from app.perception.types import PerceptionResult
 from app.schemas import Annotation, Box, FollowupResponse, Lesson, LocatedTarget, QuizItem, Step
-from app.tutor import prompts
+from app.tutor import prompts, solvers
 from app.tutor.context import LessonContext
 from app.tutor.geometry import GeometryBuilder
 from app.tutor.grounding import RELIABLE_AGREEMENT, Grounded, approx_agreement, fuse, user_selection
@@ -203,11 +203,31 @@ def _focus(context: LessonContext | None) -> dict[str, Any]:
     return {"question": context.question, "context_pages": context.context_pages}
 
 
+def _simulate(pr: PerceptionResult, model: str, context: LessonContext | None) -> "solvers.Simulation | None":
+    """Solver-backed simulation for algorithmic pages (None otherwise, or when anything fails: the lesson
+    then plans exactly as without it)."""
+    try:
+        return solvers.simulation_for(pr, context, model)
+    except Exception:  # optional feature: never break a lesson
+        log.exception("simulation skipped")
+        return None
+
+
+def _with_simulation(sim: "solvers.Simulation | None", timings: dict[str, float], warnings: list[str]) -> None:
+    if sim is None:
+        return
+    timings.update(sim.timings())
+    warnings.insert(0, sim.note)
+
+
 def plan_lesson(pr: PerceptionResult, model: str | None = None, context: LessonContext | None = None) -> Lesson:
     """context: document page context and/or the student's focus question (tutor.context.build_context)."""
     model = model or config.OPENAI_MODEL
     t0 = time.perf_counter()
-    data, meta = chat_json(model, prompts.lesson_system(context), prompts.lesson_parts(pr, context),
+    sim = _simulate(pr, model, context)
+    t_llm = time.perf_counter()
+    data, meta = chat_json(model, prompts.lesson_system(context),
+                           prompts.lesson_parts(pr, context, simulation=sim.prompt if sim is not None else None),
                            prompts.LESSON_SCHEMA, "lesson")
     t1 = time.perf_counter()
     warnings: list[str] = []
@@ -225,7 +245,7 @@ def plan_lesson(pr: PerceptionResult, model: str | None = None, context: LessonC
         steps=steps,
         quiz=quiz,
         model=model,
-        timings={"llm": round(float(meta.get("original_seconds") or (t1 - t0)), 3), "ground": round(t2 - t1, 3),
+        timings={"llm": round(float(meta.get("original_seconds") or (t1 - t_llm)), 3), "ground": round(t2 - t1, 3),
                  "total": round(t2 - t0, 3),
                  "input_tokens": float(meta.get("input_tokens", 0)), "output_tokens": float(meta.get("output_tokens", 0)),
                  **({"llm_cached": 1.0} if meta.get("cached") else {}),
@@ -233,6 +253,7 @@ def plan_lesson(pr: PerceptionResult, model: str | None = None, context: LessonC
         warnings=warnings,
         **_focus(context),
     )
+    _with_simulation(sim, lesson.timings, lesson.warnings)
     log.info("lesson %s: %d steps, %d drawings, %d quiz, %.1fs (%s)", lesson.lesson_id, len(steps),
              sum(len(s.annotations) for s in steps), len(quiz), t2 - t0, model)
     return lesson
@@ -250,6 +271,7 @@ def stream_lesson(
     lesson_id = uuid.uuid4().hex[:12]
     focus = _focus(context)
     yield {"type": "meta", "lesson_id": lesson_id, "image_id": pr.perception.image_id, "model": model, **focus}
+    sim = _simulate(pr, model, context)  # algorithmic pages only; bounded by SIM_TIMEOUT, cached per image
     warnings: list[str] = []
     resolve = _Resolver(pr)
     sb = _StepBuilder(pr, resolve, warnings)
@@ -259,8 +281,8 @@ def stream_lesson(
     seen_ids: set[str] = set()
     header_sent = False
     first_step: float | None = None
-    for delta in chat_json_stream(model, prompts.lesson_system(context), prompts.lesson_parts(pr, context),
-                                  prompts.LESSON_SCHEMA, "lesson"):
+    parts = prompts.lesson_parts(pr, context, simulation=sim.prompt if sim is not None else None)
+    for delta in chat_json_stream(model, prompts.lesson_system(context), parts, prompts.LESSON_SCHEMA, "lesson"):
         for raw in parser.feed(delta):
             if not header_sent and (head := parser.header()) is not None:
                 header_sent = True
@@ -300,6 +322,7 @@ def stream_lesson(
         warnings=warnings,
         **focus,
     )
+    _with_simulation(sim, lesson.timings, lesson.warnings)
     log.info("streamed lesson %s: %d steps, first step after %.1fs, total %.1fs (%s)", lesson_id, len(steps),
              first_step or total, total, model)
     yield {"type": "lesson", "lesson": lesson.model_dump()}
