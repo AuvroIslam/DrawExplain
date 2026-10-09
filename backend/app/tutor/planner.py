@@ -53,6 +53,7 @@ def _build_steps(
     """Turn sanitized step dicts into Steps with grounded geometry (ids are set later)."""
     builder = GeometryBuilder(pr)
     steps: list[Step] = []
+    drawn: list[Box] = []  # everything already on the board; later labels keep off it
     for si, raw in enumerate(raw_steps, 1):
         # Pass 1: ground every target of the step, so labels can avoid all of them.
         resolved: list[tuple[dict, dict[str, Grounded | None]]] = []
@@ -63,15 +64,21 @@ def _build_steps(
                     warnings.append(f"step {si} drawing {ai}: could not locate {_desc(a.get(key))!r}")
             resolved.append((a, g))
         step_boxes = [g.box for _, gs in resolved for g in gs.values() if g is not None and g.box is not None]
+        step_boxes += drawn
 
-        # Pass 2: geometry per kind.
+        # Pass 2: geometry per kind (circles/labels/arrows are added to the avoid list as they land).
         annotations: list[Annotation] = []
         for ai, (a, g) in enumerate(resolved, 1):
             ann = _annotation(builder, a, g, step_boxes, si, ai, warnings)
-            if ann is not None:
-                annotations.append(ann)
-                if ann.kind == "arrow":
-                    step_boxes.extend(builder.path_boxes(ann.geometry))
+            if ann is None:
+                continue
+            annotations.append(ann)
+            geo = ann.geometry
+            new = builder.path_boxes(geo) if ann.kind == "arrow" else ([geo.box] if geo.box is not None else [])
+            if geo.label_box is not None:
+                new.append(geo.label_box)
+            step_boxes.extend(new)
+            drawn.extend(new)
         steps.append(Step(index=si, title=raw["title"], narration=raw["narration"], annotations=annotations))
     return steps
 
