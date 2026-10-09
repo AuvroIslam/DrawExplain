@@ -64,14 +64,14 @@ def fix_cue(cue: Any, narration: str) -> tuple[str | None, str | None]:
 # ---------------------------------------------------------------- raw model output
 
 def sanitize_steps(raw_steps: Any, warnings: list[str], *, max_steps: int = MAX_STEPS,
-                   default_color: str = "red") -> list[dict]:
+                   default_color: str = "red", start: int = 1) -> list[dict]:
     """Clamp counts, normalise kinds/colours/text and repair cues of the raw step dicts."""
     steps = [s for s in (raw_steps or []) if isinstance(s, dict)]
     if len(steps) > max_steps:
         warnings.append(f"model returned {len(steps)} steps; kept the first {max_steps}")
         steps = steps[:max_steps]
     out: list[dict] = []
-    for si, s in enumerate(steps, 1):
+    for si, s in enumerate(steps, start):
         narration = _clean(s.get("narration"))
         title = _clean(s.get("title")) or f"Step {si}"
         if not narration:
@@ -151,32 +151,34 @@ def clean_geometry(kind: str, geo: Geometry) -> Geometry | None:
 def finalize_steps(steps: list[Step], warnings: list[str], *, prefix: str = "") -> list[Step]:
     """Re-index steps from 1, give annotations unique ids "{prefix}s{step}a{n}", clamp
     geometry and drop drawings that have none left."""
-    out: list[Step] = []
     seen: set[str] = set()
-    for si, step in enumerate(steps, 1):
-        anns: list[Annotation] = []
-        for a in step.annotations[:MAX_ANNOTATIONS]:
-            geo = clean_geometry(a.kind, a.geometry)
-            if geo is None:
-                warnings.append(f"step {si}: dropped a {a.kind} with no usable geometry")
-                continue
-            if a.color not in COLORS:
-                warnings.append(f"step {si}: colour {a.color!r} -> red")
-            aid = f"{prefix}s{si}a{len(anns) + 1}"
-            while aid in seen:
-                aid += "x"
-            seen.add(aid)
-            anns.append(a.model_copy(update={
-                "id": aid,
-                "geometry": geo,
-                "color": a.color if a.color in COLORS else "red",
-                "confidence": round(clamp01(a.confidence), 3),
-                "cue": a.cue if a.cue and a.cue.lower() in step.narration.lower() else None,
-            }))
-        if not anns:
-            warnings.append(f"step {si}: no drawings left (narration only)")
-        out.append(step.model_copy(update={"index": si, "annotations": anns}))
-    return out
+    return [finalize_step(step, si, warnings, seen, prefix=prefix) for si, step in enumerate(steps, 1)]
+
+
+def finalize_step(step: Step, si: int, warnings: list[str], seen: set[str], *, prefix: str = "") -> Step:
+    """finalize_steps for one step (streaming): index si, unique ids tracked in `seen`."""
+    anns: list[Annotation] = []
+    for a in step.annotations[:MAX_ANNOTATIONS]:
+        geo = clean_geometry(a.kind, a.geometry)
+        if geo is None:
+            warnings.append(f"step {si}: dropped a {a.kind} with no usable geometry")
+            continue
+        if a.color not in COLORS:
+            warnings.append(f"step {si}: colour {a.color!r} -> red")
+        aid = f"{prefix}s{si}a{len(anns) + 1}"
+        while aid in seen:
+            aid += "x"
+        seen.add(aid)
+        anns.append(a.model_copy(update={
+            "id": aid,
+            "geometry": geo,
+            "color": a.color if a.color in COLORS else "red",
+            "confidence": round(clamp01(a.confidence), 3),
+            "cue": a.cue if a.cue and a.cue.lower() in step.narration.lower() else None,
+        }))
+    if not anns:
+        warnings.append(f"step {si}: no drawings left (narration only)")
+    return step.model_copy(update={"index": si, "annotations": anns})
 
 
 def finalize_quiz(quiz: list[QuizItem], warnings: list[str]) -> list[QuizItem]:

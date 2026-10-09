@@ -180,6 +180,44 @@ def test_locate_targets_offline(pr, monkeypatch):
     assert out[0].grounding == "consensus" and out[1].grounding == "cv_snap"
 
 
+def _chunks(text: str, seed: int) -> list[str]:
+    import random
+
+    rnd, out, i = random.Random(seed), [], 0
+    while i < len(text):
+        n = rnd.randint(1, 40)
+        out.append(text[i:i + n])
+        i += n
+    return out
+
+
+def test_step_stream_yields_each_step_once(pr):
+    from app.tutor.streaming import StepStream
+
+    data = _canned(pr)
+    for seed in range(5):
+        parser, got = StepStream(), []
+        for c in _chunks(json.dumps(data, ensure_ascii=False), seed):
+            got += parser.feed(c)
+        assert got == data["steps"]
+        assert parser.header()["title"] == data["title"] and parser.result() == data
+
+
+def test_stream_lesson_matches_batch_lesson(pr, monkeypatch):
+    data = _canned(pr)
+    monkeypatch.setattr(planner, "chat_json", lambda *a, **k: (data, {"input_tokens": 1, "output_tokens": 1}))
+    monkeypatch.setattr(planner, "chat_json_stream", lambda *a, **k: iter(_chunks(json.dumps(data), 7)))
+    batch = planner.plan_lesson(pr, model="test-model")
+    events = list(planner.stream_lesson(pr, model="test-model"))
+    assert [e["type"] for e in events] == ["meta", "header", "step", "step", "step", "lesson"]
+    streamed = events[-1]["lesson"]
+    assert [s["index"] for s in streamed["steps"]] == [1, 2, 3]
+    for a, b in zip(batch.steps, streamed["steps"]):
+        assert [x.id for x in a.annotations] == [x["id"] for x in b["annotations"]]
+        assert [x.geometry.model_dump() for x in a.annotations] == [x["geometry"] for x in b["annotations"]]
+    assert events[2]["step"] == streamed["steps"][0] and len(streamed["quiz"]) == 1
+
+
 @pytest.mark.live
 @pytest.mark.skipif(os.getenv("RUN_LIVE") != "1", reason="set RUN_LIVE=1 to call OpenAI")
 def test_plan_lesson_live():

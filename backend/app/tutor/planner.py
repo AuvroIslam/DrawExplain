@@ -4,7 +4,7 @@ from __future__ import annotations
 import logging
 import time
 import uuid
-from typing import Any
+from typing import Any, Iterator
 
 from app import config
 from app.perception.types import PerceptionResult
@@ -12,8 +12,9 @@ from app.schemas import Annotation, Box, FollowupResponse, Lesson, LocatedTarget
 from app.tutor import prompts
 from app.tutor.geometry import GeometryBuilder
 from app.tutor.grounding import RELIABLE_AGREEMENT, Grounded, approx_agreement, fuse, user_selection
-from app.tutor.llm import chat_json
-from app.tutor.validator import finalize_quiz, finalize_steps, sanitize_steps
+from app.tutor.llm import chat_json, chat_json_stream, last_meta
+from app.tutor.streaming import StepStream
+from app.tutor.validator import MAX_STEPS, finalize_quiz, finalize_step, finalize_steps, sanitize_steps
 
 log = logging.getLogger("app.tutor.planner")
 
@@ -59,17 +60,20 @@ def _weakest(*items: Grounded) -> Grounded:
     return min(items, key=lambda g: g.confidence)
 
 
-def _build_steps(
-    pr: PerceptionResult,
-    raw_steps: list[dict],
-    resolve: _Resolver,
-    warnings: list[str],
-) -> list[Step]:
-    """Turn sanitized step dicts into Steps with grounded geometry (ids are set later)."""
-    builder = GeometryBuilder(pr)
-    steps: list[Step] = []
-    drawn: list[Box] = []  # everything already on the board; later labels keep off it
-    for si, raw in enumerate(raw_steps, 1):
+class _StepBuilder:
+    """Grounds and lays out sanitized steps one at a time (the board fills up step by step, so the
+    same builder serves the batch path and the streaming path)."""
+
+    def __init__(self, pr: PerceptionResult, resolve: _Resolver, warnings: list[str]):
+        self.pr = pr
+        self.resolve = resolve
+        self.warnings = warnings
+        self.builder = GeometryBuilder(pr)
+        self.drawn: list[Box] = []  # everything already on the board; later labels keep off it
+
+    def build(self, si: int, raw: dict) -> Step:
+        """Turn one sanitized step dict into a Step with grounded geometry (ids are set later)."""
+        pr, resolve, warnings, builder, drawn = self.pr, self.resolve, self.warnings, self.builder, self.drawn
         # Pass 1: ground every target of the step, so labels can avoid all of them.
         resolved: list[tuple[dict, dict[str, Grounded | None]]] = []
         for ai, a in enumerate(raw["annotations"], 1):
@@ -95,8 +99,12 @@ def _build_steps(
                 new.append(geo.label_box)
             step_boxes.extend(new)
             drawn.extend(new)
-        steps.append(Step(index=si, title=raw["title"], narration=raw["narration"], annotations=annotations))
-    return steps
+        return Step(index=si, title=raw["title"], narration=raw["narration"], annotations=annotations)
+
+
+def _build_steps(pr: PerceptionResult, raw_steps: list[dict], resolve: _Resolver, warnings: list[str]) -> list[Step]:
+    sb = _StepBuilder(pr, resolve, warnings)
+    return [sb.build(si, raw) for si, raw in enumerate(raw_steps, 1)]
 
 
 def _annotation(
@@ -196,6 +204,67 @@ def plan_lesson(pr: PerceptionResult, model: str | None = None) -> Lesson:
     log.info("lesson %s: %d steps, %d drawings, %d quiz, %.1fs (%s)", lesson.lesson_id, len(steps),
              sum(len(s.annotations) for s in steps), len(quiz), t2 - t0, model)
     return lesson
+
+
+def stream_lesson(pr: PerceptionResult, model: str | None = None) -> Iterator[dict[str, Any]]:
+    """plan_lesson, streamed: events {"type": "meta"}, {"type": "header"}, {"type": "step"} per step as
+    soon as the model has written it (grounded, laid out, validated), then {"type": "lesson"} with the
+    full lesson (the same steps plus the quiz). Lets the board start drawing step 1 while the model is
+    still writing step 4."""
+    model = model or config.OPENAI_MODEL
+    t0 = time.perf_counter()
+    lesson_id = uuid.uuid4().hex[:12]
+    yield {"type": "meta", "lesson_id": lesson_id, "image_id": pr.perception.image_id, "model": model}
+    warnings: list[str] = []
+    resolve = _Resolver(pr)
+    sb = _StepBuilder(pr, resolve, warnings)
+    parser = StepStream()
+    raw_seen: list[dict] = []
+    steps: list[Step] = []
+    seen_ids: set[str] = set()
+    header_sent = False
+    first_step: float | None = None
+    for delta in chat_json_stream(model, prompts.LESSON_SYSTEM, prompts.lesson_parts(pr), prompts.LESSON_SCHEMA, "lesson"):
+        for raw in parser.feed(delta):
+            if not header_sent and (head := parser.header()) is not None:
+                header_sent = True
+                yield {"type": "header", "title": " ".join(str(head.get("title") or "").split()),
+                       "summary": " ".join(str(head.get("summary") or "").split())}
+            if len(steps) >= MAX_STEPS:
+                continue
+            clean = sanitize_steps([raw], warnings, start=len(steps) + 1)
+            if not clean:
+                continue
+            raw_seen.append(clean[0])
+            resolve.calibrate(_all_targets(raw_seen))  # self-consistency over what has arrived so far
+            step = finalize_step(sb.build(len(steps) + 1, clean[0]), len(steps) + 1, warnings, seen_ids)
+            steps.append(step)
+            if first_step is None:
+                first_step = time.perf_counter() - t0
+            yield {"type": "step", "step": step.model_dump()}
+    data = parser.result()
+    resolve.calibrate(_all_targets(raw_seen, data.get("quiz")))
+    quiz = _build_quiz(data.get("quiz"), resolve, warnings)
+    total = time.perf_counter() - t0
+    meta = dict(last_meta)
+    lesson = Lesson(
+        lesson_id=lesson_id,
+        image_id=pr.perception.image_id,
+        title=" ".join(str(data.get("title") or "Let's look at this page").split()),
+        summary=" ".join(str(data.get("summary") or "").split()),
+        steps=steps,
+        quiz=quiz,
+        model=model,
+        timings={"llm": round(float(meta.get("seconds") or total), 3), "total": round(total, 3),
+                 "first_step": round(first_step or total, 3),
+                 "first_token": round(float(meta.get("first_token_seconds") or 0.0), 3),
+                 "input_tokens": float(meta.get("input_tokens", 0)), "output_tokens": float(meta.get("output_tokens", 0)),
+                 **({"approx_agreement": round(resolve.agreement, 3)} if resolve.agreement is not None else {})},
+        warnings=warnings,
+    )
+    log.info("streamed lesson %s: %d steps, first step after %.1fs, total %.1fs (%s)", lesson_id, len(steps),
+             first_step or total, total, model)
+    yield {"type": "lesson", "lesson": lesson.model_dump()}
 
 
 def answer_followup(

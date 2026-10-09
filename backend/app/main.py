@@ -5,6 +5,7 @@ Run: .venv/Scripts/python -m uvicorn app.main:app --port 8000   (from backend/)
 from __future__ import annotations
 
 import hashlib
+import json
 import logging
 import math
 import os
@@ -13,14 +14,14 @@ import threading
 import time
 from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
 from urllib.parse import quote
 
 import httpx
 import openai
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
 from app import config, perception, tutor
@@ -181,6 +182,28 @@ def create_lesson(req: LessonRequest) -> Lesson:
         lesson.lesson_id, lesson.image_id, len(lesson.steps), len(lesson.warnings), time.perf_counter() - t0,
     )
     return lesson
+
+
+@app.post("/api/lessons/stream")
+def create_lesson_stream(req: LessonRequest) -> StreamingResponse:
+    """Streamed lesson (newline-delimited JSON): meta, header, each step as soon as it is grounded,
+    then the full lesson. Errors after the stream started arrive as {"type": "error", "detail": ...}."""
+    pr = _perceived(req.image_id)
+    model = _model(req.model)
+
+    def events() -> Iterator[str]:
+        try:
+            for ev in tutor.stream_lesson(pr, model=model):
+                if ev["type"] == "lesson":
+                    lessons.put(Lesson.model_validate(ev["lesson"]))
+                yield json.dumps(ev, ensure_ascii=False) + "\n"
+        except Exception as exc:  # the status line is already sent: report in-band
+            err = exc if isinstance(exc, HTTPException) else _tutor_error("Lesson planning failed", exc)
+            log.warning("streamed lesson failed: %s", err.detail)
+            yield json.dumps({"type": "error", "detail": err.detail}) + "\n"
+
+    return StreamingResponse(events(), media_type="application/x-ndjson",
+                             headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
 
 
 @app.get("/api/lessons/{lesson_id}", response_model=Lesson)

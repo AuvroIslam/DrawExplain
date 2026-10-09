@@ -11,7 +11,7 @@ import random
 import threading
 import time
 from pathlib import Path
-from typing import Any, Union
+from typing import Any, Iterator, Union
 
 from PIL import Image
 
@@ -257,3 +257,101 @@ def chat_json(
                         max_attempts - 1, delay)
             time.sleep(delay)
     raise LLMError(f"OpenAI call failed after {max_attempts} attempts: {type(last_err).__name__}: {last_err}")
+
+
+def chat_json_stream(
+    model: str | None,
+    system: str,
+    parts: list[Part],
+    schema: dict,
+    schema_name: str,
+    *,
+    cache: bool | None = None,
+    reasoning_effort: str | None = None,
+    max_attempts: int = MAX_ATTEMPTS,
+) -> Iterator[str]:
+    """Streaming twin of chat_json: yields the JSON text as it is generated (a cache hit yields it
+    whole). Retries only before the first token; afterwards a failure raises LLMError. On success the
+    full response is validated, cached and described in `last_meta`."""
+    import openai
+
+    model = model or config.OPENAI_MODEL
+    effort = (reasoning_effort or config.OPENAI_REASONING_EFFORT or None) if is_reasoning_model(model) else None
+    use_cache = config.LLM_CACHE if cache is None else cache
+    t0 = time.perf_counter()
+    key = cache_key(model, system, parts, schema, schema_name, effort) if use_cache else None
+    if key is not None:
+        hit = _cache_read(key)
+        if hit is not None:
+            data, meta = hit
+            last_meta.clear()
+            last_meta.update({**meta, "cached": True, "original_seconds": meta.get("seconds")})
+            stats["cache_hits"] += 1
+            yield json.dumps(data, ensure_ascii=False)
+            return
+    kwargs: dict[str, Any] = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": system},
+            {"role": "user", "content": [_content(p) for p in parts]},
+        ],
+        "response_format": {"type": "json_schema", "json_schema": {"name": schema_name, "strict": True, "schema": schema}},
+        "stream": True,
+        "stream_options": {"include_usage": True},
+    }
+    if effort:
+        kwargs["reasoning_effort"] = effort
+    client = _get_client()
+    last_err: Exception | None = None
+    for attempt in range(max_attempts):
+        pieces: list[str] = []
+        usage = None
+        first_token: float | None = None
+        try:
+            for chunk in client.chat.completions.create(**kwargs):
+                usage = getattr(chunk, "usage", None) or usage
+                delta = chunk.choices[0].delta.content if chunk.choices else None
+                if delta:
+                    if first_token is None:
+                        first_token = time.perf_counter() - t0
+                    pieces.append(delta)
+                    yield delta
+        except openai.BadRequestError as e:
+            if not pieces and "reasoning_effort" in kwargs and _rejects_reasoning(e):
+                kwargs.pop("reasoning_effort")
+                continue
+            raise LLMError(f"OpenAI rejected the request: {getattr(e, 'message', e)}") from e
+        except openai.AuthenticationError:
+            raise LLMError("OpenAI authentication failed (check OPENAI_API_KEY)") from None
+        except (openai.RateLimitError, openai.APIConnectionError, openai.APITimeoutError,
+                openai.InternalServerError) as e:
+            if pieces:
+                raise LLMError(f"OpenAI stream broke off: {type(e).__name__}") from e
+            last_err = e
+            if attempt + 1 < max_attempts:
+                time.sleep(_backoff(attempt, e))
+            continue
+        text = "".join(pieces)
+        try:
+            data = json.loads(text)
+        except ValueError as e:
+            raise LLMError(f"model returned invalid JSON: {e}") from e
+        meta = {
+            "model": model,
+            "seconds": round(time.perf_counter() - t0, 3),
+            "first_token_seconds": round(first_token or 0.0, 3),
+            "input_tokens": int(getattr(usage, "prompt_tokens", 0) or 0),
+            "output_tokens": int(getattr(usage, "completion_tokens", 0) or 0),
+            "reasoning_effort": kwargs.get("reasoning_effort"),
+            "cached": False,
+        }
+        stats["calls"] += 1
+        stats["input_tokens"] += meta["input_tokens"]
+        stats["output_tokens"] += meta["output_tokens"]
+        stats["seconds"] += meta["seconds"]
+        last_meta.clear()
+        last_meta.update(meta)
+        if key is not None:
+            _cache_write(key, data, meta)
+        return
+    raise LLMError(f"OpenAI stream failed after {max_attempts} attempts: {type(last_err).__name__}: {last_err}")

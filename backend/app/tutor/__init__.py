@@ -6,19 +6,26 @@
 """
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Iterator
 
 if TYPE_CHECKING:
     from app.perception.types import PerceptionResult
     from app.schemas import Box, FollowupResponse, Lesson, LocatedTarget
 
-__all__ = ["plan_lesson", "answer_followup", "locate_targets"]
+__all__ = ["plan_lesson", "stream_lesson", "answer_followup", "locate_targets"]
 
 
 def plan_lesson(pr: "PerceptionResult", model: str | None = None) -> "Lesson":
     from app.tutor.planner import plan_lesson as _plan
 
     return _plan(pr, model=model)
+
+
+def stream_lesson(pr: "PerceptionResult", model: str | None = None) -> "Iterator[dict[str, Any]]":
+    """plan_lesson as events: meta, header, one step at a time, then the full lesson."""
+    from app.tutor.planner import stream_lesson as _stream
+
+    return _stream(pr, model=model)
 
 
 def answer_followup(
