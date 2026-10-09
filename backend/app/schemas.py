@@ -106,6 +106,7 @@ class Step(BaseModel):
     title: str  # short heading
     narration: str  # what the tutor says while drawing (1-3 sentences)
     annotations: list[Annotation]
+    sketch: str | None = None  # Mermaid flowchart drawn beside the page (process / algorithm summary)
 
 
 class QuizItem(BaseModel):

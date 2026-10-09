@@ -159,6 +159,20 @@ def test_plan_lesson_offline(pr, monkeypatch):
     assert len(lesson.quiz) == 1 and lesson.quiz[0].answer_ids == ["R5"]
 
 
+def test_margin_sketch_passes_through_once(pr, monkeypatch):
+    data = _canned(pr)
+    fence = "`" * 3
+    data["steps"][0]["sketch"] = "graph LR\n  A[Laptop] --> B[Switch]"
+    data["steps"][2]["sketch"] = fence + "mermaid\nflowchart TD\n  A[Pick cheapest] --> B[Relax]\n  B --> A\n" + fence
+    data["steps"][1]["sketch"] = "not mermaid at all"
+    monkeypatch.setattr(planner, "chat_json", lambda *a, **k: (data, {}))
+    lesson = planner.plan_lesson(pr, model="test-model")
+    assert lesson.steps[0].sketch == "graph LR\n  A[Laptop] --> B[Switch]"
+    assert lesson.steps[1].sketch is None and lesson.steps[2].sketch is None  # invalid, then one per lesson
+    assert any("not a Mermaid flowchart" in w for w in lesson.warnings)
+    assert any("one per lesson" in w for w in lesson.warnings)
+
+
 def test_followup_selection_offline(pr, monkeypatch):
     sel = Box(x=0.5, y=0.4, w=0.2, h=0.2)
     data = {"title": "About that box", "steps": [{

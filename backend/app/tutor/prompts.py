@@ -50,6 +50,7 @@ LESSON_RULES = """Lesson rules:
 - Colours carry meaning: a concept keeps its colour in every step; a contrasting idea gets a different colour. Use red, blue, green and orange (purple is reserved for answering questions).
 - Use arrows for flows and cause -> effect between two things; use underline/highlight with span to point at one word or formula part inside a longer text.
 - The last step recaps the big idea in one or two sentences, with one drawing that ties it together.
+- sketch: when the page shows a process, algorithm, cycle or decision flow, give exactly ONE step (usually the recap) a sketch: a tiny Mermaid flowchart that summarises the procedure, drawn on the whiteboard beside the page. Use "flowchart TD" or "flowchart LR", 3-7 nodes, node labels of at most 5 words, plain arrows (optionally a short edge label such as -->|yes|), no styling, no subgraphs. Every other step, and pages without a procedure: sketch = null.
 - quiz: 2-3 questions phrased "Tap the ..." whose answer is one thing visible on the image (answer = its target), each with a one-sentence explanation.
 - If the page has little or no text, still teach what is visible: shapes, structure, the picture itself.
 - title: a short lesson title. summary: 1-2 sentences stating the concept being taught."""
@@ -244,8 +245,9 @@ def _step(colors: list[str]) -> dict:
             "title": {"type": "string"},
             "narration": {"type": "string", "description": "1-3 short spoken sentences, <= 45 words"},
             "annotations": {"type": "array", "items": annotation},
+            "sketch": _nullable_str("Mermaid flowchart (3-7 nodes) summarising the procedure, or null"),
         },
-        "required": ["title", "narration", "annotations"],
+        "required": ["title", "narration", "annotations", "sketch"],
         "additionalProperties": False,
     }
 

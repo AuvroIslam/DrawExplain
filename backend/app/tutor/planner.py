@@ -70,6 +70,7 @@ class _StepBuilder:
         self.warnings = warnings
         self.builder = GeometryBuilder(pr)
         self.drawn: list[Box] = []  # everything already on the board; later labels keep off it
+        self.sketched = False  # at most one margin sketch per lesson
 
     def seed(self, steps: list[Step]) -> None:
         """Start from a board that already shows these steps (a follow-up keeps off the lesson's drawings)."""
@@ -112,7 +113,12 @@ class _StepBuilder:
                 new.append(geo.label_box)
             step_boxes.extend(new)
             drawn.extend(new)
-        return Step(index=si, title=raw["title"], narration=raw["narration"], annotations=annotations)
+        sketch = raw.get("sketch")
+        if sketch and self.sketched:
+            warnings.append(f"step {si}: extra sketch dropped (one per lesson)")
+            sketch = None
+        self.sketched = self.sketched or bool(sketch)
+        return Step(index=si, title=raw["title"], narration=raw["narration"], annotations=annotations, sketch=sketch)
 
 
 def _build_steps(pr: PerceptionResult, raw_steps: list[dict], resolve: _Resolver, warnings: list[str]) -> list[Step]:

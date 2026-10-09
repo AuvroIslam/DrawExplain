@@ -129,6 +129,8 @@ What this shows, and what it does not:
 ## Run it locally
 
 Requirements: Python 3.12, Node 20+, an OpenAI API key, optionally an ElevenLabs key.
+On Windows, after the one-time setup below, `powershell -ExecutionPolicy Bypass -File start.ps1`
+starts both servers and opens the app.
 
 ```bash
 # .env in the repo root

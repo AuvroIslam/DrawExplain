@@ -32,6 +32,24 @@ def _clean(s: Any) -> str:
     return " ".join(str(s or "").split())
 
 
+MAX_SKETCH_CHARS = 900
+MAX_SKETCH_LINES = 16
+
+
+def clean_sketch(sketch: Any) -> tuple[str | None, str | None]:
+    """(Mermaid flowchart text or None, note). Strips code fences; keeps only small flowcharts."""
+    text = str(sketch or "").strip()
+    if not text:
+        return None, None
+    text = re.sub(r"^```(?:mermaid)?\s*|\s*```$", "", text).strip()
+    lines = [ln.rstrip() for ln in text.splitlines() if ln.strip()]
+    if not lines or not re.match(r"^(flowchart|graph)\s+(TD|TB|LR|RL|BT)\b", lines[0].strip(), re.I):
+        return None, "sketch dropped (not a Mermaid flowchart)"
+    if len(lines) > MAX_SKETCH_LINES or len(text) > MAX_SKETCH_CHARS:
+        return None, "sketch dropped (too large)"
+    return "\n".join(lines), None
+
+
 # ---------------------------------------------------------------- cues
 
 def fix_cue(cue: Any, narration: str) -> tuple[str | None, str | None]:
@@ -109,7 +127,10 @@ def sanitize_steps(raw_steps: Any, warnings: list[str], *, max_steps: int = MAX_
             if kind not in ("underline", "highlight"):
                 span = None
             anns.append({**a, "kind": kind, "color": color, "cue": cue, "text": text, "span": span})
-        out.append({"title": title, "narration": narration, "annotations": anns})
+        sketch, note = clean_sketch(s.get("sketch"))
+        if note:
+            warnings.append(f"step {si}: {note}")
+        out.append({"title": title, "narration": narration, "annotations": anns, "sketch": sketch})
     return out
 
 

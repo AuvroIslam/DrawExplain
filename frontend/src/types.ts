@@ -76,6 +76,7 @@ export interface Step {
   title: string;
   narration: string;
   annotations: Annotation[];
+  sketch?: string | null; // Mermaid flowchart drawn beside the page (process / algorithm summary)
 }
 
 export interface QuizItem {
