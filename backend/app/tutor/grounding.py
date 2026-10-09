@@ -38,6 +38,11 @@ TEXT_ONLY_MATCH = 0.8
 INK_EXPAND = 0.15
 CONTAINER_RATIO = 0.05  # estimate < 5% of the chosen region's area: the id is a container
 DENSE_INK = 0.6
+RELIABLE_AGREEMENT = 0.5  # share of a response's targets whose estimate agrees with its ids
+
+# a description asking for the words themselves keeps the text line instead of its container
+_TEXTUAL = frozenset("word words label labels text term terms phrase title heading caption sentence line "
+                     "formula equation letter letters name".split())
 
 _STOP = frozenset(
     "a an the of to in on at for and or is are this that these those it its with by from as be "
@@ -190,10 +195,59 @@ def _conf(v: float) -> float:
 
 # ---------------------------------------------------------------- fusion
 
-def fuse(pr: PerceptionResult, ids: Any, approx: Any, desc: str | None = "") -> Grounded | None:
-    """Resolve one target reference. None when nothing usable remains (caller drops + warns)."""
+def promote_label(pr: PerceptionResult, ids: list[str], desc: str | None) -> list[str]:
+    """A text line that labels a shape names the shape: "the Router" means the Router box, so the
+    drawing goes around the box. Kept as text when the description asks for the words themselves."""
+    if not ids or set(re.findall(r"[a-z]+", (desc or "").lower())) & _TEXTUAL:
+        return ids
+    parents = set()
+    for rid in ids:
+        r = pr.region(rid)
+        if r is None or r.kind != "text" or not r.parent_id:
+            return ids
+        p = pr.region(r.parent_id)
+        while p is not None and p.kind == "text_block" and p.parent_id:
+            p = pr.region(p.parent_id)
+        if p is None or p.kind != "shape":
+            return ids
+        parents.add(p.id)
+    return sorted(parents) if len(parents) == 1 else ids
+
+
+def _agrees(cv: Box, llm_box: Box) -> bool:
+    cx, cy = box_center(llm_box)
+    return box_iou(cv, llm_box) >= CONSENSUS_IOU or contains(expand_box(cv, CENTER_EXPAND), cx, cy)
+
+
+def approx_agreement(pr: PerceptionResult, refs: Sequence[tuple[Any, Any]]) -> float | None:
+    """Self-consistency of one model response: the share of targets (with valid ids and a box
+    estimate) whose estimate agrees with the chosen regions. None when nothing can be compared.
+
+    A model whose estimates mostly agree with its own region choices localizes reliably, so its
+    estimate may arbitrate when the two disagree; one that mostly disagrees (e.g. gpt-4.1-mini,
+    whose raw boxes score ~0.1 IoU in our eval) is guessing, and its region ids are trusted instead."""
+    n = agree = 0
+    for ids, approx in refs:
+        llm_box = parse_approx(approx, pr.width, pr.height)
+        regions = [pr.region(r) for r in normalize_ids(ids)]
+        regions = [r for r in regions if r is not None]
+        if llm_box is None or not regions:
+            continue
+        cv = union_box(r.box for r in regions)
+        n += 1
+        agree += _agrees(cv, llm_box)  # type: ignore[arg-type]
+    return agree / n if n else None
+
+
+def fuse(pr: PerceptionResult, ids: Any, approx: Any, desc: str | None = "",
+         prefer_container: bool = True, trust_approx: bool = True) -> Grounded | None:
+    """Resolve one target reference. None when nothing usable remains (caller drops + warns).
+    prefer_container: circle a labelled shape rather than its label text (off for underline/highlight).
+    trust_approx: let the model's own box estimate overrule its region ids (see approx_agreement)."""
     llm_box = parse_approx(approx, pr.width, pr.height)
     wanted = normalize_ids(ids)
+    if prefer_container:
+        wanted = promote_label(pr, wanted, desc)
     valid = [r for r in wanted if pr.region(r) is not None]
     bad = [r for r in wanted if r not in valid]
     note = f"unknown ids {', '.join(bad)}" if bad else ""
@@ -206,6 +260,12 @@ def fuse(pr: PerceptionResult, ids: Any, approx: Any, desc: str | None = "") -> 
         if llm_box is None:
             sim = text_similarity(desc, texts)
             return Grounded(cv, valid, "id_only", _conf(0.55 + 0.2 * sim), None, _join(note, "no box estimate"))
+        if not trust_approx:  # the response's estimates are unreliable: the regions decide
+            sim = text_similarity(desc, texts)
+            if _agrees(cv, llm_box):
+                return Grounded(cv, valid, "consensus", _conf(0.85 + 0.1 * sim), llm_box, note)
+            return Grounded(cv, valid, "id_only", _conf(0.6 + 0.2 * sim), llm_box,
+                            _join(note, "estimates unreliable in this response; trusted the region ids"))
         iou = box_iou(cv, llm_box)
         cx, cy = box_center(llm_box)
         center_in = contains(expand_box(cv, CENTER_EXPAND), cx, cy)
@@ -228,7 +288,8 @@ def fuse(pr: PerceptionResult, ids: Any, approx: Any, desc: str | None = "") -> 
         if refined is not None:
             return Grounded(refined, [], "llm_refined", 0.45, llm_box,
                             _join(note, f"estimate disagrees with {'+'.join(valid)}; used inked estimate"))
-        return Grounded(llm_box, [], "llm_only", 0.3, llm_box, _join(note, "raw estimate"))
+        return Grounded(cv, valid, "id_only", _conf(0.45 + 0.2 * sim), llm_box,
+                        _join(note, "estimate disagrees and is not on any ink; kept the region ids"))
 
     if llm_box is not None:
         snap = best_region(pr, llm_box)

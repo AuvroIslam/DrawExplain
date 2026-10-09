@@ -11,7 +11,7 @@ from app.perception.types import PerceptionResult
 from app.schemas import Annotation, Box, FollowupResponse, Lesson, LocatedTarget, QuizItem, Step
 from app.tutor import prompts
 from app.tutor.geometry import GeometryBuilder
-from app.tutor.grounding import Grounded, fuse, user_selection
+from app.tutor.grounding import RELIABLE_AGREEMENT, Grounded, approx_agreement, fuse, user_selection
 from app.tutor.llm import chat_json
 from app.tutor.validator import finalize_quiz, finalize_steps, sanitize_steps
 
@@ -24,8 +24,16 @@ class _Resolver:
     def __init__(self, pr: PerceptionResult, selection: Box | None = None):
         self.pr = pr
         self.selection = selection
+        self.agreement: float | None = None
+        self.trust_approx = True
 
-    def __call__(self, target: Any) -> Grounded | None:
+    def calibrate(self, targets: list[Any]) -> None:
+        """Measure how far this response's box estimates can be trusted (self-consistency)."""
+        refs = [(t.get("ids"), t.get("approx")) for t in targets if isinstance(t, dict)]
+        self.agreement = approx_agreement(self.pr, refs)
+        self.trust_approx = self.agreement is None or self.agreement >= RELIABLE_AGREEMENT
+
+    def __call__(self, target: Any, prefer_container: bool = True) -> Grounded | None:
         if not isinstance(target, dict):
             return None
         ids = [str(i).strip().upper() for i in (target.get("ids") or [])]
@@ -33,7 +41,14 @@ class _Resolver:
             if self.selection is not None:
                 return user_selection(self.selection, target.get("approx"), self.pr)
             ids = [i for i in ids if i != prompts.SEL_ID]
-        return fuse(self.pr, ids, target.get("approx"), target.get("desc") or "")
+        return fuse(self.pr, ids, target.get("approx"), target.get("desc") or "", prefer_container,
+                    self.trust_approx)
+
+
+def _all_targets(raw_steps: list[dict], quiz: Any = None) -> list[Any]:
+    out = [a.get(k) for s in raw_steps for a in s["annotations"] for k in ("target", "from_target", "to_target")]
+    out += [q.get("answer") for q in (quiz or []) if isinstance(q, dict)]
+    return out
 
 
 def _desc(target: Any) -> str:
@@ -58,7 +73,8 @@ def _build_steps(
         # Pass 1: ground every target of the step, so labels can avoid all of them.
         resolved: list[tuple[dict, dict[str, Grounded | None]]] = []
         for ai, a in enumerate(raw["annotations"], 1):
-            g = {key: resolve(a.get(key)) for key in ("target", "from_target", "to_target")}
+            textual = a["kind"] in ("underline", "highlight")  # these need the text line itself
+            g = {key: resolve(a.get(key), not textual) for key in ("target", "from_target", "to_target")}
             for key in ("target", "from_target", "to_target"):
                 if a.get(key) is not None and g[key] is None:
                     warnings.append(f"step {si} drawing {ai}: could not locate {_desc(a.get(key))!r}")
@@ -160,6 +176,7 @@ def plan_lesson(pr: PerceptionResult, model: str | None = None) -> Lesson:
     warnings: list[str] = []
     resolve = _Resolver(pr)
     raw_steps = sanitize_steps(data.get("steps"), warnings)
+    resolve.calibrate(_all_targets(raw_steps, data.get("quiz")))
     steps = finalize_steps(_build_steps(pr, raw_steps, resolve, warnings), warnings)
     quiz = _build_quiz(data.get("quiz"), resolve, warnings)
     t2 = time.perf_counter()
@@ -172,7 +189,8 @@ def plan_lesson(pr: PerceptionResult, model: str | None = None) -> Lesson:
         quiz=quiz,
         model=model,
         timings={"llm": round(t1 - t0, 3), "ground": round(t2 - t1, 3), "total": round(t2 - t0, 3),
-                 "input_tokens": float(meta.get("input_tokens", 0)), "output_tokens": float(meta.get("output_tokens", 0))},
+                 "input_tokens": float(meta.get("input_tokens", 0)), "output_tokens": float(meta.get("output_tokens", 0)),
+                 **({"approx_agreement": round(resolve.agreement, 3)} if resolve.agreement is not None else {})},
         warnings=warnings,
     )
     log.info("lesson %s: %d steps, %d drawings, %d quiz, %.1fs (%s)", lesson.lesson_id, len(steps),
@@ -194,7 +212,9 @@ def answer_followup(
     t1 = time.perf_counter()
     warnings: list[str] = []
     raw_steps = sanitize_steps(data.get("steps"), warnings, max_steps=2, default_color="purple")
-    steps = _build_steps(pr, raw_steps, _Resolver(pr, selection), warnings)
+    resolve = _Resolver(pr, selection)
+    resolve.calibrate(_all_targets(raw_steps))
+    steps = _build_steps(pr, raw_steps, resolve, warnings)
     steps = finalize_steps(steps, warnings, prefix=f"q{uuid.uuid4().hex[:4]}")
     t2 = time.perf_counter()
     return FollowupResponse(
@@ -214,10 +234,12 @@ def locate_targets(pr: PerceptionResult, queries: list[str], model: str | None =
     data, _ = chat_json(model, prompts.LOCATE_SYSTEM, prompts.locate_parts(pr, queries), prompts.LOCATE_SCHEMA, "locate")
     entries = [e for e in (data.get("targets") or []) if isinstance(e, dict)]
     by_query = {str(e.get("query", "")).strip().lower(): e for e in entries}
+    agreement = approx_agreement(pr, [(e.get("ids"), e.get("approx")) for e in entries])
+    trust = agreement is None or agreement >= RELIABLE_AGREEMENT
     out: list[LocatedTarget] = []
     for i, q in enumerate(queries):
         e = by_query.get(q.strip().lower()) or (entries[i] if i < len(entries) else None)
-        g = fuse(pr, e.get("ids"), e.get("approx"), q) if e is not None else None
+        g = fuse(pr, e.get("ids"), e.get("approx"), q, trust_approx=trust) if e is not None else None
         if g is None or g.box is None:
             out.append(LocatedTarget(query=q, box=None, region_ids=[], grounding="llm_only", confidence=0.0,
                                      llm_box=g.llm_box if g is not None else None))
