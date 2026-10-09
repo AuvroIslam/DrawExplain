@@ -290,27 +290,32 @@ def build(pr: "PerceptionResult", data: dict[str, Any]) -> Simulation | None:
                 traces[s] = cpu_schedule(ps, s, data.get("quantum"))
             except SolverError:
                 continue
-        drawn = _run_order(data.get("drawn_order") or [])
-        matching = [s for s, t in traces.items() if drawn and _run_order(t.data["order"]) == drawn]
-        if named:
-            if named not in traces:
-                return None
-            scheduler, order_ok = named, not drawn or named in matching
-        elif matching:  # the page names no algorithm: the run order drawn on it identifies one
-            scheduler, order_ok = matching[0], True
-        else:
+        if named and named not in traces:
             return None
+        drawn = _run_order(data.get("drawn_order") or [])
+        exact = [s for s, t in traces.items() if drawn and _run_order(t.data["order"]) == drawn]
+        extras: list[str] = []
+        if named:  # a named algorithm is run as named; the drawing only confirms it (or not)
+            scheduler, order_ok = named, not drawn or named in exact
+        elif exact:
+            scheduler, order_ok = exact[0], True
+        else:  # nobody names it and no algorithm reproduces the drawn order exactly (a misread bar or two)
+            scheduler = _closest_scheduler(traces, drawn)
+            if scheduler is None:
+                return None
+            order_ok = False
         assumed = bool(data.get("assumed"))
         confirmed = _process_rows(pr, procs)
         evidence = f"{confirmed}/{len(procs)} processes printed with these arrival and burst times"
         if drawn:
             evidence += ("; the run order drawn on the page matches it" if order_ok else
-                         "; the run order drawn on the page does NOT match it")
-        extras = ["The page gives the rules but no numbers, so this is an illustrative example: say so."] if assumed else []
+                         "; the run order read off the drawing does not match it exactly")
+        if assumed:
+            extras.append("The page gives the rules but no numbers, so this is an illustrative example: say so.")
         if not named:
-            same = [SCHEDULERS[s] for s in matching[1:]]
-            extras.append(f"Neither the page nor the question names the algorithm; the run order drawn on the page is "
-                          f"exactly what {SCHEDULERS[scheduler]} produces"
+            same = [SCHEDULERS[s] for s in exact if s != scheduler]
+            extras.append("Neither the page nor the question names the algorithm; the run order drawn on the page is "
+                          + ("exactly" if order_ok else "closest to") + f" what {SCHEDULERS[scheduler]} produces"
                           + (f" ({', '.join(same)} would give the same order here)" if same else "") + ": say so.")
         return Simulation(kind, traces[scheduler], data, verified=(confirmed == len(procs) or assumed) and order_ok,
                           assumed=assumed, evidence=evidence, extras=extras)
@@ -345,6 +350,29 @@ def _scheduler(variant: str) -> str | None:
     if re.search(r"fcfs|first come|fifo", v):
         return "fcfs"
     return None
+
+
+def _closest_scheduler(traces: dict[str, Trace], drawn: list[str]) -> str | None:
+    """The scheduler whose run order shares the longest common subsequence with the drawn order (normalised by
+    the longer order), if it is a clear winner: >= 0.85 and >= 0.05 ahead of every algorithm that produces a
+    different order (algorithms giving the same order give the same schedule, so they cannot be told apart)."""
+    if not drawn:
+        return None
+    by_order: dict[tuple[str, ...], str] = {}
+    for s, t in traces.items():
+        by_order.setdefault(tuple(_run_order(t.data["order"])), s)  # first algorithm per distinct order
+    scored = sorted(((_lcs(list(o), drawn) / max(len(o), len(drawn)), s) for o, s in by_order.items()), reverse=True)
+    best, runner_up = scored[0][0], (scored[1][0] if len(scored) > 1 else 0.0)
+    return scored[0][1] if best >= 0.85 and best - runner_up >= 0.05 else None
+
+
+def _lcs(a: list[str], b: list[str]) -> int:
+    row = [0] * (len(b) + 1)
+    for x in a:
+        prev = 0
+        for j, y in enumerate(b, 1):
+            prev, row[j] = row[j], prev + 1 if x == y else max(row[j], row[j - 1])
+    return row[-1]
 
 
 def _run_order(names: list[Any]) -> list[str]:

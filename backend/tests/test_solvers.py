@@ -363,11 +363,20 @@ def test_unnamed_scheduler_is_identified_from_the_drawn_run_order():
     assert sim is not None and sim.verified and "shortest job first" in sim.trace.algorithm
     assert "Neither the page nor the question names the algorithm" in sim.prompt and "matches it" in sim.evidence
     assert solvers.build(page, clean(_scheduling_extraction(variant=None))) is None  # no chart order: cannot tell
-    shuffled = SJF_DRAWN[:6] + ["P7", "P9", "P8"] + SJF_DRAWN[9:]
-    assert solvers.build(page, clean(_scheduling_extraction(variant=None, drawn=shuffled))) is None
+    shuffled = SJF_DRAWN[:6] + ["P7", "P9", "P8"] + SJF_DRAWN[9:]  # one misread trio: still closest to SJF
+    sim = solvers.build(page, clean(_scheduling_extraction(variant=None, drawn=shuffled)))
+    assert sim is not None and not sim.verified and "shortest job first" in sim.trace.algorithm
+    garbled = list(reversed(SJF_DRAWN))  # resembles no algorithm: no simulation rather than a guess
+    assert solvers.build(page, clean(_scheduling_extraction(variant=None, drawn=garbled))) is None
+    # the misread seen on the live server: the last bars read as P12, P13, P14 (they run P13, P14, P12)
+    misread = SJF_DRAWN[:11] + ["P12", "P13", "P14"]
+    sim = solvers.build(page, clean(_scheduling_extraction(variant=None, drawn=misread)))
+    assert sim is not None and not sim.verified and "shortest job first" in sim.trace.algorithm
+    assert "closest to" in sim.prompt and "33/14 = 2.36" in sim.prompt
     fcfs_drawn = [f"P{i}" for i in range(1, 15)]  # a named SJF contradicted by the drawing is not verified
     sim = solvers.build(page, clean(_scheduling_extraction(variant="sjf", drawn=fcfs_drawn)))
-    assert sim is not None and not sim.verified and "does NOT match" in sim.evidence
+    assert sim is not None and not sim.verified and "does not match it exactly" in sim.evidence
+    assert "shortest job first" in sim.trace.algorithm  # the named algorithm is kept, just not verified
 
 
 def test_scheduling_page_is_detected_and_its_rows_confirm_the_extraction():

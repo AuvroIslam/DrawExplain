@@ -269,6 +269,16 @@ On the real chart the model read the order exactly (P1..P6, P9, P8, P7, P10, P11
 SJF reproduces it, and the simulation is verified by the 14 printed rows and by the drawn order. A named
 algorithm that the drawing contradicts is no longer marked verified.
 
+The live server still ran no simulation. Reproduced with the server's own perception (fetched from the
+API: its OCR differs slightly, so the marked image and region list do too): the model read the last three
+bars in the wrong order (P12, P13, P14), so no algorithm reproduced the drawing exactly. Reading the
+order of bars is the same weakness the solver exists to avoid, so exact matching was too strict. Fix:
+when nobody names the algorithm, the one whose run order shares the longest common subsequence with the
+drawing wins if it is clearly closest (here SJF 13/14 vs FCFS 12/14); its numbers are used but the
+simulation is marked unverified. A drawing that resembles no algorithm still gives no simulation. A
+named algorithm always runs as named, and the drawing only verifies it, because with 3-4 processes a
+misread drawing can match the wrong algorithm by chance.
+
 Checker audit, second round (every failed verdict of L4, and the L2/L3 failures re-read with the same
 rule: widen a check only when the lesson states the checked fact in other words, never when the fact is
 missing, wrong or ambiguous). Widened: Go-Back-N "refuses frames 3 through 8", DFS "dives",
