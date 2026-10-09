@@ -90,7 +90,7 @@ Data (fill what the kind needs, null otherwise):
 - source: the start vertex: from the question ("from A"), else the one the page names, else null. target: the destination vertex when the question asks about reaching one vertex, else null.
 - array (sort, binary_search): the values exactly as printed, in order, as strings. search_key: the value searched for (binary_search), else null.
 - tcp (tcp_cwnd): initial_cwnd and ssthresh in MSS; events: [{round, type}] with type "timeout" or "triple_dup_ack", meaning the loss is detected during that transmission round (round 1 = the first round trip); rounds: how many rounds to simulate (enough to answer the question: usually through the event and 3-4 rounds after it). Use the page's numbers when it gives them. When the page gives only the rules, choose a small illustrative example instead: initial_cwnd 1, ssthresh 8, and (if the question or page involves a loss) one event a few rounds after cwnd passes ssthresh, e.g. a timeout in round 8; then set assumed = true.
-- processes (cpu_scheduling): one entry per process exactly as printed: name ("P1"), arrival time (0 when the page gives none), burst / service time, priority (null unless the page gives one). quantum: the round robin time quantum, else null.
+- processes (cpu_scheduling): one entry per process exactly as printed: name ("P1"), arrival time (0 when the page gives none), burst / service time, priority (null unless the page gives one). quantum: the round robin time quantum, else null. drawn_order: when the page draws a Gantt chart or timeline, the process names in the order their bars run, left to right (one entry per bar, repeating a name that runs again), else null. Name the variant only when the page or the question names the algorithm; otherwise leave variant null and code identifies it from drawn_order.
 - pages (page_replacement): reference = the referenced pages or blocks in order, as strings ("7", "A"); frames = the number of frames / cache slots.
 - assumed: true when any of the data is invented rather than printed on the page (say what in note).
 - note: one short sentence about anything uncertain, else null."""
@@ -181,6 +181,7 @@ SCHEMA: dict = {
             ]
         },
         "quantum": _nullable("number"),
+        "drawn_order": {"anyOf": [{"type": "array", "items": {"type": "string"}}, {"type": "null"}]},
         "pages": {
             "anyOf": [
                 {
@@ -197,7 +198,7 @@ SCHEMA: dict = {
         "note": _nullable("string"),
     },
     "required": ["kind", "variant", "graph", "source", "target", "array", "search_key", "tcp", "processes", "quantum",
-                 "pages", "assumed", "note"],
+                 "drawn_order", "pages", "assumed", "note"],
     "additionalProperties": False,
 }
 
@@ -265,6 +266,8 @@ def clean(data: Any) -> dict:
     out["processes"] = procs or None
     q = _real(d.get("quantum"))
     out["quantum"] = q if q is not None and q > 0 else None
+    drawn = d.get("drawn_order") if isinstance(d.get("drawn_order"), list) else []
+    out["drawn_order"] = [s for s in (_s(v) for v in drawn) if s] or None
     pg = d.get("pages") if isinstance(d.get("pages"), dict) else {}
     raw_refs = pg.get("reference") if isinstance(pg.get("reference"), list) else []
     refs = [str(v).strip() for v in raw_refs if str(v).strip()]

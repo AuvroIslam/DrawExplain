@@ -29,6 +29,7 @@ from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
 
 from app.tutor.solvers.algorithms import (
+    SCHEDULERS,
     SORTS,
     Edge,
     Graph,
@@ -279,17 +280,40 @@ def build(pr: "PerceptionResult", data: dict[str, Any]) -> Simulation | None:
 
     if kind == "cpu_scheduling":
         procs = data.get("processes") or []
-        scheduler = _scheduler(variant)
-        if len(procs) < 2 or scheduler is None:
+        if len(procs) < 2:
             return None
-        trace = cpu_schedule([Proc(p["name"], p["arrival"], p["burst"], p["priority"]) for p in procs], scheduler,
-                             data.get("quantum"))
+        ps = [Proc(p["name"], p["arrival"], p["burst"], p["priority"]) for p in procs]
+        named = _scheduler(variant)
+        traces: dict[str, Trace] = {}
+        for s in [named] if named else list(SCHEDULERS):  # unnamed: try every algorithm the data allows
+            try:
+                traces[s] = cpu_schedule(ps, s, data.get("quantum"))
+            except SolverError:
+                continue
+        drawn = _run_order(data.get("drawn_order") or [])
+        matching = [s for s, t in traces.items() if drawn and _run_order(t.data["order"]) == drawn]
+        if named:
+            if named not in traces:
+                return None
+            scheduler, order_ok = named, not drawn or named in matching
+        elif matching:  # the page names no algorithm: the run order drawn on it identifies one
+            scheduler, order_ok = matching[0], True
+        else:
+            return None
         assumed = bool(data.get("assumed"))
         confirmed = _process_rows(pr, procs)
         evidence = f"{confirmed}/{len(procs)} processes printed with these arrival and burst times"
+        if drawn:
+            evidence += ("; the run order drawn on the page matches it" if order_ok else
+                         "; the run order drawn on the page does NOT match it")
         extras = ["The page gives the rules but no numbers, so this is an illustrative example: say so."] if assumed else []
-        return Simulation(kind, trace, data, verified=confirmed == len(procs) or assumed, assumed=assumed,
-                          evidence=evidence, extras=extras)
+        if not named:
+            same = [SCHEDULERS[s] for s in matching[1:]]
+            extras.append(f"Neither the page nor the question names the algorithm; the run order drawn on the page is "
+                          f"exactly what {SCHEDULERS[scheduler]} produces"
+                          + (f" ({', '.join(same)} would give the same order here)" if same else "") + ": say so.")
+        return Simulation(kind, traces[scheduler], data, verified=(confirmed == len(procs) or assumed) and order_ok,
+                          assumed=assumed, evidence=evidence, extras=extras)
 
     if kind == "page_replacement":
         pages = data.get("pages") or {}
@@ -321,6 +345,16 @@ def _scheduler(variant: str) -> str | None:
     if re.search(r"fcfs|first come|fifo", v):
         return "fcfs"
     return None
+
+
+def _run_order(names: list[Any]) -> list[str]:
+    """Process names in run order, normalised: idle gaps dropped, consecutive repeats merged."""
+    out: list[str] = []
+    for n in names:
+        k = re.sub(r"\s+", "", str(n)).lower()
+        if k and k != "idle" and (not out or out[-1] != k):
+            out.append(k)
+    return out
 
 
 _TOKEN = re.compile(r"[A-Za-z]+\d*|\d+(?:\.\d+)?")

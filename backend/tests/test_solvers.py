@@ -346,11 +346,28 @@ SJF_ROWS = [(0, 1), (0, 1), (0, 1), (3, 1), (3, 2), (3, 3), (7, 3), (7, 2), (7, 
             (17, 1), (17, 2)]
 
 
-def _scheduling_extraction(rows=SJF_ROWS, variant: str = "sjf") -> dict:
+def _scheduling_extraction(rows=SJF_ROWS, variant: str | None = "sjf", drawn: list[str] | None = None) -> dict:
     return {"kind": "cpu_scheduling", "variant": variant, "graph": None, "source": None, "target": None, "array": None,
             "search_key": None, "tcp": None, "quantum": None, "pages": None, "assumed": False, "note": None,
-            "processes": [{"name": f"P{i}", "arrival": a, "burst": b, "priority": None}
-                          for i, (a, b) in enumerate(rows, 1)]}
+            "drawn_order": drawn, "processes": [{"name": f"P{i}", "arrival": a, "burst": b, "priority": None}
+                                               for i, (a, b) in enumerate(rows, 1)]}
+
+
+SJF_DRAWN = ["P1", "P2", "P3", "P4", "P5", "P6", "P9", "P8", "P7", "P10", "P11", "P13", "P14", "P12"]
+
+
+def test_unnamed_scheduler_is_identified_from_the_drawn_run_order():
+    lines = [f"P{i}({a}, {b})" for i, (a, b) in enumerate(SJF_ROWS, 1)]
+    page = text_page(lines, "sjf-unnamed")
+    sim = solvers.build(page, clean(_scheduling_extraction(variant=None, drawn=SJF_DRAWN)))
+    assert sim is not None and sim.verified and "shortest job first" in sim.trace.algorithm
+    assert "Neither the page nor the question names the algorithm" in sim.prompt and "matches it" in sim.evidence
+    assert solvers.build(page, clean(_scheduling_extraction(variant=None))) is None  # no chart order: cannot tell
+    shuffled = SJF_DRAWN[:6] + ["P7", "P9", "P8"] + SJF_DRAWN[9:]
+    assert solvers.build(page, clean(_scheduling_extraction(variant=None, drawn=shuffled))) is None
+    fcfs_drawn = [f"P{i}" for i in range(1, 15)]  # a named SJF contradicted by the drawing is not verified
+    sim = solvers.build(page, clean(_scheduling_extraction(variant="sjf", drawn=fcfs_drawn)))
+    assert sim is not None and not sim.verified and "does NOT match" in sim.evidence
 
 
 def test_scheduling_page_is_detected_and_its_rows_confirm_the_extraction():
