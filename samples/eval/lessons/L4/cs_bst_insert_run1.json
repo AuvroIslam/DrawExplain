@@ -1,0 +1,780 @@
+{
+ "version": "L4",
+ "note": "+ CPU scheduling and page replacement solvers",
+ "case": "cs_bst_insert",
+ "topic": "data structures",
+ "run": 1,
+ "question": "How would you insert 5 into this binary search tree? Show the comparisons, where 5 ends up, and the in-order traversal afterwards.",
+ "source": "cs_bst_insert.png",
+ "page": null,
+ "backend": {
+  "path": "D:\\BananaHack\\backend",
+  "commit": "3e13ede",
+  "subject": "Add CPU scheduling and page replacement solvers",
+  "dirty": false
+ },
+ "started": "2026-10-09T23:35:22+06:00",
+ "finished": "2026-10-09T23:36:05+06:00",
+ "jobs": 3,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "D:\\BananaHack\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L4_cs_bst_insert_1_dnign6pk\\data",
+ "perceive_s": 15.484,
+ "perception": {
+  "image_id": "8a47992099a4",
+  "width": 1280,
+  "height": 1067,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.186,
+   "ink": 0.095,
+   "ocr": 13.944,
+   "text": 0.01,
+   "rescue": 0.995,
+   "regions": 0.067,
+   "freespace": 0.004,
+   "som": 0.016,
+   "total": 15.317,
+   "prepare": 0.047
+  },
+  "regions": 16
+ },
+ "regions": {
+  "R1": "8",
+  "R2": "8",
+  "R3": "3",
+  "R4": "3",
+  "R5": "10",
+  "R6": "1",
+  "R7": "6",
+  "R8": "1",
+  "R9": "6",
+  "R10": "14",
+  "R11": "4",
+  "R12": "7",
+  "R13": "13",
+  "R15": "4",
+  "R16": "7"
+ },
+ "request": {
+  "image_id": "8a47992099a4",
+  "question": "How would you insert 5 into this binary search tree? Show the comparisons, where 5 ends up, and the in-order traversal afterwards."
+ },
+ "lesson_s": 25.238,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "9339f01b1b41",
+  "image_id": "8a47992099a4",
+  "title": "Inserting 5 in the BST",
+  "summary": "We’ll follow the binary search tree rule: smaller values go left, larger values go right. Starting at 8, the comparisons place 5 as the left child of 6, and the in-order traversal becomes sorted.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Orient: use the BST rule",
+    "narration": "We’re inserting 5 into this binary search tree. I’ll start at the root I just circled: compare 5 to each node, then move left if smaller and right if larger.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "root I just circled",
+      "geometry": {
+       "box": {
+        "x": 0.41218750000000004,
+        "y": 0.0,
+        "w": 0.17718749999999994,
+        "h": 0.2063964386129335
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "start here",
+      "cue": "start at the root",
+      "geometry": {
+       "box": {
+        "x": 0.43515625,
+        "y": 0.022492970946579195,
+        "w": 0.13124999999999998,
+        "h": 0.15651358950328023
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.39387285156249996,
+        "y": 0.20825656044985943,
+        "w": 0.213816796875,
+        "h": 0.058500000000000024
+       },
+       "leader": [
+        {
+         "x": 0.50078125,
+         "y": 0.20435215554826167
+        },
+        {
+         "x": 0.50078125,
+         "y": 0.18681537025305495
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Comparison 1: 5 is less than 8",
+    "narration": "First comparison: 5 is less than 8, so we follow the left branch. That rule keeps every value in 8’s left subtree smaller than 8.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "5 < 8",
+      "cue": "5 is less",
+      "geometry": {
+       "box": {
+        "x": 0.43515625,
+        "y": 0.022492970946579195,
+        "w": 0.13124999999999998,
+        "h": 0.15651358950328023
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.5907888671875,
+        "y": 0.07149976569821931,
+        "w": 0.11628632812499995,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.5875341796640587,
+         "y": 0.1007497656982193
+        },
+        {
+         "x": 0.5729156250468825,
+         "y": 0.10074976569821932
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R1"
+      ],
+      "to_ids": [
+       "R3"
+      ],
+      "span": null,
+      "text": "go left",
+      "cue": "follow the left branch",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.4267617138063546,
+         "y": 0.16595910405063427
+        },
+        {
+         "x": 0.38476655674586996,
+         "y": 0.22554938939204508
+        },
+        {
+         "x": 0.32480078619364544,
+         "y": 0.25578410119772566
+        }
+       ],
+       "label_box": {
+        "x": 0.229662887747935,
+        "y": 0.12483725327146772,
+        "w": 0.155298515625,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R3"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "left subtree",
+      "geometry": {
+       "box": {
+        "x": 0.16218749999999998,
+        "y": 0.2153467666354264,
+        "w": 0.1771875,
+        "h": 0.21129334582942838
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Comparison 2: 5 is greater than 3",
+    "narration": "Now compare 5 with 3. Since 5 is greater than 3, we move right to 6, staying inside the left side of 8.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R3"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "5 > 3",
+      "cue": "greater than 3",
+      "geometry": {
+       "box": {
+        "x": 0.18515625,
+        "y": 0.24273664479850046,
+        "w": 0.13125,
+        "h": 0.15651358950328023
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.3407888671875,
+        "y": 0.2917434395501406,
+        "w": 0.116286328125,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.33753417966405874,
+         "y": 0.3209934395501406
+        },
+        {
+         "x": 0.3229156250468825,
+         "y": 0.3209934395501406
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R3"
+      ],
+      "to_ids": [
+       "R7"
+      ],
+      "span": null,
+      "text": "go right",
+      "cue": "move right to 6",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.30008513571797313,
+         "y": 0.4096434512491271
+        },
+        {
+         "x": 0.346798514651659,
+         "y": 0.46152398424794877
+        },
+        {
+         "x": 0.3687954795164019,
+         "y": 0.5331869142616509
+        }
+       ],
+       "label_box": {
+        "x": 0.3696895283219233,
+        "y": 0.4372195835016689,
+        "w": 0.17480460937500003,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "circle",
+      "color": "orange",
+      "target_ids": [
+       "R7"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "to 6",
+      "geometry": {
+       "box": {
+        "x": 0.33056640625,
+        "y": 0.5165182755388941,
+        "w": 0.17402343750000004,
+        "h": 0.20876288659793818
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Comparison 3: insert left of 6",
+    "narration": "At 6, 5 is smaller, so we try the left child. That spot is between 4 and 6 and is empty, so 5 lands there.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R7"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "5 < 6",
+      "cue": "5 is smaller",
+      "geometry": {
+       "box": {
+        "x": 0.353125,
+        "y": 0.5435801312089972,
+        "w": 0.12890625,
+        "h": 0.15463917525773196
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.5064138671875,
+        "y": 0.5916497188378631,
+        "w": 0.11628632812499995,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.5031591796640587,
+         "y": 0.6208997188378631
+        },
+        {
+         "x": 0.4885406250468825,
+         "y": 0.6208997188378632
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "arrow",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [
+       "R7"
+      ],
+      "to_ids": [],
+      "span": null,
+      "text": "go left",
+      "cue": "try the left child",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.37711886054958066,
+         "y": 0.7091674229949037
+        },
+        {
+         "x": 0.3705054245342688,
+         "y": 0.7381491893726105
+        },
+        {
+         "x": 0.35364760364479275,
+         "y": 0.7603733455149371
+        }
+       ],
+       "label_box": {
+        "x": 0.18357569550322775,
+        "y": 0.7072097868137655,
+        "w": 0.155298515625,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.583,
+      "grounding": "llm_refined"
+     },
+     {
+      "id": "s4a3",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "insert 5",
+      "cue": "5 lands there",
+      "geometry": {
+       "box": {
+        "x": 0.31484375,
+        "y": 0.7713214620431116,
+        "w": 0.03749999999999998,
+        "h": 0.06560449859418938
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.07908259765624995,
+        "y": 0.7748737113402062,
+        "w": 0.174804609375,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.25714189455469116,
+         "y": 0.8041237113402063
+        },
+        {
+         "x": 0.3083343749531175,
+         "y": 0.8041237113402063
+        }
+       ]
+      },
+      "confidence": 0.583,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Check the local order",
+    "narration": "Quick sanity check: 4 is still left of 6, 7 is still right of 6, and new 5 belongs between them. So the tree rule is preserved.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R11"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "4 is still",
+      "geometry": {
+       "box": {
+        "x": 0.19591796874999998,
+        "y": 0.7954779756326148,
+        "w": 0.17613281250000004,
+        "h": 0.2045220243673852
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R12"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "7 is still",
+      "geometry": {
+       "box": {
+        "x": 0.46218750000000003,
+        "y": 0.7954779756326148,
+        "w": 0.1771875,
+        "h": 0.2045220243673852
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "4 < 5 < 6",
+      "cue": "between them",
+      "geometry": {
+       "box": {
+        "x": 0.31484375,
+        "y": 0.7713214620431116,
+        "w": 0.03749999999999998,
+        "h": 0.06560449859418938
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.004,
+        "y": 0.9375,
+        "w": 0.194310703125,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.14577323396265401,
+         "y": 0.9355329520794636
+        },
+        {
+         "x": 0.3092208279980624,
+         "y": 0.8211763062454132
+        }
+       ]
+      },
+      "confidence": 0.583,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "In-order traversal after insertion",
+    "narration": "For in-order traversal, read left subtree, then node, then right subtree. After inserting 5, the final order is 1, 3, 4, 5, 6, 7, 8, 10, 13, 14.",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "arrow",
+      "color": "purple",
+      "target_ids": [],
+      "from_ids": [
+       "R6"
+      ],
+      "to_ids": [
+       "R3"
+      ],
+      "span": null,
+      "text": "in-order",
+      "cue": "read left subtree",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.13328826071797306,
+         "y": 0.5322497071388766
+        },
+        {
+         "x": 0.1796472695344715,
+         "y": 0.4807627425561749
+        },
+        {
+         "x": 0.2014773642820269,
+         "y": 0.4096434512491271
+        }
+       ],
+       "label_box": {
+        "x": 0.004,
+        "y": 0.3824814181384436,
+        "w": 0.174804609375,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a2",
+      "kind": "label",
+      "color": "purple",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "1,3,4,5,6,7,8,10,13,14",
+      "cue": "final order",
+      "geometry": {
+       "box": {
+        "x": 0.21484375,
+        "y": 0.9250234301780693,
+        "w": 0.60390625,
+        "h": 0.060918462980318666
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.37086007812499994,
+        "y": 0.7202734301780693,
+        "w": 0.44788992187500004,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.5823800898534469,
+         "y": 0.7823281118566502
+        },
+        {
+         "x": 0.5310261818839084,
+         "y": 0.9179140668209076
+        }
+       ]
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": "flowchart TD\nA[Compare at node]\nB{5 smaller?}\nC[Go left]\nD[Go right]\nE[Empty spot]\nF[Insert 5]\nA --> B\nB -->|yes| C\nB -->|no| D\nC --> A\nD --> A\nA --> E\nE --> F"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the root where insertion starts.",
+    "answer_ids": [
+     "R1"
+    ],
+    "answer_box": {
+     "x": 0.43515625,
+     "y": 0.022492970946579195,
+     "w": 0.13124999999999998,
+     "h": 0.15651358950328023
+    },
+    "explanation": "BST insertion always begins by comparing with the root node."
+   },
+   {
+    "question": "Tap the node compared right before 5 is inserted.",
+    "answer_ids": [
+     "R7"
+    ],
+    "answer_box": {
+     "x": 0.353125,
+     "y": 0.5435801312089972,
+     "w": 0.12890625,
+     "h": 0.15463917525773196
+    },
+    "explanation": "The last comparison is 5 < 6, so the empty left child of 6 receives 5."
+   },
+   {
+    "question": "Tap the node that comes immediately before 5 in the in-order traversal.",
+    "answer_ids": [
+     "R11"
+    ],
+    "answer_box": {
+     "x": 0.21875,
+     "y": 0.8228678537956888,
+     "w": 0.13046875000000002,
+     "h": 0.1565135895032802
+    },
+    "explanation": "In sorted in-order sequence, 4 is followed by the newly inserted 5."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 16.804,
+   "ground": 4.403,
+   "total": 25.207,
+   "input_tokens": 5931.0,
+   "output_tokens": 1919.0,
+   "approx_agreement": 1.0
+  },
+  "warnings": [],
+  "question": "How would you insert 5 into this binary search tree? Show the comparisons, where 5 ends up, and the in-order traversal afterwards.",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 2,
+  "cache_hits": 0,
+  "input_tokens": 10990,
+  "output_tokens": 2004,
+  "seconds": 20.708
+ },
+ "checks": {
+  "left_at_8": {
+   "pass": true,
+   "evidence": "5 is less than 8"
+  },
+  "right_at_3_left_at_6": {
+   "pass": true,
+   "evidence": "5 is greater than 3 | 5 < 6"
+  },
+  "right_child_of_4": {
+   "pass": false,
+   "evidence": "MISSING any: 0 of 6 matched, need 1"
+  },
+  "search_path": {
+   "pass": true,
+   "evidence": "5 is less than 8, so we follow the left branch. that rule keeps every value in 8's left subtree smaller than 8.\n5 < 8\ngo left\n\nnow compare 5 with 3. since 5 is greater than 3, we move right to 6, staying inside the left side of 8.\n5 > 3\ngo right\n\nat 6, 5 is smaller, so we try the left child. that spot is between 4 and 6 and is empty, so 5 lands there.\n5 < 6"
+  },
+  "inorder_after": {
+   "pass": true,
+   "evidence": "1, 3, 4, 5, 6, 7, 8, 10, 13, 14"
+  }
+ },
+ "passed": 4,
+ "total": 5,
+ "score": 0.8,
+ "all_passed": false,
+ "checked_text": "we're inserting 5 into this binary search tree. i'll start at the root i just circled: compare 5 to each node, then move left if smaller and right if larger.\nstart here\n\nfirst comparison: 5 is less than 8, so we follow the left branch. that rule keeps every value in 8's left subtree smaller than 8.\n5 < 8\ngo left\n\nnow compare 5 with 3. since 5 is greater than 3, we move right to 6, staying inside the left side of 8.\n5 > 3\ngo right\n\nat 6, 5 is smaller, so we try the left child. that spot is between 4 and 6 and is empty, so 5 lands there.\n5 < 6\ngo left\ninsert 5\n\nquick sanity check: 4 is still left of 6, 7 is still right of 6, and new 5 belongs between them. so the tree rule is preserved.\n4 < 5 < 6\n\nfor in-order traversal, read left subtree, then node, then right subtree. after inserting 5, the final order is 1, 3, 4, 5, 6, 7, 8, 10, 13, 14.\nin-order\n1,3,4,5,6,7,8,10,13,14\ncompare at node\n5 smaller?\ngo left\ngo right\nempty spot\ninsert 5\ncompare at node -> 5 smaller?\n5 smaller? -> (yes) go left\n5 smaller? -> (no) go right\ngo left -> compare at node\ngo right -> compare at node\ncompare at node -> empty spot\nempty spot -> insert 5"
+}

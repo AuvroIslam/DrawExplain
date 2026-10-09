@@ -640,7 +640,7 @@ Score 5/5 (client_syn_1023 PASS, server_isn_2131691 PASS, ack_1024_is_1023_plus_
 ## cs_deadlock_rag, run 1
 
 Question: "Is there a deadlock in this resource-allocation graph? R3 has two instances, so does the cycle really mean deadlock?" (cs_deadlock_rag.png)
-Score 0/5 (p1_holds_r3_waits_r1 FAIL, p2_holds_r1_waits_r2 FAIL, p3_holds_r2_waits_r3 FAIL, cycle FAIL, deadlock_because_no_free_instance FAIL). Lesson 20.125 s, 6 steps, model gpt-5.5.
+Score 1/5 (p1_holds_r3_waits_r1 PASS, p2_holds_r1_waits_r2 FAIL, p3_holds_r2_waits_r3 FAIL, cycle FAIL, deadlock_because_no_free_instance FAIL). Lesson 20.125 s, 6 steps, model gpt-5.5.
 
 **Deadlock Check with Multi-Instance R3**: We’ll test the resource-allocation graph by actually satisfying requests and releasing resources. Because R3 has two instances, the visible cycle is not enough by itself to prove deadlock.
 
@@ -657,7 +657,7 @@ Score 0/5 (p1_holds_r3_waits_r1 FAIL, p2_holds_r1_waits_r2 FAIL, p3_holds_r2_wai
    - board: `2 copies help`
    - sketch: `flowchart LR ; A[Grant free R1] --> B[P1 finishes] ; B --> C[Release R3] ; C --> D[P3 finishes] ; D --> E[Release R2] ; E --> F[P2 finishes]`
 
-Missing: p1_holds_r3_waits_r1: MISSING all[1] \| p1 is waiting for r1, but r1; p2_holds_r1_waits_r2: MISSING all[1] \| p2's request for r2; p3_holds_r2_waits_r3: MISSING all[1] \| p3 is asking for r3; cycle: cycl \| MISSING any: 0 of 13 matched, need 1; deadlock_because_no_free_instance: deadlocked \| MISSING any: 0 of 6 matched, need 1
+Missing: p2_holds_r1_waits_r2: MISSING all[1] \| p2's request for r2; p3_holds_r2_waits_r3: MISSING all[1] \| p3 is asking for r3; cycle: cycl \| MISSING any: 0 of 13 matched, need 1; deadlock_because_no_free_instance: deadlocked \| MISSING any: 0 of 6 matched, need 1
 
 ## cs_deadlock_rag, run 2
 

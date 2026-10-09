@@ -1,0 +1,809 @@
+{
+ "version": "L4",
+ "note": "+ CPU scheduling and page replacement solvers",
+ "case": "math_pythagoras",
+ "topic": "math",
+ "run": 1,
+ "question": "How does this picture prove the Pythagorean theorem?",
+ "source": "math_pythagoras_squares.jpg",
+ "page": null,
+ "backend": {
+  "path": "D:\\BananaHack\\backend",
+  "commit": "3e13ede",
+  "subject": "Add CPU scheduling and page replacement solvers",
+  "dirty": false
+ },
+ "started": "2026-10-09T23:36:32+06:00",
+ "finished": "2026-10-09T23:37:00+06:00",
+ "jobs": 3,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "D:\\BananaHack\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L4_math_pythagoras_1_q_xvkh3e\\data",
+ "perceive_s": 3.55,
+ "perception": {
+  "image_id": "599af9792590",
+  "width": 1000,
+  "height": 909,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.208,
+   "ink": 0.08,
+   "ocr": 2.901,
+   "text": 0.002,
+   "rescue": 0.113,
+   "regions": 0.059,
+   "freespace": 0.002,
+   "som": 0.015,
+   "total": 3.38,
+   "prepare": 0.074
+  },
+  "regions": 41
+ },
+ "regions": {
+  "R23": "a",
+  "R28": "a",
+  "R36": "β"
+ },
+ "request": {
+  "image_id": "599af9792590",
+  "question": "How does this picture prove the Pythagorean theorem?"
+ },
+ "lesson_s": 22.134,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "d2f50237eebf",
+  "image_id": "599af9792590",
+  "title": "Pythagoras by Rearranging Squares",
+  "summary": "The picture proves the Pythagorean theorem by showing that the two leg-squares can be rearranged to exactly fill the square on the hypotenuse. The matching angles make the tilted square line up with the triangle’s sides.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Orient: three squares on one right triangle",
+    "narration": "This picture proves Pythagoras by comparing the square on each side of the pale green right triangle. I’ll circle the triangle first: its sides are the two legs and the slanted hypotenuse.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "circle the triangle",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 1.0,
+        "h": 1.0
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.916,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "side c",
+      "cue": "slanted hypotenuse",
+      "geometry": {
+       "box": {
+        "x": 0.364,
+        "y": 0.30913091309130913,
+        "w": 0.267,
+        "h": 0.3938393839383938
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.76394125,
+        "y": 0.6444702970297029,
+        "w": 0.14807609999999993,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.7754989961950951,
+         "y": 0.642951750180863
+        },
+        {
+         "x": 0.6371672895326274,
+         "y": 0.5748300328087077
+        }
+       ]
+      },
+      "confidence": 0.598,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "The left red square is one leg squared",
+    "narration": "The red square on the left sits on one leg of the triangle, so its area represents one leg squared. Think of its 4 by 4 grid as a concrete area: 16 little squares.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "box",
+      "color": "red",
+      "target_ids": [
+       "R22"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "red square",
+      "geometry": {
+       "box": {
+        "x": 0.084,
+        "y": 0.39383938393839385,
+        "w": 0.106,
+        "h": 0.11441144114411445
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.907,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "arrow",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [
+       "R22"
+      ],
+      "to_ids": [],
+      "span": null,
+      "text": "built on leg",
+      "cue": "one leg",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.1926106856725403,
+         "y": 0.4629945943657286
+        },
+        {
+         "x": 0.267801850862038,
+         "y": 0.500775001604561
+        },
+        {
+         "x": 0.3503893143274597,
+         "y": 0.4968976851061209
+        }
+       ],
+       "label_box": {
+        "x": 0.004,
+        "y": 0.5262112307362495,
+        "w": 0.2756997,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.3,
+      "grounding": "llm_only"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R22"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "4² = 16",
+      "cue": "16 little squares",
+      "geometry": {
+       "box": {
+        "x": 0.092,
+        "y": 0.40264026402640263,
+        "w": 0.09,
+        "h": 0.09680968096809683
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.012653300000000006,
+        "y": 0.31489026402640263,
+        "w": 0.1693467,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.1094585746943136,
+         "y": 0.3768312637582146
+        },
+        {
+         "x": 0.11648255531081145,
+         "y": 0.3957582645627786
+        }
+       ]
+      },
+      "confidence": 0.907,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "The bottom yellow square is the other leg squared",
+    "narration": "Now the yellow square underneath is built on the other leg. Its 3 by 3 grid gives the second area: 9 little squares.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "box",
+      "color": "orange",
+      "target_ids": [
+       "R40",
+       "R41",
+       "R38"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "yellow square",
+      "geometry": {
+       "box": {
+        "x": 0.341,
+        "y": 0.6732673267326733,
+        "w": 0.32,
+        "h": 0.3267326732673267
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R40",
+       "R41",
+       "R38"
+      ],
+      "to_ids": [],
+      "span": null,
+      "text": "built on leg",
+      "cue": "other leg",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.501,
+         "y": 0.8487348734873488
+        },
+        {
+         "x": 0.516224,
+         "y": 0.774103410341034
+        },
+        {
+         "x": 0.499,
+         "y": 0.7
+        }
+       ],
+       "label_box": {
+        "x": 0.64705325,
+        "y": 0.7449854235423543,
+        "w": 0.2756997,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.3,
+      "grounding": "llm_only"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R40",
+       "R41",
+       "R38"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "3² = 9",
+      "cue": "9 little squares",
+      "geometry": {
+       "box": {
+        "x": 0.363,
+        "y": 0.6974697469746974,
+        "w": 0.276,
+        "h": 0.30253025302530256
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.66558825,
+        "y": 0.8194848734873488,
+        "w": 0.14807610000000004,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.6622097508879682,
+         "y": 0.8487348734873488
+        },
+        {
+         "x": 0.6457569982240637,
+         "y": 0.8487348734873488
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "The tilted square is the hypotenuse squared",
+    "narration": "The tilted square is built on the slanted side, the hypotenuse. Inside it, the red and yellow pieces together make a 5 by 5 square: 25 little squares.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "box",
+      "color": "green",
+      "target_ids": [
+       "R8"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "tilted square",
+      "geometry": {
+       "box": {
+        "x": 0.63836,
+        "y": 0.18411441144114413,
+        "w": 0.29928,
+        "h": 0.47445544554455443
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.923,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [
+       "R8"
+      ],
+      "span": null,
+      "text": "side c square",
+      "cue": "hypotenuse",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.631,
+         "y": 0.4671226158760454
+        },
+        {
+         "x": 0.6458906024096385,
+         "y": 0.4667366495685713
+        },
+        {
+         "x": 0.659,
+         "y": 0.45895794398716977
+        }
+       ],
+       "label_box": {
+        "x": 0.20953375120481932,
+        "y": 0.2535378046840828,
+        "w": 0.2969703,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.598,
+      "grounding": "llm_refined"
+     },
+     {
+      "id": "s4a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R8"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "5² = 25",
+      "cue": "25 little squares",
+      "geometry": {
+       "box": {
+        "x": 0.659,
+        "y": 0.2068206820682068,
+        "w": 0.258,
+        "h": 0.429042904290429
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.8266533,
+        "y": 0.11907068206820681,
+        "w": 0.16934669999999996,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8966106401660242,
+         "y": 0.18089909374691004
+        },
+        {
+         "x": 0.8879085440216878,
+         "y": 0.2001638587108003
+        }
+       ]
+      },
+      "confidence": 0.923,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Why the pieces fit",
+    "narration": "The angle marks explain the fit: α and β are the sharp angles of the same right triangle. Their sum is 90°, so copies of the leg-squares can turn and line up along the hypotenuse square.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R23"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "α and β",
+      "geometry": {
+       "box": {
+        "x": 0.456,
+        "y": 0.38063806380638066,
+        "w": 0.16199999999999998,
+        "h": 0.17821782178217815
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.906,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R36"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "α and β",
+      "geometry": {
+       "box": {
+        "x": 0.463,
+        "y": 0.6402640264026402,
+        "w": 0.03999999999999998,
+        "h": 0.06160616061606161
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.977,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "α + β = 90°",
+      "cue": "sum is 90°",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 0.883,
+        "h": 1.0
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.7415708999999999,
+        "y": 0.9375,
+        "w": 0.2544291000000001,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8420085899839315,
+         "y": 0.9375
+        },
+        {
+         "x": 0.883,
+         "y": 0.9822774213350818
+        }
+       ]
+      },
+      "confidence": 0.916,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "The proof in one equation",
+    "narration": "So the two leg areas combine to equal the hypotenuse area. Here that is 16 plus 9 equals 25, which is exactly a² + b² = c².",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "arrow",
+      "color": "purple",
+      "target_ids": [],
+      "from_ids": [
+       "R22"
+      ],
+      "to_ids": [
+       "R18",
+       "R24",
+       "R31"
+      ],
+      "span": null,
+      "text": "same red area",
+      "cue": "leg areas",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.19271809117219485,
+         "y": 0.4591420000999533
+        },
+        {
+         "x": 0.3464661710637872,
+         "y": 0.524138639652091
+        },
+        {
+         "x": 0.5102819088278051,
+         "y": 0.505290046819909
+        }
+       ],
+       "label_box": {
+        "x": 0.004,
+        "y": 0.5829029916220176,
+        "w": 0.2969703,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.907,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a2",
+      "kind": "arrow",
+      "color": "purple",
+      "target_ids": [],
+      "from_ids": [
+       "R40",
+       "R41",
+       "R38"
+      ],
+      "to_ids": [
+       "R2",
+       "R4",
+       "R5",
+       "R17",
+       "R20"
+      ],
+      "span": null,
+      "text": "same yellow area",
+      "cue": "hypotenuse area",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.5608900234776177,
+         "y": 0.6864498002626741
+        },
+        {
+         "x": 0.5728382369254902,
+         "y": 0.5995447915846397
+        },
+        {
+         "x": 0.6193382272239725,
+         "y": 0.5280716518825405
+        }
+       ],
+       "label_box": {
+        "x": 0.6352179,
+        "y": 0.6831284188946302,
+        "w": 0.3607821,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.978,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a3",
+      "kind": "label",
+      "color": "purple",
+      "target_ids": [
+       "R8"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "16 + 9 = 25",
+      "cue": "16 plus 9",
+      "geometry": {
+       "box": {
+        "x": 0.659,
+        "y": 0.2068206820682068,
+        "w": 0.258,
+        "h": 0.429042904290429
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.27162965,
+        "y": 0.004,
+        "w": 0.2544291,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.4306774602041255,
+         "y": 0.06499625147971648
+        },
+        {
+         "x": 0.6539938138088826,
+         "y": 0.2877022223922129
+        }
+       ]
+      },
+      "confidence": 0.923,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart LR\nA[leg square a²] --> C[combine areas]\nB[leg square b²] --> C\nC --> D[hypotenuse square c²]\nD --> E[a² + b² = c²]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the pale green right triangle.",
+    "answer_ids": [
+     "R1"
+    ],
+    "answer_box": {
+     "x": 0.0,
+     "y": 0.0,
+     "w": 0.883,
+     "h": 1.0
+    },
+    "explanation": "This triangle supplies the two legs and the hypotenuse that the three squares are built on."
+   },
+   {
+    "question": "Tap the square built on the hypotenuse.",
+    "answer_ids": [
+     "R8"
+    ],
+    "answer_box": {
+     "x": 0.659,
+     "y": 0.2068206820682068,
+     "w": 0.258,
+     "h": 0.429042904290429
+    },
+    "explanation": "The tilted square’s side is the slanted side of the triangle, so its area represents c²."
+   },
+   {
+    "question": "Tap the angle label β.",
+    "answer_ids": [
+     "R36"
+    ],
+    "answer_box": {
+     "x": 0.473,
+     "y": 0.6512651265126512,
+     "w": 0.020000000000000018,
+     "h": 0.03960396039603964
+    },
+    "explanation": "β is one acute angle of the right triangle; together with α it helps show the rotated pieces fit."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 18.255,
+   "ground": 3.826,
+   "total": 22.081,
+   "input_tokens": 5167.0,
+   "output_tokens": 2028.0,
+   "approx_agreement": 1.0
+  },
+  "warnings": [],
+  "question": "How does this picture prove the Pythagorean theorem?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 5167,
+  "output_tokens": 2028,
+  "seconds": 18.254
+ },
+ "checks": {
+  "areas": {
+   "pass": true,
+   "evidence": "9 | 16 | 25"
+  },
+  "sides_3_4_5": {
+   "pass": true,
+   "evidence": "4 by 4 grid as a concrete area: 16 little squares.\nbuilt on leg\n42 = 16\n\nnow the yellow square underneath is built on the other leg. its 3 by 3"
+  },
+  "sum_9_16_25": {
+   "pass": true,
+   "evidence": "16 plus 9 equals 25 | 16 plus 9 equals 25"
+  },
+  "theorem": {
+   "pass": true,
+   "evidence": "a2 + b2 = c2"
+  },
+  "rearrangement": {
+   "pass": true,
+   "evidence": "red and yellow pieces together make a 5 by 5 square: 25"
+  }
+ },
+ "passed": 5,
+ "total": 5,
+ "score": 1.0,
+ "all_passed": true,
+ "checked_text": "this picture proves pythagoras by comparing the square on each side of the pale green right triangle. i'll circle the triangle first: its sides are the two legs and the slanted hypotenuse.\nside c\n\nthe red square on the left sits on one leg of the triangle, so its area represents one leg squared. think of its 4 by 4 grid as a concrete area: 16 little squares.\nbuilt on leg\n42 = 16\n\nnow the yellow square underneath is built on the other leg. its 3 by 3 grid gives the second area: 9 little squares.\nbuilt on leg\n32 = 9\n\nthe tilted square is built on the slanted side, the hypotenuse. inside it, the red and yellow pieces together make a 5 by 5 square: 25 little squares.\nside c square\n52 = 25\n\nthe angle marks explain the fit: α and β are the sharp angles of the same right triangle. their sum is 90°, so copies of the leg-squares can turn and line up along the hypotenuse square.\nα + β = 90°\n\nso the two leg areas combine to equal the hypotenuse area. here that is 16 plus 9 equals 25, which is exactly a2 + b2 = c2.\nsame red area\nsame yellow area\n16 + 9 = 25\nleg square a2 -> combine areas\nleg square b2 -> combine areas\ncombine areas -> hypotenuse square c2\nhypotenuse square c2 -> a2 + b2 = c2"
+}

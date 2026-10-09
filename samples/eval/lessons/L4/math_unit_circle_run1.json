@@ -1,0 +1,760 @@
+{
+ "version": "L4",
+ "note": "+ CPU scheduling and page replacement solvers",
+ "case": "math_unit_circle",
+ "topic": "math",
+ "run": 1,
+ "question": "What is sin(150°) and why?",
+ "source": "math_unit_circle.png",
+ "page": null,
+ "backend": {
+  "path": "D:\\BananaHack\\backend",
+  "commit": "3e13ede",
+  "subject": "Add CPU scheduling and page replacement solvers",
+  "dirty": false
+ },
+ "started": "2026-10-09T23:36:47+06:00",
+ "finished": "2026-10-09T23:37:18+06:00",
+ "jobs": 3,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "D:\\BananaHack\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L4_math_unit_circle_1_sdga20sx\\data",
+ "perceive_s": 9.561,
+ "perception": {
+  "image_id": "ff68cd1c28f9",
+  "width": 1280,
+  "height": 1280,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.232,
+   "ink": 0.109,
+   "ocr": 4.837,
+   "text": 0.064,
+   "rescue": 1.801,
+   "regions": 0.114,
+   "freespace": 0.004,
+   "som": 0.029,
+   "latex_lines": 1.0,
+   "latex": 2.16,
+   "total": 9.349,
+   "prepare": 0.062
+  },
+  "regions": 80
+ },
+ "regions": {
+  "R2": "y\n(0, 1)",
+  "R3": "y",
+  "R9": "(0, 1)",
+  "R11": "1/2",
+  "R12": "1209 57 135° 6 150° 180° T",
+  "R16": "2\n90°",
+  "R17": "2",
+  "R18": "π3π4\n6",
+  "R19": "π3π4",
+  "R25": "90°",
+  "R26": "57\n6",
+  "R27": "57",
+  "R28": "1209\n135°\n150°",
+  "R29": "1209",
+  "R31": "o09",
+  "R32": "6",
+  "R34": "135°",
+  "R35": "6",
+  "R36": "150°",
+  "R37": "30°",
+  "R38": "(-1,0)",
+  "R39": "180°",
+  "R40": "0°",
+  "R41": "0",
+  "R42": "(1,0)",
+  "R43": "T",
+  "R44": "210° 2259 240°",
+  "R45": "210°\n2259\n240°",
+  "R46": "210°",
+  "R47": "3309\n315°\n300°",
+  "R48": "3309",
+  "R49": "2259",
+  "R50": "315°",
+  "R51": "11π\n9",
+  "R52": "11π [LaTeX: \\frac{11\\pi}{6}]",
+  "R54": "240°",
+  "R55": "300°",
+  "R56": "9",
+  "R60": "(V,",
+  "R62": "270°\n3π\n2",
+  "R63": "270°",
+  "R64": "2",
+  "R65": "2",
+  "R69": "3π",
+  "R71": "2",
+  "R73": "Z-T",
+  "R76": "(0, -1)",
+  "R78": "7%"
+ },
+ "request": {
+  "image_id": "ff68cd1c28f9",
+  "question": "What is sin(150°) and why?"
+ },
+ "lesson_s": 18.495,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "32cd4f7134f0",
+  "image_id": "ff68cd1c28f9",
+  "title": "Why sin(150°) = 1/2",
+  "summary": "On the unit circle, sine is the y-coordinate of the point at an angle. Since 150° has the same reference angle as 30° and lies in Quadrant II, its sine is positive 1/2.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Find 150° on the unit circle",
+    "narration": "We’re answering: what is sin(150°)? I’ll circle 150° first, because sine comes from the point on the unit circle at that angle.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R36"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "circle 150°",
+      "geometry": {
+       "box": {
+        "x": 0.30712890625,
+        "y": 0.361875,
+        "w": 0.08964843750000001,
+        "h": 0.07312499999999994
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.78,
+      "grounding": "cv_snap"
+     },
+     {
+      "id": "s1a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R12"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "angle location",
+      "cue": "that angle",
+      "geometry": {
+       "box": {
+        "x": 0.19375,
+        "y": 0.191015625,
+        "w": 0.30390625000000004,
+        "h": 0.30625
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.14755625000000006,
+        "y": 0.004,
+        "w": 0.35009999999999997,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.3250412508974271,
+         "y": 0.06602581711277693
+        },
+        {
+         "x": 0.33380318527480457,
+         "y": 0.18396399077444614
+        }
+       ]
+      },
+      "confidence": 0.924,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Sine means the y-coordinate",
+    "narration": "On this circle, each angle lands on an ordered pair. The sine is the vertical coordinate, so we only need the second number of the 150° point.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "ordered pair",
+      "geometry": {
+       "box": {
+        "x": 0.2071875,
+        "y": 0.29833984375,
+        "w": 0.05906249999999999,
+        "h": 0.0791015625
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     },
+     {
+      "id": "s2a2",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R12"
+      ],
+      "to_ids": [],
+      "span": null,
+      "text": "lands here",
+      "cue": "vertical coordinate",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.345703125,
+         "y": 0.344140625
+        },
+        {
+         "x": 0.29196093749999996,
+         "y": 0.3279375
+        },
+        {
+         "x": 0.23671875,
+         "y": 0.337890625
+        }
+       ],
+       "label_box": {
+        "x": 0.1633359375,
+        "y": 0.12503906250000002,
+        "w": 0.25650000000000006,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "sin = y",
+      "cue": "sine is",
+      "geometry": {
+       "box": {
+        "x": 0.2171875,
+        "y": 0.30859375,
+        "w": 0.03906249999999997,
+        "h": 0.05859375
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.004,
+        "y": 0.308640625,
+        "w": 0.1863,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.19383553390593272,
+         "y": 0.337890625
+        },
+        {
+         "x": 0.21011643218813453,
+         "y": 0.337890625
+        }
+       ]
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Read the coordinate at 150°",
+    "narration": "Now look just outside that blue point: the coordinate shown is (-√3/2, 1/2). Since sine is y, grab the 1/2 part.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R15",
+       "R24"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "coordinate shown",
+      "geometry": {
+       "box": {
+        "x": 0.03675781249999999,
+        "y": 0.21203124999999998,
+        "w": 0.20460937500000007,
+        "h": 0.1603125
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R24"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "1/2",
+      "text": null,
+      "cue": "1/2 part",
+      "geometry": {
+       "box": {
+        "x": 0.14765625,
+        "y": 0.28253125,
+        "w": 0.06875,
+        "h": 0.07556250000000003
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.989,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R24"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "the y-value",
+      "cue": "sine is y",
+      "geometry": {
+       "box": {
+        "x": 0.15,
+        "y": 0.28984375,
+        "w": 0.0640625,
+        "h": 0.06093749999999998
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.04208124999999999,
+        "y": 0.49703125,
+        "w": 0.27990000000000004,
+        "h": 0.05850000000000005
+       },
+       "leader": [
+        {
+         "x": 0.18203124999999998,
+         "y": 0.4934957160940672
+        },
+        {
+         "x": 0.18203125,
+         "y": 0.35785231781186544
+        }
+       ]
+      },
+      "confidence": 0.989,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Why it is positive",
+    "narration": "150° sits in Quadrant II, above the x-axis. Above the x-axis means y is positive, so the sine value is positive.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "box",
+      "color": "orange",
+      "target_ids": [
+       "R12"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "Quadrant II",
+      "geometry": {
+       "box": {
+        "x": 0.1694375,
+        "y": 0.166703125,
+        "w": 0.35253124999999996,
+        "h": 0.354875
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "above = +y",
+      "cue": "above the x-axis",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.4609586573847532,
+         "y": 0.4745800747175579
+        },
+        {
+         "x": 0.3491671150641527,
+         "y": 0.43853828883315105
+        },
+        {
+         "x": 0.2659104090709429,
+         "y": 0.3556849233534297
+        }
+       ],
+       "label_box": {
+        "x": 0.004,
+        "y": 0.5777728939343224,
+        "w": 0.2565,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     },
+     {
+      "id": "s4a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "positive sine",
+      "cue": "positive",
+      "geometry": {
+       "box": {
+        "x": 0.2171875,
+        "y": 0.30859375,
+        "w": 0.03906249999999997,
+        "h": 0.05859375
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.40249999999999997,
+        "y": 0.5134375,
+        "w": 0.3267,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.5158401602535606,
+         "y": 0.5115696438276627
+        },
+        {
+         "x": 0.2622537032969531,
+         "y": 0.35377935825910845
+        }
+       ]
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Connect to the 30° reference angle",
+    "narration": "The reason it matches 1/2 is that 150° is 30° away from 180°. That reference angle has the same height as 30° on the right side.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "highlight",
+      "color": "red",
+      "target_ids": [
+       "R39"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "180°",
+      "text": null,
+      "cue": "180°",
+      "geometry": {
+       "box": {
+        "x": 0.26328125,
+        "y": 0.4890625,
+        "w": 0.08203125,
+        "h": 0.005468750000000022
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.985,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "arrow",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [
+       "R39"
+      ],
+      "to_ids": [
+       "R36"
+      ],
+      "span": null,
+      "text": "30° back",
+      "cue": "30° away",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.32031758112683206,
+         "y": 0.4490025086497356
+        },
+        {
+         "x": 0.32309636907790956,
+         "y": 0.4407149213935166
+        },
+        {
+         "x": 0.32933386118086017,
+         "y": 0.4345912413502644
+        }
+       ],
+       "label_box": {
+        "x": 0.47489854511587787,
+        "y": 0.41200589819675837,
+        "w": 0.20969999999999994,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.78,
+      "grounding": "cv_snap"
+     },
+     {
+      "id": "s5a3",
+      "kind": "arrow",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [
+       "R37"
+      ],
+      "to_ids": [
+       "R36"
+      ],
+      "span": null,
+      "text": "same height",
+      "cue": "same height",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.5996241767899024,
+         "y": 0.40048155269702806
+        },
+        {
+         "x": 0.49824807350698413,
+         "y": 0.37526467315501766
+        },
+        {
+         "x": 0.3964695732100976,
+         "y": 0.39880489847216033
+        }
+       ],
+       "label_box": {
+        "x": 0.6490849742534921,
+        "y": 0.3827664493698059,
+        "w": 0.27990000000000004,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.78,
+      "grounding": "cv_snap"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "Final answer",
+    "narration": "So the answer is sin(150°) = 1/2. We use the y-coordinate at 150°, and it is positive because the point is above the x-axis.",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "label",
+      "color": "purple",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "sin150° = 1/2",
+      "cue": "sin(150°) = 1/2",
+      "geometry": {
+       "box": {
+        "x": 0.2171875,
+        "y": 0.30859375,
+        "w": 0.03906249999999997,
+        "h": 0.05859375
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.40249999999999997,
+        "y": 0.10384375000000001,
+        "w": 0.3267,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.5158401602535606,
+         "y": 0.16421160617233732
+        },
+        {
+         "x": 0.2622537032969531,
+         "y": 0.32200189174089155
+        }
+       ]
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": "flowchart LR\nA[Find 150°] --> B[Read point]\nB --> C[Take y-coordinate]\nC --> D[Above x-axis]\nD --> E[Positive 1/2]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the 150° angle.",
+    "answer_ids": [
+     "R36"
+    ],
+    "answer_box": {
+     "x": 0.31875,
+     "y": 0.371875,
+     "w": 0.06640625,
+     "h": 0.05312499999999998
+    },
+    "explanation": "This is the angle whose sine we are finding."
+   },
+   {
+    "question": "Tap the coordinate for 150°.",
+    "answer_ids": [
+     "R15",
+     "R24"
+    ],
+    "answer_box": {
+     "x": 0.06328125,
+     "y": 0.2328125,
+     "w": 0.1515625,
+     "h": 0.11875
+    },
+    "explanation": "The coordinate gives the x- and y-values for that point on the unit circle."
+   },
+   {
+    "question": "Tap the y-value 1/2.",
+    "answer_ids": [
+     "R24"
+    ],
+    "answer_box": {
+     "x": 0.15,
+     "y": 0.28984375,
+     "w": 0.0640625,
+     "h": 0.06093749999999998
+    },
+    "explanation": "Sine equals the y-coordinate, so this is sin(150°)."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 15.978,
+   "ground": 2.492,
+   "total": 18.47,
+   "input_tokens": 7392.0,
+   "output_tokens": 1773.0,
+   "approx_agreement": 0.591
+  },
+  "warnings": [
+   "step 2 drawing 3: cue 'sin is' not in narration; using 'sine is'",
+   "step 3 drawing 2: span '1/2' not found in R24; using the whole target"
+  ],
+  "question": "What is sin(150°) and why?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 7392,
+  "output_tokens": 1773,
+  "seconds": 15.978
+ },
+ "checks": {
+  "value_half": {
+   "pass": true,
+   "evidence": "sin(150°) = 1/2 | sin(150°) = 1/2"
+  },
+  "y_coordinate": {
+   "pass": true,
+   "evidence": "y-value | sin = y"
+  },
+  "point_150": {
+   "pass": true,
+   "evidence": "-√3/2"
+  },
+  "reference_30": {
+   "pass": true,
+   "evidence": "reference angle | same height as 30°"
+  },
+  "quadrant_sign": {
+   "pass": true,
+   "evidence": "above the x-axis | quadrant ii"
+  }
+ },
+ "passed": 5,
+ "total": 5,
+ "score": 1.0,
+ "all_passed": true,
+ "checked_text": "we're answering: what is sin(150°)? i'll circle 150° first, because sine comes from the point on the unit circle at that angle.\nangle location\n\non this circle, each angle lands on an ordered pair. the sine is the vertical coordinate, so we only need the second number of the 150° point.\nlands here\nsin = y\n\nnow look just outside that blue point: the coordinate shown is (-√3/2, 1/2). since sine is y, grab the 1/2 part.\nthe y-value\n\n150° sits in quadrant ii, above the x-axis. above the x-axis means y is positive, so the sine value is positive.\nabove = +y\npositive sine\n\nthe reason it matches 1/2 is that 150° is 30° away from 180°. that reference angle has the same height as 30° on the right side.\n30° back\nsame height\n\nso the answer is sin(150°) = 1/2. we use the y-coordinate at 150°, and it is positive because the point is above the x-axis.\nsin150° = 1/2\nfind 150° -> read point\nread point -> take y-coordinate\ntake y-coordinate -> above x-axis\nabove x-axis -> positive 1/2"
+}

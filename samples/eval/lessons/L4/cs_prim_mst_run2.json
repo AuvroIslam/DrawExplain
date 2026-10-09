@@ -1,0 +1,1131 @@
+{
+ "version": "L4",
+ "note": "+ CPU scheduling and page replacement solvers",
+ "case": "cs_prim_mst",
+ "topic": "graph algorithms",
+ "run": 2,
+ "question": "Using Prim's algorithm starting from A, which edges are added to the minimum spanning tree, in what order, and what is the total weight?",
+ "source": "cs_prim_mst.png",
+ "page": null,
+ "backend": {
+  "path": "D:\\BananaHack\\backend",
+  "commit": "3e13ede",
+  "subject": "Add CPU scheduling and page replacement solvers",
+  "dirty": false
+ },
+ "started": "2026-10-09T23:39:02+06:00",
+ "finished": "2026-10-09T23:39:36+06:00",
+ "jobs": 3,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "D:\\BananaHack\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L4_cs_prim_mst_2_4jmg7b7l\\data",
+ "perceive_s": 4.214,
+ "perception": {
+  "image_id": "994177ec7029",
+  "width": 1280,
+  "height": 1073,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.186,
+   "ink": 0.11,
+   "ocr": 3.655,
+   "text": 0.019,
+   "rescue": 0.022,
+   "regions": 0.071,
+   "freespace": 0.003,
+   "som": 0.017,
+   "total": 4.083,
+   "prepare": 0.042
+  },
+  "regions": 28
+ },
+ "regions": {
+  "R1": "A",
+  "R3": "C",
+  "R4": "7",
+  "R8": "8",
+  "R9": "B",
+  "R11": "5",
+  "R12": "5",
+  "R13": "9",
+  "R14": "7",
+  "R15": "15",
+  "R16": "E",
+  "R17": "8 6",
+  "R18": "D",
+  "R19": "8",
+  "R20": "9",
+  "R21": "6",
+  "R25": "F",
+  "R26": "11",
+  "R28": "G"
+ },
+ "request": {
+  "image_id": "994177ec7029",
+  "question": "Using Prim's algorithm starting from A, which edges are added to the minimum spanning tree, in what order, and what is the total weight?"
+ },
+ "lesson_s": 24.605,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "40e89a374ced",
+  "image_id": "994177ec7029",
+  "title": "Prim’s Algorithm from A",
+  "summary": "We’ll run Prim’s algorithm on this weighted graph, starting at A. The MST grows by repeatedly adding the cheapest edge that connects the current tree to one new vertex.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Start at A",
+    "narration": "We’re answering the MST question by growing one tree from A. I’ll circle A as the starting vertex, then write the first cheapest connections A offers to its neighbors.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "circle A",
+      "geometry": {
+       "box": {
+        "x": 0.015000000000000003,
+        "y": 0.03746505125815471,
+        "w": 0.06296874999999999,
+        "h": 0.08070829450139794
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R10"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "B ∞→7 via A",
+      "cue": "connections A offers",
+      "geometry": {
+       "box": {
+        "x": 0.465625,
+        "y": 0.2190121155638397,
+        "w": 0.04921875000000003,
+        "h": 0.05591798695246969
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.20647035156250002,
+        "y": 0.21772110904007455,
+        "w": 0.23463492187499999,
+        "h": 0.058500000000000024
+       },
+       "leader": [
+        {
+         "x": 0.4443674769241229,
+         "y": 0.24697110904007455
+        },
+        {
+         "x": 0.4591005930267541,
+         "y": 0.24697110904007455
+        }
+       ]
+      },
+      "confidence": 0.981,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a3",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R18"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "D ∞→5 via A",
+      "cue": "connections A offers",
+      "geometry": {
+       "box": {
+        "x": 0.046875,
+        "y": 0.53215284249767,
+        "w": 0.03984375,
+        "h": 0.05684995340167753
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.046875,
+        "y": 0.6182527958993476,
+        "w": 0.234634921875,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.128807064891658,
+         "y": 0.6159215420136879
+        },
+        {
+         "x": 0.09194288342586958,
+         "y": 0.5830204810039471
+        }
+       ]
+      },
+      "confidence": 0.7,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s1a4",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "✓ start",
+      "cue": "starting vertex",
+      "geometry": {
+       "box": {
+        "x": 0.025,
+        "y": 0.049394221808014914,
+        "w": 0.04296874999999999,
+        "h": 0.05684995340167754
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.09248847656249999,
+        "y": 0.004,
+        "w": 0.156171796875,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.0893647858769877,
+         "y": 0.062417912792698683
+        },
+        {
+         "x": 0.07421613137102456,
+         "y": 0.06785882978696343
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Add A-D",
+    "narration": "Now the cheapest edge leaving the tree is A-D with weight 5, so D joins the tree. From D, we discover E at 15 and F at 6.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "highlight",
+      "color": "blue",
+      "target_ids": [
+       "R12"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "5",
+      "text": null,
+      "cue": "A-D with weight 5",
+      "geometry": {
+       "box": {
+        "x": 0.0671875,
+        "y": 0.29073625349487414,
+        "w": 0.02578125000000002,
+        "h": 0.04853681267474369
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.956,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R18"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "✓ add D",
+      "cue": "D joins",
+      "geometry": {
+       "box": {
+        "x": 0.046875,
+        "y": 0.53215284249767,
+        "w": 0.03984375,
+        "h": 0.05684995340167753
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.004,
+        "y": 0.44440284249767004,
+        "w": 0.156171796875,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.07627130039785643,
+         "y": 0.5067114483129417
+        },
+        {
+         "x": 0.07313624813591443,
+         "y": 0.524535630867127
+        }
+       ]
+      },
+      "confidence": 0.7,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R16"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "E ∞→15 via D",
+      "cue": "discover E",
+      "geometry": {
+       "box": {
+        "x": 0.84921875,
+        "y": 0.4725069897483691,
+        "w": 0.030468750000000044,
+        "h": 0.05591798695246969
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.7373277734375001,
+        "y": 0.3847569897483691,
+        "w": 0.254250703125,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.864453125,
+         "y": 0.4471485279243964
+        },
+        {
+         "x": 0.864453125,
+         "y": 0.46472391339631436
+        }
+       ]
+      },
+      "confidence": 0.7,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s2a4",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R22"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "F ∞→6 via D",
+      "cue": "F at 6",
+      "geometry": {
+       "box": {
+        "x": 0.46953125,
+        "y": 0.6710158434296365,
+        "w": 0.04999999999999999,
+        "h": 0.054986020503261845
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.21037660156250002,
+        "y": 0.7552518639328983,
+        "w": 0.23463492187499999,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.3874373434859155,
+         "y": 0.7537083421091868
+        },
+        {
+         "x": 0.46354199949791025,
+         "y": 0.7144816651152684
+        }
+       ]
+      },
+      "confidence": 0.94,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Add D-F",
+    "narration": "Among the outside vertices, F has the smallest known connection, D-F with weight 6. Adding F improves E from 15 to 8 and discovers G at 11.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R21"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "6",
+      "text": null,
+      "cue": "weight 6",
+      "geometry": {
+       "box": {
+        "x": 0.28046875,
+        "y": 0.6439515377446412,
+        "w": 0.02656249999999999,
+        "h": 0.048536812674743635
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.969,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R22"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "✓ add F",
+      "cue": "Adding F",
+      "geometry": {
+       "box": {
+        "x": 0.46953125,
+        "y": 0.6710158434296365,
+        "w": 0.04999999999999999,
+        "h": 0.054986020503261845
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.41644535156249995,
+        "y": 0.5832658434296365,
+        "w": 0.15617179687500005,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.49453125,
+         "y": 0.6456573816056638
+        },
+        {
+         "x": 0.49453125,
+         "y": 0.6632327670775818
+        }
+       ]
+      },
+      "confidence": 0.94,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R16"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "E 15→8 via F",
+      "cue": "improves E",
+      "geometry": {
+       "box": {
+        "x": 0.84921875,
+        "y": 0.4725069897483691,
+        "w": 0.030468750000000044,
+        "h": 0.05591798695246969
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.7373277734375001,
+        "y": 0.5576749767008388,
+        "w": 0.254250703125,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.864453125,
+         "y": 0.5537834385248115
+        },
+        {
+         "x": 0.864453125,
+         "y": 0.5362080530528935
+        }
+       ]
+      },
+      "confidence": 0.7,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s3a4",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R27"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "G ∞→11 via F",
+      "cue": "discovers G",
+      "geometry": {
+       "box": {
+        "x": 0.86328125,
+        "y": 0.7931034482758621,
+        "w": 0.04843750000000002,
+        "h": 0.05684995340167753
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.5845108203125,
+        "y": 0.8792034016775396,
+        "w": 0.254250703125,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.7738275821450706,
+         "y": 0.8777137837222444
+        },
+        {
+         "x": 0.8572537553487549,
+         "y": 0.8364783674385958
+        }
+       ]
+      },
+      "confidence": 0.949,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Add A-B",
+    "narration": "Next the cheapest outside connection is B through A with weight 7. When B joins, C becomes 8 and E improves again from 8 to 7.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "highlight",
+      "color": "orange",
+      "target_ids": [
+       "R4"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "7",
+      "text": null,
+      "cue": "weight 7",
+      "geometry": {
+       "box": {
+        "x": 0.26328125,
+        "y": 0.08301957129543336,
+        "w": 0.025000000000000022,
+        "h": 0.04738117427772598
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.969,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R10"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "✓ add B",
+      "cue": "B joins",
+      "geometry": {
+       "box": {
+        "x": 0.465625,
+        "y": 0.2190121155638397,
+        "w": 0.04921875000000003,
+        "h": 0.05591798695246969
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.4121484765625,
+        "y": 0.3480551025163094,
+        "w": 0.15617179687499994,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.490234375,
+         "y": 0.34416356434028206
+        },
+        {
+         "x": 0.490234375,
+         "y": 0.2827131788683641
+        }
+       ]
+      },
+      "confidence": 0.981,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R5"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "C ∞→8 via B",
+      "cue": "C becomes 8",
+      "geometry": {
+       "box": {
+        "x": 0.8765625,
+        "y": 0.08853681267474371,
+        "w": 0.04921874999999998,
+        "h": 0.0559179869524697
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.761365078125,
+        "y": 0.004,
+        "w": 0.234634921875,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8875852372628247,
+         "y": 0.06620394273376994
+        },
+        {
+         "x": 0.8916173081286682,
+         "y": 0.08112892720720384
+        }
+       ]
+      },
+      "confidence": 0.983,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a4",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R16"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "E 8→7 via B",
+      "cue": "E improves again",
+      "geometry": {
+       "box": {
+        "x": 0.84921875,
+        "y": 0.4725069897483691,
+        "w": 0.030468750000000044,
+        "h": 0.05591798695246969
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.7471356640625001,
+        "y": 0.6746749767008388,
+        "w": 0.234634921875,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8644531250000002,
+         "y": 0.6707834385248115
+        },
+        {
+         "x": 0.864453125,
+         "y": 0.5362080530528935
+        }
+       ]
+      },
+      "confidence": 0.7,
+      "grounding": "id_only"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Add B-E, then E-C",
+    "narration": "Now E is tied at 7 through B, so we add B-E. From E, C improves to 5 and G improves to 9; then E-C is the next cheapest edge.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "highlight",
+      "color": "blue",
+      "target_ids": [
+       "R14"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "7",
+      "text": null,
+      "cue": "add B-E",
+      "geometry": {
+       "box": {
+        "x": 0.6484375,
+        "y": 0.31787511649580613,
+        "w": 0.02499999999999991,
+        "h": 0.047381174277726035
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.962,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R16"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "✓ add E",
+      "cue": "add B-E",
+      "geometry": {
+       "box": {
+        "x": 0.84921875,
+        "y": 0.4725069897483691,
+        "w": 0.030468750000000044,
+        "h": 0.05591798695246969
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.5704483203124999,
+        "y": 0.6746749767008388,
+        "w": 0.15617179687500005,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.6821354085278187,
+         "y": 0.6722627921773426
+        },
+        {
+         "x": 0.8440989346004679,
+         "y": 0.5196456056283851
+        }
+       ]
+      },
+      "confidence": 0.7,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s5a3",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R5"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "C 8→5 via E",
+      "cue": "C improves",
+      "geometry": {
+       "box": {
+        "x": 0.8765625,
+        "y": 0.08853681267474371,
+        "w": 0.04921874999999998,
+        "h": 0.0559179869524697
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.761365078125,
+        "y": 0.1737047996272134,
+        "w": 0.234634921875,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8872576982250233,
+         "y": 0.16998808010509395
+        },
+        {
+         "x": 0.8919657499620419,
+         "y": 0.15188823867145232
+        }
+       ]
+      },
+      "confidence": 0.983,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a4",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R27"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "G 11→9 via E",
+      "cue": "G improves",
+      "geometry": {
+       "box": {
+        "x": 0.86328125,
+        "y": 0.7931034482758621,
+        "w": 0.04843750000000002,
+        "h": 0.05684995340167753
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.741749296875,
+        "y": 0.9375,
+        "w": 0.254250703125,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8731194659313444,
+         "y": 0.9336532243459154
+        },
+        {
+         "x": 0.8828676285222781,
+         "y": 0.8576469529857089
+        }
+       ]
+      },
+      "confidence": 0.949,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "Finish with E-G",
+    "narration": "E-C with weight 5 adds C, and no cheaper updates appear. The last outside vertex is G, so E-G with weight 9 finishes the tree.",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R11"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "5",
+      "text": null,
+      "cue": "weight 5",
+      "geometry": {
+       "box": {
+        "x": 0.871875,
+        "y": 0.2759366262814539,
+        "w": 0.025000000000000022,
+        "h": 0.04738117427772609
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.949,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R5"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "✓ add C",
+      "cue": "adds C",
+      "geometry": {
+       "box": {
+        "x": 0.8765625,
+        "y": 0.08853681267474371,
+        "w": 0.04921874999999998,
+        "h": 0.0559179869524697
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.6958709765625,
+        "y": 0.08724580615097857,
+        "w": 0.15617179687500005,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8553049769241229,
+         "y": 0.11649580615097857
+        },
+        {
+         "x": 0.8700380930267542,
+         "y": 0.11649580615097857
+        }
+       ]
+      },
+      "confidence": 0.983,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a3",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R20"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "9",
+      "text": null,
+      "cue": "weight 9",
+      "geometry": {
+       "box": {
+        "x": 0.859375,
+        "y": 0.6243802423112769,
+        "w": 0.026562500000000044,
+        "h": 0.048536812674743635
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.941,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a4",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R27"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "✓ add G",
+      "cue": "finishes the tree",
+      "geometry": {
+       "box": {
+        "x": 0.86328125,
+        "y": 0.7931034482758621,
+        "w": 0.04843750000000002,
+        "h": 0.05684995340167753
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.5845108203125,
+        "y": 0.9375,
+        "w": 0.15617179687500005,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.7107648064935753,
+         "y": 0.9356475388482356
+        },
+        {
+         "x": 0.8575434718309763,
+         "y": 0.8408715585172901
+        }
+       ]
+      },
+      "confidence": 0.949,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 7,
+    "title": "Result",
+    "narration": "So the MST edges, in order, are A-D, D-F, A-B, B-E, E-C, and E-G. Their weights add to 5+6+7+7+5+9 = 39.",
+    "annotations": [
+     {
+      "id": "s7a1",
+      "kind": "box",
+      "color": "red",
+      "target_ids": [
+       "R12",
+       "R21",
+       "R4",
+       "R14",
+       "R11",
+       "R20"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "MST edges",
+      "geometry": {
+       "box": {
+        "x": 0.029281249999999998,
+        "y": 0.03958993476234855,
+        "w": 0.9055,
+        "h": 0.6962162162162162
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.987,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart LR\nA[A start] --> D[add D]\nD --> F[add F]\nF --> B[add B]\nB --> E[add E]\nE --> C[add C]\nC --> G[add G]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the first edge Prim adds after starting at A.",
+    "answer_ids": [
+     "R12"
+    ],
+    "answer_box": {
+     "x": 0.06953125,
+     "y": 0.2954333643988816,
+     "w": 0.02109375000000001,
+     "h": 0.03914259086672878
+    },
+    "explanation": "A-D is the cheapest edge leaving the starting tree {A}, with weight 5."
+   },
+   {
+    "question": "Tap the edge that improves E from 8 to 7.",
+    "answer_ids": [
+     "R14"
+    ],
+    "answer_box": {
+     "x": 0.65078125,
+     "y": 0.32246039142590865,
+     "w": 0.020312499999999956,
+     "h": 0.03821062441752099
+    },
+    "explanation": "When B joins the tree, the connection to E through B has cost 7, better than 8 through F."
+   },
+   {
+    "question": "Tap the last vertex added to the MST.",
+    "answer_ids": [
+     "R27"
+    ],
+    "answer_box": {
+     "x": 0.86328125,
+     "y": 0.7931034482758621,
+     "w": 0.04843750000000002,
+     "h": 0.05684995340167753
+    },
+    "explanation": "After C is added, G remains outside and joins by E-G with weight 9."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 17.824,
+   "ground": 2.894,
+   "total": 24.577,
+   "input_tokens": 6822.0,
+   "output_tokens": 2415.0,
+   "approx_agreement": 0.786,
+   "verified_simulation": 1.0,
+   "sim_steps": 7.0,
+   "sim_extract": 3.839,
+   "sim_nodes": 7.0,
+   "sim_nodes_mapped": 7.0,
+   "sim_edges": 11.0,
+   "sim_edges_verified": 11.0,
+   "sim_edges_corrected": 0.0,
+   "sim_edges_added": 0.0,
+   "sim_edges_confirmed": 11.0
+  },
+  "warnings": [
+   "Verified simulation computed by code: Prim's minimum spanning tree from A (7 steps); checked against the image: 7/7 vertices matched to regions, 11/11 edge weights verified against the printed labels."
+  ],
+  "question": "Using Prim's algorithm starting from A, which edges are added to the minimum spanning tree, in what order, and what is the total weight?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 2,
+  "cache_hits": 0,
+  "input_tokens": 12005,
+  "output_tokens": 2741,
+  "seconds": 21.662
+ },
+ "checks": {
+  "edges_ad_df_ab": {
+   "pass": true,
+   "evidence": "a-d | d-f | a-b"
+  },
+  "edges_be_ce_eg": {
+   "pass": true,
+   "evidence": "b-e | e-c | e-g"
+  },
+  "prim_order": {
+   "pass": true,
+   "evidence": "a-d with weight 5, so d joins the tree. from d, we discover e at 15 and f at 6.\n✓ add d\ne ∞ -> 15 via d\nf ∞ -> 6 via d\n\namong the outside vertices, f has the smallest known connection, d-f with weight 6. adding f improves e from 15 to 8 and discovers g at 11.\n✓ add f\ne 15 -> 8 via f\ng ∞ -> 11 via f\n\nnext the cheapest outside connection is b through a with weight 7. when b joins, c becomes 8 and e improves again from 8 to 7.\n✓ add b\nc ∞ -> 8 via b\ne 8 -> 7 via b\n\nnow e is tied at 7 through b, so we add b-e. from e, c improves to 5 and g improves to 9; then e-c is the next cheapest edge.\n✓ add e\nc 8 -> 5 via e\ng 11 -> 9 via e\n\ne-c with weight 5 adds c, and no cheaper updates appear. the last outside vertex is g, so e-g with weight 9 finishes the tree.\n✓ add c\n✓ add g\n\nso the mst edges, in order, are a-d, d-f, a-b, b-e, e-c, and e-g"
+  },
+  "total_39": {
+   "pass": true,
+   "evidence": "39"
+  },
+  "skips_cycle_edges": {
+   "pass": false,
+   "evidence": "MISSING any: 0 of 4 matched, need 1"
+  }
+ },
+ "passed": 4,
+ "total": 5,
+ "score": 0.8,
+ "all_passed": false,
+ "checked_text": "we're answering the mst question by growing one tree from a. i'll circle a as the starting vertex, then write the first cheapest connections a offers to its neighbors.\nb ∞ -> 7 via a\nd ∞ -> 5 via a\n✓ start\n\nnow the cheapest edge leaving the tree is a-d with weight 5, so d joins the tree. from d, we discover e at 15 and f at 6.\n✓ add d\ne ∞ -> 15 via d\nf ∞ -> 6 via d\n\namong the outside vertices, f has the smallest known connection, d-f with weight 6. adding f improves e from 15 to 8 and discovers g at 11.\n✓ add f\ne 15 -> 8 via f\ng ∞ -> 11 via f\n\nnext the cheapest outside connection is b through a with weight 7. when b joins, c becomes 8 and e improves again from 8 to 7.\n✓ add b\nc ∞ -> 8 via b\ne 8 -> 7 via b\n\nnow e is tied at 7 through b, so we add b-e. from e, c improves to 5 and g improves to 9; then e-c is the next cheapest edge.\n✓ add e\nc 8 -> 5 via e\ng 11 -> 9 via e\n\ne-c with weight 5 adds c, and no cheaper updates appear. the last outside vertex is g, so e-g with weight 9 finishes the tree.\n✓ add c\n✓ add g\n\nso the mst edges, in order, are a-d, d-f, a-b, b-e, e-c, and e-g. their weights add to 5+6+7+7+5+9 = 39.\na start -> add d\nadd d -> add f\nadd f -> add b\nadd b -> add e\nadd e -> add c\nadd c -> add g"
+}

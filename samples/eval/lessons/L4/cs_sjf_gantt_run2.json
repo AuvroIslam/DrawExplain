@@ -1,0 +1,1216 @@
+{
+ "version": "L4",
+ "note": "+ CPU scheduling and page replacement solvers",
+ "case": "cs_sjf_gantt",
+ "topic": "operating systems",
+ "run": 2,
+ "question": "This chart shows non-preemptive Shortest Job First. Why do P9, P8 and P7 run in that order, why does P12 wait so long, and what is the average waiting time?",
+ "source": "cs_sjf_gantt.png",
+ "page": null,
+ "backend": {
+  "path": "D:\\BananaHack\\backend",
+  "commit": "3e13ede",
+  "subject": "Add CPU scheduling and page replacement solvers",
+  "dirty": false
+ },
+ "started": "2026-10-09T23:40:46+06:00",
+ "finished": "2026-10-09T23:41:36+06:00",
+ "jobs": 3,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "D:\\BananaHack\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L4_cs_sjf_gantt_2_k4nu94lq\\data",
+ "perceive_s": 11.103,
+ "perception": {
+  "image_id": "fcaf25f86a2e",
+  "width": 1600,
+  "height": 970,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.221,
+   "ink": 0.19,
+   "ocr": 9.794,
+   "text": 0.046,
+   "rescue": 0.425,
+   "regions": 0.13,
+   "freespace": 0.006,
+   "som": 0.042,
+   "total": 10.854,
+   "prepare": 0.102
+  },
+  "regions": 68
+ },
+ "regions": {
+  "R2": "Pr oces s\n(arrival time, burst time)",
+  "R3": "Pr oces s",
+  "R4": "Time",
+  "R5": "(arrival time, burst time)",
+  "R7": "2\n1",
+  "R8": "1",
+  "R9": "2",
+  "R10": "3\n4",
+  "R11": "3",
+  "R12": "4",
+  "R13": "5\n6\n7\n8\n9\n10\n11\n12\n13\n14",
+  "R14": "5",
+  "R15": "6",
+  "R16": "7",
+  "R17": "8",
+  "R18": "9",
+  "R19": "10",
+  "R20": "11",
+  "R21": "12",
+  "R22": "13",
+  "R23": "14",
+  "R24": "161718192021222324\n15",
+  "R25": "15",
+  "R26": "161718192021222324",
+  "R27": "P1(0, 1)\nP2(0, 1)\nP3(0, 1)\nP4(3, 1)\nP5(3, 2)\nP6(3, 3)\nP7(7, 3)\nP8(7, 2)\nP9(7, 1)\nP10(13, 1)\nP11(13, 2)\nP12(13, 3)\nP13(17, 1)\nP14(17, 2)",
+  "R28": "P1(0, 1)",
+  "R29": "P2(0, 1)",
+  "R31": "P3(0, 1)",
+  "R34": "P4(3, 1)",
+  "R35": "P5(3, 2)",
+  "R38": "P6(3, 3)",
+  "R41": "P7(7, 3)",
+  "R47": "P8(7, 2)",
+  "R50": "P9(7, 1)",
+  "R52": "P10(13, 1)",
+  "R54": "P11(13, 2)",
+  "R57": "P12(13, 3)",
+  "R60": "P13(17, 1)",
+  "R62": "P14(17, 2)",
+  "R66": "wait time\nburst time",
+  "R67": "wait time",
+  "R68": "burst time"
+ },
+ "request": {
+  "image_id": "fcaf25f86a2e",
+  "question": "This chart shows non-preemptive Shortest Job First. Why do P9, P8 and P7 run in that order, why does P12 wait so long, and what is the average waiting time?"
+ },
+ "lesson_s": 35.973,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "54977a83ecae",
+  "image_id": "fcaf25f86a2e",
+  "title": "Non-preemptive SJF on this chart",
+  "summary": "This Gantt-style chart shows non-preemptive Shortest Job First: whenever the CPU becomes free, choose the ready process with the smallest burst and run it to completion. That rule explains P9 → P8 → P7, why P12 is delayed, and gives an average waiting time of 33/14 = 2.36.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Orient: shortest ready job wins",
+    "narration": "This page is a non-preemptive SJF schedule: gray is waiting, black is running. We’ll answer your question by following each CPU-free moment, not by eyeballing the bars.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R6"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "SJF schedule",
+      "geometry": {
+       "box": {
+        "x": 0.13670312499999995,
+        "y": 0.0,
+        "w": 0.8632968750000001,
+        "h": 0.872603092783505
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "highlight",
+      "color": "orange",
+      "target_ids": [
+       "R67"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "wait time",
+      "text": null,
+      "cue": "gray is waiting",
+      "geometry": {
+       "box": {
+        "x": 0.03,
+        "y": 0.9428865979381443,
+        "w": 0.090625,
+        "h": 0.025567010309278326
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.7,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s1a3",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R67"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "burst time",
+      "text": null,
+      "cue": "black is running",
+      "geometry": {
+       "box": {
+        "x": 0.03,
+        "y": 0.9428865979381443,
+        "w": 0.090625,
+        "h": 0.025567010309278326
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.757,
+      "grounding": "cv_snap"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "First arrivals at time 0",
+    "narration": "At time 0, P1, P2, and P3 are all ready with burst 1. The tie goes by listing order, so P1 runs first, then P2, then P3.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "box",
+      "color": "blue",
+      "target_ids": [
+       "R28",
+       "R29",
+       "R31"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "P1, P2, and P3",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.17670103092783507,
+        "w": 0.08412499999999999,
+        "h": 0.1496907216494846
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "P1 wait 0",
+      "cue": "P1 runs first",
+      "geometry": {
+       "box": {
+        "x": 0.269375,
+        "y": 0.1865979381443299,
+        "w": 0.03187499999999999,
+        "h": 0.02577319587628865
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.17828125,
+        "y": 0.18273195876288661,
+        "w": 0.0809375,
+        "h": 0.03350515463917525
+       },
+       "leader": [
+        {
+         "x": 0.25921875,
+         "y": 0.19948453608247424
+        },
+        {
+         "x": 0.269375,
+         "y": 0.19948453608247424
+        }
+       ]
+      },
+      "confidence": 0.441,
+      "grounding": "llm_only"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R30"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "P2 wait 1",
+      "cue": "then P2",
+      "geometry": {
+       "box": {
+        "x": 0.269375,
+        "y": 0.2381443298969072,
+        "w": 0.06312499999999999,
+        "h": 0.028865979381443307
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.17828125,
+        "y": 0.23582474226804123,
+        "w": 0.0809375,
+        "h": 0.03350515463917525
+       },
+       "leader": [
+        {
+         "x": 0.25921875,
+         "y": 0.25257731958762886
+        },
+        {
+         "x": 0.2693749999999999,
+         "y": 0.25257731958762886
+        }
+       ]
+      },
+      "confidence": 0.931,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a4",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R32"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "P3 wait 2",
+      "cue": "then P3",
+      "geometry": {
+       "box": {
+        "x": 0.269375,
+        "y": 0.28969072164948456,
+        "w": 0.09249999999999997,
+        "h": 0.02989690721649485
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.17828125,
+        "y": 0.28788659793814436,
+        "w": 0.0809375,
+        "h": 0.03350515463917525
+       },
+       "leader": [
+        {
+         "x": 0.25921875,
+         "y": 0.30463917525773193
+        },
+        {
+         "x": 0.2693749999999999,
+         "y": 0.30463917525773193
+        }
+       ]
+      },
+      "confidence": 0.92,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Time 3 group: P4, P5, P6",
+    "narration": "At time 3, the ready bursts are P4=1, P5=2, and P6=3. SJF picks them in increasing burst length: P4, then P5, then P6.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "box",
+      "color": "blue",
+      "target_ids": [
+       "R34",
+       "R35",
+       "R38"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "At time 3",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.33340206185567006,
+        "w": 0.08412499999999999,
+        "h": 0.14969072164948466
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R33"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "P4 wait 0",
+      "cue": "P4",
+      "geometry": {
+       "box": {
+        "x": 0.35625,
+        "y": 0.33505154639175255,
+        "w": 0.03437499999999999,
+        "h": 0.057731958762886615
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.26515625000000004,
+        "y": 0.4095360824742268,
+        "w": 0.0809375,
+        "h": 0.03350515463917525
+       },
+       "leader": [
+        {
+         "x": 0.32639251664493796,
+         "y": 0.4071875565468194
+        },
+        {
+         "x": 0.35114316918946287,
+         "y": 0.38442292956872054
+        }
+       ]
+      },
+      "confidence": 0.933,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R37"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "P5 wait 1",
+      "cue": "then P5",
+      "geometry": {
+       "box": {
+        "x": 0.385,
+        "y": 0.3938144329896907,
+        "w": 0.06437500000000002,
+        "h": 0.028865979381443307
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.278671875,
+        "y": 0.4645618556701031,
+        "w": 0.0809375,
+        "h": 0.03350515463917525
+       },
+       "leader": [
+        {
+         "x": 0.3442847618607353,
+         "y": 0.4625763864459202
+        },
+        {
+         "x": 0.3924917086418451,
+         "y": 0.4266513508194998
+        }
+       ]
+      },
+      "confidence": 0.948,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a4",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R40"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "P6 wait 3",
+      "cue": "then P6",
+      "geometry": {
+       "box": {
+        "x": 0.44375,
+        "y": 0.4463917525773196,
+        "w": 0.09312500000000001,
+        "h": 0.028865979381443307
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.44984375,
+        "y": 0.39613402061855674,
+        "w": 0.0809375,
+        "h": 0.03350515463917525
+       },
+       "leader": [
+        {
+         "x": 0.4903125,
+         "y": 0.42963917525773193
+        },
+        {
+         "x": 0.4903125,
+         "y": 0.4463917525773196
+        }
+       ]
+      },
+      "confidence": 0.955,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Why P9, P8, P7 run in that order",
+    "narration": "Here’s the key part: P7, P8, and P9 all arrive at 7, but the CPU is busy with P6 until 9. At 9, their bursts are 3, 2, and 1, so SJF runs P9, then P8, then P7.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "box",
+      "color": "blue",
+      "target_ids": [
+       "R41",
+       "R47",
+       "R50"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "P7, P8, and P9",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.49113402061855665,
+        "w": 0.08412499999999999,
+        "h": 0.148659793814433
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R40"
+      ],
+      "to_ids": [
+       "R51"
+      ],
+      "span": null,
+      "text": "CPU frees",
+      "cue": "until 9",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.4959131428263497,
+         "y": 0.4899678470377385
+        },
+        {
+         "x": 0.512703428256009,
+         "y": 0.535907883345689
+        },
+        {
+         "x": 0.5150243571736504,
+         "y": 0.5894135962612305
+        }
+       ],
+       "label_box": {
+        "x": 0.37361733912800443,
+        "y": 0.521046725177999,
+        "w": 0.0809375,
+        "h": 0.03350515463917525
+       },
+       "leader": null
+      },
+      "confidence": 0.914,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R51"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "P9 wait 2",
+      "cue": "runs P9",
+      "geometry": {
+       "box": {
+        "x": 0.474375,
+        "y": 0.6041237113402061,
+        "w": 0.09250000000000003,
+        "h": 0.028865979381443307
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.57703125,
+        "y": 0.6018041237113402,
+        "w": 0.0809375,
+        "h": 0.03350515463917525
+       },
+       "leader": [
+        {
+         "x": 0.57703125,
+         "y": 0.6185567010309279
+        },
+        {
+         "x": 0.566875,
+         "y": 0.6185567010309279
+        }
+       ]
+      },
+      "confidence": 0.914,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a4",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R49"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "P8 wait 3",
+      "cue": "then P8",
+      "geometry": {
+       "box": {
+        "x": 0.560625,
+        "y": 0.5505154639175258,
+        "w": 0.06437499999999996,
+        "h": 0.02989690721649485
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.63515625,
+        "y": 0.5487113402061855,
+        "w": 0.0809375,
+        "h": 0.03350515463917525
+       },
+       "leader": [
+        {
+         "x": 0.63515625,
+         "y": 0.5654639175257731
+        },
+        {
+         "x": 0.625,
+         "y": 0.5654639175257732
+        }
+       ]
+      },
+      "confidence": 0.945,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "P7 finishes that trio",
+    "narration": "After P9 and P8 finish, only P7 remains from the time-7 group. It finally runs 12 to 15, so its waiting time is 12 minus 7, which is 5.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R41"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "only P7 remains",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.4845360824742268,
+        "w": 0.09125000000000001,
+        "h": 0.05773195876288656
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.954,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R43"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "P7 wait 5",
+      "cue": "runs 12 to 15",
+      "geometry": {
+       "box": {
+        "x": 0.619375,
+        "y": 0.49896907216494846,
+        "w": 0.09312500000000001,
+        "h": 0.028865979381443307
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.62546875,
+        "y": 0.4487113402061856,
+        "w": 0.0809375,
+        "h": 0.03350515463917525
+       },
+       "leader": [
+        {
+         "x": 0.6659375,
+         "y": 0.48221649484536083
+        },
+        {
+         "x": 0.6659375,
+         "y": 0.49896907216494846
+        }
+       ]
+      },
+      "confidence": 0.95,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R42"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "12−7=5",
+      "cue": "12 minus 7",
+      "geometry": {
+       "box": {
+        "x": 0.474375,
+        "y": 0.49896907216494846,
+        "w": 0.23875000000000002,
+        "h": 0.02989690721649485
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.56546875,
+        "y": 0.4487113402061856,
+        "w": 0.05656249999999996,
+        "h": 0.03350515463917525
+       },
+       "leader": [
+        {
+         "x": 0.59375,
+         "y": 0.48221649484536083
+        },
+        {
+         "x": 0.59375,
+         "y": 0.49896907216494846
+        }
+       ]
+      },
+      "confidence": 0.931,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "Why P12 waits so long",
+    "narration": "Now look at P12: it arrives at 13, but at each choice point a shorter ready job exists. P10 and P11 go first, then new arrivals P13 and P14 are shorter than P12.",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R57"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "look at P12",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.7453608247422681,
+        "w": 0.11401562500000002,
+        "h": 0.057731958762886615
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.938,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R53"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "P10 wait 2",
+      "cue": "P10",
+      "geometry": {
+       "box": {
+        "x": 0.65,
+        "y": 0.656701030927835,
+        "w": 0.09250000000000003,
+        "h": 0.028865979381443307
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.535546875,
+        "y": 0.7274484536082474,
+        "w": 0.08906250000000004,
+        "h": 0.03350515463917525
+       },
+       "leader": [
+        {
+         "x": 0.6094453491947579,
+         "y": 0.7257303359081216
+        },
+        {
+         "x": 0.6678390745381738,
+         "y": 0.6890032457095299
+        }
+       ]
+      },
+      "confidence": 0.913,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R56"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "P11 wait 3",
+      "cue": "P11 go first",
+      "geometry": {
+       "box": {
+        "x": 0.73625,
+        "y": 0.7072164948453609,
+        "w": 0.06437499999999996,
+        "h": 0.02989690721649485
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.8107812499999999,
+        "y": 0.7054123711340207,
+        "w": 0.08906250000000004,
+        "h": 0.03350515463917525
+       },
+       "leader": [
+        {
+         "x": 0.81078125,
+         "y": 0.7221649484536082
+        },
+        {
+         "x": 0.800625,
+         "y": 0.7221649484536082
+        }
+       ]
+      },
+      "confidence": 0.937,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a4",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "P13 wait 1",
+      "cue": "P13",
+      "geometry": {
+       "box": {
+        "x": 0.794375,
+        "y": 0.8,
+        "w": 0.03500000000000003,
+        "h": 0.024742268041237137
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.7673437500000001,
+        "y": 0.9085051546391754,
+        "w": 0.08906250000000004,
+        "h": 0.03350515463917525
+       },
+       "leader": [
+        {
+         "x": 0.8118750000000001,
+         "y": 0.9036828113065885
+        },
+        {
+         "x": 0.811875,
+         "y": 0.8343869547064109
+        }
+       ]
+      },
+      "confidence": 0.45,
+      "grounding": "llm_refined"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 7,
+    "title": "P12 finally runs last",
+    "narration": "At time 19, P14 is still shorter than P12, so P14 runs before it. Only at time 21 is P12 the only ready process, so P12 waits 21 minus 13: 8 units.",
+    "annotations": [
+     {
+      "id": "s7a1",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "P14 wait 2",
+      "cue": "P14 runs before",
+      "geometry": {
+       "box": {
+        "x": 0.82375,
+        "y": 0.865979381443299,
+        "w": 0.06312499999999999,
+        "h": 0.02268041237113405
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.89703125,
+        "y": 0.9054123711340207,
+        "w": 0.08906250000000004,
+        "h": 0.03350515463917525
+       },
+       "leader": [
+        {
+         "x": 0.9065543722934468,
+         "y": 0.9039626050472428
+        },
+        {
+         "x": 0.8826994450682788,
+         "y": 0.891559325987989
+        }
+       ]
+      },
+      "confidence": 0.579,
+      "grounding": "llm_refined"
+     },
+     {
+      "id": "s7a2",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R59"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "P12 wait 8",
+      "cue": "P12 waits",
+      "geometry": {
+       "box": {
+        "x": 0.8825,
+        "y": 0.7597938144329897,
+        "w": 0.09312500000000001,
+        "h": 0.02989690721649485
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.8865624999999999,
+        "y": 0.8734536082474227,
+        "w": 0.08906250000000004,
+        "h": 0.03350515463917525
+       },
+       "leader": [
+        {
+         "x": 0.9307142380530402,
+         "y": 0.8686332939269749
+        },
+        {
+         "x": 0.9294950730010626,
+         "y": 0.7993313502903803
+        }
+       ]
+      },
+      "confidence": 0.938,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s7a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R58"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "21−13=8",
+      "cue": "21 minus 13",
+      "geometry": {
+       "box": {
+        "x": 0.65,
+        "y": 0.7608247422680412,
+        "w": 0.326875,
+        "h": 0.02989690721649485
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.65,
+        "y": 0.8744845360824742,
+        "w": 0.06468750000000001,
+        "h": 0.03350515463917525
+       },
+       "leader": [
+        {
+         "x": 0.7039429666291455,
+         "y": 0.8722130930541127
+        },
+        {
+         "x": 0.791307705134566,
+         "y": 0.7952645355412593
+        }
+       ]
+      },
+      "confidence": 0.927,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 8,
+    "title": "Average waiting time",
+    "narration": "So the answer is: P9, P8, P7 run by burst lengths 1, 2, 3; P12 waits because shorter jobs keep appearing. Adding all waits gives 33, and 33 divided by 14 is 2.36.",
+    "annotations": [
+     {
+      "id": "s8a1",
+      "kind": "box",
+      "color": "purple",
+      "target_ids": [
+       "R27"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "Adding all waits",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.1741443298969072,
+        "w": 0.10505000000000002,
+        "h": 0.7300618556701032
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s8a2",
+      "kind": "label",
+      "color": "purple",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "33/14 = 2.36",
+      "cue": "33 divided by 14",
+      "geometry": {
+       "box": {
+        "x": 0.113,
+        "y": 0.87,
+        "w": 0.18,
+        "h": 0.05999999999999994
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.15034375,
+        "y": 0.9467525773195876,
+        "w": 0.10531250000000003,
+        "h": 0.03350515463917525
+       },
+       "leader": [
+        {
+         "x": 0.203,
+         "y": 0.9467525773195876
+        },
+        {
+         "x": 0.203,
+         "y": 0.9299999999999999
+        }
+       ]
+      },
+      "confidence": 0.3,
+      "grounding": "llm_only"
+     }
+    ],
+    "sketch": "flowchart LR\nA[CPU free] --> B[Find ready jobs]\nB --> C[Pick shortest burst]\nC --> D[Run to finish]\nD --> E[Record wait]\nE --> A"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the P9 burst bar.",
+    "answer_ids": [
+     "R51"
+    ],
+    "answer_box": {
+     "x": 0.474375,
+     "y": 0.6041237113402061,
+     "w": 0.09250000000000003,
+     "h": 0.028865979381443307
+    },
+    "explanation": "P9 has burst 1, so among P7, P8, and P9 it is chosen first at time 9."
+   },
+   {
+    "question": "Tap the P12 wait bar.",
+    "answer_ids": [
+     "R58"
+    ],
+    "answer_box": {
+     "x": 0.65,
+     "y": 0.7608247422680412,
+     "w": 0.326875,
+     "h": 0.02989690721649485
+    },
+    "explanation": "This long gray segment shows P12 waiting from arrival at 13 until it runs at 21."
+   },
+   {
+    "question": "Tap the burst time legend.",
+    "answer_ids": [
+     "R67"
+    ],
+    "answer_box": {
+     "x": 0.031875,
+     "y": 0.945360824742268,
+     "w": 0.086875,
+     "h": 0.020618556701030966
+    },
+    "explanation": "The legend tells us the black bars are CPU burst/run time, which SJF compares."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 22.041,
+   "ground": 2.657,
+   "total": 35.936,
+   "input_tokens": 8498.0,
+   "output_tokens": 2845.0,
+   "approx_agreement": 0.828,
+   "verified_simulation": 1.0,
+   "sim_steps": 14.0,
+   "sim_extract": 11.227
+  },
+  "warnings": [
+   "Verified simulation computed by code: CPU scheduling, shortest job first (SJF, non-preemptive) (14 steps); checked against the image: 14/14 processes printed with these arrival and burst times.",
+   "step 1 drawing 3: span 'burst time' not found in R67; using the whole target"
+  ],
+  "question": "This chart shows non-preemptive Shortest Job First. Why do P9, P8 and P7 run in that order, why does P12 wait so long, and what is the average waiting time?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 2,
+  "cache_hits": 0,
+  "input_tokens": 14897,
+  "output_tokens": 3171,
+  "seconds": 33.266999999999996
+ },
+ "checks": {
+  "order_p9_p8_p7": {
+   "pass": true,
+   "evidence": "p9, then p8, then p7"
+  },
+  "waits_p7_p8_p9": {
+   "pass": true,
+   "evidence": "p9 wait 2 | p8 wait 3 | p7 wait 5"
+  },
+  "p12_waits_8": {
+   "pass": true,
+   "evidence": "p12 wait 8 | p13 | p14 | shorter"
+  },
+  "total_33": {
+   "pass": true,
+   "evidence": "33"
+  },
+  "average_2_36": {
+   "pass": true,
+   "evidence": "33/14 | 2.36"
+  }
+ },
+ "passed": 5,
+ "total": 5,
+ "score": 1.0,
+ "all_passed": true,
+ "checked_text": "this page is a non-preemptive sjf schedule: gray is waiting, black is running. we'll answer your question by following each cpu-free moment, not by eyeballing the bars.\n\nat time 0, p1, p2, and p3 are all ready with burst 1. the tie goes by listing order, so p1 runs first, then p2, then p3.\np1 wait 0\np2 wait 1\np3 wait 2\n\nat time 3, the ready bursts are p4=1, p5=2, and p6=3. sjf picks them in increasing burst length: p4, then p5, then p6.\np4 wait 0\np5 wait 1\np6 wait 3\n\nhere's the key part: p7, p8, and p9 all arrive at 7, but the cpu is busy with p6 until 9. at 9, their bursts are 3, 2, and 1, so sjf runs p9, then p8, then p7.\ncpu frees\np9 wait 2\np8 wait 3\n\nafter p9 and p8 finish, only p7 remains from the time-7 group. it finally runs 12 to 15, so its waiting time is 12 minus 7, which is 5.\np7 wait 5\n12-7=5\n\nnow look at p12: it arrives at 13, but at each choice point a shorter ready job exists. p10 and p11 go first, then new arrivals p13 and p14 are shorter than p12.\np10 wait 2\np11 wait 3\np13 wait 1\n\nat time 19, p14 is still shorter than p12, so p14 runs before it. only at time 21 is p12 the only ready process, so p12 waits 21 minus 13: 8 units.\np14 wait 2\np12 wait 8\n21-13=8\n\nso the answer is: p9, p8, p7 run by burst lengths 1, 2, 3; p12 waits because shorter jobs keep appearing. adding all waits gives 33, and 33 divided by 14 is 2.36.\n33/14 = 2.36\ncpu free -> find ready jobs\nfind ready jobs -> pick shortest burst\npick shortest burst -> run to finish\nrun to finish -> record wait\nrecord wait -> cpu free"
+}

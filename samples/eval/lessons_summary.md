@@ -1,55 +1,56 @@
 # Lesson-quality benchmark
 
-Does the tutor teach the procedure on the page correctly? 20 fixed pages with a focus question each (the 3 core cases with hand-written checks, plus 17 bench cases from `samples/bench/cases/` with declarative regex checks); every run is a real lesson from `POST /api/lessons`, scored by automatic fact checks (`backend/scripts/eval_lessons.py`). Model gpt-5.5 (reasoning effort low); LLM cache off and a fresh data dir per run, so the runs are independent; run on 2026-10-09. Lessons were made 2, 3 at a time per version.
+Does the tutor teach the procedure on the page correctly? 20 fixed pages with a focus question each (the 3 core cases with hand-written checks, plus 17 bench cases from `samples/bench/cases/` with declarative regex checks); every run is a real lesson from `POST /api/lessons`, scored by automatic fact checks (`backend/scripts/eval_lessons.py`). Model gpt-5.5 (reasoning effort low); LLM cache off and a fresh data dir per run, so the runs are independent; run on 2026-10-09. Lessons were made 1, 2, 3 at a time per version.
 
 | version | backend commit | what it adds | lessons | verdicts checked by hand |
 |---|---|---|---|---|
 | L0 | `3da1980` Add PDF reader mode with page context | teach-by-doing rule only (no simulation rule) | 9 ok / 9 | yes, all 45 (2026-10-09) |
 | L2 | `6dbe976` Simulate procedures faithfully, deepen board colours | + general simulate-don't-shortcut rule | 43 ok / 43 | core: all 45 verdicts; bench: every failed verdict (2026-10-09) |
 | L3 | `6085db5` Add results log of all measurements (+ uncommitted changes) (7 runs); `0b90f8e` Harden perception against native OpenCV failures (+ uncommitted changes) (36 runs) | solver-backed simulation + GPU perception | 43 ok / 43 | every failed verdict, core and bench (2026-10-09) |
+| L4 | `3e13ede` Add CPU scheduling and page replacement solvers | + CPU scheduling and page replacement solvers | 43 ok / 43 | every failed verdict, core and bench (2026-10-10) |
 
 ## Overview: mean score (share of checks passed) and runs passing every check
 
-| case | L0 | L2 | L3 |
-|---|---|---|---|
-| dijkstra_AtoE | 0.47 (0/3 all) | 0.93 (2/3 all) | 1.00 (3/3 all) |
-| tcp_cwnd | 0.73 (0/3 all) | 0.73 (0/3 all) | 1.00 (3/3 all) |
-| flowchart_invalid_twice | 1.00 (3/3 all) | 1.00 (3/3 all) | 1.00 (3/3 all) |
-| math_calvin_cycle | n/a | 1.00 (2/2 all) | 0.90 (1/2 all) |
-| cs_bst_insert | n/a | 1.00 (2/2 all) | 1.00 (2/2 all) |
-| cs_bfs_dfs | n/a | 1.00 (2/2 all) | 1.00 (2/2 all) |
-| cs_dijkstra_a_to_e | n/a | 1.00 (2/2 all) | 1.00 (2/2 all) |
-| cs_prim_mst | n/a | 0.80 (0/2 all) | 0.80 (0/2 all) |
-| math_derivative_tangent | n/a | 1.00 (2/2 all) | 1.00 (2/2 all) |
-| math_pythagoras | n/a | 0.30 (0/2 all) | 0.60 (0/2 all) |
-| math_quadratic | n/a | 1.00 (2/2 all) | 1.00 (2/2 all) |
-| math_unit_circle | n/a | 0.90 (1/2 all) | 0.80 (0/2 all) |
-| cs_gbn_vs_sr | n/a | 0.70 (0/2 all) | 0.80 (0/2 all) |
-| cs_tcp_handshake | n/a | 1.00 (2/2 all) | 0.90 (1/2 all) |
-| cs_deadlock_rag | n/a | 0.50 (0/2 all) | 0.20 (0/2 all) |
-| cs_lru_cache | n/a | 1.00 (2/2 all) | 1.00 (2/2 all) |
-| cs_sjf_gantt | n/a | 0.30 (0/2 all) | 0.40 (0/2 all) |
-| math_kinematics | n/a | 0.90 (1/2 all) | 0.80 (0/2 all) |
-| math_ohm_internal_resistance | n/a | 1.00 (2/2 all) | 1.00 (2/2 all) |
-| math_parallel_meters | n/a | 1.00 (2/2 all) | 1.00 (2/2 all) |
-| **all cases** | **0.73 (3/9 all)** | **0.86 (27/43 all)** | **0.87 (27/43 all)** |
+| case | L0 | L2 | L3 | L4 |
+|---|---|---|---|---|
+| dijkstra_AtoE | 0.47 (0/3 all) | 0.93 (2/3 all) | 1.00 (3/3 all) | 1.00 (3/3 all) |
+| tcp_cwnd | 0.73 (0/3 all) | 0.73 (0/3 all) | 1.00 (3/3 all) | 0.93 (2/3 all) |
+| flowchart_invalid_twice | 1.00 (3/3 all) | 1.00 (3/3 all) | 1.00 (3/3 all) | 1.00 (3/3 all) |
+| math_calvin_cycle | n/a | 1.00 (2/2 all) | 0.90 (1/2 all) | 1.00 (2/2 all) |
+| cs_bst_insert | n/a | 1.00 (2/2 all) | 1.00 (2/2 all) | 0.90 (1/2 all) |
+| cs_bfs_dfs | n/a | 1.00 (2/2 all) | 1.00 (2/2 all) | 0.90 (1/2 all) |
+| cs_dijkstra_a_to_e | n/a | 1.00 (2/2 all) | 1.00 (2/2 all) | 1.00 (2/2 all) |
+| cs_prim_mst | n/a | 0.80 (0/2 all) | 0.80 (0/2 all) | 0.80 (0/2 all) |
+| math_derivative_tangent | n/a | 1.00 (2/2 all) | 1.00 (2/2 all) | 1.00 (2/2 all) |
+| math_pythagoras | n/a | 0.30 (0/2 all) | 0.60 (0/2 all) | 1.00 (2/2 all) |
+| math_quadratic | n/a | 1.00 (2/2 all) | 1.00 (2/2 all) | 1.00 (2/2 all) |
+| math_unit_circle | n/a | 0.90 (1/2 all) | 0.80 (0/2 all) | 1.00 (2/2 all) |
+| cs_gbn_vs_sr | n/a | 0.80 (0/2 all) | 0.80 (0/2 all) | 0.70 (0/2 all) |
+| cs_tcp_handshake | n/a | 1.00 (2/2 all) | 0.90 (1/2 all) | 1.00 (2/2 all) |
+| cs_deadlock_rag | n/a | 0.50 (0/2 all) | 0.30 (0/2 all) | 0.50 (0/2 all) |
+| cs_lru_cache | n/a | 1.00 (2/2 all) | 1.00 (2/2 all) | 1.00 (2/2 all) |
+| cs_sjf_gantt | n/a | 0.30 (0/2 all) | 0.40 (0/2 all) | 1.00 (2/2 all) |
+| math_kinematics | n/a | 0.90 (1/2 all) | 0.80 (0/2 all) | 0.80 (0/2 all) |
+| math_ohm_internal_resistance | n/a | 1.00 (2/2 all) | 1.00 (2/2 all) | 0.90 (1/2 all) |
+| math_parallel_meters | n/a | 1.00 (2/2 all) | 1.00 (2/2 all) | 1.00 (2/2 all) |
+| **all cases** | **0.73 (3/9 all)** | **0.86 (27/43 all)** | **0.87 (27/43 all)** | **0.93 (31/43 all)** |
 
 ## Per topic: mean score and runs passing every check
 
 Every run counts once (mean over the runs of the topic's cases); "k/n all" = runs passing every check. Core = the three original cases.
 
-| topic | cases | L0 | L2 | L3 |
-|---|---|---|---|---|
-| core | 3 | 0.73 (3/9 all, 33%) | 0.89 (5/9 all, 56%) | 1.00 (9/9 all, 100%) |
-| biology | 1 | n/a | 1.00 (2/2 all, 100%) | 0.90 (1/2 all, 50%) |
-| data structures | 1 | n/a | 1.00 (2/2 all, 100%) | 1.00 (2/2 all, 100%) |
-| graph algorithms | 3 | n/a | 0.93 (4/6 all, 67%) | 0.93 (4/6 all, 67%) |
-| math | 4 | n/a | 0.80 (5/8 all, 62%) | 0.85 (4/8 all, 50%) |
-| networking | 2 | n/a | 0.85 (2/4 all, 50%) | 0.85 (1/4 all, 25%) |
-| operating systems | 3 | n/a | 0.60 (2/6 all, 33%) | 0.53 (2/6 all, 33%) |
-| physics | 3 | n/a | 0.97 (5/6 all, 83%) | 0.93 (4/6 all, 67%) |
-| *all bench* | 17 | n/a | 0.85 (22/34 all, 65%) | 0.84 (18/34 all, 53%) |
-| **all** | 20 | **0.73 (3/9 all, 33%)** | **0.86 (27/43 all, 63%)** | **0.87 (27/43 all, 63%)** |
+| topic | cases | L0 | L2 | L3 | L4 |
+|---|---|---|---|---|---|
+| core | 3 | 0.73 (3/9 all, 33%) | 0.89 (5/9 all, 56%) | 1.00 (9/9 all, 100%) | 0.98 (8/9 all, 89%) |
+| biology | 1 | n/a | 1.00 (2/2 all, 100%) | 0.90 (1/2 all, 50%) | 1.00 (2/2 all, 100%) |
+| data structures | 1 | n/a | 1.00 (2/2 all, 100%) | 1.00 (2/2 all, 100%) | 0.90 (1/2 all, 50%) |
+| graph algorithms | 3 | n/a | 0.93 (4/6 all, 67%) | 0.93 (4/6 all, 67%) | 0.90 (3/6 all, 50%) |
+| math | 4 | n/a | 0.80 (5/8 all, 62%) | 0.85 (4/8 all, 50%) | 1.00 (8/8 all, 100%) |
+| networking | 2 | n/a | 0.90 (2/4 all, 50%) | 0.85 (1/4 all, 25%) | 0.85 (2/4 all, 50%) |
+| operating systems | 3 | n/a | 0.60 (2/6 all, 33%) | 0.57 (2/6 all, 33%) | 0.83 (4/6 all, 67%) |
+| physics | 3 | n/a | 0.97 (5/6 all, 83%) | 0.93 (4/6 all, 67%) | 0.90 (3/6 all, 50%) |
+| *all bench* | 17 | n/a | 0.85 (22/34 all, 65%) | 0.84 (18/34 all, 53%) | 0.91 (23/34 all, 68%) |
+| **all** | 20 | **0.73 (3/9 all, 33%)** | **0.86 (27/43 all, 63%)** | **0.87 (27/43 all, 63%)** | **0.93 (31/43 all, 72%)** |
 
 ## What changed from L0 to L2
 
@@ -71,13 +72,36 @@ Every run counts once (mean over the runs of the topic's cases); "k/n all" = run
 - **math_pythagoras**: mean score 0.30 -> 0.60, all checks 0/2 -> 0/2; checks that moved: `areas` 0/2 -> 1/2, `sides_3_4_5` 0/2 -> 1/2, `sum_9_16_25` 0/2 -> 1/2.
 - **math_quadratic**: mean score 1.00 -> 1.00, all checks 2/2 -> 2/2; no check moved.
 - **math_unit_circle**: mean score 0.90 -> 0.80, all checks 1/2 -> 0/2; checks that moved: `point_150` 1/2 -> 0/2.
-- **cs_gbn_vs_sr**: mean score 0.70 -> 0.80, all checks 0/2 -> 0/2; checks that moved: `gbn_discards_3_to_8` 1/2 -> 2/2.
+- **cs_gbn_vs_sr**: mean score 0.80 -> 0.80, all checks 0/2 -> 0/2; no check moved.
 - **cs_tcp_handshake**: mean score 1.00 -> 0.90, all checks 2/2 -> 1/2; checks that moved: `third_seq_1024_established` 2/2 -> 1/2.
-- **cs_deadlock_rag**: mean score 0.50 -> 0.20, all checks 0/2 -> 0/2; checks that moved: `p1_holds_r3_waits_r1` 2/2 -> 1/2, `p2_holds_r1_waits_r2` 1/2 -> 0/2, `deadlock_because_no_free_instance` 1/2 -> 0/2.
+- **cs_deadlock_rag**: mean score 0.50 -> 0.30, all checks 0/2 -> 0/2; checks that moved: `p2_holds_r1_waits_r2` 1/2 -> 0/2, `deadlock_because_no_free_instance` 1/2 -> 0/2.
 - **cs_lru_cache**: mean score 1.00 -> 1.00, all checks 2/2 -> 2/2; no check moved.
 - **cs_sjf_gantt**: mean score 0.30 -> 0.40, all checks 0/2 -> 0/2; checks that moved: `waits_p7_p8_p9` 0/2 -> 1/2.
 - **math_kinematics**: mean score 0.90 -> 0.80, all checks 1/2 -> 0/2; checks that moved: `formula` 1/2 -> 0/2.
 - **math_ohm_internal_resistance**: mean score 1.00 -> 1.00, all checks 2/2 -> 2/2; no check moved.
+- **math_parallel_meters**: mean score 1.00 -> 1.00, all checks 2/2 -> 2/2; no check moved.
+
+## What changed from L3 to L4
+
+- **dijkstra_AtoE**: mean score 1.00 -> 1.00, all checks 3/3 -> 3/3; no check moved.
+- **tcp_cwnd**: mean score 1.00 -> 0.93, all checks 3/3 -> 2/3; checks that moved: `starts_at_1` 3/3 -> 2/3.
+- **flowchart_invalid_twice**: mean score 1.00 -> 1.00, all checks 3/3 -> 3/3; no check moved.
+- **math_calvin_cycle**: mean score 0.90 -> 1.00, all checks 1/2 -> 2/2; checks that moved: `fixation` 1/2 -> 2/2.
+- **cs_bst_insert**: mean score 1.00 -> 0.90, all checks 2/2 -> 1/2; checks that moved: `right_child_of_4` 2/2 -> 1/2.
+- **cs_bfs_dfs**: mean score 1.00 -> 0.90, all checks 2/2 -> 1/2; checks that moved: `dfs_order` 2/2 -> 1/2.
+- **cs_dijkstra_a_to_e**: mean score 1.00 -> 1.00, all checks 2/2 -> 2/2; no check moved.
+- **cs_prim_mst**: mean score 0.80 -> 0.80, all checks 0/2 -> 0/2; no check moved.
+- **math_derivative_tangent**: mean score 1.00 -> 1.00, all checks 2/2 -> 2/2; no check moved.
+- **math_pythagoras**: mean score 0.60 -> 1.00, all checks 0/2 -> 2/2; checks that moved: `areas` 1/2 -> 2/2, `sides_3_4_5` 1/2 -> 2/2, `sum_9_16_25` 1/2 -> 2/2, `rearrangement` 1/2 -> 2/2.
+- **math_quadratic**: mean score 1.00 -> 1.00, all checks 2/2 -> 2/2; no check moved.
+- **math_unit_circle**: mean score 0.80 -> 1.00, all checks 0/2 -> 2/2; checks that moved: `point_150` 0/2 -> 2/2.
+- **cs_gbn_vs_sr**: mean score 0.80 -> 0.70, all checks 0/2 -> 0/2; checks that moved: `gbn_discards_3_to_8` 2/2 -> 1/2.
+- **cs_tcp_handshake**: mean score 0.90 -> 1.00, all checks 1/2 -> 2/2; checks that moved: `third_seq_1024_established` 1/2 -> 2/2.
+- **cs_deadlock_rag**: mean score 0.30 -> 0.50, all checks 0/2 -> 0/2; checks that moved: `p1_holds_r3_waits_r1` 2/2 -> 1/2, `p2_holds_r1_waits_r2` 0/2 -> 2/2, `deadlock_because_no_free_instance` 0/2 -> 1/2.
+- **cs_lru_cache**: mean score 1.00 -> 1.00, all checks 2/2 -> 2/2; no check moved.
+- **cs_sjf_gantt**: mean score 0.40 -> 1.00, all checks 0/2 -> 2/2; checks that moved: `waits_p7_p8_p9` 1/2 -> 2/2, `p12_waits_8` 1/2 -> 2/2, `total_33` 0/2 -> 2/2, `average_2_36` 0/2 -> 2/2.
+- **math_kinematics**: mean score 0.80 -> 0.80, all checks 0/2 -> 0/2; no check moved.
+- **math_ohm_internal_resistance**: mean score 1.00 -> 0.90, all checks 2/2 -> 1/2; checks that moved: `internal_drop` 2/2 -> 1/2.
 - **math_parallel_meters**: mean score 1.00 -> 1.00, all checks 2/2 -> 2/2; no check moved.
 
 ## dijkstra_AtoE
@@ -89,12 +113,14 @@ Question: "how to get the shortest path from A to E" (dijkstra-slides.pdf, page 
 | L0 | 3 | 0.47 | 2/5, 2/5, 3/5 | 0/3 (0%) | 0/3 | 2/3 | 0/3 | 2/3 | 3/3 | 5.0 | 17.9 s |
 | L2 | 3 | 0.93 | 5/5, 4/5, 5/5 | 2/3 (67%) | 3/3 | 3/3 | 2/3 | 3/3 | 3/3 | 5.3 | 19.3 s |
 | L3 | 3 | 1.00 | 5/5, 5/5, 5/5 | 3/3 (100%) | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | 6.0 | 23.1 s |
+| L4 | 3 | 1.00 | 5/5, 5/5, 5/5 | 3/3 (100%) | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | 6.0 | 23.2 s |
 
 Verbatim excerpts (a typical run of each version: the step where it first works out E's distance; board texts after the narration):
 
 - **L0**, run 1 (score 2/5), step 3 of 5: "Now we lock in I with total distance 1. From I to E costs 2 more, so A to I to E gives 1 + 2 = 3, which is already very strong." Board: `? -> e: +2` · `e: dist = 3`
 - **L2**, run 1 (score 5/5), step 3 of 5: "Next we choose I, the smallest unfinished distance, 1. From I, E becomes 1 plus 2 equals 3, and G improves from 9 to 4; C would be 7, not our best route to E yet." Board: `1 ✓` · `? -> e: +2` · `e: ∞→3`
 - **L3**, run 1 (score 5/5), step 4 of 6: "Now I has the smallest tentative distance, 1, so I becomes final. Relaxing I updates C to 7, E to 3, and improves G from 9 down to 4." Board: `1 ✓` · `c: C ∞→7` · `e: E ∞→3` · `g: G 9→4`
+- **L4**, run 1 (score 5/5), step 4 of 6: "Now the smallest unvisited value is I at 1, so we finalize I. Relaxing from I improves C to 7, E to 3, and G from 9 down to 4." Board: `I 1 ✓` · `c: C ∞→7` · `e: E ∞→3` · `g: G 9→4`
 
 ## tcp_cwnd
 
@@ -105,6 +131,7 @@ Question: "How does the congestion window change from the start until a timeout?
 | L0 | 3 | 0.73 | 4/5, 4/5, 3/5 | 0/3 (0%) | 3/3 | 2/3 | 0/3 | 3/3 | 3/3 | 6.7 | 18.1 s |
 | L2 | 3 | 0.73 | 4/5, 4/5, 3/5 | 0/3 (0%) | 3/3 | 2/3 | 0/3 | 3/3 | 3/3 | 6.0 | 17.0 s |
 | L3 | 3 | 1.00 | 5/5, 5/5, 5/5 | 3/3 (100%) | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | 6.0 | 22.3 s |
+| L4 | 3 | 0.93 | 4/5, 5/5, 5/5 | 2/3 (67%) | 2/3 | 3/3 | 3/3 | 3/3 | 3/3 | 6.3 | 24.2 s |
 
 ## flowchart_invalid_twice
 
@@ -115,6 +142,7 @@ Question: "What happens if the input is invalid twice?" (samples/synthetic/clean
 | L0 | 3 | 1.00 | 5/5, 5/5, 5/5 | 3/3 (100%) | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | 5.0 | 16.7 s |
 | L2 | 3 | 1.00 | 5/5, 5/5, 5/5 | 3/3 (100%) | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | 5.7 | 18.9 s |
 | L3 | 3 | 1.00 | 5/5, 5/5, 5/5 | 3/3 (100%) | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | 5.7 | 18.9 s |
+| L4 | 3 | 1.00 | 5/5, 5/5, 5/5 | 3/3 (100%) | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | 5.3 | 16.3 s |
 
 ## math_calvin_cycle (biology)
 
@@ -125,6 +153,7 @@ Question: "How many ATP and NADPH does this cycle use to fix 3 CO₂, and what h
 | L0 | 0 (0 failed) | n/a | | | | | | | | | |
 | L2 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.0 | 18.6 s |
 | L3 | 2 | 0.90 | 4/5, 5/5 | 1/2 (50%) | 1/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.0 | 19.3 s |
+| L4 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.0 | 20.9 s |
 
 ## cs_bst_insert (data structures)
 
@@ -135,6 +164,7 @@ Question: "How would you insert 5 into this binary search tree? Show the compari
 | L0 | 0 (0 failed) | n/a | | | | | | | | | |
 | L2 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.0 | 17.6 s |
 | L3 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 5.5 | 26.8 s |
+| L4 | 2 | 0.90 | 4/5, 5/5 | 1/2 (50%) | 2/2 | 2/2 | 1/2 | 2/2 | 2/2 | 5.5 | 22.7 s |
 
 ## cs_bfs_dfs (graph algorithms)
 
@@ -145,6 +175,7 @@ Question: "In which order does breadth-first search visit the nodes if it starts
 | L0 | 0 (0 failed) | n/a | | | | | | | | | |
 | L2 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.0 | 21.2 s |
 | L3 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.5 | 30.0 s |
+| L4 | 2 | 0.90 | 4/5, 5/5 | 1/2 (50%) | 2/2 | 2/2 | 2/2 | 1/2 | 2/2 | 6.0 | 24.7 s |
 
 ## cs_dijkstra_a_to_e (graph algorithms)
 
@@ -155,6 +186,7 @@ Question: "Use Dijkstra's algorithm starting at A: what are the shortest distanc
 | L0 | 0 (0 failed) | n/a | | | | | | | | | |
 | L2 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 5.5 | 18.5 s |
 | L3 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.0 | 23.3 s |
+| L4 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.0 | 21.1 s |
 
 ## cs_prim_mst (graph algorithms)
 
@@ -165,6 +197,7 @@ Question: "Using Prim's algorithm starting from A, which edges are added to the 
 | L0 | 0 (0 failed) | n/a | | | | | | | | | |
 | L2 | 2 | 0.80 | 4/5, 4/5 | 0/2 (0%) | 2/2 | 2/2 | 2/2 | 2/2 | 0/2 | 7.0 | 20.2 s |
 | L3 | 2 | 0.80 | 4/5, 4/5 | 0/2 (0%) | 2/2 | 2/2 | 2/2 | 2/2 | 0/2 | 7.0 | 27.8 s |
+| L4 | 2 | 0.80 | 4/5, 4/5 | 0/2 (0%) | 2/2 | 2/2 | 2/2 | 2/2 | 0/2 | 7.0 | 26.1 s |
 
 ## math_derivative_tangent (math)
 
@@ -175,6 +208,7 @@ Question: "The curve is f(x) = x² and the tangent touches it at a = 1. How do I
 | L0 | 0 (0 failed) | n/a | | | | | | | | | |
 | L2 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 5.0 | 16.3 s |
 | L3 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 5.0 | 18.3 s |
+| L4 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 5.0 | 15.9 s |
 
 ## math_pythagoras (math)
 
@@ -185,6 +219,7 @@ Question: "How does this picture prove the Pythagorean theorem?" (samples/bench/
 | L0 | 0 (0 failed) | n/a | | | | | | | | | |
 | L2 | 2 | 0.30 | 2/5, 1/5 | 0/2 (0%) | 0/2 | 0/2 | 0/2 | 2/2 | 1/2 | 5.0 | 15.3 s |
 | L3 | 2 | 0.60 | 4/5, 2/5 | 0/2 (0%) | 1/2 | 1/2 | 1/2 | 2/2 | 1/2 | 6.0 | 21.2 s |
+| L4 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 5.5 | 21.0 s |
 
 ## math_quadratic (math)
 
@@ -195,6 +230,7 @@ Question: "Where does this parabola cross the x-axis? Solve its equation step by
 | L0 | 0 (0 failed) | n/a | | | | | | | | | |
 | L2 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 5.0 | 16.0 s |
 | L3 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 5.0 | 17.1 s |
+| L4 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 5.0 | 21.7 s |
 
 ## math_unit_circle (math)
 
@@ -205,6 +241,7 @@ Question: "What is sin(150°) and why?" (samples/bench/images/math_unit_circle.p
 | L0 | 0 (0 failed) | n/a | | | | | | | | | |
 | L2 | 2 | 0.90 | 5/5, 4/5 | 1/2 (50%) | 2/2 | 2/2 | 1/2 | 2/2 | 2/2 | 5.0 | 13.5 s |
 | L3 | 2 | 0.80 | 4/5, 4/5 | 0/2 (0%) | 2/2 | 2/2 | 0/2 | 2/2 | 2/2 | 5.5 | 17.4 s |
+| L4 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 5.5 | 17.4 s |
 
 ## cs_gbn_vs_sr (networking)
 
@@ -213,8 +250,9 @@ Question: "In both timelines frame 2 is damaged. What does the receiver do with 
 | version | runs | mean score | scores per run | all checks pass | gbn_discards_3_to_8 | gbn_timeout_resends_from_2 | sr_buffers_3_to_5 | sr_nak_only_2 | sr_ack_5 | mean steps | mean lesson latency |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | L0 | 0 (0 failed) | n/a | | | | | | | | | |
-| L2 | 2 | 0.70 | 4/5, 3/5 | 0/2 (0%) | 1/2 | 2/2 | 2/2 | 2/2 | 0/2 | 6.0 | 19.3 s |
+| L2 | 2 | 0.80 | 4/5, 4/5 | 0/2 (0%) | 2/2 | 2/2 | 2/2 | 2/2 | 0/2 | 6.0 | 19.3 s |
 | L3 | 2 | 0.80 | 4/5, 4/5 | 0/2 (0%) | 2/2 | 2/2 | 2/2 | 2/2 | 0/2 | 6.0 | 22.3 s |
+| L4 | 2 | 0.70 | 4/5, 3/5 | 0/2 (0%) | 1/2 | 2/2 | 2/2 | 2/2 | 0/2 | 6.5 | 21.4 s |
 
 ## cs_tcp_handshake (networking)
 
@@ -225,6 +263,7 @@ Question: "Walk me through this TCP three-way handshake: what do the SYN, Seq an
 | L0 | 0 (0 failed) | n/a | | | | | | | | | |
 | L2 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.0 | 18.7 s |
 | L3 | 2 | 0.90 | 4/5, 5/5 | 1/2 (50%) | 2/2 | 2/2 | 2/2 | 2/2 | 1/2 | 6.0 | 19.8 s |
+| L4 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.0 | 18.9 s |
 
 ## cs_deadlock_rag (operating systems)
 
@@ -234,7 +273,8 @@ Question: "Is there a deadlock in this resource-allocation graph? R3 has two ins
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | L0 | 0 (0 failed) | n/a | | | | | | | | | |
 | L2 | 2 | 0.50 | 4/5, 1/5 | 0/2 (0%) | 2/2 | 1/2 | 1/2 | 0/2 | 1/2 | 6.0 | 18.5 s |
-| L3 | 2 | 0.20 | 0/5, 2/5 | 0/2 (0%) | 1/2 | 0/2 | 1/2 | 0/2 | 0/2 | 6.0 | 20.0 s |
+| L3 | 2 | 0.30 | 1/5, 2/5 | 0/2 (0%) | 2/2 | 0/2 | 1/2 | 0/2 | 0/2 | 6.0 | 20.0 s |
+| L4 | 2 | 0.50 | 1/5, 4/5 | 0/2 (0%) | 1/2 | 2/2 | 1/2 | 0/2 | 1/2 | 5.0 | 16.5 s |
 
 ## cs_lru_cache (operating systems)
 
@@ -245,6 +285,7 @@ Question: "This LRU example has 4 slots and the access sequence A B C D E D F (t
 | L0 | 0 (0 failed) | n/a | | | | | | | | | |
 | L2 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.0 | 18.2 s |
 | L3 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.0 | 17.9 s |
+| L4 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.0 | 20.4 s |
 
 ## cs_sjf_gantt (operating systems)
 
@@ -255,6 +296,7 @@ Question: "This chart shows non-preemptive Shortest Job First. Why do P9, P8 and
 | L0 | 0 (0 failed) | n/a | | | | | | | | | |
 | L2 | 2 | 0.30 | 2/5, 1/5 | 0/2 (0%) | 2/2 | 0/2 | 1/2 | 0/2 | 0/2 | 6.0 | 19.3 s |
 | L3 | 2 | 0.40 | 2/5, 2/5 | 0/2 (0%) | 2/2 | 1/2 | 1/2 | 0/2 | 0/2 | 6.0 | 25.5 s |
+| L4 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 8.0 | 32.8 s |
 
 ## math_kinematics (physics)
 
@@ -265,6 +307,7 @@ Question: "For the example at the bottom, how far does the object travel in the 
 | L0 | 0 (0 failed) | n/a | | | | | | | | | |
 | L2 | 2 | 0.90 | 4/5, 5/5 | 1/2 (50%) | 1/2 | 2/2 | 2/2 | 2/2 | 2/2 | 5.5 | 14.0 s |
 | L3 | 2 | 0.80 | 4/5, 4/5 | 0/2 (0%) | 0/2 | 2/2 | 2/2 | 2/2 | 2/2 | 5.0 | 18.6 s |
+| L4 | 2 | 0.80 | 4/5, 4/5 | 0/2 (0%) | 0/2 | 2/2 | 2/2 | 2/2 | 2/2 | 5.0 | 15.9 s |
 
 ## math_ohm_internal_resistance (physics)
 
@@ -275,6 +318,7 @@ Question: "How do we get the 1.5 A current and the 7.5 V across R in this circui
 | L0 | 0 (0 failed) | n/a | | | | | | | | | |
 | L2 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.0 | 17.7 s |
 | L3 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.0 | 17.8 s |
+| L4 | 2 | 0.90 | 5/5, 4/5 | 1/2 (50%) | 2/2 | 2/2 | 1/2 | 2/2 | 2/2 | 6.0 | 19.0 s |
 
 ## math_parallel_meters (physics)
 
@@ -285,6 +329,7 @@ Question: "Suppose the battery gives 12 V, R1 = 4 Ω, R2 = 2 Ω and R3 = 4 Ω. W
 | L0 | 0 (0 failed) | n/a | | | | | | | | | |
 | L2 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.0 | 18.5 s |
 | L3 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.0 | 18.8 s |
+| L4 | 2 | 1.00 | 5/5, 5/5 | 2/2 (100%) | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 | 6.0 | 17.9 s |
 
 ## How the checks work
 
@@ -419,5 +464,6 @@ Bench cases (`samples/bench/cases/<case>.json`) use declarative checks instead: 
 - `samples/eval/lessons/L0/`: every lesson (`<case>_run<k>.json`: lesson JSON, latency, region texts, checks with evidence), `results.json` (scores), `transcripts.md` (all lessons, readable)
 - `samples/eval/lessons/L2/`: every lesson (`<case>_run<k>.json`: lesson JSON, latency, region texts, checks with evidence), `results.json` (scores), `transcripts.md` (all lessons, readable)
 - `samples/eval/lessons/L3/`: every lesson (`<case>_run<k>.json`: lesson JSON, latency, region texts, checks with evidence), `results.json` (scores), `transcripts.md` (all lessons, readable)
+- `samples/eval/lessons/L4/`: every lesson (`<case>_run<k>.json`: lesson JSON, latency, region texts, checks with evidence), `results.json` (scores), `transcripts.md` (all lessons, readable)
 
-Reproduce: `backend/.venv/Scripts/python backend/scripts/eval_lessons.py --backend <worktree>/backend --version <label> --runs 3 --all`, then `--summary L0 L2 L3`; `--rescore` re-scores saved lessons for free.
+Reproduce: `backend/.venv/Scripts/python backend/scripts/eval_lessons.py --backend <worktree>/backend --version <label> --runs 3 --all`, then `--summary L0 L2 L3 L4`; `--rescore` re-scores saved lessons for free.

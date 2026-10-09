@@ -681,7 +681,7 @@
   },
   "kirchhoff": {
    "pass": true,
-   "evidence": "add back to the battery's 12 v"
+   "evidence": "add back to the battery's 12 v | drops add back to the battery's 12"
   }
  },
  "passed": 5,

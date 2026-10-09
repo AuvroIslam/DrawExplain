@@ -1,0 +1,906 @@
+{
+ "version": "L4",
+ "note": "+ CPU scheduling and page replacement solvers",
+ "case": "math_calvin_cycle",
+ "topic": "biology",
+ "run": 1,
+ "question": "How many ATP and NADPH does this cycle use to fix 3 CO₂, and what happens to the 6 GAP?",
+ "source": "math_calvin_cycle.png",
+ "page": null,
+ "backend": {
+  "path": "D:\\BananaHack\\backend",
+  "commit": "3e13ede",
+  "subject": "Add CPU scheduling and page replacement solvers",
+  "dirty": false
+ },
+ "started": "2026-10-09T23:35:22+06:00",
+ "finished": "2026-10-09T23:36:03+06:00",
+ "jobs": 3,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "D:\\BananaHack\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L4_math_calvin_cycle_1_baky_v7w\\data",
+ "perceive_s": 18.423,
+ "perception": {
+  "image_id": "66ba57b11629",
+  "width": 1280,
+  "height": 915,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.178,
+   "ink": 0.085,
+   "ocr": 17.068,
+   "text": 0.032,
+   "rescue": 0.793,
+   "regions": 0.075,
+   "freespace": 0.003,
+   "som": 0.03,
+   "total": 18.264,
+   "prepare": 0.051
+  },
+  "regions": 80
+ },
+ "regions": {
+  "R2": "6ATP",
+  "R3": "6ADP",
+  "R4": "3 CO2\n3 H2O",
+  "R5": "3 CO2",
+  "R6": "C3",
+  "R8": "OPO",
+  "R9": "2-\n3",
+  "R10": "2-",
+  "R11": "3 H2O",
+  "R12": "C3",
+  "R13": "OH\nOPO32-\n6x 3-P-glycerat",
+  "R14": "OH",
+  "R15": "3",
+  "R16": "C3",
+  "R17": "OPO32-",
+  "R18": "OH\nOPO32-\n6x 1,3-bP-glycerat",
+  "R19": "C3",
+  "R20": "OH",
+  "R21": "6x 3-P-glycerat",
+  "R22": "OPO32-",
+  "R23": "OPO32-\nO",
+  "R24": "OPO32-",
+  "R26": "6x 1,3-bP-glycerat",
+  "R27": "6 NADPH/H+",
+  "R28": "O",
+  "R29": "C5",
+  "R30": "C5",
+  "R31": "OH",
+  "R32": "6 NADP+\n6 P;",
+  "R33": "6 NADP+",
+  "R34": "6 P;",
+  "R35": "OH",
+  "R36": "OPO32-\n3x Ribulose-1,5-bP",
+  "R37": "OPO32-",
+  "R38": "H",
+  "R40": "3x Ribulose-1,5-bP",
+  "R41": "C3",
+  "R43": "C3",
+  "R44": "OH\nOPO32-\n6x\nGAP",
+  "R45": "OH",
+  "R46": "OPO32-",
+  "R47": "3ADP",
+  "R48": "6x",
+  "R49": "GAP",
+  "R51": "3ATP",
+  "R53": "OH",
+  "R55": "H",
+  "R57": "H",
+  "R58": "C3",
+  "R59": "C5",
+  "R60": "C3",
+  "R61": "OH\nOPO32-\n5x\nGAP",
+  "R62": "OH",
+  "R63": "C3",
+  "R64": "OH\nOPO32-",
+  "R65": "OH",
+  "R66": "OH\nOH\nOPO32-\n3x Ribulose-5-P",
+  "R67": "C5",
+  "R68": "OH",
+  "R69": "C3",
+  "R70": "OPO32-",
+  "R71": "OH",
+  "R72": "OPO32-",
+  "R73": "GAP",
+  "R74": "OPO32-",
+  "R76": "5x",
+  "R77": "GAP",
+  "R78": "3x Ribulose-5-P",
+  "R79": "2 H2O",
+  "R80": "2 P;"
+ },
+ "request": {
+  "image_id": "66ba57b11629",
+  "question": "How many ATP and NADPH does this cycle use to fix 3 CO₂, and what happens to the 6 GAP?"
+ },
+ "lesson_s": 19.893,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "0934e29de46b",
+  "image_id": "66ba57b11629",
+  "title": "Calvin Cycle Cost and GAP Fate",
+  "summary": "This page shows the Calvin cycle fixing 3 CO₂ into sugar-building GAP. For 3 CO₂, the cycle spends 9 ATP and 6 NADPH total; of the 6 GAP made, 1 GAP exits and 5 GAP are recycled to regenerate RuBP.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Find the question on the cycle",
+    "narration": "We’re tracking two things: the energy bill for fixing these 3 CO₂, and the fate of the 6 GAP. I’ll circle the carbon input and the GAP branch where the answer lives.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R5"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "3 CO₂",
+      "geometry": {
+       "box": {
+        "x": 0.14591796875000002,
+        "y": 0.051584699453551916,
+        "w": 0.09175781250000001,
+        "h": 0.06185792349726775
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.986,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R48",
+       "R49"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "6 GAP",
+      "geometry": {
+       "box": {
+        "x": 0.6359179687500001,
+        "y": 0.539016393442623,
+        "w": 0.10863281250000001,
+        "h": 0.048743169398907105
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.959,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a3",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R48",
+       "R49"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "product pool",
+      "cue": "answer lives",
+      "geometry": {
+       "box": {
+        "x": 0.65,
+        "y": 0.5530054644808743,
+        "w": 0.08046874999999998,
+        "h": 0.020765027322404372
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.7431640625,
+        "y": 0.5456284153005465,
+        "w": 0.13164062499999996,
+        "h": 0.03551912568306015
+       },
+       "leader": [
+        {
+         "x": 0.7431640625,
+         "y": 0.5633879781420765
+        },
+        {
+         "x": 0.73046875,
+         "y": 0.5633879781420765
+        }
+       ]
+      },
+      "confidence": 0.959,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "First ATP spending: phosphorylation",
+    "narration": "First, the cycle upgrades 6 molecules of 3-P-glycerate using ATP. Follow my red arrow: 6 ATP become 6 ADP, so that is the first energy cost.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R2"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "6 ATP",
+      "geometry": {
+       "box": {
+        "x": 0.38453125,
+        "y": 0.0034972677595628407,
+        "w": 0.07546874999999997,
+        "h": 0.0487431693989071
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.98,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "arrow",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [
+       "R2"
+      ],
+      "to_ids": [
+       "R3"
+      ],
+      "span": null,
+      "text": "spent",
+      "cue": "become 6 ADP",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.45,
+         "y": 0.035181529482447856
+        },
+        {
+         "x": 0.45939078861256544,
+         "y": 0.034534031413612575
+        },
+        {
+         "x": 0.46796875,
+         "y": 0.039919320230023175
+        }
+       ],
+       "label_box": {
+        "x": 0.5273516443062827,
+        "y": 0.018282665293393986,
+        "w": 0.060546875,
+        "h": 0.03551912568306011
+       },
+       "leader": null
+      },
+      "confidence": 0.98,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R26"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "ATP cost = 6",
+      "cue": "first energy cost",
+      "geometry": {
+       "box": {
+        "x": 0.47578125,
+        "y": 0.2360655737704918,
+        "w": 0.1765625,
+        "h": 0.025136612021857907
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.49824218750000004,
+        "y": 0.2789617486338798,
+        "w": 0.13164062499999996,
+        "h": 0.03551912568306009
+       },
+       "leader": [
+        {
+         "x": 0.5640625,
+         "y": 0.2789617486338798
+        },
+        {
+         "x": 0.5640625,
+         "y": 0.2612021857923497
+        }
+       ]
+      },
+      "confidence": 0.985,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "NADPH reduces the 6 intermediates",
+    "narration": "Next, NADPH supplies high-energy electrons to reduce 1,3-bP-glycerate into GAP. The page shows 6 NADPH/H⁺ turning into 6 NADP⁺, and releasing 6 Pi.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R27"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "6 NADPH/H⁺",
+      "geometry": {
+       "box": {
+        "x": 0.6589453125,
+        "y": 0.2340983606557377,
+        "w": 0.15398437499999995,
+        "h": 0.05202185792349728
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [
+       "R27"
+      ],
+      "to_ids": [
+       "R33"
+      ],
+      "span": null,
+      "text": "electrons used",
+      "cue": "6 NADP⁺",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.740254458117059,
+         "y": 0.28551483623742013
+        },
+        {
+         "x": 0.7429616734080177,
+         "y": 0.29299034921700606
+        },
+        {
+         "x": 0.7429486668829409,
+         "y": 0.3013704096642192
+        }
+       ],
+       "label_box": {
+        "x": 0.7787073992040088,
+        "y": 0.3441727702369184,
+        "w": 0.15195312500000002,
+        "h": 0.03551912568306009
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R48",
+       "R49"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "NADPH cost = 6",
+      "cue": "into GAP",
+      "geometry": {
+       "box": {
+        "x": 0.65,
+        "y": 0.5530054644808743,
+        "w": 0.08046874999999998,
+        "h": 0.020765027322404372
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.4853515625,
+        "y": 0.5456284153005465,
+        "w": 0.15195312500000002,
+        "h": 0.03551912568306015
+       },
+       "leader": [
+        {
+         "x": 0.6373046875,
+         "y": 0.5633879781420765
+        },
+        {
+         "x": 0.65,
+         "y": 0.5633879781420765
+        }
+       ]
+      },
+      "confidence": 0.959,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "The 6 GAP split: 1 exits, 5 recycle",
+    "narration": "Here is the key GAP accounting: the cycle makes 6 GAP, but only one GAP leaves as net product. The other 5 GAP follow the lower path back into regeneration.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R48",
+       "R49"
+      ],
+      "to_ids": [
+       "R73"
+      ],
+      "span": null,
+      "text": "1 exits",
+      "cue": "one GAP leaves",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.7058954749223461,
+         "y": 0.5829268002473708
+        },
+        {
+         "x": 0.7744849416674395,
+         "y": 0.7211026339932844
+        },
+        {
+         "x": 0.880432650077654,
+         "y": 0.8006797571296784
+        }
+       ],
+       "label_box": {
+        "x": 0.6855823145837199,
+        "y": 0.6886933934993745,
+        "w": 0.08085937499999996,
+        "h": 0.03551912568306015
+       },
+       "leader": null
+      },
+      "confidence": 0.959,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R48",
+       "R49"
+      ],
+      "to_ids": [
+       "R76",
+       "R77"
+      ],
+      "span": null,
+      "text": "5 recycle",
+      "cue": "other 5 GAP",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.682796905871208,
+         "y": 0.5862957538270374
+        },
+        {
+         "x": 0.626101990265951,
+         "y": 0.6880926672309999
+        },
+        {
+         "x": 0.608609344128792,
+         "y": 0.8147971423478261
+        }
+       ],
+       "label_box": {
+        "x": 0.5394181826329756,
+        "y": 0.6078441478231501,
+        "w": 0.10117187500000002,
+        "h": 0.03551912568306015
+       },
+       "leader": null
+      },
+      "confidence": 0.959,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R73"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "net sugar output",
+      "cue": "net product",
+      "geometry": {
+       "box": {
+        "x": 0.875,
+        "y": 0.8098360655737705,
+        "w": 0.042187500000000044,
+        "h": 0.020765027322404372
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.8099609375,
+        "y": 0.8483606557377049,
+        "w": 0.17226562499999998,
+        "h": 0.03551912568306015
+       },
+       "leader": [
+        {
+         "x": 0.89609375,
+         "y": 0.8483606557377049
+        },
+        {
+         "x": 0.89609375,
+         "y": 0.8306010928961749
+        }
+       ]
+      },
+      "confidence": 0.977,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Second ATP spending: regeneration",
+    "narration": "Those 5 recycled GAP are rearranged into 3 ribulose-5-P, then ATP re-phosphorylates them into 3 ribulose-1,5-bP. This regeneration step spends 3 more ATP.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R76",
+       "R77"
+      ],
+      "to_ids": [
+       "R78"
+      ],
+      "span": null,
+      "text": "rearrange",
+      "cue": "3 ribulose-5-P",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.5511482827453088,
+         "y": 0.8443929905313525
+        },
+        {
+         "x": 0.42077520889361064,
+         "y": 0.8186431411623348
+        },
+        {
+         "x": 0.29624892120205953,
+         "y": 0.8784726184229196
+        }
+       ],
+       "label_box": {
+        "x": 0.37165096793364744,
+        "y": 0.780201907245965,
+        "w": 0.10117187499999997,
+        "h": 0.03551912568306015
+       },
+       "leader": null
+      },
+      "confidence": 0.965,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R51"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "3 more ATP",
+      "geometry": {
+       "box": {
+        "x": 0.019687500000000004,
+        "y": 0.6395628415300547,
+        "w": 0.07546875,
+        "h": 0.048743169398906994
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.978,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "arrow",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [
+       "R51"
+      ],
+      "to_ids": [
+       "R47"
+      ],
+      "span": null,
+      "text": "spent",
+      "cue": "spends",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.05463360714073227,
+         "y": 0.639974041690227
+        },
+        {
+         "x": 0.057201796527479566,
+         "y": 0.5916246512419312
+        },
+        {
+         "x": 0.04380389285926774,
+         "y": 0.5469112042114124
+        }
+       ],
+       "label_box": {
+        "x": 0.0705930857637398,
+        "y": 0.5747740742548454,
+        "w": 0.060546875,
+        "h": 0.03551912568306015
+       },
+       "leader": null
+      },
+      "confidence": 0.978,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "Total answer",
+    "narration": "So the answer is: fixing 3 CO₂ uses 9 ATP total and 6 NADPH. The 6 GAP split into 1 GAP exported and 5 GAP recycled to rebuild the CO₂ acceptor.",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "box",
+      "color": "red",
+      "target_ids": [
+       "R2",
+       "R51"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "9 ATP total",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 0.48362499999999997,
+        "h": 0.7213551912568305
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a2",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R2",
+       "R51"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "6 + 3 = 9 ATP",
+      "cue": "9 ATP total",
+      "geometry": {
+       "box": {
+        "x": 0.0296875,
+        "y": 0.017486338797814208,
+        "w": 0.42031250000000003,
+        "h": 0.6568306010928961
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.48173828125,
+        "y": 0.3281420765027322,
+        "w": 0.141796875,
+        "h": 0.03551912568306009
+       },
+       "leader": [
+        {
+         "x": 0.47866521113719535,
+         "y": 0.3459016393442622
+        },
+        {
+         "x": 0.4561461402256092,
+         "y": 0.3459016393442622
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a3",
+      "kind": "box",
+      "color": "blue",
+      "target_ids": [
+       "R27"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "6 NADPH",
+      "geometry": {
+       "box": {
+        "x": 0.67265625,
+        "y": 0.23934426229508196,
+        "w": 0.12656250000000002,
+        "h": 0.04153005464480877
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart LR\nA[3 CO2 fixed] --> B[6 PGA]\nB --> C[6 GAP]\nC --> D[1 GAP exits]\nC --> E[5 GAP recycle]\nE --> F[3 RuBP rebuilt]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the 6 ATP used before 1,3-bP-glycerate.",
+    "answer_ids": [
+     "R2"
+    ],
+    "answer_box": {
+     "x": 0.39453125,
+     "y": 0.017486338797814208,
+     "w": 0.05546875000000001,
+     "h": 0.020765027322404372
+    },
+    "explanation": "This is the first ATP investment that converts 3-P-glycerate toward 1,3-bP-glycerate."
+   },
+   {
+    "question": "Tap the 6 NADPH/H⁺ label.",
+    "answer_ids": [
+     "R27"
+    ],
+    "answer_box": {
+     "x": 0.67890625,
+     "y": 0.24808743169398906,
+     "w": 0.11406249999999996,
+     "h": 0.02404371584699455
+    },
+    "explanation": "This label shows the reducing power used to make GAP."
+   },
+   {
+    "question": "Tap the GAP that leaves the cycle.",
+    "answer_ids": [
+     "R73"
+    ],
+    "answer_box": {
+     "x": 0.875,
+     "y": 0.8098360655737705,
+     "w": 0.042187500000000044,
+     "h": 0.020765027322404372
+    },
+    "explanation": "This single GAP on the right is the net product; the other 5 GAP recycle."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 19.769,
+   "ground": 0.078,
+   "total": 19.848,
+   "input_tokens": 6418.0,
+   "output_tokens": 2147.0,
+   "approx_agreement": 1.0
+  },
+  "warnings": [],
+  "question": "How many ATP and NADPH does this cycle use to fix 3 CO₂, and what happens to the 6 GAP?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 6418,
+  "output_tokens": 2147,
+  "seconds": 19.769
+ },
+ "checks": {
+  "fixation": {
+   "pass": true,
+   "evidence": "3 co2 fixed -> 6 pga"
+  },
+  "reduction_cost": {
+   "pass": true,
+   "evidence": "6 atp | 6 nadph"
+  },
+  "regeneration_cost": {
+   "pass": true,
+   "evidence": "3 more atp"
+  },
+  "totals": {
+   "pass": true,
+   "evidence": "9 atp | 6 + 3 = 9"
+  },
+  "gap_split": {
+   "pass": true,
+   "evidence": "5 gap | one gap leaves as net product | one gap leaves"
+  }
+ },
+ "passed": 5,
+ "total": 5,
+ "score": 1.0,
+ "all_passed": true,
+ "checked_text": "we're tracking two things: the energy bill for fixing these 3 co2, and the fate of the 6 gap. i'll circle the carbon input and the gap branch where the answer lives.\nproduct pool\n\nfirst, the cycle upgrades 6 molecules of 3-p-glycerate using atp. follow my red arrow: 6 atp become 6 adp, so that is the first energy cost.\nspent\natp cost = 6\n\nnext, nadph supplies high-energy electrons to reduce 1,3-bp-glycerate into gap. the page shows 6 nadph/h+ turning into 6 nadp+, and releasing 6 pi.\nelectrons used\nnadph cost = 6\n\nhere is the key gap accounting: the cycle makes 6 gap, but only one gap leaves as net product. the other 5 gap follow the lower path back into regeneration.\n1 exits\n5 recycle\nnet sugar output\n\nthose 5 recycled gap are rearranged into 3 ribulose-5-p, then atp re-phosphorylates them into 3 ribulose-1,5-bp. this regeneration step spends 3 more atp.\nrearrange\nspent\n\nso the answer is: fixing 3 co2 uses 9 atp total and 6 nadph. the 6 gap split into 1 gap exported and 5 gap recycled to rebuild the co2 acceptor.\n6 + 3 = 9 atp\n3 co2 fixed -> 6 pga\n6 pga -> 6 gap\n6 gap -> 1 gap exits\n6 gap -> 5 gap recycle\n5 gap recycle -> 3 rubp rebuilt"
+}

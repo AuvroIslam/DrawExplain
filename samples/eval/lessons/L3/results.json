@@ -7,7 +7,7 @@
   "subject": "Add results log of all measurements",
   "dirty": true
  },
- "updated": "2026-10-09T23:25:01+06:00",
+ "updated": "2026-10-10T00:05:01+06:00",
  "audited": "every failed verdict, core and bench (2026-10-09)",
  "runs": [
   {
@@ -853,12 +853,12 @@
    "run": 1,
    "ok": true,
    "error": null,
-   "score": 0.0,
-   "passed": 0,
+   "score": 0.2,
+   "passed": 1,
    "total": 5,
    "all_passed": false,
    "checks": {
-    "p1_holds_r3_waits_r1": false,
+    "p1_holds_r3_waits_r1": true,
     "p2_holds_r1_waits_r2": false,
     "p3_holds_r2_waits_r3": false,
     "cycle": false,

@@ -1,0 +1,832 @@
+{
+ "version": "L4",
+ "note": "+ CPU scheduling and page replacement solvers",
+ "case": "cs_lru_cache",
+ "topic": "operating systems",
+ "run": 2,
+ "question": "This LRU example has 4 slots and the access sequence A B C D E D F (the number in brackets is the time of last use). Why does E replace A, why does F replace B, and how many hits and misses are there?",
+ "source": "cs_lru_cache.png",
+ "page": null,
+ "backend": {
+  "path": "D:\\BananaHack\\backend",
+  "commit": "3e13ede",
+  "subject": "Add CPU scheduling and page replacement solvers",
+  "dirty": false
+ },
+ "started": "2026-10-09T23:40:46+06:00",
+ "finished": "2026-10-09T23:41:18+06:00",
+ "jobs": 3,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "D:\\BananaHack\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L4_cs_lru_cache_2_xc2vbh60\\data",
+ "perceive_s": 9.311,
+ "perception": {
+  "image_id": "a7e2ad064874",
+  "width": 1512,
+  "height": 744,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.164,
+   "ink": 0.071,
+   "ocr": 8.839,
+   "text": 0.011,
+   "rescue": 0.01,
+   "regions": 0.064,
+   "freespace": 0.003,
+   "som": 0.022,
+   "total": 9.185,
+   "prepare": 0.048
+  },
+  "regions": 56
+ },
+ "regions": {
+  "R1": "A(0)",
+  "R5": "A(0)",
+  "R8": "E(4)",
+  "R9": "B(1)",
+  "R10": "C(2)",
+  "R11": "D(3)",
+  "R12": "E(4)",
+  "R13": "B(1)",
+  "R14": "C(2)",
+  "R15": "D(3)",
+  "R16": "A(0)",
+  "R17": "B(1)",
+  "R21": "A(0)",
+  "R22": "B(1)",
+  "R24": "E(4)",
+  "R25": "B(1)",
+  "R26": "C(2)",
+  "R27": "D(5)",
+  "R28": "E(4)",
+  "R29": "B(1)",
+  "R30": "C(2)",
+  "R31": "D(5)",
+  "R32": "A(0)",
+  "R33": "B(1)",
+  "R34": "C(2)",
+  "R36": "A(0)",
+  "R37": "B(1)",
+  "R38": "C(2)",
+  "R41": "E(4)",
+  "R42": "F(6)",
+  "R43": "C(2)",
+  "R44": "D(5)",
+  "R45": "E(4)",
+  "R46": "F(6)",
+  "R47": "C(2)",
+  "R48": "D(5)",
+  "R49": "A(0)",
+  "R50": "B(1)",
+  "R51": "C(2)",
+  "R52": "D(3)",
+  "R53": "A(0)",
+  "R54": "B(1)",
+  "R55": "C(2)",
+  "R56": "D(3)"
+ },
+ "request": {
+  "image_id": "a7e2ad064874",
+  "question": "This LRU example has 4 slots and the access sequence A B C D E D F (the number in brackets is the time of last use). Why does E replace A, why does F replace B, and how many hits and misses are there?"
+ },
+ "lesson_s": 20.037,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "3f1b98805ee4",
+  "image_id": "a7e2ad064874",
+  "title": "LRU: Why E Evicts A and F Evicts B",
+  "summary": "This page simulates LRU page replacement with 4 frames for the reference string A B C D E D F. LRU evicts the page with the oldest last-use time, giving 6 misses and 1 hit.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Orient: four frames, oldest loses",
+    "narration": "We’re answering why E kicks out A and F kicks out B. This is LRU: when all 4 slots are full, replace the page whose bracket time is smallest—the oldest last use.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "box",
+      "color": "blue",
+      "target_ids": [
+       "R49",
+       "R50",
+       "R51",
+       "R52"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "4 slots",
+      "geometry": {
+       "box": {
+        "x": 0.008597883597883597,
+        "y": 0.7970430107526881,
+        "w": 0.3148148148148148,
+        "h": 0.12365591397849462
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R49",
+       "R50",
+       "R51",
+       "R52"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "full: choose oldest",
+      "cue": "oldest last use",
+      "geometry": {
+       "box": {
+        "x": 0.013888888888888888,
+        "y": 0.8077956989247311,
+        "w": 0.30423280423280424,
+        "h": 0.10215053763440862
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.05108386243386247,
+        "y": 0.7200456989247311,
+        "w": 0.22984285714285707,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.16600529100529102,
+         "y": 0.7785456989247309
+        },
+        {
+         "x": 0.16600529100529102,
+         "y": 0.8077956989247311
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Load A, B, C, D: four misses",
+    "narration": "First we just fill free slots: A, then B, then C, then D are all not present. So each is a miss, but no eviction happens yet.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "miss; free slot",
+      "cue": "A",
+      "geometry": {
+       "box": {
+        "x": 0.013888888888888888,
+        "y": 0.05510752688172043,
+        "w": 0.07804232804232802,
+        "h": 0.1021505376344086
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.013888888888888888,
+        "y": 0.18650806451612903,
+        "w": 0.18378571428571425,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.08971739487814183,
+         "y": 0.18246509634923824
+        },
+        {
+         "x": 0.08145621225072097,
+         "y": 0.16534400084991055
+        }
+       ]
+      },
+      "confidence": 0.924,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R17"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "miss; free slot",
+      "cue": "B",
+      "geometry": {
+       "box": {
+        "x": 0.08928571428571429,
+        "y": 0.27553763440860213,
+        "w": 0.07804232804232804,
+        "h": 0.10215053763440862
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.18172089947089948,
+        "y": 0.40693817204301075,
+        "w": 0.18378571428571427,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.23221333814604284,
+         "y": 0.404968301135291
+        },
+        {
+         "x": 0.17255250210547254,
+         "y": 0.35997833078303965
+        }
+       ]
+      },
+      "confidence": 0.923,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R34"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "miss; free slot",
+      "cue": "C",
+      "geometry": {
+       "box": {
+        "x": 0.16468253968253968,
+        "y": 0.5201612903225806,
+        "w": 0.07804232804232805,
+        "h": 0.10215053763440862
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.16468253968253968,
+        "y": 0.6515618279569892,
+        "w": 0.18378571428571425,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.2405110456717926,
+         "y": 0.6475188597900986
+        },
+        {
+         "x": 0.23224986304437176,
+         "y": 0.6303977642907708
+        }
+       ]
+      },
+      "confidence": 0.924,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a4",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R52"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "miss; free slot",
+      "cue": "D",
+      "geometry": {
+       "box": {
+        "x": 0.2400793650793651,
+        "y": 0.8077956989247311,
+        "w": 0.07804232804232805,
+        "h": 0.10215053763440862
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.3325145502645503,
+        "y": 0.8296209677419355,
+        "w": 0.18378571428571427,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.3325145502645503,
+         "y": 0.8588709677419355
+        },
+        {
+         "x": 0.31812169312169314,
+         "y": 0.8588709677419355
+        }
+       ]
+      },
+      "confidence": 0.924,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "At E, compare last-use times",
+    "narration": "Now E arrives when memory is full, so LRU compares A(0), B(1), C(2), D(3). The smallest time is A(0), so E replaces A.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "circle",
+      "color": "orange",
+      "target_ids": [
+       "R49"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "smallest time",
+      "geometry": {
+       "box": {
+        "x": 0.00023148148148147772,
+        "y": 0.7874731182795699,
+        "w": 0.10535714285714284,
+        "h": 0.1427956989247312
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.925,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R49"
+      ],
+      "to_ids": [
+       "R8"
+      ],
+      "span": null,
+      "text": "evicted by E",
+      "cue": "E replaces A",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.09999197792243932,
+         "y": 0.8136391828913262
+        },
+        {
+         "x": 0.34848980654955347,
+         "y": 0.40764124858668654
+        },
+        {
+         "x": 0.6605900326595712,
+         "y": 0.27507049452802873
+        }
+       ],
+       "label_box": {
+        "x": 0.3827515170313905,
+        "y": 0.446748043648182,
+        "w": 0.14924285714285718,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.925,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R8"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "miss; A out",
+      "cue": "E replaces A",
+      "geometry": {
+       "box": {
+        "x": 0.6686507936507936,
+        "y": 0.17876344086021506,
+        "w": 0.07804232804232802,
+        "h": 0.10215053763440862
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.638807671957672,
+        "y": 0.3101639784946237,
+        "w": 0.13772857142857142,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.7076719576719577,
+         "y": 0.3101639784946237
+        },
+        {
+         "x": 0.7076719576719577,
+         "y": 0.28091397849462363
+        }
+       ]
+      },
+      "confidence": 0.926,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "At D, it is a hit",
+    "narration": "Next the reference is D. D is already in the frames, so this is the only hit; its last-use time updates from 3 to 5.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R27"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "D is already",
+      "geometry": {
+       "box": {
+        "x": 0.8811838624338624,
+        "y": 0.416505376344086,
+        "w": 0.10535714285714293,
+        "h": 0.1427956989247312
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.925,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R27"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "hit: 3→5",
+      "cue": "only hit",
+      "geometry": {
+       "box": {
+        "x": 0.8948412698412699,
+        "y": 0.4368279569892473,
+        "w": 0.07804232804232802,
+        "h": 0.10215053763440857
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.8822695767195768,
+        "y": 0.3490779569892473,
+        "w": 0.10318571428571433,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.9338624338624341,
+         "y": 0.4075779569892473
+        },
+        {
+         "x": 0.9338624338624338,
+         "y": 0.4368279569892473
+        }
+       ]
+      },
+      "confidence": 0.925,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "At F, B is now oldest",
+    "narration": "Finally F arrives and is not present, so another miss. Among E(4), B(1), C(2), D(5), B has the smallest last-use time, so F replaces B.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "circle",
+      "color": "orange",
+      "target_ids": [
+       "R25"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "smallest last-use",
+      "geometry": {
+       "box": {
+        "x": 0.7303902116402116,
+        "y": 0.416505376344086,
+        "w": 0.10535714285714304,
+        "h": 0.1427956989247312
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.925,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R25"
+      ],
+      "to_ids": [
+       "R42"
+      ],
+      "span": null,
+      "text": "evicted by F",
+      "cue": "F replaces B",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.783068783068783,
+         "y": 0.5570982259078283
+        },
+        {
+         "x": 0.7750499068902791,
+         "y": 0.625
+        },
+        {
+         "x": 0.783068783068783,
+         "y": 0.6929017740921718
+        }
+       ],
+       "label_box": {
+        "x": 0.7974204560906422,
+        "y": 0.59575,
+        "w": 0.14924285714285712,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.925,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R42"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "miss; B out",
+      "cue": "F replaces B",
+      "geometry": {
+       "box": {
+        "x": 0.7440476190476191,
+        "y": 0.7110215053763441,
+        "w": 0.07804232804232802,
+        "h": 0.10215053763440862
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.7142044973544973,
+        "y": 0.8424220430107527,
+        "w": 0.13772857142857142,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.783068783068783,
+         "y": 0.842422043010753
+        },
+        {
+         "x": 0.783068783068783,
+         "y": 0.8131720430107527
+        }
+       ]
+      },
+      "confidence": 0.925,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "Answer: 6 misses, 1 hit",
+    "narration": "So the answer is: E replaces A because A was last used at time 0; F replaces B because B was last used at time 1. Total: 6 misses and 1 hit.",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "box",
+      "color": "blue",
+      "target_ids": [
+       "R41",
+       "R42",
+       "R43",
+       "R44"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "Total",
+      "geometry": {
+       "box": {
+        "x": 0.6633597883597883,
+        "y": 0.7002688172043011,
+        "w": 0.3148148148148149,
+        "h": 0.12365591397849462
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R41",
+       "R42",
+       "R43",
+       "R44"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "6 misses, 1 hit",
+      "cue": "6 misses",
+      "geometry": {
+       "box": {
+        "x": 0.6686507936507936,
+        "y": 0.7110215053763441,
+        "w": 0.3042328042328043,
+        "h": 0.10215053763440862
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.4704722222222223,
+        "y": 0.7328467741935485,
+        "w": 0.18378571428571422,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.6542579365079365,
+         "y": 0.7620967741935484
+        },
+        {
+         "x": 0.6686507936507936,
+         "y": 0.7620967741935484
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart LR\nA[Reference page] --> B{In frames?}\nB -->|yes| C[Hit: update time]\nB -->|no| D{Free slot?}\nD -->|yes| E[Load page]\nD -->|no| F[Evict oldest]\nF --> E"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the page that E replaces.",
+    "answer_ids": [
+     "R49"
+    ],
+    "answer_box": {
+     "x": 0.013888888888888888,
+     "y": 0.8077956989247311,
+     "w": 0.07804232804232802,
+     "h": 0.10215053763440862
+    },
+    "explanation": "A has last-use time 0, the oldest among A, B, C, and D when E arrives."
+   },
+   {
+    "question": "Tap the only hit.",
+    "answer_ids": [
+     "R27"
+    ],
+    "answer_box": {
+     "x": 0.8948412698412699,
+     "y": 0.4368279569892473,
+     "w": 0.07804232804232802,
+     "h": 0.10215053763440857
+    },
+    "explanation": "The second D reference is already in memory, so it is a hit and its time updates to 5."
+   },
+   {
+    "question": "Tap the page that F replaces.",
+    "answer_ids": [
+     "R25"
+    ],
+    "answer_box": {
+     "x": 0.7440476190476191,
+     "y": 0.4368279569892473,
+     "w": 0.07804232804232802,
+     "h": 0.10215053763440857
+    },
+    "explanation": "After D is refreshed to time 5, B has the smallest last-use time, so F evicts B."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 16.499,
+   "ground": 0.031,
+   "total": 19.947,
+   "input_tokens": 6531.0,
+   "output_tokens": 1951.0,
+   "approx_agreement": 1.0,
+   "verified_simulation": 1.0,
+   "sim_steps": 7.0,
+   "sim_extract": 3.382
+  },
+  "warnings": [
+   "Verified simulation computed by code: LRU (least recently used) page replacement (7 steps); checked against the image: 7/7 references found in the page text."
+  ],
+  "question": "This LRU example has 4 slots and the access sequence A B C D E D F (the number in brackets is the time of last use). Why does E replace A, why does F replace B, and how many hits and misses are there?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 2,
+  "cache_hits": 0,
+  "input_tokens": 11689,
+  "output_tokens": 2059,
+  "seconds": 19.880000000000003
+ },
+ "checks": {
+  "e_evicts_a": {
+   "pass": true,
+   "evidence": "e replaces a | a(0), so e replac"
+  },
+  "d_hit_updated": {
+   "pass": true,
+   "evidence": "hit | d(5)"
+  },
+  "f_evicts_b": {
+   "pass": true,
+   "evidence": "f kicks out b | b(1), c(2), d(5), b has the smallest last-use time, so f replac"
+  },
+  "six_misses": {
+   "pass": true,
+   "evidence": "6 misses"
+  },
+  "one_hit": {
+   "pass": true,
+   "evidence": "1 hit | only hit"
+  }
+ },
+ "passed": 5,
+ "total": 5,
+ "score": 1.0,
+ "all_passed": true,
+ "checked_text": "we're answering why e kicks out a and f kicks out b. this is lru: when all 4 slots are full, replace the page whose bracket time is smallest-the oldest last use.\nfull: choose oldest\n\nfirst we just fill free slots: a, then b, then c, then d are all not present. so each is a miss, but no eviction happens yet.\nmiss; free slot\nmiss; free slot\nmiss; free slot\nmiss; free slot\n\nnow e arrives when memory is full, so lru compares a(0), b(1), c(2), d(3). the smallest time is a(0), so e replaces a.\nevicted by e\nmiss; a out\n\nnext the reference is d. d is already in the frames, so this is the only hit; its last-use time updates from 3 to 5.\nhit: 3 -> 5\n\nfinally f arrives and is not present, so another miss. among e(4), b(1), c(2), d(5), b has the smallest last-use time, so f replaces b.\nevicted by f\nmiss; b out\n\nso the answer is: e replaces a because a was last used at time 0; f replaces b because b was last used at time 1. total: 6 misses and 1 hit.\n6 misses, 1 hit\nreference page -> in frames?\nin frames? -> (yes) hit: update time\nin frames? -> (no) free slot?\nfree slot? -> (yes) load page\nfree slot? -> (no) evict oldest\nevict oldest -> load page"
+}

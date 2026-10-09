@@ -840,8 +840,8 @@
  },
  "checks": {
   "p1_holds_r3_waits_r1": {
-   "pass": false,
-   "evidence": "MISSING all[1] | p1 is waiting for r1, but r1"
+   "pass": true,
+   "evidence": "r3 already feeds p1 | p1 is waiting for r1, but r1"
   },
   "p2_holds_r1_waits_r2": {
    "pass": false,
@@ -860,9 +860,9 @@
    "evidence": "deadlocked | MISSING any: 0 of 6 matched, need 1"
   }
  },
- "passed": 0,
+ "passed": 1,
  "total": 5,
- "score": 0.0,
+ "score": 0.2,
  "all_passed": false,
  "checked_text": "great question: we're checking whether this resource-allocation graph is truly deadlocked. i'll circle the resource boxes and the processes so we can trace who holds what and who is waiting.\n\nremember the rule: resource to process means assigned, process to resource means requested. follow my arrows: r3 already feeds p1 and p2, while p3 is asking for r3.\nassigned\nassigned\nrequest\n\nnow we simulate, not just eyeball the cycle. p1 is waiting for r1, but r1 has a free instance because no assignment arrow leaves r1 yet, so grant it and p1 can finish.\nfree now\ngrant r1\np1 ✓ releases\n\nwhen p1 finishes, it releases its r3 instance. that gives p3 the r3 it was waiting for, so the cycle is already breakable.\nrelease\ngrant r3\np3 can run\n\nafter p3 runs, it can release r2. then p2's request for r2 can be granted, so p2 finishes too: everyone can complete.\nrelease r2\ngrant r2\np2 ✓\n\nso the answer is no deadlock. with multiple instances, a cycle is only a warning; here the safe finish order is p1, then p3, then p2.\n2 copies help\ngrant free r1 -> p1 finishes\np1 finishes -> release r3\nrelease r3 -> p3 finishes\np3 finishes -> release r2\nrelease r2 -> p2 finishes"
 }

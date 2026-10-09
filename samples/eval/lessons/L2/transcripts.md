@@ -576,7 +576,7 @@ Missing: sr_ack_5: MISSING any: 0 of 5 matched, need 1
 ## cs_gbn_vs_sr, run 2
 
 Question: "In both timelines frame 2 is damaged. What does the receiver do with the frames that arrive after it, and which frames does the sender retransmit, in (a) Go-Back-N versus (b) Selective Repeat?" (cs_gbn_vs_sr.png)
-Score 3/5 (gbn_discards_3_to_8 FAIL, gbn_timeout_resends_from_2 PASS, sr_buffers_3_to_5 PASS, sr_nak_only_2 PASS, sr_ack_5 FAIL). Lesson 19.677 s, 6 steps, model gpt-5.5.
+Score 4/5 (gbn_discards_3_to_8 PASS, gbn_timeout_resends_from_2 PASS, sr_buffers_3_to_5 PASS, sr_nak_only_2 PASS, sr_ack_5 FAIL). Lesson 19.677 s, 6 steps, model gpt-5.5.
 
 **Damaged Frame 2: Go-Back-N vs Selective Repeat**: Both timelines show frame 2 getting an error. In Go-Back-N the receiver discards later out-of-order frames and the sender retransmits from 2 onward; in Selective Repeat the receiver buffers later good frames and the sender retransmits only frame 2.
 
@@ -593,7 +593,7 @@ Score 3/5 (gbn_discards_3_to_8 FAIL, gbn_timeout_resends_from_2 PASS, sr_buffers
 6. **Plain answer**: So the answer is: Go-Back-N discards frames after damaged 2 and retransmits the whole run from 2. Selective Repeat buffers good later frames and retransmits only damaged 2.
    - sketch: `flowchart LR ; A[Frame 2 damaged] --> B{Protocol?} ; B --> C[Go-Back-N] ; C --> D[Discard later] ; C --> E[Retransmit 2 onward] ; B --> F[Selective Repeat] ; F --> G[Buffer later] ; F --> H[Retransmit only 2]`
 
-Missing: gbn_discards_3_to_8: MISSING any: 0 of 6 matched, need 1; sr_ack_5: MISSING any: 0 of 5 matched, need 1
+Missing: sr_ack_5: MISSING any: 0 of 5 matched, need 1
 
 ## cs_tcp_handshake, run 1
 

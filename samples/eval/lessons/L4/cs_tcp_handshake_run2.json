@@ -1,0 +1,718 @@
+{
+ "version": "L4",
+ "note": "+ CPU scheduling and page replacement solvers",
+ "case": "cs_tcp_handshake",
+ "topic": "networking",
+ "run": 2,
+ "question": "Walk me through this TCP three-way handshake: what do the SYN, Seq and Ack values in each of the three segments mean, and why is the first acknowledgement number 1024?",
+ "source": "cs_tcp_handshake.png",
+ "page": null,
+ "backend": {
+  "path": "D:\\BananaHack\\backend",
+  "commit": "3e13ede",
+  "subject": "Add CPU scheduling and page replacement solvers",
+  "dirty": false
+ },
+ "started": "2026-10-09T23:40:17+06:00",
+ "finished": "2026-10-09T23:40:46+06:00",
+ "jobs": 3,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "D:\\BananaHack\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L4_cs_tcp_handshake_2__t3eud87\\data",
+ "perceive_s": 9.693,
+ "perception": {
+  "image_id": "f2eb682cf261",
+  "width": 1410,
+  "height": 1054,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.179,
+   "ink": 0.115,
+   "ocr": 3.9,
+   "text": 0.035,
+   "rescue": 0.726,
+   "regions": 0.086,
+   "freespace": 0.004,
+   "som": 0.019,
+   "latex_lines": 3.0,
+   "latex": 4.401,
+   "total": 9.465,
+   "prepare": 0.069
+  },
+  "regions": 25
+ },
+ "regions": {
+  "R2": "Client: A",
+  "R3": "Server: B",
+  "R9": "[LaTeX: \\text{SYN}=1\\text{Seg:}1023\\text{ACK}=0]",
+  "R12": "TiMe",
+  "R14": "CK=1\nACK",
+  "R15": "CK=1",
+  "R16": "ACK",
+  "R17": "169",
+  "R18": "Ack Number = 1024\nSYN =1 Sea= 2131691 ACK=1\nSYN =0 Sea = 1024 ACK=1\nAck Number = 2131692",
+  "R19": "Ack Number = 1024 [LaTeX: Synd=Seq+213168+AckNumber=1024]",
+  "R21": "SYN =1 Sea= 2131691 ACK=1",
+  "R23": "[LaTeX: Syn=\\text{Seq}\\times1024\\text{ACK}\\times\\text{Ack\\_Number}]",
+  "R24": "Ack Number = 2131692",
+  "R25": "Data"
+ },
+ "request": {
+  "image_id": "f2eb682cf261",
+  "question": "Walk me through this TCP three-way handshake: what do the SYN, Seq and Ack values in each of the three segments mean, and why is the first acknowledgement number 1024?"
+ },
+ "lesson_s": 17.151,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "1983c23ce677",
+  "image_id": "f2eb682cf261",
+  "title": "TCP Three-Way Handshake Values",
+  "summary": "This diagram shows TCP connection setup between Client A and Server B. The key rule is: a SYN consumes one sequence number, so the next expected byte is Seq + 1, which explains Ack Number = 1024.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Orient: three messages over time",
+    "narration": "We’re walking down the time arrow through the TCP three-way handshake. I’ll use blue for Client A, green for Server B, and orange for the sequence-number rule that answers why 1024 appears.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R2"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "Client A",
+      "geometry": {
+       "box": {
+        "x": 0.22916666666666666,
+        "y": 0.04734345351043643,
+        "w": 0.11968085106382978,
+        "h": 0.04952561669829222
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.979,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R3"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "Server B",
+      "geometry": {
+       "box": {
+        "x": 0.6688829787234043,
+        "y": 0.037855787476280836,
+        "w": 0.11968085106382975,
+        "h": 0.047628083491461096
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.988,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a3",
+      "kind": "circle",
+      "color": "orange",
+      "target_ids": [
+       "R4",
+       "R8"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "time arrow",
+      "geometry": {
+       "box": {
+        "x": 0.16446808510638297,
+        "y": 0.0,
+        "w": 0.04269503546099293,
+        "h": 1.0
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.965,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Segment 1: client opens with SYN",
+    "narration": "First, the client sends a SYN segment to say, “I want to start a connection.” Its Seq is 1023, the client’s initial sequence number; ACK is 0 because the client has not received anything from B yet.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "box",
+      "color": "blue",
+      "target_ids": [
+       "R9"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "SYN segment",
+      "geometry": {
+       "box": {
+        "x": 0.33693617021276595,
+        "y": 0.12815939278937383,
+        "w": 0.2651347517730496,
+        "h": 0.2190132827324478
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.974,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "arrow",
+      "color": "blue",
+      "target_ids": [],
+      "from_ids": [
+       "R5"
+      ],
+      "to_ids": [
+       "R7"
+      ],
+      "span": null,
+      "text": "open request",
+      "cue": "client sends",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.3213356154710084,
+         "y": 0.5341555977229602
+        },
+        {
+         "x": 0.5085106382978724,
+         "y": 0.4740606947584338
+        },
+        {
+         "x": 0.6956856611247363,
+         "y": 0.5341555977229602
+        }
+       ],
+       "label_box": {
+        "x": 0.39514957446808513,
+        "y": 0.4106655466202036,
+        "w": 0.2267221276595745,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R9"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "client ISN",
+      "cue": "Seq is 1023",
+      "geometry": {
+       "box": {
+        "x": 0.34822695035460993,
+        "y": 0.1432637571157495,
+        "w": 0.24255319148936172,
+        "h": 0.18880455407969637
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.3736343971631206,
+        "y": 0.05551375711574952,
+        "w": 0.19173829787234037,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.4695035460992908,
+         "y": 0.11818928421908262
+        },
+        {
+         "x": 0.4695035460992908,
+         "y": 0.13491270290908333
+        }
+       ]
+      },
+      "confidence": 0.939,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Segment 2: server replies and acknowledges",
+    "narration": "Now the server replies with SYN=1 and ACK=1: it is both opening its side and acknowledging the client’s SYN. The acknowledgement number is 1024 because TCP says a SYN uses one sequence number: 1023 plus 1.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "box",
+      "color": "green",
+      "target_ids": [
+       "R21"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "server replies",
+      "geometry": {
+       "box": {
+        "x": 0.3354609929078014,
+        "y": 0.610056925996205,
+        "w": 0.2092198581560284,
+        "h": 0.0977229601518026
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.921,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "circle",
+      "color": "green",
+      "target_ids": [
+       "R19"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "acknowledgement number",
+      "geometry": {
+       "box": {
+        "x": 0.3173404255319149,
+        "y": 0.5847248576850095,
+        "w": 0.25468085106382976,
+        "h": 0.1588235294117648
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.966,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R19"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "1023+1=1024",
+      "cue": "1023 plus 1",
+      "geometry": {
+       "box": {
+        "x": 0.350354609929078,
+        "y": 0.6053130929791272,
+        "w": 0.18865248226950354,
+        "h": 0.11764705882352944
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.3297768794326241,
+        "y": 0.5175630929791272,
+        "w": 0.20923021276595744,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.4373207940278394,
+         "y": 0.5802101788714681
+        },
+        {
+         "x": 0.43879486223581426,
+         "y": 0.5970189211944458
+        }
+       ]
+      },
+      "confidence": 0.966,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Segment 2 also gives server’s Seq",
+    "narration": "The same green segment has the server’s own Seq, 2131691. That is B’s initial sequence number, so the next client ACK must point to 2131692.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R21"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "Seq= 2131691",
+      "text": null,
+      "cue": "server’s own Seq",
+      "geometry": {
+       "box": {
+        "x": 0.3800187228274265,
+        "y": 0.6012830389238645,
+        "w": 0.09503048999406022,
+        "h": 0.11293133993247839
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.568,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s4a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R21"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "server ISN",
+      "cue": "initial sequence number",
+      "geometry": {
+       "box": {
+        "x": 0.34113475177304964,
+        "y": 0.6176470588235294,
+        "w": 0.19787234042553192,
+        "h": 0.08254269449715368
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.5936693262411348,
+        "y": 0.6416897533206831,
+        "w": 0.19173829787234042,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.5905500687237204,
+         "y": 0.6661696980876949
+        },
+        {
+         "x": 0.5452456072334103,
+         "y": 0.6639865658265357
+        }
+       ]
+      },
+      "confidence": 0.568,
+      "grounding": "id_only"
+     },
+     {
+      "id": "s4a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R21"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "2131691+1",
+      "cue": "2131692",
+      "geometry": {
+       "box": {
+        "x": 0.34113475177304964,
+        "y": 0.6176470588235294,
+        "w": 0.19787234042553192,
+        "h": 0.08254269449715368
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.5608719858156028,
+        "y": 0.7294397533206831,
+        "w": 0.1742463829787234,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.5840999563071763,
+         "y": 0.7280299716039716
+        },
+        {
+         "x": 0.5319567190880362,
+         "y": 0.7030093167541062
+        }
+       ]
+      },
+      "confidence": 0.568,
+      "grounding": "id_only"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Segment 3: client finishes the handshake",
+    "narration": "Finally, the client sends ACK=1 with Seq=1024 and Ack Number=2131692. SYN=0 now because this is no longer a setup request; it can carry data after the connection is established.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "box",
+      "color": "blue",
+      "target_ids": [
+       "R23"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "client sends",
+      "geometry": {
+       "box": {
+        "x": 0.357531914893617,
+        "y": 0.7686148007590133,
+        "w": 0.2984113475177306,
+        "h": 0.17719165085388988
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.983,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "circle",
+      "color": "orange",
+      "target_ids": [
+       "R24"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "Ack Number=2131692",
+      "geometry": {
+       "box": {
+        "x": 0.3162943262411348,
+        "y": 0.7990512333965845,
+        "w": 0.3284042553191489,
+        "h": 0.17419354838709666
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.957,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R25"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "carry data",
+      "geometry": {
+       "box": {
+        "x": 0.3420567375886525,
+        "y": 0.8490512333965845,
+        "w": 0.08042553191489366,
+        "h": 0.07039848197343435
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.988,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "Recap: what each value means",
+    "narration": "So the answer is: SYN starts each side, Seq names that side’s starting number, and Ack says the next number expected from the other side. The first acknowledgement is 1024 exactly because A’s SYN at Seq 1023 consumes one sequence number.",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R9"
+      ],
+      "to_ids": [
+       "R19"
+      ],
+      "span": null,
+      "text": "SYN consumes 1",
+      "cue": "1024 exactly",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.46323349796607877,
+         "y": 0.3453896762425897
+        },
+        {
+         "x": 0.43393604042284223,
+         "y": 0.46638652273890957
+        },
+        {
+         "x": 0.4488800403231157,
+         "y": 0.5919917279319834
+        }
+       ],
+       "label_box": {
+        "x": 0.5585761920177623,
+        "y": 0.4618460127926047,
+        "w": 0.2617059574468086,
+        "h": 0.05850000000000005
+       },
+       "leader": null
+      },
+      "confidence": 0.939,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart TD\nA[A SYN Seq 1023] --> B[B SYN ACK]\nB --> C[Ack 1024]\nC --> D[A ACK]\nD --> E[Ack 2131692]\nE --> F[Connection open]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the client’s first SYN segment.",
+    "answer_ids": [
+     "R9"
+    ],
+    "answer_box": {
+     "x": 0.34822695035460993,
+     "y": 0.1432637571157495,
+     "w": 0.24255319148936172,
+     "h": 0.18880455407969637
+    },
+    "explanation": "This is the first message from Client A to Server B and starts the handshake."
+   },
+   {
+    "question": "Tap the acknowledgement number that comes from 1023 + 1.",
+    "answer_ids": [
+     "R19"
+    ],
+    "answer_box": {
+     "x": 0.350354609929078,
+     "y": 0.6053130929791272,
+     "w": 0.18865248226950354,
+     "h": 0.11764705882352944
+    },
+    "explanation": "A SYN consumes one sequence number, so the server expects the client’s next sequence number to be 1024."
+   },
+   {
+    "question": "Tap the final acknowledgement of the server’s SYN.",
+    "answer_ids": [
+     "R24"
+    ],
+    "answer_box": {
+     "x": 0.3588652482269504,
+     "y": 0.8216318785578748,
+     "w": 0.24326241134751775,
+     "h": 0.12903225806451613
+    },
+    "explanation": "The server’s SYN used sequence number 2131691, so the client acknowledges the next expected number, 2131692."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 17.059,
+   "ground": 0.041,
+   "total": 17.101,
+   "input_tokens": 6458.0,
+   "output_tokens": 1946.0,
+   "approx_agreement": 0.857
+  },
+  "warnings": [],
+  "question": "Walk me through this TCP three-way handshake: what do the SYN, Seq and Ack values in each of the three segments mean, and why is the first acknowledgement number 1024?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 1,
+  "cache_hits": 0,
+  "input_tokens": 6458,
+  "output_tokens": 1946,
+  "seconds": 17.058
+ },
+ "checks": {
+  "client_syn_1023": {
+   "pass": true,
+   "evidence": "1023 | syn segment to say, \"i want to start a connection.\" its seq is 1023 | 1023 -> b syn | first acknowledgement is 1024 exactly because a's syn at seq 1023"
+  },
+  "server_isn_2131691": {
+   "pass": true,
+   "evidence": "2131691 | server's own seq, 2131691"
+  },
+  "ack_1024_is_1023_plus_1": {
+   "pass": true,
+   "evidence": "1024 | 1023+1 | plus 1 | next number"
+  },
+  "final_ack_2131692": {
+   "pass": true,
+   "evidence": "2131692 | 2131691+1 | ack must point to 2131692"
+  },
+  "third_seq_1024_established": {
+   "pass": true,
+   "evidence": "establish | seq=1024 | 1024 exactly because a's syn at seq"
+  }
+ },
+ "passed": 5,
+ "total": 5,
+ "score": 1.0,
+ "all_passed": true,
+ "checked_text": "we're walking down the time arrow through the tcp three-way handshake. i'll use blue for client a, green for server b, and orange for the sequence-number rule that answers why 1024 appears.\n\nfirst, the client sends a syn segment to say, \"i want to start a connection.\" its seq is 1023, the client's initial sequence number; ack is 0 because the client has not received anything from b yet.\nopen request\nclient isn\n\nnow the server replies with syn=1 and ack=1: it is both opening its side and acknowledging the client's syn. the acknowledgement number is 1024 because tcp says a syn uses one sequence number: 1023 plus 1.\n1023+1=1024\n\nthe same green segment has the server's own seq, 2131691. that is b's initial sequence number, so the next client ack must point to 2131692.\nserver isn\n2131691+1\n\nfinally, the client sends ack=1 with seq=1024 and ack number=2131692. syn=0 now because this is no longer a setup request; it can carry data after the connection is established.\n\nso the answer is: syn starts each side, seq names that side's starting number, and ack says the next number expected from the other side. the first acknowledgement is 1024 exactly because a's syn at seq 1023 consumes one sequence number.\nsyn consumes 1\na syn seq 1023 -> b syn ack\nb syn ack -> ack 1024\nack 1024 -> a ack\na ack -> ack 2131692\nack 2131692 -> connection open"
+}

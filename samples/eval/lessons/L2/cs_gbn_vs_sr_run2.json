@@ -789,8 +789,8 @@
  },
  "checks": {
   "gbn_discards_3_to_8": {
-   "pass": false,
-   "evidence": "MISSING any: 0 of 6 matched, need 1"
+   "pass": true,
+   "evidence": "refuses later frames 3 through 8"
   },
   "gbn_timeout_resends_from_2": {
    "pass": true,
@@ -809,9 +809,9 @@
    "evidence": "MISSING any: 0 of 5 matched, need 1"
   }
  },
- "passed": 3,
+ "passed": 4,
  "total": 5,
- "score": 0.6,
+ "score": 0.8,
  "all_passed": false,
  "checked_text": "great question-both diagrams start the same: frame 2 is the trouble spot. i'm circling the error in each timeline, because everything after it shows the protocol difference.\nframe 2 damaged\n\nin go-back-n, once frame 2 is damaged, the receiver refuses later frames 3 through 8 because they are out of order. these d marks mean discarded, not saved.\nnot buffered\n\nnow follow the timeout: because ack 2 never arrives, the sender goes back to frame 2. so in part (a), it retransmits 2, 3, 4, 5, 6, 7, 8, and then continues with 9.\ngo back\n\nin selective repeat, the receiver still notices frame 2 is missing, but it keeps later correct frames. that buffered group is frames 3, 4, and 5 waiting until 2 is resent.\nsaved out-of-order\n\nhere the nak 2 pinpoints exactly what failed, so the sender retransmits only frame 2. after that, the receiver can deliver buffered 3, 4, and 5 in order, then continue normally.\nonly 2\nthen in order\n\nso the answer is: go-back-n discards frames after damaged 2 and retransmits the whole run from 2. selective repeat buffers good later frames and retransmits only damaged 2.\nframe 2 damaged -> protocol?\nprotocol? -> go-back-n\ngo-back-n -> discard later\ngo-back-n -> retransmit 2 onward\nprotocol? -> selective repeat\nselective repeat -> buffer later\nselective repeat -> retransmit only 2"
 }

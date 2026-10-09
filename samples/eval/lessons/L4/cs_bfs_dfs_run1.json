@@ -1,0 +1,1043 @@
+{
+ "version": "L4",
+ "note": "+ CPU scheduling and page replacement solvers",
+ "case": "cs_bfs_dfs",
+ "topic": "graph algorithms",
+ "run": 1,
+ "question": "In which order does breadth-first search visit the nodes if it starts at A and takes neighbours in alphabetical order? How would depth-first search from A differ?",
+ "source": "cs_bfs_dfs.png",
+ "page": null,
+ "backend": {
+  "path": "D:\\BananaHack\\backend",
+  "commit": "3e13ede",
+  "subject": "Add CPU scheduling and page replacement solvers",
+  "dirty": false
+ },
+ "started": "2026-10-09T23:35:22+06:00",
+ "finished": "2026-10-09T23:36:06+06:00",
+ "jobs": 3,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "D:\\BananaHack\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L4_cs_bfs_dfs_1_8nqwrxfi\\data",
+ "perceive_s": 14.472,
+ "perception": {
+  "image_id": "3c68e5b034db",
+  "width": 1280,
+  "height": 1037,
+  "doc_id": null,
+  "page": null,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.185,
+   "ink": 0.099,
+   "ocr": 13.71,
+   "text": 0.028,
+   "rescue": 0.013,
+   "regions": 0.114,
+   "freespace": 0.016,
+   "som": 0.078,
+   "total": 14.244,
+   "prepare": 0.045
+  },
+  "regions": 14
+ },
+ "regions": {
+  "R1": "A",
+  "R2": "A",
+  "R3": "B",
+  "R4": "C",
+  "R5": "E",
+  "R6": "B",
+  "R7": "C",
+  "R8": "E",
+  "R9": "D",
+  "R10": "F",
+  "R11": "G",
+  "R12": "D",
+  "R13": "F",
+  "R14": "G"
+ },
+ "request": {
+  "image_id": "3c68e5b034db",
+  "question": "In which order does breadth-first search visit the nodes if it starts at A and takes neighbours in alphabetical order? How would depth-first search from A differ?"
+ },
+ "lesson_s": 27.341,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "3334433a0c3a",
+  "image_id": "3c68e5b034db",
+  "title": "BFS vs DFS from A",
+  "summary": "We’ll run breadth-first search exactly on this graph starting at A, using a FIFO queue and alphabetical neighbours. Then we’ll contrast how depth-first search would dive down one branch before coming back.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Set the starting rule",
+    "narration": "We start at A, and breadth-first search uses a FIFO queue: first in, first out. I’ll circle A and write the initial queue, because A is marked seen before any visiting happens.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "start at A",
+      "geometry": {
+       "box": {
+        "x": 0.5094921875,
+        "y": 0.0,
+        "w": 0.234140625,
+        "h": 0.2700337512054002
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "queue [A]",
+      "cue": "initial queue",
+      "geometry": {
+       "box": {
+        "x": 0.53984375,
+        "y": 0.017357762777242044,
+        "w": 0.17343750000000002,
+        "h": 0.21504339440694312
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.77252392578125,
+        "y": 0.09562945998071361,
+        "w": 0.18884742187500003,
+        "h": 0.05850000000000001
+       },
+       "leader": [
+        {
+         "x": 0.7693064411761836,
+         "y": 0.12487945998071359
+        },
+        {
+         "x": 0.7197162192101324,
+         "y": 0.12487945998071359
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Visit A, enqueue level 1",
+    "narration": "Now dequeue A and visit it first. Its alphabetical neighbours are B, C, E, so they enter the queue in that order as level 1 children of A.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "visit 1 ✓",
+      "cue": "visit it first",
+      "geometry": {
+       "box": {
+        "x": 0.53984375,
+        "y": 0.017357762777242044,
+        "w": 0.17343750000000002,
+        "h": 0.21504339440694312
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.29175365234374995,
+        "y": 0.09562945998071361,
+        "w": 0.18884742187500003,
+        "h": 0.05850000000000001
+       },
+       "leader": [
+        {
+         "x": 0.48381855882381614,
+         "y": 0.12487945998071359
+        },
+        {
+         "x": 0.5334087807898676,
+         "y": 0.12487945998071359
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R3"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "seen, L1",
+      "cue": "B, C, E",
+      "geometry": {
+       "box": {
+        "x": 0.2796875,
+        "y": 0.33847637415621984,
+        "w": 0.17343750000000002,
+        "h": 0.21407907425265188
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.2814613671875,
+        "y": 0.25072637415621984,
+        "w": 0.16988976562499997,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.36640624999999993,
+         "y": 0.3131978112772273
+        },
+        {
+         "x": 0.36640624999999993,
+         "y": 0.330533499914205
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R4"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "seen, L1",
+      "cue": "B, C, E",
+      "geometry": {
+       "box": {
+        "x": 0.53984375,
+        "y": 0.33847637415621984,
+        "w": 0.17343750000000002,
+        "h": 0.21407907425265188
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.5416176171874999,
+        "y": 0.5818054484088717,
+        "w": 0.16988976562500002,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.6265624999999999,
+         "y": 0.5778340112878643
+        },
+        {
+         "x": 0.6265624999999999,
+         "y": 0.5604983226508866
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a4",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R5"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "queue [B,C,E]",
+      "cue": "that order",
+      "geometry": {
+       "box": {
+        "x": 0.8,
+        "y": 0.3394406943105111,
+        "w": 0.171875,
+        "h": 0.21215043394406946
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.731321953125,
+        "y": 0.5808411282545806,
+        "w": 0.26467804687499996,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.868150404615303,
+         "y": 0.5769239871634969
+        },
+        {
+         "x": 0.8705189717771653,
+         "y": 0.559425410436748
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Visit B, add D and F",
+    "narration": "FIFO means B comes out next, not C or E yet. From B, the unvisited alphabetical neighbours are D then F, so both are marked and placed at the back.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R3"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "visit 2 ✓",
+      "cue": "B comes out",
+      "geometry": {
+       "box": {
+        "x": 0.2796875,
+        "y": 0.33847637415621984,
+        "w": 0.17343750000000002,
+        "h": 0.21407907425265188
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.06714300781249996,
+        "y": 0.41626591128254575,
+        "w": 0.188847421875,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.2592079142925662,
+         "y": 0.44551591128254575
+        },
+        {
+         "x": 0.2732525307898676,
+         "y": 0.4455159112825458
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R9"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "seen, L2",
+      "cue": "D then F",
+      "geometry": {
+       "box": {
+        "x": 0.01953125,
+        "y": 0.6595949855351977,
+        "w": 0.1734375,
+        "h": 0.21407907425265194
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.0213051171875,
+        "y": 0.5718449855351977,
+        "w": 0.169889765625,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.10625,
+         "y": 0.634316422656205
+        },
+        {
+         "x": 0.10625,
+         "y": 0.6516521112931828
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R10"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "seen, L2",
+      "cue": "D then F",
+      "geometry": {
+       "box": {
+        "x": 0.2796875,
+        "y": 0.6595949855351977,
+        "w": 0.17343750000000002,
+        "h": 0.21407907425265194
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.08610066406249997,
+        "y": 0.9029240597878496,
+        "w": 0.169889765625,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.2082173903416571,
+         "y": 0.9006763754369419
+        },
+        {
+         "x": 0.2743823118519707,
+         "y": 0.8446113106331524
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a4",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "queue [C,E,D,F]",
+      "cue": "at the back",
+      "geometry": {
+       "box": {
+        "x": 0.42,
+        "y": 0.88,
+        "w": 0.18,
+        "h": 0.050000000000000044
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.6236970703125,
+        "y": 0.87575,
+        "w": 0.302593359375,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.6204795857074338,
+         "y": 0.9050000000000001
+        },
+        {
+         "x": 0.6064349692101324,
+         "y": 0.9050000000000001
+        }
+       ]
+      },
+      "confidence": 0.3,
+      "grounding": "llm_only"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Visit C, add G",
+    "narration": "Next the queue front is C, so C is visited third. C’s only unvisited neighbour is G, so G joins after D and F, not before them.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R4"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "visit 3 ✓",
+      "cue": "C is visited",
+      "geometry": {
+       "box": {
+        "x": 0.53984375,
+        "y": 0.33847637415621984,
+        "w": 0.17343750000000002,
+        "h": 0.21407907425265188
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.77252392578125,
+        "y": 0.20685137415621985,
+        "w": 0.18884742187500003,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8307431036075246,
+         "y": 0.26764140881415566
+        },
+        {
+         "x": 0.71853867197168,
+         "y": 0.3653897115390225
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R11"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "seen, L2",
+      "cue": "G joins",
+      "geometry": {
+       "box": {
+        "x": 0.53984375,
+        "y": 0.6595949855351977,
+        "w": 0.17343750000000002,
+        "h": 0.21407907425265194
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.7369783203125,
+        "y": 0.7373845226615237,
+        "w": 0.16988976562500002,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.7337608357074338,
+         "y": 0.7666345226615237
+        },
+        {
+         "x": 0.7197162192101324,
+         "y": 0.7666345226615237
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "queue [E,D,F,G]",
+      "cue": "after D and F",
+      "geometry": {
+       "box": {
+        "x": 0.6,
+        "y": 0.88,
+        "w": 0.20000000000000007,
+        "h": 0.050000000000000044
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.5487033203125,
+        "y": 0.9375,
+        "w": 0.302593359375,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.7,
+         "y": 0.9375
+        },
+        {
+         "x": 0.7,
+         "y": 0.93
+        }
+       ]
+      },
+      "confidence": 0.3,
+      "grounding": "llm_only"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Finish the BFS queue",
+    "narration": "Now BFS simply drains the queue: E, then D, then F, then G. None adds a new unvisited node, so the BFS order is A, B, C, E, D, F, G.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R5"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "visit 4 ✓",
+      "cue": "E, then D",
+      "geometry": {
+       "box": {
+        "x": 0.8,
+        "y": 0.3394406943105111,
+        "w": 0.171875,
+        "h": 0.21215043394406946
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.5874555078125,
+        "y": 0.2516906943105111,
+        "w": 0.18884742187500003,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.7208400423453969,
+         "y": 0.3123630210955047
+        },
+        {
+         "x": 0.7946130252389769,
+         "y": 0.3718617319148438
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R9"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "visit 5 ✓",
+      "cue": "then D",
+      "geometry": {
+       "box": {
+        "x": 0.01953125,
+        "y": 0.6595949855351977,
+        "w": 0.1734375,
+        "h": 0.21407907425265194
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.2166658203125,
+        "y": 0.5718449855351977,
+        "w": 0.188847421875,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.2722035640028019,
+         "y": 0.6325203895064374
+        },
+        {
+         "x": 0.19835246361287667,
+         "y": 0.692202604654145
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R10"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "visit 6 ✓",
+      "cue": "then F",
+      "geometry": {
+       "box": {
+        "x": 0.2796875,
+        "y": 0.6595949855351977,
+        "w": 0.17343750000000002,
+        "h": 0.21407907425265194
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.26427757812499997,
+        "y": 0.9029240597878496,
+        "w": 0.18884742187500003,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.36024726112942723,
+         "y": 0.8989591606539937
+        },
+        {
+         "x": 0.36105505563520357,
+         "y": 0.8816038580555615
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a4",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R11"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "visit 7 ✓",
+      "cue": "then G",
+      "geometry": {
+       "box": {
+        "x": 0.53984375,
+        "y": 0.6595949855351977,
+        "w": 0.17343750000000002,
+        "h": 0.21407907425265194
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.7369783203125,
+        "y": 0.6595949855351977,
+        "w": 0.18884742187500003,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.7513041522754779,
+         "y": 0.7192628296505704
+        },
+        {
+         "x": 0.7194317080179615,
+         "y": 0.7313666587832922
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "How DFS differs",
+    "narration": "Depth-first search would use the same alphabetical choice, but it dives before siblings: from A to B to D, then backtrack to F, then C to G, then E. So DFS order is A, B, D, F, C, G, E.",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "arrow",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [
+       "R1"
+      ],
+      "to_ids": [
+       "R3"
+      ],
+      "span": null,
+      "text": "DFS dives",
+      "cue": "dives before siblings",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.5325579456473537,
+         "y": 0.2407378593612502
+        },
+        {
+         "x": 0.5051290324704469,
+         "y": 0.2958840895881071
+        },
+        {
+         "x": 0.46041080435264636,
+         "y": 0.32965751190200915
+        }
+       ],
+       "label_box": {
+        "x": 0.5291912740477235,
+        "y": 0.28475496668412104,
+        "w": 0.18884742187500003,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a2",
+      "kind": "arrow",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [
+       "R3"
+      ],
+      "to_ids": [
+       "R9"
+      ],
+      "span": null,
+      "text": null,
+      "cue": "A to B to D",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.272407163415662,
+         "y": 0.5615417847906968
+        },
+        {
+         "x": 0.22766915578024113,
+         "y": 0.5953871932485136
+        },
+        {
+         "x": 0.200249086584338,
+         "y": 0.6506086491533726
+        }
+       ],
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s6a3",
+      "kind": "label",
+      "color": "purple",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "BFS: A B C E D",
+      "cue": "DFS order",
+      "geometry": {
+       "box": {
+        "x": 0.05625,
+        "y": 0.08293153326904533,
+        "w": 0.3640625,
+        "h": 0.14175506268081
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.09646339843750001,
+        "y": 0.004,
+        "w": 0.28363570312499997,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.23828125,
+         "y": 0.0625
+        },
+        {
+         "x": 0.23828125,
+         "y": 0.08293153326904533
+        }
+       ]
+      },
+      "confidence": 0.421,
+      "grounding": "llm_only"
+     },
+     {
+      "id": "s6a4",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "DFS: A B D F C",
+      "cue": "DFS order",
+      "geometry": {
+       "box": {
+        "x": 0.04296875,
+        "y": 0.16972034715525555,
+        "w": 0.37109375,
+        "h": 0.1485053037608486
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.004,
+        "y": 0.34747565091610416,
+        "w": 0.28363570312499997,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.16600026971920148,
+         "y": 0.344327323605797
+        },
+        {
+         "x": 0.178337732466669,
+         "y": 0.32452230553671835
+        }
+       ]
+      },
+      "confidence": 0.425,
+      "grounding": "llm_only"
+     }
+    ],
+    "sketch": "flowchart TD\nA[Start A] --> B[BFS: queue]\nB --> C[Visit front]\nC --> D[Enqueue neighbours]\nD --> E[Queue empty?]\nE -->|no| C\nE -->|yes| F[Done]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the node visited first by BFS.",
+    "answer_ids": [
+     "R1"
+    ],
+    "answer_box": {
+     "x": 0.53984375,
+     "y": 0.017357762777242044,
+     "w": 0.17343750000000002,
+     "h": 0.21504339440694312
+    },
+    "explanation": "BFS starts at A, so A is enqueued first and visited first."
+   },
+   {
+    "question": "Tap the node enqueued after C when visiting A.",
+    "answer_ids": [
+     "R5"
+    ],
+    "answer_box": {
+     "x": 0.8,
+     "y": 0.3394406943105111,
+     "w": 0.171875,
+     "h": 0.21215043394406946
+    },
+    "explanation": "A’s neighbours are taken alphabetically as B, C, E, so E is the third level-1 enqueue."
+   },
+   {
+    "question": "Tap the node DFS reaches after B if using alphabetical neighbours.",
+    "answer_ids": [
+     "R9"
+    ],
+    "answer_box": {
+     "x": 0.01953125,
+     "y": 0.6595949855351977,
+     "w": 0.1734375,
+     "h": 0.21407907425265194
+    },
+    "explanation": "DFS dives from B to its first alphabetical unvisited neighbour, D."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 19.255,
+   "ground": 2.146,
+   "total": 27.24,
+   "input_tokens": 6432.0,
+   "output_tokens": 2159.0,
+   "approx_agreement": 1.0,
+   "verified_simulation": 0.0,
+   "sim_steps": 7.0,
+   "sim_extract": 5.69,
+   "sim_nodes": 7.0,
+   "sim_nodes_mapped": 7.0,
+   "sim_edges": 7.0,
+   "sim_edges_verified": 0.0,
+   "sim_edges_corrected": 0.0,
+   "sim_edges_added": 0.0,
+   "sim_edges_confirmed": 6.0
+  },
+  "warnings": [
+   "Simulation computed by code: breadth-first search from A (7 steps); checked against the image: 7/7 vertices matched to regions, 6/7 edges confirmed as drawn lines.",
+   "step 6 drawing 3: cue 'BFS order' not in narration; using 'DFS order'",
+   "step 6 drawing 3: label shortened to 'BFS: A B C E D'",
+   "step 6 drawing 4: label shortened to 'DFS: A B D F C'"
+  ],
+  "question": "In which order does breadth-first search visit the nodes if it starts at A and takes neighbours in alphabetical order? How would depth-first search from A differ?",
+  "context_pages": []
+ },
+ "llm_stats": {
+  "calls": 2,
+  "cache_hits": 0,
+  "input_tokens": 11374,
+  "output_tokens": 2439,
+  "seconds": 24.944000000000003
+ },
+ "checks": {
+  "bfs_order": {
+   "pass": true,
+   "evidence": "a, b, c, e, d, f, g"
+  },
+  "bfs_queue": {
+   "pass": true,
+   "evidence": "queue | fifo | first in, first out"
+  },
+  "bfs_levels": {
+   "pass": true,
+   "evidence": "b, c, e, so they enter the queue in that order as level | neighbours are b, c, e"
+  },
+  "dfs_order": {
+   "pass": false,
+   "evidence": "MISSING any: 0 of 2 matched, need 1"
+  },
+  "dfs_mechanism": {
+   "pass": true,
+   "evidence": "backtrack | dives"
+  }
+ },
+ "passed": 4,
+ "total": 5,
+ "score": 0.8,
+ "all_passed": false,
+ "checked_text": "we start at a, and breadth-first search uses a fifo queue: first in, first out. i'll circle a and write the initial queue, because a is marked seen before any visiting happens.\nqueue [a]\n\nnow dequeue a and visit it first. its alphabetical neighbours are b, c, e, so they enter the queue in that order as level 1 children of a.\nvisit 1 ✓\nseen, l1\nseen, l1\nqueue [b,c,e]\n\nfifo means b comes out next, not c or e yet. from b, the unvisited alphabetical neighbours are d then f, so both are marked and placed at the back.\nvisit 2 ✓\nseen, l2\nseen, l2\nqueue [c,e,d,f]\n\nnext the queue front is c, so c is visited third. c's only unvisited neighbour is g, so g joins after d and f, not before them.\nvisit 3 ✓\nseen, l2\nqueue [e,d,f,g]\n\nnow bfs simply drains the queue: e, then d, then f, then g. none adds a new unvisited node, so the bfs order is a, b, c, e, d, f, g.\nvisit 4 ✓\nvisit 5 ✓\nvisit 6 ✓\nvisit 7 ✓\n\ndepth-first search would use the same alphabetical choice, but it dives before siblings: from a to b to d, then backtrack to f, then c to g, then e. so dfs order is a, b, d, f, c, g, e.\ndfs dives\nbfs: a b c e d\ndfs: a b d f c\nstart a -> bfs: queue\nbfs: queue -> visit front\nvisit front -> enqueue neighbours\nenqueue neighbours -> queue empty?\nqueue empty? -> (no) visit front\nqueue empty? -> (yes) done"
+}

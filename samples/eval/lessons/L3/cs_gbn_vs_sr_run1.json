@@ -781,7 +781,7 @@
  "checks": {
   "gbn_discards_3_to_8": {
    "pass": true,
-   "evidence": "3-8 thrown"
+   "evidence": "refuses frames 3 through 8 | 3-8 thrown"
   },
   "gbn_timeout_resends_from_2": {
    "pass": true,

@@ -1,0 +1,926 @@
+{
+ "version": "L4",
+ "note": "+ CPU scheduling and page replacement solvers",
+ "case": "tcp_cwnd",
+ "topic": "core",
+ "run": 1,
+ "question": "How does the congestion window change from the start until a timeout?",
+ "source": "L11 TCP Error Control & Congestion Control.pptx.pdf",
+ "page": 31,
+ "backend": {
+  "path": "D:\\BananaHack\\backend",
+  "commit": "3e13ede",
+  "subject": "Add CPU scheduling and page replacement solvers",
+  "dirty": false
+ },
+ "started": "2026-10-09T23:33:25+06:00",
+ "finished": "2026-10-09T23:34:16+06:00",
+ "jobs": 3,
+ "dry_run": false,
+ "ok": true,
+ "app_file": "D:\\BananaHack\\backend\\app\\__init__.py",
+ "model_default": "gpt-5.5",
+ "reasoning_effort": "low",
+ "llm_cache": false,
+ "data_dir": "C:\\Users\\oitij\\AppData\\Local\\Temp\\eval_L4_tcp_cwnd_1_947rptnb\\data",
+ "perceive_s": 24.433,
+ "perception": {
+  "image_id": "8a64344aeda9",
+  "width": 1600,
+  "height": 900,
+  "doc_id": "112c3701c037",
+  "page": 31,
+  "source_pages": null,
+  "timings": {
+   "rectify": 0.259,
+   "ink": 0.121,
+   "ocr": 23.326,
+   "text": 0.132,
+   "rescue": 0.014,
+   "regions": 0.072,
+   "freespace": 0.005,
+   "som": 0.02,
+   "total": 23.947,
+   "prepare": 0.042
+  },
+  "regions": 15
+ },
+ "regions": {
+  "R1": "Congestion control in TcP",
+  "R2": "1. Slow Start (SS) (Exponential Increase)\nstart with the congestion window (CongWin) = 1MSS\nfor each successfully received ACK increase the cwnd size by 1 until the CongWin\n= threshold value;\n2. Additive Increase (Al) (Congestion Avoidance)\nafter that, for each successfully received AcK, increase the window size by 1/n\nsegments up to a size of the receiver window. n=current CongWin size\n3. Multiplicative Decrease (MD)\nif a time-out occurs the (TCP Tahoe, TCP Reno)\nThreshold =% (CongWin) , CongWin =1 MSS, ·\nif 3 d u plicated ACKs r eceived (TCP Reno)\nThreshol d =%(CongW i n), CongWin = threshold",
+  "R3": "1. Slow Start (SS) (Exponential Increase)",
+  "R4": "start with the congestion window (CongWin) = 1MSS",
+  "R5": "for each successfully received ACK increase the cwnd size by 1 until the CongWin",
+  "R6": "= threshold value;",
+  "R7": "2. Additive Increase (Al) (Congestion Avoidance)",
+  "R8": "after that, for each successfully received AcK, increase the window size by 1/n",
+  "R9": "segments up to a size of the receiver window. n=current CongWin size",
+  "R10": "3. Multiplicative Decrease (MD)",
+  "R11": "if a time-out occurs the (TCP Tahoe, TCP Reno)",
+  "R12": "Threshold =% (CongWin) , CongWin =1 MSS, ·",
+  "R13": "if 3 d u plicated ACKs r eceived (TCP Reno)",
+  "R14": "Threshol d =%(CongW i n), CongWin = threshold",
+  "R15": "31"
+ },
+ "request": {
+  "image_id": "8a64344aeda9",
+  "question": "How does the congestion window change from the start until a timeout?"
+ },
+ "lesson_s": 23.862,
+ "status": 200,
+ "lesson": {
+  "lesson_id": "5dab6c860ee5",
+  "image_id": "8a64344aeda9",
+  "title": "TCP Congestion Window Until Timeout",
+  "summary": "This page explains how TCP’s CongWin grows in slow start, then additive increase, and drops on a timeout. We’ll run an illustrative example with ssthresh = 8 MSS to answer how the window changes over time.",
+  "steps": [
+   {
+    "index": 1,
+    "title": "Find the three rules",
+    "narration": "Your question lives in these three rules: start tiny, grow fast, then cut back on timeout. I’ll use an illustrative example because the slide gives rules but no starting threshold number.",
+    "annotations": [
+     {
+      "id": "s1a1",
+      "kind": "circle",
+      "color": "blue",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "these three rules",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.04322222222222222,
+        "w": 0.559578125,
+        "h": 0.10133333333333333
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a2",
+      "kind": "box",
+      "color": "green",
+      "target_ids": [
+       "R3",
+       "R4",
+       "R5",
+       "R6"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "start tiny",
+      "geometry": {
+       "box": {
+        "x": 0.025500000000000002,
+        "y": 0.20533333333333334,
+        "w": 0.9590000000000002,
+        "h": 0.24488888888888885
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a3",
+      "kind": "box",
+      "color": "orange",
+      "target_ids": [
+       "R7",
+       "R8",
+       "R9"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "grow fast",
+      "geometry": {
+       "box": {
+        "x": 0.02545,
+        "y": 0.4408,
+        "w": 0.9153500000000001,
+        "h": 0.18173333333333325
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s1a4",
+      "kind": "box",
+      "color": "red",
+      "target_ids": [
+       "R10",
+       "R11",
+       "R12"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "cut back",
+      "geometry": {
+       "box": {
+        "x": 0.026799999999999997,
+        "y": 0.6176444444444444,
+        "w": 0.5870250000000001,
+        "h": 0.1791555555555555
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 2,
+    "title": "Slow start: 1 to threshold",
+    "narration": "Set the example threshold to 8 MSS. In slow start, each RTT roughly doubles CongWin: rounds 1, 2, and 3 go 1 to 2 to 4 to 8.",
+    "annotations": [
+     {
+      "id": "s2a1",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R4"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "(CongWin) = 1MSS",
+      "text": null,
+      "cue": "8 MSS",
+      "geometry": {
+       "box": {
+        "x": 0.47125,
+        "y": 0.2804888888888889,
+        "w": 0.21125,
+        "h": 0.052355555555555544
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.933,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R3"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "ssthresh = 8",
+      "cue": "threshold to 8",
+      "geometry": {
+       "box": {
+        "x": 0.035,
+        "y": 0.2222222222222222,
+        "w": 0.49624999999999997,
+        "h": 0.04666666666666669
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.547703125,
+        "y": 0.13447222222222222,
+        "w": 0.17060625000000007,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.5448592624688119,
+         "y": 0.18433882232002363
+        },
+        {
+         "x": 0.3885751996041275,
+         "y": 0.2208919265835226
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R5"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "cwnd 1→2→4→8",
+      "cue": "1 to 2",
+      "geometry": {
+       "box": {
+        "x": 0.1125,
+        "y": 0.34555555555555556,
+        "w": 0.8625,
+        "h": 0.0411111111111111
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.80439375,
+        "y": 0.14080555555555557,
+        "w": 0.17060625000000007,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8353513593859917,
+         "y": 0.20085433139550937
+        },
+        {
+         "x": 0.5854867337995668,
+         "y": 0.3424580038756479
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s2a4",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R4"
+      ],
+      "to_ids": [
+       "R6"
+      ],
+      "span": null,
+      "text": "until threshold",
+      "cue": "to 8",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.35141459467641595,
+         "y": 0.3327979811341491
+        },
+        {
+         "x": 0.29729473776238846,
+         "y": 0.34023836400335467
+        },
+        {
+         "x": 0.2509694259421407,
+         "y": 0.3905353521991843
+        }
+       ],
+       "label_box": {
+        "x": 0.19419649903583344,
+        "y": 0.139535848668344,
+        "w": 0.21009375,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.933,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 3,
+    "title": "Additive increase after threshold",
+    "narration": "Once CongWin hits 8, the slide switches to additive increase. Now it rises gently by about 1 MSS per RTT: rounds 4 through 7 give 8, 9, 10, 11, then 12 entering round 8.",
+    "annotations": [
+     {
+      "id": "s3a1",
+      "kind": "circle",
+      "color": "orange",
+      "target_ids": [
+       "R7"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "additive increase",
+      "geometry": {
+       "box": {
+        "x": 0.0,
+        "y": 0.43555555555555553,
+        "w": 0.7375,
+        "h": 0.08222222222222225
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a2",
+      "kind": "highlight",
+      "color": "orange",
+      "target_ids": [
+       "R8"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "increase the window size by 1/n",
+      "text": null,
+      "cue": "1 MSS per RTT",
+      "geometry": {
+       "box": {
+        "x": 0.596875,
+        "y": 0.5117333333333334,
+        "w": 0.3387500000000001,
+        "h": 0.05097777777777779
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a3",
+      "kind": "label",
+      "color": "orange",
+      "target_ids": [
+       "R8",
+       "R9"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "8→9→10→11→12",
+      "cue": "8, 9, 10",
+      "geometry": {
+       "box": {
+        "x": 0.113125,
+        "y": 0.5166666666666667,
+        "w": 0.820625,
+        "h": 0.09333333333333327
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.76314375,
+        "y": 0.63925,
+        "w": 0.17060625000000007,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.7603217456326233,
+         "y": 0.6399844345485856
+        },
+        {
+         "x": 0.673301199701473,
+         "y": 0.6118262906578358
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s3a4",
+      "kind": "arrow",
+      "color": "orange",
+      "target_ids": [],
+      "from_ids": [
+       "R6"
+      ],
+      "to_ids": [
+       "R7"
+      ],
+      "span": null,
+      "text": "after that",
+      "cue": "switches to",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.2555812232943899,
+         "y": 0.4377951359682873
+        },
+        {
+         "x": 0.26579252192714736,
+         "y": 0.4480091542515365
+        },
+        {
+         "x": 0.2774991338484672,
+         "y": 0.4488715306983794
+        }
+       ],
+       "label_box": {
+        "x": 0.311049162749288,
+        "y": 0.3938379104591016,
+        "w": 0.14428125000000003,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 4,
+    "title": "Timeout: multiplicative decrease",
+    "narration": "At round 8, timeout happens while cwnd is 12 MSS. The timeout rule halves the threshold to 6, then resets CongWin all the way back to 1 MSS.",
+    "annotations": [
+     {
+      "id": "s4a1",
+      "kind": "circle",
+      "color": "red",
+      "target_ids": [
+       "R11"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": null,
+      "cue": "timeout happens",
+      "geometry": {
+       "box": {
+        "x": 0.028874999999999956,
+        "y": 0.6755555555555556,
+        "w": 0.6547500000000003,
+        "h": 0.0755555555555556
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a2",
+      "kind": "highlight",
+      "color": "red",
+      "target_ids": [
+       "R12"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "Threshold = ½ (CongWin)",
+      "text": null,
+      "cue": "halves the threshold",
+      "geometry": {
+       "box": {
+        "x": 0.145,
+        "y": 0.7458666666666667,
+        "w": 0.238125,
+        "h": 0.042711111111111144
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.958,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a3",
+      "kind": "highlight",
+      "color": "red",
+      "target_ids": [
+       "R12"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "CongWin = 1 MSS",
+      "text": null,
+      "cue": "back to 1",
+      "geometry": {
+       "box": {
+        "x": 0.4125,
+        "y": 0.7483555555555556,
+        "w": 0.17437500000000006,
+        "h": 0.03995555555555563
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.94,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s4a4",
+      "kind": "label",
+      "color": "red",
+      "target_ids": [
+       "R12"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "12/2=6; cwnd=1",
+      "cue": "12 MSS",
+      "geometry": {
+       "box": {
+        "x": 0.146875,
+        "y": 0.75,
+        "w": 0.4600000000000001,
+        "h": 0.0344444444444445
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.623328125,
+        "y": 0.75,
+        "w": 0.19693125,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.623328125,
+         "y": 0.7758163720622611
+        },
+        {
+         "x": 0.606875,
+         "y": 0.7752426296047982
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 5,
+    "title": "Growth restarts after timeout",
+    "narration": "After the timeout reset, TCP slow-starts again, but toward the new threshold 6. So rounds 9 to 11 are cwnd 1, 2, 4, then capped at 6 before avoidance resumes.",
+    "annotations": [
+     {
+      "id": "s5a1",
+      "kind": "arrow",
+      "color": "green",
+      "target_ids": [],
+      "from_ids": [
+       "R12"
+      ],
+      "to_ids": [
+       "R3"
+      ],
+      "span": null,
+      "text": "restart SS",
+      "cue": "slow-starts again",
+      "geometry": {
+       "box": null,
+       "points": [
+        {
+         "x": 0.3709865373699976,
+         "y": 0.7344561990543865
+        },
+        {
+         "x": 0.36092570827809306,
+         "y": 0.49219114696636584
+        },
+        {
+         "x": 0.29011170544150405,
+         "y": 0.28443268983450243
+        }
+       ],
+       "label_box": {
+        "x": 0.431753039841922,
+        "y": 0.6537344623720718,
+        "w": 0.14428124999999997,
+        "h": 0.058499999999999996
+       },
+       "leader": null
+      },
+      "confidence": 0.94,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a2",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R3",
+       "R4",
+       "R5",
+       "R6"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "new ssthresh=6",
+      "cue": "new threshold 6",
+      "geometry": {
+       "box": {
+        "x": 0.035,
+        "y": 0.2222222222222222,
+        "w": 0.9400000000000001,
+        "h": 0.21111111111111114
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.7780687500000001,
+        "y": 0.017472222222222222,
+        "w": 0.19693125,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.8352287096561904,
+         "y": 0.07796882415722833
+        },
+        {
+         "x": 0.6498152475931342,
+         "y": 0.21822901835220998
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a3",
+      "kind": "label",
+      "color": "green",
+      "target_ids": [
+       "R5"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "1→2→4→6",
+      "cue": "1, 2, 4",
+      "geometry": {
+       "box": {
+        "x": 0.1125,
+        "y": 0.34555555555555556,
+        "w": 0.8625,
+        "h": 0.0411111111111111
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.004,
+        "y": 0.14080555555555557,
+        "w": 0.10479375,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.11159138583839077,
+         "y": 0.1922595590407858
+        },
+        {
+         "x": 0.48705791442409707,
+         "y": 0.34330465361032714
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     },
+     {
+      "id": "s5a4",
+      "kind": "highlight",
+      "color": "green",
+      "target_ids": [
+       "R6"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": "threshold value",
+      "text": null,
+      "cue": "capped at 6",
+      "geometry": {
+       "box": {
+        "x": 0.13562500000000002,
+        "y": 0.3918222222222222,
+        "w": 0.165625,
+        "h": 0.03857777777777782
+       },
+       "points": null,
+       "label_box": null,
+       "leader": null
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": null
+   },
+   {
+    "index": 6,
+    "title": "Plain answer",
+    "narration": "So the example CongWin sequence is 1, 2, 4, 8, 9, 10, 11, 12, then timeout resets it to 1. Big pattern: exponential rise, linear rise, multiplicative drop.",
+    "annotations": [
+     {
+      "id": "s6a1",
+      "kind": "label",
+      "color": "blue",
+      "target_ids": [
+       "R1"
+      ],
+      "from_ids": [],
+      "to_ids": [],
+      "span": null,
+      "text": "SS → AI → timeout",
+      "cue": "Big pattern",
+      "geometry": {
+       "box": {
+        "x": 0.04625,
+        "y": 0.06222222222222222,
+        "w": 0.436875,
+        "h": 0.06333333333333334
+       },
+       "points": null,
+       "label_box": {
+        "x": 0.49957812500000004,
+        "y": 0.004,
+        "w": 0.23641875000000007,
+        "h": 0.058499999999999996
+       },
+       "leader": [
+        {
+         "x": 0.496723046458565,
+         "y": 0.05404075034464211
+        },
+        {
+         "x": 0.454792526528587,
+         "y": 0.06124160035621753
+        }
+       ]
+      },
+      "confidence": 0.99,
+      "grounding": "consensus"
+     }
+    ],
+    "sketch": "flowchart LR\nA[Start cwnd 1] --> B[Slow start]\nB --> C[Reach ssthresh]\nC --> D[Additive increase]\nD --> E[Timeout]\nE --> F[Set cwnd 1]"
+   }
+  ],
+  "quiz": [
+   {
+    "question": "Tap the rule that starts CongWin at 1 MSS.",
+    "answer_ids": [
+     "R4"
+    ],
+    "answer_box": {
+     "x": 0.113125,
+     "y": 0.28555555555555556,
+     "w": 0.5675,
+     "h": 0.04222222222222222
+    },
+    "explanation": "This line gives the initial congestion window used before any ACK-driven growth."
+   },
+   {
+    "question": "Tap the rule that makes growth additive after slow start.",
+    "answer_ids": [
+     "R8"
+    ],
+    "answer_box": {
+     "x": 0.113125,
+     "y": 0.5166666666666667,
+     "w": 0.820625,
+     "h": 0.0411111111111111
+    },
+    "explanation": "This line says each ACK increases the window by 1/n, which totals about 1 MSS per RTT."
+   },
+   {
+    "question": "Tap the timeout formula that resets CongWin.",
+    "answer_ids": [
+     "R12"
+    ],
+    "answer_box": {
+     "x": 0.146875,
+     "y": 0.75,
+     "w": 0.4600000000000001,
+     "h": 0.0344444444444445
+    },
+    "explanation": "On timeout, TCP sets the threshold to half and resets CongWin to 1 MSS."
+   }
+  ],
+  "model": "gpt-5.5",
+  "timings": {
+   "llm": 20.586,
+   "ground": 0.082,
+   "total": 23.831,
+   "input_tokens": 7513.0,
+   "output_tokens": 2327.0,
+   "approx_agreement": 1.0,
+   "verified_simulation": 1.0,
+   "sim_steps": 11.0,
+   "sim_extract": 3.161,
+   "sim_assumed": 1.0
+  },
+  "warnings": [
+   "Verified simulation computed by code: TCP congestion window (slow start, congestion avoidance, multiplicative decrease) (11 steps); illustrative example (the page gives no numbers)."
+  ],
+  "question": "How does the congestion window change from the start until a timeout?",
+  "context_pages": [
+   26,
+   27,
+   28,
+   29,
+   30
+  ]
+ },
+ "llm_stats": {
+  "calls": 2,
+  "cache_hits": 0,
+  "input_tokens": 12922,
+  "output_tokens": 2459,
+  "seconds": 23.747
+ },
+ "checks": {
+  "starts_at_1": {
+   "pass": false,
+   "evidence": "MISSING"
+  },
+  "doubling": {
+   "pass": true,
+   "evidence": "1, 2, and 3 go 1 to 2 to 4 to 8"
+  },
+  "concrete_threshold": {
+   "pass": true,
+   "evidence": "threshold to 8"
+  },
+  "additive": {
+   "pass": true,
+   "evidence": "by about 1 mss per rtt"
+  },
+  "timeout": {
+   "pass": true,
+   "evidence": "halves the threshold | congwin all the way back to 1"
+  }
+ },
+ "passed": 4,
+ "total": 5,
+ "score": 0.8,
+ "all_passed": false,
+ "checked_text": "your question lives in these three rules: start tiny, grow fast, then cut back on timeout. i'll use an illustrative example because the slide gives rules but no starting threshold number.\n\nset the example threshold to 8 mss. in slow start, each rtt roughly doubles congwin: rounds 1, 2, and 3 go 1 to 2 to 4 to 8.\nssthresh = 8\ncwnd 1 -> 2 -> 4 -> 8\nuntil threshold\n\nonce congwin hits 8, the slide switches to additive increase. now it rises gently by about 1 mss per rtt: rounds 4 through 7 give 8, 9, 10, 11, then 12 entering round 8.\n8 -> 9 -> 10 -> 11 -> 12\nafter that\n\nat round 8, timeout happens while cwnd is 12 mss. the timeout rule halves the threshold to 6, then resets congwin all the way back to 1 mss.\n12/2=6; cwnd=1\n\nafter the timeout reset, tcp slow-starts again, but toward the new threshold 6. so rounds 9 to 11 are cwnd 1, 2, 4, then capped at 6 before avoidance resumes.\nrestart ss\nnew ssthresh=6\n1 -> 2 -> 4 -> 6\n\nso the example congwin sequence is 1, 2, 4, 8, 9, 10, 11, 12, then timeout resets it to 1. big pattern: exponential rise, linear rise, multiplicative drop.\nss -> ai -> timeout\nstart cwnd 1 -> slow start\nslow start -> reach ssthresh\nreach ssthresh -> additive increase\nadditive increase -> timeout\ntimeout -> set cwnd 1"
+}
