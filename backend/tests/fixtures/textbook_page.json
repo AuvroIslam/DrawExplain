@@ -1,0 +1,148 @@
+{
+ "image": "textbook_page.png",
+ "width": 1200,
+ "height": 1500,
+ "note": "Paragraphs, photo-like figure, line drawing (ellipse) with captions.",
+ "elements": [
+  {
+   "name": "heading",
+   "kind": "text",
+   "box": [
+    80,
+    79,
+    572,
+    112
+   ]
+  },
+  {
+   "name": "Mitochondria are the power plants of the cell. They turn the",
+   "kind": "text",
+   "box": [
+    80,
+    176,
+    822,
+    202
+   ]
+  },
+  {
+   "name": "chemical energy stored in food into ATP, a molecule the cell can",
+   "kind": "text",
+   "box": [
+    80,
+    220,
+    889,
+    246
+   ]
+  },
+  {
+   "name": "spend on work such as moving, building proteins and dividing.",
+   "kind": "text",
+   "box": [
+    80,
+    264,
+    861,
+    290
+   ]
+  },
+  {
+   "name": "Each mitochondrion has two membranes: a smooth outer membrane",
+   "kind": "text",
+   "box": [
+    80,
+    308,
+    943,
+    328
+   ]
+  },
+  {
+   "name": "and a folded inner membrane whose folds are called cristae.",
+   "kind": "text",
+   "box": [
+    80,
+    352,
+    840,
+    372
+   ]
+  },
+  {
+   "name": "paragraph",
+   "kind": "text_block",
+   "box": [
+    80,
+    170,
+    1100,
+    390
+   ]
+  },
+  {
+   "name": "photo",
+   "kind": "figure",
+   "box": [
+    80,
+    470,
+    600,
+    830
+   ]
+  },
+  {
+   "name": "caption 1",
+   "kind": "text",
+   "box": [
+    80,
+    855,
+    474,
+    877
+   ]
+  },
+  {
+   "name": "mitochondrion drawing",
+   "kind": "shape",
+   "box": [
+    700,
+    520,
+    1100,
+    780
+   ]
+  },
+  {
+   "name": "caption 2",
+   "kind": "text",
+   "box": [
+    700,
+    855,
+    1094,
+    877
+   ]
+  },
+  {
+   "name": "The inner membrane holds the enzymes of the electron transport",
+   "kind": "text",
+   "box": [
+    80,
+    966,
+    897,
+    992
+   ]
+  },
+  {
+   "name": "chain. Because its folds make the surface much larger, a cell",
+   "kind": "text",
+   "box": [
+    80,
+    1010,
+    844,
+    1036
+   ]
+  },
+  {
+   "name": "with many cristae can produce ATP faster.",
+   "kind": "text",
+   "box": [
+    80,
+    1054,
+    613,
+    1080
+   ]
+  }
+ ]
+}

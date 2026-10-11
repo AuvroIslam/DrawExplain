@@ -1,0 +1,68 @@
+{
+ "image": "network_photo.jpg",
+ "width": 1400,
+ "height": 1000,
+ "note": "network_basic warped into a phone photo; GT = bbox of warped GT corners.",
+ "elements": [
+  {
+   "name": "Laptop",
+   "kind": "shape",
+   "box": [
+    165,
+    455,
+    350,
+    567
+   ]
+  },
+  {
+   "name": "Switch",
+   "kind": "shape",
+   "box": [
+    439,
+    442,
+    629,
+    556
+   ]
+  },
+  {
+   "name": "Router",
+   "kind": "shape",
+   "box": [
+    723,
+    429,
+    918,
+    545
+   ]
+  },
+  {
+   "name": "Internet",
+   "kind": "shape",
+   "box": [
+    1013,
+    392,
+    1259,
+    555
+   ]
+  },
+  {
+   "name": "title: How Packets Travel Across Networks",
+   "kind": "text",
+   "box": [
+    160,
+    176,
+    671,
+    240
+   ]
+  },
+  {
+   "name": "caption: A router forwards packets between different networks",
+   "kind": "text",
+   "box": [
+    159,
+    673,
+    729,
+    723
+   ]
+  }
+ ]
+}

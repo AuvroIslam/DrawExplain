@@ -1,0 +1,128 @@
+{
+ "image": "bullets_formula.png",
+ "width": 1280,
+ "height": 720,
+ "note": "Bullets with drawn bullet dots, formula text, bar chart figure.",
+ "elements": [
+  {
+   "name": "title",
+   "kind": "text",
+   "box": [
+    60,
+    48,
+    521,
+    80
+   ]
+  },
+  {
+   "name": "Force causes acceleration",
+   "kind": "text",
+   "box": [
+    96,
+    155,
+    395,
+    174
+   ]
+  },
+  {
+   "name": "Heavier objects need more force",
+   "kind": "text",
+   "box": [
+    96,
+    199,
+    466,
+    223
+   ]
+  },
+  {
+   "name": "Acceleration points along the net force",
+   "kind": "text",
+   "box": [
+    95,
+    243,
+    529,
+    267
+   ]
+  },
+  {
+   "name": "Units: newtons (N) = kg m/s2",
+   "kind": "text",
+   "box": [
+    96,
+    287,
+    427,
+    311
+   ]
+  },
+  {
+   "name": "bullet list",
+   "kind": "text_block",
+   "box": [
+    96,
+    150,
+    600,
+    316
+   ]
+  },
+  {
+   "name": "formula",
+   "kind": "text",
+   "box": [
+    760,
+    182,
+    1034,
+    228
+   ]
+  },
+  {
+   "name": "formula 2",
+   "kind": "text",
+   "box": [
+    790,
+    278,
+    947,
+    307
+   ]
+  },
+  {
+   "name": "bar chart",
+   "kind": "figure",
+   "box": [
+    758,
+    380,
+    1200,
+    642
+   ]
+  },
+  {
+   "name": "Same force, bigger mass:",
+   "kind": "text",
+   "box": [
+    60,
+    405,
+    372,
+    429
+   ]
+  },
+  {
+   "name": "smaller acceleration",
+   "kind": "text",
+   "box": [
+    60,
+    449,
+    289,
+    468
+   ]
+  },
+  {
+   "name": "caption",
+   "kind": "text",
+   "box": [
+    60,
+    644,
+    404,
+    663
+   ]
+  }
+ ]
+}
