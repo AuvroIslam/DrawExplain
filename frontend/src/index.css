@@ -1,7 +1,7 @@
 /* Design tokens + base. The handwriting face is Excalidraw's Excalifont (Latin subset),
    self-hosted at /fonts/ by vite.config.ts, so the UI and the whiteboard share one hand. */
 @font-face {
-  font-family: "StudyLens Hand";
+  font-family: "DrawExplain Hand";
   src: url("/fonts/Excalifont/Excalifont-Regular-a88b72a24fb54c9f94e3b5fdaa7481c9.woff2") format("woff2");
   font-display: swap;
 }
@@ -41,7 +41,7 @@
   --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   --font-display: "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial,
     sans-serif;
-  --font-hand: "StudyLens Hand", "Segoe Print", "Comic Sans MS", cursive;
+  --font-hand: "DrawExplain Hand", "Segoe Print", "Comic Sans MS", cursive;
   --topbar-h: 60px;
 
   color-scheme: light;

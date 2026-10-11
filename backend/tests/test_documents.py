@@ -31,7 +31,7 @@ def make_pdf() -> bytes:
 
 @pytest.fixture()
 def client(tmp_path, monkeypatch):
-    monkeypatch.setenv("STUDYLENS_WARMUP", "0")
+    monkeypatch.setenv("DRAWEXPLAIN_WARMUP", "0")
     data_dir = tmp_path / "data"
     monkeypatch.setattr(config, "DATA_DIR", data_dir)
     monkeypatch.setattr(main, "images", ImageStore(data_dir / "images"))

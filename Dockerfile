@@ -1,4 +1,4 @@
-# StudyLens / DrawExplain API (FastAPI + RapidOCR + OpenCV + PyMuPDF) for Render or any container host.
+# DrawExplain / DrawExplain API (FastAPI + RapidOCR + OpenCV + PyMuPDF) for Render or any container host.
 # The frontend is deployed separately (Vercel) and calls this API through VITE_API_BASE.
 FROM python:3.12-slim
 

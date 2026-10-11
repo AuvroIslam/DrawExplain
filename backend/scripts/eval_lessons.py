@@ -2,7 +2,7 @@
 
 Three fixed study pages, each with a focus question. Every (case, run) is one real lesson from
 POST /api/lessons, made by a fresh child process with its own temporary DATA_DIR, LLM_CACHE=0 and
-STUDYLENS_WARMUP=0, so uploads, scans, cached model answers and already-taught lessons never leak from
+DRAWEXPLAIN_WARMUP=0, so uploads, scans, cached model answers and already-taught lessons never leak from
 one run into the next, and run-to-run variation is real. Each lesson JSON (plus latency) is saved,
 then scored by small regex checks (one documented function per check) on what the student hears and
 sees:
@@ -754,7 +754,7 @@ def child_env() -> dict[str, str]:
         raise SystemExit("OPENAI_API_KEY is not set in .env or the environment")
     _SECRETS.append(key)
     env = {k: v for k, v in os.environ.items() if k not in ("PYTHONPATH", "PYTHONHOME", "DATA_DIR")}
-    env.update(OPENAI_API_KEY=key, LLM_CACHE="0", STUDYLENS_WARMUP="0", SERVE_FRONTEND="0", PYTHONUTF8="1",
+    env.update(OPENAI_API_KEY=key, LLM_CACHE="0", DRAWEXPLAIN_WARMUP="0", SERVE_FRONTEND="0", PYTHONUTF8="1",
                PYTHONIOENCODING="utf-8")
     return env
 

@@ -1,4 +1,4 @@
-# StudyLens Live Whiteboard (Devpost write-up, < 500 words)
+# DrawExplain (Devpost write-up, < 500 words)
 
 ## Inspiration
 Stuck on a lecture slide, we paste it into a chatbot and get a wall of text that never points at
@@ -8,7 +8,7 @@ right: circles miss and labels cover the text.
 
 ## What it does
 Upload a slide, a phone photo of a textbook page or a PDF lecture (read it like a book, press Explain
-on any page, with or without your own question). StudyLens teaches by drawing on the untouched page:
+on any page, with or without your own question). DrawExplain teaches by drawing on the untouched page:
 circles, arrows, word-level underlines and handwritten values appear the moment the narrator says them.
 On an algorithm slide it runs the algorithm: on Dijkstra it writes "B ∞→5", "G 9→4" next to the nodes,
 in the real relaxation order. Circle a confusing part and ask why; it draws the answer. A tap quiz

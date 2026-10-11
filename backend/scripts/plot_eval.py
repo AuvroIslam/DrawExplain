@@ -24,7 +24,7 @@ STYLE = {  # categorical slots 1-2 of the validated reference palette (all check
     "raw": ("#eb6834", "Raw GPT coordinates"),
     "som_approx": ("#eb6834", "GPT estimate with region marks"),
     "ids_only": ("#eb6834", "Region ids only"),
-    "fused": ("#2a78d6", "StudyLens grounding (ours)"),
+    "fused": ("#2a78d6", "DrawExplain grounding (ours)"),
 }
 METRICS = {
     "hit75": ("Drawings that land tightly on their target", "IoU ≥ 0.75 with the ground-truth box"),

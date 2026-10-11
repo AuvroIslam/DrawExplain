@@ -1,4 +1,4 @@
-# StudyLens Live Whiteboard: build contract
+# DrawExplain: build contract
 
 This is the single source of truth that every part of the build codes against.
 The data contract itself is code: `backend/app/schemas.py` (Python, pydantic) and its mirror

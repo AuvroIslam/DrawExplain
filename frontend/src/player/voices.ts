@@ -1,7 +1,7 @@
 // Three ways to "speak" a narration, all exposing the same clock so drawings can follow it:
 // ElevenLabs audio with real word timings, the browser's speechSynthesis (boundary events with a
 // timer fallback) and a silent caption timer.
-import type { StudyLensApi } from "../api";
+import type { DrawExplainApi } from "../api";
 import { estimateTimeline, type Timeline, timelineFromTts, wordAtChar } from "./timing";
 
 export type VoiceMode = "eleven" | "browser" | "silent";
@@ -398,13 +398,13 @@ function abortable<T>(promise: Promise<T>, signal?: AbortSignal): Promise<T> {
 
 /** Prepares narrations for the selected voice; caches ElevenLabs results by text. */
 export class VoiceBox {
-  private readonly api: StudyLensApi;
+  private readonly api: DrawExplainApi;
   private readonly eleven = new Map<string, Promise<ElevenAsset>>();
   /** Silent clock speed (1 = ~170 wpm); ?speed=N in the URL for quick demos. */
   silentRate = 1;
   onAutoplayBlocked: () => void = () => {};
 
-  constructor(api: StudyLensApi) {
+  constructor(api: DrawExplainApi) {
     this.api = api;
     if (speechAvailable()) {
       // Chrome fills the voice list asynchronously.

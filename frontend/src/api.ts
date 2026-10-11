@@ -1,4 +1,4 @@
-// Typed client for the StudyLens backend (FastAPI, prefix /api; Vite proxies it in dev).
+// Typed client for the DrawExplain backend (FastAPI, prefix /api; Vite proxies it in dev).
 import type {
   DocumentInfo,
   FollowupRequest,
@@ -40,7 +40,7 @@ export interface LessonStreamHandlers {
 }
 
 /** Everything the app needs from the server; the mock (?mock=1) implements the same shape. */
-export interface StudyLensApi {
+export interface DrawExplainApi {
   readonly mock: boolean;
   health(): Promise<Health>;
   /** `page` (1-based) picks the page of a PDF upload; images ignore it. */
@@ -104,8 +104,8 @@ export function cleanQuestion(question?: string | null): string | null {
 }
 
 const OFFLINE_MESSAGE = API_BASE
-  ? "Can't reach the StudyLens server. Please try again in a moment."
-  : "Can't reach the StudyLens server. Is the backend running on port 8000?";
+  ? "Can't reach the DrawExplain server. Please try again in a moment."
+  : "Can't reach the DrawExplain server. Is the backend running on port 8000?";
 const TIMEOUT_MS = 120_000;
 
 function describeDetail(detail: unknown): string | null {
@@ -272,7 +272,7 @@ export function validateImageFile(file: File): string | null {
   return null;
 }
 
-export const api: StudyLensApi = {
+export const api: DrawExplainApi = {
   mock: false,
   health: () => request<Health>("/api/health"),
   uploadImage(file, signal, page) {

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import type { StudyLensApi } from "../api";
+import type { DrawExplainApi } from "../api";
 import { speechAvailable, type VoiceMode } from "../player/voices";
 import type { Health, SampleInfo } from "../types";
 import { type AppEnv, safeStorage } from "./useAppEnv";
@@ -12,7 +12,7 @@ export interface BackendInfo {
 }
 
 /** Health + sample list, fetched once (and again on retry). */
-export function useBackend(api: StudyLensApi): BackendInfo {
+export function useBackend(api: DrawExplainApi): BackendInfo {
   const [health, setHealth] = useState<Health | null>(null);
   const [offline, setOffline] = useState(false);
   const [samples, setSamples] = useState<SampleInfo[] | null>(null);
@@ -41,7 +41,7 @@ export function useBackend(api: StudyLensApi): BackendInfo {
   return { health, offline, samples, retry };
 }
 
-const VOICE_KEY = "studylens.voice";
+const VOICE_KEY = "drawexplain.voice";
 
 /** Voice preference: URL flag > saved choice > best available (ElevenLabs when the server has a key). */
 export function useVoiceMode(env: AppEnv, health: Health | null) {

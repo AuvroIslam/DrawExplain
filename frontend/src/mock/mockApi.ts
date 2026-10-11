@@ -1,5 +1,5 @@
 // Backend-free API for ?mock=1: same shape as the real client, canned data, realistic delays.
-import { ApiError, cleanQuestion, type StudyLensApi } from "../api";
+import { ApiError, cleanQuestion, type DrawExplainApi } from "../api";
 import type { Lesson, Perception } from "../types";
 import { MOCK_DOC_ID, mockContextPages, mockDocument, mockLessonFor, mockPagePerception } from "./mockDocument";
 import { MOCK_IMAGE_URL, MOCK_PERCEPTION, MOCK_SAMPLE_NAME, mockFollowup } from "./networkBasic";
@@ -47,7 +47,7 @@ function lessonFor(imageId: string, question?: string | null): Lesson {
   };
 }
 
-export const mockApi: StudyLensApi = {
+export const mockApi: DrawExplainApi = {
   mock: true,
   health: () => delay(60, () => ({ ok: true, model: "gpt-5.4-mini (demo data)", tts: false })),
   // The demo only knows one page, so any upload is "perceived" as the network slide.

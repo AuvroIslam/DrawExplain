@@ -1,4 +1,4 @@
-# Start StudyLens locally: backend on :8000 and frontend on :5173, each in its own window.
+# Start DrawExplain locally: backend on :8000 and frontend on :5173, each in its own window.
 #   powershell -ExecutionPolicy Bypass -File start.ps1
 # LLM_CACHE=1 replays lessons that were already generated (instant, free); new pages still call OpenAI.
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path

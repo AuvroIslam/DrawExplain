@@ -62,7 +62,7 @@ def calls() -> Calls:
 
 @pytest.fixture()
 def client(tmp_path, monkeypatch, calls: Calls) -> TestClient:
-    monkeypatch.setenv("STUDYLENS_WARMUP", "0")
+    monkeypatch.setenv("DRAWEXPLAIN_WARMUP", "0")
     data_dir = tmp_path / "data"
     samples = tmp_path / "samples"
     (samples / "quick").mkdir(parents=True)

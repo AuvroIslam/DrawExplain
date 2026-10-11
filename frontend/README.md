@@ -1,6 +1,6 @@
-# StudyLens frontend
+# DrawExplain frontend
 
-React 19 + TypeScript + Vite app for StudyLens Live Whiteboard. See the root [README](../README.md)
+React 19 + TypeScript + Vite app for DrawExplain. See the root [README](../README.md)
 for the project, and [CONTRACT.md](../CONTRACT.md) for the API it talks to.
 
 ```bash

@@ -21,7 +21,7 @@ function excalidrawFonts(): Plugin {
   }
   let outDir = path.join(ROOT, 'dist')
   return {
-    name: 'studylens-excalidraw-fonts',
+    name: 'drawexplain-excalidraw-fonts',
     configResolved(config) {
       outDir = path.resolve(config.root, config.build.outDir)
     },

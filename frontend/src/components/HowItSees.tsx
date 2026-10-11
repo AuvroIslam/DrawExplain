@@ -112,7 +112,7 @@ export function HowItSees({ perception, lesson, steps, followups, onClose }: Pro
           <EyeIcon size={18} />
         </span>
         <div>
-          <h2>How StudyLens sees this page</h2>
+          <h2>How DrawExplain sees this page</h2>
           <p>Computer vision finds the real parts first; the model can only point at what is there.</p>
         </div>
         <button type="button" className="icon-btn" onClick={onClose} aria-label="Close How it sees">

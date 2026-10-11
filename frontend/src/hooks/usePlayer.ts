@@ -1,11 +1,11 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
-import type { StudyLensApi } from "../api";
+import type { DrawExplainApi } from "../api";
 import type { BoardSlot } from "../player/boardSlot";
 import { LessonPlayer } from "../player/lessonPlayer";
 import { VoiceBox, type VoiceMode } from "../player/voices";
 
 interface Options {
-  api: StudyLensApi;
+  api: DrawExplainApi;
   slot: BoardSlot;
   mode: VoiceMode;
   speed: number;
