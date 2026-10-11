@@ -108,7 +108,7 @@ export function Landing({ samples, offline, mock, onFile, onSample, onRetry }: P
             Any study page, <span className="hand-underline">explained out loud</span> while it&rsquo;s drawn on.
           </h1>
           <p className="pitch">
-            Drop in a lecture slide, a textbook photo or a diagram. StudyLens finds what&rsquo;s on it, then a tutor
+            Drop in a lecture slide, a textbook photo or a diagram. DrawExplain finds what&rsquo;s on it, then a tutor
             circles, points and labels the real parts, step by step, in sync with its voice.
           </p>
 
@@ -153,7 +153,7 @@ export function Landing({ samples, offline, mock, onFile, onSample, onRetry }: P
             <div className="offline-note" role="status">
               <AlertIcon size={18} />
               <div>
-                <strong>The StudyLens server isn&rsquo;t answering.</strong> Start the backend on port 8000, or{" "}
+                <strong>The DrawExplain server isn&rsquo;t answering.</strong> Start the backend on port 8000, or{" "}
                 <a href="?mock=1">open the demo with built-in data</a>.
               </div>
               <button type="button" className="btn-ghost small" onClick={onRetry}>
@@ -172,7 +172,9 @@ export function Landing({ samples, offline, mock, onFile, onSample, onRetry }: P
           </h2>
           <ul>
             {samples.map((s) => {
-              const { title, group } = prettySampleName(s.name);
+              const pretty = prettySampleName(s.name);
+              const title = s.title ?? pretty.title;
+              const group = s.subject ?? pretty.group;
               return (
                 <li key={s.name}>
                   <button type="button" className="sample-card" onClick={() => onSample(s)}>

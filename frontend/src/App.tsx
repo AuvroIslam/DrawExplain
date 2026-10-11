@@ -94,7 +94,7 @@ export default function App() {
           offline={backend.offline}
           mock={api.mock}
           onFile={(file) => void study.open({ kind: "file", file, name: file.name })}
-          onSample={(s) => void study.open({ kind: "sample", name: s.name, url: s.url })}
+          onSample={(s) => void study.open({ kind: "sample", name: s.name, url: s.url, question: s.question })}
           onRetry={backend.retry}
         />
       )}

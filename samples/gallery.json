@@ -1,0 +1,22 @@
+[
+ {"name": "bench/images/cs_dijkstra_a_to_e.png", "title": "Dijkstra's shortest path", "subject": "Graph algorithms",
+  "question": "Run Dijkstra from A: what is the shortest path to E?"},
+ {"name": "bench/images/cs_sjf_gantt.png", "title": "Shortest Job First scheduling", "subject": "Operating systems",
+  "question": "Why do P9, P8 and P7 run in that order, and what is the average waiting time?"},
+ {"name": "bench/images/cs_bfs_dfs.png", "title": "BFS and DFS traversal", "subject": "Graph algorithms",
+  "question": "In which order does BFS visit the nodes from A, and how is DFS different?"},
+ {"name": "bench/images/cs_lru_cache.png", "title": "LRU cache replacement", "subject": "Operating systems",
+  "question": "Why does E replace A and F replace B? How many hits and misses?"},
+ {"name": "bench/images/cs_tcp_handshake.png", "title": "TCP three-way handshake", "subject": "Networking",
+  "question": "What do SYN, Seq and Ack mean in each segment, and why is the first ack 1024?"},
+ {"name": "synthetic/clean/flowchart_loop.png", "title": "Flowchart with a loop", "subject": "Programming",
+  "question": "What happens if the input is invalid twice?"},
+ {"name": "bench/images/math_quadratic_roots.png", "title": "Roots of a quadratic", "subject": "Math",
+  "question": "Where does this parabola cross the x-axis? Solve it step by step."},
+ {"name": "bench/images/math_derivative_tangent.png", "title": "Tangent line from the derivative", "subject": "Math",
+  "question": "The curve is f(x) = x² and the tangent touches it at a = 1. How do I find the tangent line?"},
+ {"name": "bench/images/math_ohm_internal_resistance.jpg", "title": "Ohm's law with internal resistance", "subject": "Physics",
+  "question": "How do we get the 1.5 A current and the 7.5 V across R?"},
+ {"name": "bench/images/math_calvin_cycle.png", "title": "The Calvin cycle", "subject": "Biology",
+  "question": "How many ATP and NADPH does the cycle use to fix 3 CO2?"}
+]

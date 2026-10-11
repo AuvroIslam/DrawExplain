@@ -169,6 +169,10 @@ export interface TTSResponse {
 export interface SampleInfo {
   name: string;
   url: string;
+  title?: string | null;
+  subject?: string | null;
+  /** a question that shows what the tutor can do; pre-filled when the sample is opened */
+  question?: string | null;
 }
 
 export interface LoadSampleRequest {

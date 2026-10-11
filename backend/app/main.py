@@ -45,7 +45,7 @@ from app.store import ImageStore, LessonStore, valid_id
 from app.tts import eleven
 from app.tutor.context import LessonContext, build_context
 
-log = logging.getLogger("studylens")
+log = logging.getLogger("drawexplain")
 
 MAX_UPLOAD_BYTES = 15 * 1024 * 1024
 IMAGE_TYPES = {"image/png", "image/jpeg", "image/jpg", "image/pjpeg", "image/webp"}
@@ -68,13 +68,13 @@ documents = DocumentStore()
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
-    if os.getenv("STUDYLENS_WARMUP", "1") == "1":
+    if os.getenv("DRAWEXPLAIN_WARMUP", "1") == "1":
         # before serving, so the first upload never loads the OCR models / OpenCV alongside another thread
         await asyncio.to_thread(_warmup)
     yield
 
 
-app = FastAPI(title="StudyLens Live Whiteboard", version="1.0", lifespan=lifespan)
+app = FastAPI(title="DrawExplain", version="1.0", lifespan=lifespan)
 # Split deployments (frontend on Vercel, API elsewhere): CORS_ORIGINS="https://a.app,https://b.app" and/or
 # CORS_ORIGIN_REGEX="https://.*\.vercel\.app". Defaults cover the local Vite dev server.
 app.add_middleware(
@@ -147,10 +147,17 @@ def image_marked(image_id: str) -> FileResponse:
 
 @app.get("/api/samples", response_model=list[SampleInfo])
 def list_samples() -> list[SampleInfo]:
-    """Images under SAMPLES_DIR (recursive, folders named "eval" skipped)."""
+    """The curated examples in SAMPLES_DIR/gallery.json (pages the tutor is known to teach correctly), else every
+    image under SAMPLES_DIR (recursive, folders named "eval" skipped)."""
     root = _samples_root()
     if not root.is_dir():
         return []
+    gallery = root / "gallery.json"
+    if gallery.is_file():
+        items = json.loads(gallery.read_text(encoding="utf-8"))
+        return [SampleInfo(name=g["name"], url=f"/api/samples/file/{quote(g['name'])}", title=g.get("title"),
+                           subject=g.get("subject"), question=g.get("question"))
+                for g in items if (root / g["name"]).is_file()]
     out = []
     for path in sorted(root.rglob("*")):
         if not path.is_file() or path.suffix.lower() not in IMAGE_EXTS:

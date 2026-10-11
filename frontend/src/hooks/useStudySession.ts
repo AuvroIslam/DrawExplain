@@ -11,7 +11,7 @@ import {
   isAbort,
   isPdfFile,
   type LessonMeta,
-  type StudyLensApi,
+  type DrawExplainApi,
 } from "../api";
 import type { BoardHandle } from "../board/types";
 import type { BoardSlot } from "../player/boardSlot";
@@ -21,7 +21,7 @@ import type { Box, DocumentInfo, FollowupResponse, Lesson, Perception, Point, Qu
 /** A file upload; for a PDF, `page` is the 1-based page shown and `pages` the page count once known. */
 export type PageSource =
   | { kind: "file"; file: File; name: string; page?: number; pages?: number }
-  | { kind: "sample"; name: string; url: string };
+  | { kind: "sample"; name: string; url: string; question?: string | null };
 
 /** loading: a PDF is being uploaded; idle: a document page is shown but not scanned (reader mode);
  *  scanning: perception in flight; found: regions flash on the board; done: ready to teach. */
@@ -181,7 +181,7 @@ function replaySteps(saved: PageLesson): Step[] {
 }
 
 interface Deps {
-  api: StudyLensApi;
+  api: DrawExplainApi;
   player: LessonPlayer;
   slot: BoardSlot;
   notify: (message: string, kind?: "info" | "success" | "error") => void;
@@ -340,7 +340,7 @@ export function useStudySession({ api, player, slot, notify }: Deps) {
       releaseUrls();
       dropPageImages();
       debugOff();
-      draft.current = "";
+      draft.current = source.kind === "sample" ? (source.question ?? "") : "";
       const alive = () => counter.current === id && !ctrl.signal.aborted;
       const pdf = source.kind === "file" && isPdfFile(source.file);
 
@@ -804,7 +804,7 @@ export function useStudySession({ api, player, slot, notify }: Deps) {
     const b = slot.current;
     if (!b) return;
     const page = ref.current?.reader?.page;
-    const name = page ? `studylens-notes-page-${page}.png` : "studylens-notes.png";
+    const name = page ? `drawexplain-notes-page-${page}.png` : "drawexplain-notes.png";
     try {
       const blob = await b.exportPng();
       downloadBlob(blob, name);

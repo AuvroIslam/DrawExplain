@@ -1,4 +1,4 @@
-"""Shared data contract for StudyLens Live Whiteboard (backend <-> frontend).
+"""Shared data contract for DrawExplain (backend <-> frontend).
 
 Coordinates: every Box/Point is NORMALIZED to the processed image (the image that
 perception ran on, which keeps the uploaded image's aspect ratio). x, y in [0, 1]
@@ -204,6 +204,9 @@ class TTSResponse(BaseModel):
 class SampleInfo(BaseModel):
     name: str  # path relative to the samples dir, e.g. "quick/network_basic.png"
     url: str  # served image url
+    title: str | None = None
+    subject: str | None = None
+    question: str | None = None  # suggested question, pre-filled in the app
 
 
 class LoadSampleRequest(BaseModel):
