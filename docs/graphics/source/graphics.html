@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>DrawExplain feature graphics</title>
+<!-- Source of docs/graphics/*.png. Render: node docs/graphics/source/render.mjs (needs the frontend's playwright). -->
+<style>
+  :root {
+    --paper: #f6f4ef; --paper-deep: #eeeae0; --card: #ffffff; --ink: #1d1b26; --ink-2: #4a4757; --muted: #8a8696;
+    --line: #e2ddd1; --hl: #ffd43b; --hl-soft: #fff6cf; --red: #e03131; --blue: #1971c2; --green: #2f9e44;
+    --gray-bar: #c9c4b8;
+    --font: "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+    --hand: "Segoe Print", "Comic Sans MS", cursive;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #777; font-family: var(--font); color: var(--ink); }
+  .slide {
+    width: 1600px; height: 900px; position: relative; overflow: hidden; margin: 0 0 40px;
+    background: var(--paper);
+    background-image: radial-gradient(rgb(29 27 38 / 0.07) 1.2px, transparent 1.2px);
+    background-size: 26px 26px;
+    padding: 72px 96px;
+  }
+  .brand { position: absolute; left: 96px; bottom: 44px; display: flex; align-items: center; gap: 12px;
+           font-weight: 700; font-size: 22px; }
+  .brand .x { background: linear-gradient(transparent 55%, var(--hl) 55%); padding: 0 2px; }
+  .page-no { position: absolute; right: 96px; bottom: 48px; font-size: 18px; color: var(--muted); letter-spacing: .08em; }
+  .kicker { font-size: 20px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--red);
+            display: flex; align-items: center; gap: 14px; }
+  .kicker::before { content: ""; width: 34px; height: 4px; border-radius: 2px; background: var(--red); }
+  h1 { font-size: 58px; line-height: 1.08; letter-spacing: -0.02em; margin-top: 18px; font-weight: 800; }
+  h1 .hl { background: linear-gradient(transparent 58%, var(--hl) 58%); padding: 0 4px; }
+  .lead { font-size: 26px; line-height: 1.45; color: var(--ink-2); margin-top: 18px; max-width: 1180px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 22px;
+          box-shadow: 0 2px 6px rgb(29 27 38 / .05), 0 28px 56px -28px rgb(29 27 38 / .30); }
+  .hand { font-family: var(--hand); }
+
+  /* 1 problem */
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 44px; }
+  .duo .card { padding: 24px 30px; height: 400px; position: relative; }
+  .tag { font-size: 18px; font-weight: 700; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+  .chat { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .bubble-q { align-self: flex-end; background: var(--ink); color: #fff; border-radius: 18px 18px 4px 18px;
+              padding: 12px 18px; font-size: 19px; }
+  .bubble-a { background: var(--paper-deep); border-radius: 18px 18px 18px 4px; padding: 16px 20px; font-size: 16.5px;
+              line-height: 1.5; color: var(--ink-2); height: 250px; overflow: hidden; position: relative; }
+  .bubble-a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 90px;
+                     background: linear-gradient(transparent, var(--paper-deep)); }
+  .miss { width: 416px; height: 312px; margin: 14px auto 0; position: relative; border-radius: 14px; overflow: hidden;
+          border: 1px solid var(--line); }
+  .miss img { display: block; width: 100%; height: 100%; }
+  .miss svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .stat-row { display: flex; gap: 56px; margin-top: 28px; }
+  .stat { display: flex; align-items: baseline; gap: 14px; font-size: 21px; color: var(--ink-2); }
+  .stat b { font-size: 46px; color: var(--red); font-weight: 800; letter-spacing: -0.02em; }
+
+  /* 2 solution */
+  .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 34px; margin-top: 56px; }
+  .step { padding: 30px 28px; height: 390px; position: relative; }
+  .num { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; font-weight: 800;
+         font-size: 24px; background: var(--ink); color: var(--hl); }
+  .step h3 { font-size: 30px; margin-top: 22px; letter-spacing: -0.01em; }
+  .step .who { font-size: 17px; font-weight: 700; color: var(--blue); margin-top: 6px; letter-spacing: .02em; }
+  .step p { font-size: 19.5px; line-height: 1.5; color: var(--ink-2); margin-top: 14px; }
+  .step .arrow { position: absolute; right: -40px; top: 46px; width: 46px; height: 30px; z-index: 2; }
+  .rule { margin-top: 34px; font-size: 25px; color: var(--ink-2); }
+  .rule b { color: var(--ink); }
+
+  /* 3 why it works */
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; margin-top: 50px; }
+  .tile { padding: 30px 32px 28px; height: 430px; display: flex; flex-direction: column; }
+  .tile .what { font-size: 21px; font-weight: 700; line-height: 1.35; min-height: 86px; }
+  .hero { font-size: 92px; font-weight: 800; letter-spacing: -0.04em; margin-top: 8px; line-height: 1; }
+  .hero small { font-size: 26px; font-weight: 600; color: var(--muted); letter-spacing: 0; margin-left: 6px; }
+  .bars { margin-top: auto; display: flex; flex-direction: column; gap: 14px; }
+  .bar-row { display: grid; grid-template-columns: 150px 1fr 70px; align-items: center; gap: 12px; font-size: 17px; }
+  .bar-row .lbl { color: var(--ink-2); }
+  .bar-row .val { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .track { height: 14px; border-radius: 4px; background: var(--paper-deep); position: relative; }
+  .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; }
+  .fill.before { background: var(--gray-bar); }
+  .fill.after { background: var(--ink); }
+  .source { margin-top: 30px; font-size: 18px; color: var(--muted); }
+
+  /* laptop slides */
+  .shot-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; }
+  .shot-head h1 { font-size: 50px; margin-top: 12px; }
+  .shot-head .lead { font-size: 22px; margin-top: 0; max-width: 560px; text-align: right; }
+  .laptop { width: 990px; margin: 30px auto 0; position: relative; }
+  .lid { background: #17161d; border-radius: 26px 26px 8px 8px; padding: 20px 20px 24px; position: relative;
+         box-shadow: 0 40px 70px -36px rgb(29 27 38 / .55); }
+  .lid::before { content: ""; position: absolute; top: 7px; left: 50%; width: 7px; height: 7px; margin-left: -3px;
+                 border-radius: 50%; background: #34323d; }
+  .lid img { display: block; width: 100%; border-radius: 6px; }
+  .base { height: 24px; margin: 0 -78px; position: relative; border-radius: 3px 3px 22px 22px;
+          background: linear-gradient(#ebe8e1, #c8c4ba); box-shadow: 0 16px 30px -18px rgb(29 27 38 / .5); }
+  .base::before { content: ""; position: absolute; left: 50%; top: 0; width: 170px; margin-left: -85px; height: 9px;
+                  border-radius: 0 0 10px 10px; background: #b5b1a6; }
+  .note { position: absolute; font-family: var(--hand); font-size: 24px; color: var(--red); }
+
+  /* thank you */
+  .thanks { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+            height: 100%; }
+  .thanks h1 { font-size: 132px; margin-top: 28px; }
+  .thanks .lead { text-align: center; font-size: 30px; }
+  .links { display: flex; gap: 22px; margin-top: 40px; }
+  .links span { background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 14px 26px;
+                font-size: 22px; font-weight: 600; }
+  .credits { margin-top: 34px; font-size: 19px; color: var(--muted); max-width: 1100px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="logo" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="16" fill="#1d1b26" />
+      <path d="M37 15c-12-2-24 4-25 15s9 19 21 18c11-1 19-8 18-17" fill="none" stroke="#e03131" stroke-width="4.5" stroke-linecap="round" />
+      <path d="M33 37 52 14" stroke="#ffd43b" stroke-width="7" stroke-linecap="round" />
+      <path d="M33 37l-4 7 7-4" fill="#ffd43b" stroke="#ffd43b" stroke-width="2" stroke-linejoin="round" />
+    </symbol>
+    <symbol id="arrow" viewBox="0 0 46 30">
+      <path d="M3 17c11-5 23-6 36-2" fill="none" stroke="#e03131" stroke-width="3.5" stroke-linecap="round" />
+      <path d="M30 6l10 9-11 8" fill="none" stroke="#e03131" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
+  </defs>
+</svg>
+
+<!-- 1 the problem -->
+<section class="slide" id="problem">
+  <div class="kicker">The problem</div>
+  <h1>Students get a wall of text.<br />AI that tries to draw <span class="hl">misses the target.</span></h1>
+  <div class="duo">
+    <div class="card">
+      <div class="tag">Ask a chatbot about a slide</div>
+      <div class="chat">
+        <div class="bubble-q">How do I get the shortest path from A to E?</div>
+        <div class="bubble-a">Dijkstra's algorithm finds the shortest path from a source node to every other node in a
+          weighted graph with non-negative edge weights. It maintains a set of visited nodes and a priority queue of
+          tentative distances. Initially, the distance to the source is zero and every other distance is infinity. At
+          each iteration, the algorithm selects the unvisited node with the smallest tentative distance, marks it as
+          visited, and relaxes each of its neighbours by checking whether a shorter path exists through the current
+          node. This continues until all nodes have been visited or the destination is reached. In your graph, the
+          path would likely go through the nodes with the lowest weights...</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="tag">Ask a model to circle node C</div>
+      <div class="miss">
+        <img src="../../../samples/bench/images/cs_dijkstra_a_to_e.png" alt="" />
+        <svg viewBox="0 0 1600 1200" preserveAspectRatio="none">
+          <ellipse cx="1090" cy="330" rx="120" ry="104" fill="none" stroke="#e03131" stroke-width="10" stroke-dasharray="2 0" />
+          <path d="M935 196 L1210 196" stroke="none" />
+          <text x="1235" y="352" font-family="Segoe Print, cursive" font-size="64" fill="#e03131">C?</text>
+          <circle cx="935" cy="195" r="86" fill="none" stroke="#2f9e44" stroke-width="7" stroke-dasharray="18 14" />
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="stat-row">
+    <div class="stat"><b>34%</b> of raw GPT drawings land tightly on their target</div>
+    <div class="stat"><b>0 of 3</b> plain-prompt Dijkstra lessons ran the algorithm correctly</div>
+  </div>
+  <div class="brand"><svg width="34" height="34"><use href="#logo" /></svg><span>Draw<span class="x">Explain</span></span></div>
+  <div class="page-no">01</div>
+</section>
+
+<!-- 2 the solution -->
+<section class="slide" id="solution">
+  <div class="kicker">Our solution</div>
+  <h1>A tutor that <span class="hl">teaches by drawing</span> on your page</h1>
+  <div class="flow">
+    <div class="card step">
+      <div class="num">1</div>
+      <h3>See</h3>
+      <div class="who">Computer vision</div>
+      <p>OCR reads every line and label, OpenCV finds the shapes, SAM sharpens unsure ones. Each thing on the page
+        becomes a numbered region.</p>
+      <svg class="arrow"><use href="#arrow" /></svg>
+    </div>
+    <div class="card step">
+      <div class="num">2</div>
+      <h3>Plan</h3>
+      <div class="who">Language model</div>
+      <p>The model plans the lesson by naming regions, not pixels: what to circle, what to write, and when the voice
+        says it.</p>
+      <svg class="arrow"><use href="#arrow" /></svg>
+    </div>
+    <div class="card step">
+      <div class="num">3</div>
+      <h3>Check</h3>
+      <div class="who">Code</div>
+      <p>Every drawing is cross-checked against the region. For an algorithm, code runs it on the graph or table
+        read off the page.</p>
+      <svg class="arrow"><use href="#arrow" /></svg>
+    </div>
+    <div class="card step">
+      <div class="num">4</div>
+      <h3>Teach</h3>
+      <div class="who">Whiteboard + voice</div>
+      <p>Marker strokes appear on the untouched page in sync with the narration. Ask a follow-up, then take a tap
+        quiz.</p>
+    </div>
+  </div>
+  <p class="rule"><b>The model never draws and never does the arithmetic.</b> Vision and code decide where, and what the
+    numbers are.</p>
+  <div class="brand"><svg width="34" height="34"><use href="#logo" /></svg><span>Draw<span class="x">Explain</span></span></div>
+  <div class="page-no">02</div>
+</section>
+
+<!-- 3 why it works -->
+<section class="slide" id="why">
+  <div class="kicker">Why it works</div>
+  <h1 style="font-size:54px">The model reads. <span class="hl">Code computes.</span> The pixels verify.</h1>
+  <div class="tiles">
+    <div class="card tile">
+      <div class="what">Drawings that land tightly on their target</div>
+      <div class="hero">83%</div>
+      <div class="bars">
+        <div class="bar-row"><span class="lbl">Raw GPT boxes</span><span class="track"><span class="fill before" style="width:34%"></span></span><span class="val">34%</span></div>
+        <div class="bar-row"><span class="lbl">DrawExplain</span><span class="track"><span class="fill after" style="width:83%"></span></span><span class="val">83%</span></div>
+      </div>
+    </div>
+    <div class="card tile">
+      <div class="what">Fully correct lessons on algorithm pages</div>
+      <div class="hero">9<small>of 9</small></div>
+      <div class="bars">
+        <div class="bar-row"><span class="lbl">Prompting only</span><span class="track"><span class="fill before" style="width:33.3%"></span></span><span class="val">3 / 9</span></div>
+        <div class="bar-row"><span class="lbl">With solvers</span><span class="track"><span class="fill after" style="width:100%"></span></span><span class="val">9 / 9</span></div>
+      </div>
+    </div>
+    <div class="card tile">
+      <div class="what">Fact-check score on 20 real study pages</div>
+      <div class="hero">0.93</div>
+      <div class="bars">
+        <div class="bar-row"><span class="lbl">Prompt rules</span><span class="track"><span class="fill before" style="width:86%"></span></span><span class="val">0.86</span></div>
+        <div class="bar-row"><span class="lbl">DrawExplain</span><span class="track"><span class="fill after" style="width:93%"></span></span><span class="val">0.93</span></div>
+      </div>
+    </div>
+  </div>
+  <p class="source">Measured on 407 ground-truth targets in 24 images and 145 fact-checked lessons. Every run is logged in docs/RESULTS_LOG.md.</p>
+  <div class="brand"><svg width="34" height="34"><use href="#logo" /></svg><span>Draw<span class="x">Explain</span></span></div>
+  <div class="page-no">03</div>
+</section>
+
+<!-- 4-7 the app in a laptop -->
+<section class="slide" id="app-upload">
+  <div class="shot-head">
+    <div><div class="kicker">The app</div><h1>Drop in any study page</h1></div>
+    <p class="lead">A slide, a phone photo of a textbook or a PDF lecture. Ask a question or just press Explain.</p>
+  </div>
+  <div class="laptop"><div class="lid"><img src="../../screenshots/landing.png" alt="" /></div><div class="base"></div></div>
+  <div class="page-no">04</div>
+</section>
+
+<section class="slide" id="app-dijkstra">
+  <div class="shot-head">
+    <div><div class="kicker">The app</div><h1>Algorithms, run for real</h1></div>
+    <p class="lead">Dijkstra on the page's own graph: every distance written next to its node, in the real order.</p>
+  </div>
+  <div class="laptop"><div class="lid"><img src="../../screenshots/dijkstra-lesson.png" alt="" /></div><div class="base"></div></div>
+  <div class="page-no">05</div>
+</section>
+
+<section class="slide" id="app-scheduling">
+  <div class="shot-head">
+    <div><div class="kicker">The app</div><h1>Charts, computed exactly</h1></div>
+    <p class="lead">A CPU-scheduling chart: all 14 waiting times and the 2.36 average come from code, not from guessing.</p>
+  </div>
+  <div class="laptop"><div class="lid"><img src="../../screenshots/scheduling-lesson.png" alt="" /></div><div class="base"></div></div>
+  <div class="page-no">06</div>
+</section>
+
+<section class="slide" id="app-vision">
+  <div class="shot-head">
+    <div><div class="kicker">The app</div><h1>See how it sees</h1></div>
+    <p class="lead">Every drawing is pinned to a region computer vision found, with its confidence and timings.</p>
+  </div>
+  <div class="laptop"><div class="lid"><img src="../../screenshots/how-it-sees.png" alt="" /></div><div class="base"></div></div>
+  <div class="page-no">07</div>
+</section>
+
+<!-- 8 thank you -->
+<section class="slide" id="thanks">
+  <div class="thanks">
+    <svg width="96" height="96"><use href="#logo" /></svg>
+    <h1>Thank <span class="hl">you</span></h1>
+    <p class="lead">DrawExplain: a tutor that teaches any page by drawing on it.</p>
+    <div class="links"><span>drawexplain.vercel.app</span><span>github.com/AuvroIslam/DrawExplain</span></div>
+    <p class="credits">Built for Banana Hacks 2026 with OpenAI gpt-5.5, RapidOCR, OpenCV, SAM 2.1, Qwen2-VL, Modal,
+      ElevenLabs and Excalidraw, and developed with Claude Code.</p>
+  </div>
+</section>
+
+</body>
+</html>
