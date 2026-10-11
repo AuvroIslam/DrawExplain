@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231d1b26'/%3E%3Ccircle cx='28' cy='28' r='14' fill='none' stroke='%23ffd43b' stroke-width='6'/%3E%3Cpath d='M38 38l12 12' stroke='%23ffd43b' stroke-width='7' stroke-linecap='round'/%3E%3Cpath d='M14 52c10-3 22-4 34-2' stroke='%23e03131' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f4ef" />
+    <meta
+      name="description"
+      content="StudyLens Live Whiteboard: upload a study image and an AI tutor teaches it by drawing on top of it, step by step, out loud."
+    />
+    <title>StudyLens · Live Whiteboard</title>
+    <script>
+      // Excalidraw fonts are self-hosted at /fonts/ (see vite.config.ts), so the board works offline.
+      window.EXCALIDRAW_ASSET_PATH = "/";
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
