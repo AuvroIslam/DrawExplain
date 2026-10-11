@@ -1,0 +1,61 @@
+{
+ "id": "cs_dijkstra_a_to_e",
+ "topic": "graph algorithms",
+ "image": "images/cs_dijkstra_a_to_e.png",
+ "question": "Use Dijkstra's algorithm starting at A: what are the shortest distances to the other nodes, and what is the shortest path from A to E?",
+ "reference_answer": "Undirected edges: A-B 4, A-C 2, B-C 5, B-D 10, C-D 3, C-E 8, D-E 7. Settle A (0): B = 4, C = 2. Settle C (2): B via C would be 2+5 = 7 > 4 so B stays 4; D = 2+3 = 5; E = 2+8 = 10. Settle B (4): D via B is 14, no change. Settle D (5): E via D is 5+7 = 12 > 10, no change. Settle E (10). Distances: A 0, C 2, B 4, D 5, E 10; settling order A, C, B, D, E. Shortest path A -> C -> E, length 10.",
+ "checks": [
+  {
+   "name": "b_stays_4",
+   "description": "B's distance is 4 (direct edge); the route via C (2 + 5 = 7) is worse.",
+   "any": [
+    "2\\s*\\+\\s*5\\s*=\\s*7",
+    "(?<![\\w./])7(?![\\d/]|[.,]\\d)[^.\\n]{0,40}(?:not|worse|larger|bigger|more|greater|longer|than|instead|no improvement)",
+    "\\bb\\b[^.\\n\\d]{0,12}(?:stays?|remains?|keeps?|is|=|:|->)\\s*(?<![\\w./])4(?![\\d/]|[.,]\\d)",
+    "\\bb\\b[^.\\n]{0,40}(?:stays?|keeps?|remains?|unchanged|already)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "d_is_5",
+   "description": "D's distance is 5, via C (2 + 3).",
+   "any": [
+    "2\\s*\\+\\s*3\\s*=\\s*5\\b",
+    "\\bd\\b[^.\\n\\d]{0,15}(?<![\\w./])5(?![\\d/]|[.,]\\d)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "e_is_10",
+   "description": "E's distance is 10 (2 + 8).",
+   "any": [
+    "2\\s*\\+\\s*8\\s*=\\s*10\\b",
+    "\\be\\b[^.\\n\\d]{0,15}(?<![\\w./])10(?![\\d/]|[.,]\\d)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "path_a_c_e",
+   "description": "The shortest path to E is A -> C -> E.",
+   "any": [
+    "\\ba\\s*(?:->|-|,|to|then)\\s*c\\s*(?:->|-|,|to|then)\\s*e\\b",
+    "\\bace\\b",
+    "\\ba\\b to e\\b[^.\\n]{0,25}(?:via|through|by way of) (?:node )?c\\b",
+    "(?:via|through|by way of) (?:node )?c\\b[^.\\n]{0,40}(?:directly )?(?:to|reach(?:es|ing)?) (?:node )?e\\b"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "via_d_is_12",
+   "description": "Rejects reaching E through D: 5 + 7 = 12 is longer than 10.",
+   "any": [
+    "5\\s*\\+\\s*7",
+    "(?<![\\w./])12(?![\\d/]|[.,]\\d)"
+   ],
+   "min_any": 1
+  }
+ ],
+ "source_url": "https://commons.wikimedia.org/wiki/File:Shortest_path_example_graph.png",
+ "license": "CC0 1.0",
+ "author": "Shirisha Gongati"
+}

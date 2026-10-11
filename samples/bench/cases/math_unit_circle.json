@@ -1,0 +1,70 @@
+{
+ "id": "math_unit_circle",
+ "topic": "math",
+ "image": "images/math_unit_circle.png",
+ "question": "What is sin(150°) and why?",
+ "reference_answer": "sin 150° = 1/2. 150° (= 5π/6) lies in quadrant II; its point on the unit circle is (−√3/2, 1/2), and the sine is the y-coordinate, so sin 150° = 1/2. Its reference angle is 180° − 150° = 30°, so sin 150° = sin 30°; sine is positive above the x-axis (cos 150° = −√3/2).",
+ "checks": [
+  {
+   "name": "value_half",
+   "description": "States sin(150°) = 1/2 (0.5, one half).",
+   "any": [
+    "sin\\w*\\s*\\(?\\s*150\\s*(?:°|degrees?|deg)?\\s*\\)?\\s*(?:=|is|equals|of)\\s*(?:exactly\\s*)?(?:\\+\\s*)?(?:1\\s*/\\s*2|0[.,]5|one[- ]half|a half|half)(?![\\d/]|[.,]\\d)",
+    "sin\\w*[^.\\n]{0,40}150[^.\\n]{0,80}(?:=|is|equals|gives|comes out(?: to)?|get)\\s*(?:exactly\\s*)?(?:positive\\s*)?(?:\\+\\s*)?(?:1\\s*/\\s*2|0[.,]5|one[- ]half|a half)(?![\\d/]|[.,]\\d)",
+    "sin\\w*\\s*\\(?\\s*5\\s*π\\s*/\\s*6\\s*\\)?\\s*=\\s*1\\s*/\\s*2"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "y_coordinate",
+   "description": "Explains that the sine is the y-coordinate (height) of the point on the unit circle.",
+   "any": [
+    "\\by[- ]?(?:coordinate|value|component|co-ordinate)",
+    "sin\\w*[^.\\n]{0,40}(?:=|is|equals|gives|means)[^.\\n]{0,15}\\by\\b",
+    "\\by\\b[^.\\n]{0,30}(?:=|is|gives)[^.\\n]{0,15}sin\\w*",
+    "(?:height|vertical)[^.\\n]{0,60}(?:sin|1\\s*/\\s*2)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "point_150",
+   "description": "Reads the 150° point (−√3/2, 1/2) (x negative: cos 150° = −√3/2).",
+   "any": [
+    "-\\s*(?:√|sqrt\\s*\\(?|root\\s*|the square root of\\s*)\\s*3\\s*\\)?\\s*(?:/|over)\\s*2",
+    "negative\\s+(?:√|sqrt|root|square root of)\\s*\\(?\\s*3\\s*\\)?\\s*(?:/|over)\\s*2",
+    "cos\\w*\\s*\\(?\\s*150[^.\\n]{0,30}-\\s*(?:√|sqrt|root)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "reference_30",
+   "description": "Relates 150° to 30°: reference angle 180° − 150° = 30°, sin 150° = sin 30° (mirror image).",
+   "any": [
+    "reference angle",
+    "180\\s*(?:°|degrees?)?\\s*-\\s*150",
+    "sin\\w*\\s*\\(?\\s*30\\s*(?:°|degrees?)",
+    "(?:same|equal|mirror\\w*|reflect\\w*|symmetr\\w*)[^.\\n]{0,80}(?<![\\w./,])30\\s*(?:°|degrees?)",
+    "(?<![\\w./,])30\\s*(?:°|degrees?)[^.\\n]{0,80}(?:same|equal|mirror\\w*|reflect\\w*|symmetr\\w*)",
+    "π\\s*/\\s*6[^.\\n]{0,60}(?:same|mirror|reflect)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "quadrant_sign",
+   "description": "150° is in the second quadrant (upper left), where the sine (y) is positive.",
+   "all": [
+    "\\bpositive\\b|above the x[- ]?axis|upper half|top half"
+   ],
+   "any": [
+    "(?:second|2nd)\\s+quadrant",
+    "quadrant\\s+(?:ii|2|two)\\b",
+    "(?:upper|top)[- ]left",
+    "\\bq(?:2|ii)\\b"
+   ],
+   "min_any": 1
+  }
+ ],
+ "source_url": "https://commons.wikimedia.org/wiki/File:Unit_circle_angles_color.svg",
+ "license": "Public domain",
+ "author": "Jim.belk"
+}

@@ -1,0 +1,57 @@
+{
+ "id": "cs_prim_mst",
+ "topic": "graph algorithms",
+ "image": "images/cs_prim_mst.png",
+ "question": "Using Prim's algorithm starting from A, which edges are added to the minimum spanning tree, in what order, and what is the total weight?",
+ "reference_answer": "Start at A: cheapest edge out of {A} is A-D (5). From {A,D}: D-F (6). From {A,D,F}: A-B (7). From {A,B,D,F}: B-E (7). From {A,B,D,E,F}: E-C (5). Last: E-G (9) (cheaper than F-G 11). MST = AD, DF, AB, BE, EC, EG; total 5+6+7+7+5+9 = 39. B-C (8), E-F (8), B-D (9), F-G (11) and D-E (15) are never taken because both ends are already in the tree (they would close a cycle).",
+ "checks": [
+  {
+   "name": "edges_ad_df_ab",
+   "description": "The tree contains A-D (5), D-F (6) and A-B (7).",
+   "all": [
+    "(?:(?:\\ba\\s*(?:-|->|to)\\s*d\\b|\\bd\\s*(?:-|->|to)\\s*a\\b|\\(\\s*a\\s*,\\s*d\\s*\\)|\\(\\s*d\\s*,\\s*a\\s*\\)|\\bad\\b|\\bda\\b)|\\b(?:ad|da)\\s*(?:\\(\\s*(?:w\\s*=\\s*)?5\\s*\\)|[:=]\\s*5\\b|,?\\s*(?:weight|cost)\\s*(?:of\\s*)?[:=]?\\s*5\\b))",
+    "(?:(?:\\bd\\s*(?:-|->|to)\\s*f\\b|\\bf\\s*(?:-|->|to)\\s*d\\b|\\(\\s*d\\s*,\\s*f\\s*\\)|\\(\\s*f\\s*,\\s*d\\s*\\)|\\bdf\\b|\\bfd\\b)|\\b(?:df|fd)\\s*(?:\\(\\s*(?:w\\s*=\\s*)?6\\s*\\)|[:=]\\s*6\\b|,?\\s*(?:weight|cost)\\s*(?:of\\s*)?[:=]?\\s*6\\b))",
+    "(?:(?:\\ba\\s*(?:-|->|to)\\s*b\\b|\\bb\\s*(?:-|->|to)\\s*a\\b|\\(\\s*a\\s*,\\s*b\\s*\\)|\\(\\s*b\\s*,\\s*a\\s*\\)|\\bab\\b|\\bba\\b)|\\b(?:ab|ba)\\s*(?:\\(\\s*(?:w\\s*=\\s*)?7\\s*\\)|[:=]\\s*7\\b|,?\\s*(?:weight|cost)\\s*(?:of\\s*)?[:=]?\\s*7\\b))"
+   ]
+  },
+  {
+   "name": "edges_be_ce_eg",
+   "description": "The tree contains B-E (7), C-E (5) and E-G (9).",
+   "all": [
+    "(?:(?:\\bb\\s*(?:-|->|to)\\s*e\\b|\\be\\s*(?:-|->|to)\\s*b\\b|\\(\\s*b\\s*,\\s*e\\s*\\)|\\(\\s*e\\s*,\\s*b\\s*\\))|\\b(?:be|eb)\\s*(?:\\(\\s*(?:w\\s*=\\s*)?7\\s*\\)|[:=]\\s*7\\b|,?\\s*(?:weight|cost)\\s*(?:of\\s*)?[:=]?\\s*7\\b))",
+    "(?:(?:\\bc\\s*(?:-|->|to)\\s*e\\b|\\be\\s*(?:-|->|to)\\s*c\\b|\\(\\s*c\\s*,\\s*e\\s*\\)|\\(\\s*e\\s*,\\s*c\\s*\\)|\\bce\\b|\\bec\\b)|\\b(?:ce|ec)\\s*(?:\\(\\s*(?:w\\s*=\\s*)?5\\s*\\)|[:=]\\s*5\\b|,?\\s*(?:weight|cost)\\s*(?:of\\s*)?[:=]?\\s*5\\b))",
+    "(?:(?:\\be\\s*(?:-|->|to)\\s*g\\b|\\bg\\s*(?:-|->|to)\\s*e\\b|\\(\\s*e\\s*,\\s*g\\s*\\)|\\(\\s*g\\s*,\\s*e\\s*\\)|\\beg\\b|\\bge\\b)|\\b(?:eg|ge)\\s*(?:\\(\\s*(?:w\\s*=\\s*)?9\\s*\\)|[:=]\\s*9\\b|,?\\s*(?:weight|cost)\\s*(?:of\\s*)?[:=]?\\s*9\\b))"
+   ]
+  },
+  {
+   "name": "prim_order",
+   "description": "Adds the edges in Prim's order from A: A-D, D-F, A-B, B-E, C-E, E-G.",
+   "any": [
+    "(?:(?:\\ba\\s*(?:-|->|to)\\s*d\\b|\\bd\\s*(?:-|->|to)\\s*a\\b|\\(\\s*a\\s*,\\s*d\\s*\\)|\\(\\s*d\\s*,\\s*a\\s*\\)|\\bad\\b|\\bda\\b)|\\b(?:ad|da)\\s*(?:\\(\\s*(?:w\\s*=\\s*)?5\\s*\\)|[:=]\\s*5\\b|,?\\s*(?:weight|cost)\\s*(?:of\\s*)?[:=]?\\s*5\\b))(?=([\\s\\S]*?(?:(?:\\bd\\s*(?:-|->|to)\\s*f\\b|\\bf\\s*(?:-|->|to)\\s*d\\b|\\(\\s*d\\s*,\\s*f\\s*\\)|\\(\\s*f\\s*,\\s*d\\s*\\)|\\bdf\\b|\\bfd\\b)|\\b(?:df|fd)\\s*(?:\\(\\s*(?:w\\s*=\\s*)?6\\s*\\)|[:=]\\s*6\\b|,?\\s*(?:weight|cost)\\s*(?:of\\s*)?[:=]?\\s*6\\b))))\\1(?=([\\s\\S]*?(?:(?:\\ba\\s*(?:-|->|to)\\s*b\\b|\\bb\\s*(?:-|->|to)\\s*a\\b|\\(\\s*a\\s*,\\s*b\\s*\\)|\\(\\s*b\\s*,\\s*a\\s*\\)|\\bab\\b|\\bba\\b)|\\b(?:ab|ba)\\s*(?:\\(\\s*(?:w\\s*=\\s*)?7\\s*\\)|[:=]\\s*7\\b|,?\\s*(?:weight|cost)\\s*(?:of\\s*)?[:=]?\\s*7\\b))))\\2(?=([\\s\\S]*?(?:(?:\\bb\\s*(?:-|->|to)\\s*e\\b|\\be\\s*(?:-|->|to)\\s*b\\b|\\(\\s*b\\s*,\\s*e\\s*\\)|\\(\\s*e\\s*,\\s*b\\s*\\))|\\b(?:be|eb)\\s*(?:\\(\\s*(?:w\\s*=\\s*)?7\\s*\\)|[:=]\\s*7\\b|,?\\s*(?:weight|cost)\\s*(?:of\\s*)?[:=]?\\s*7\\b))))\\3(?=([\\s\\S]*?(?:(?:\\bc\\s*(?:-|->|to)\\s*e\\b|\\be\\s*(?:-|->|to)\\s*c\\b|\\(\\s*c\\s*,\\s*e\\s*\\)|\\(\\s*e\\s*,\\s*c\\s*\\)|\\bce\\b|\\bec\\b)|\\b(?:ce|ec)\\s*(?:\\(\\s*(?:w\\s*=\\s*)?5\\s*\\)|[:=]\\s*5\\b|,?\\s*(?:weight|cost)\\s*(?:of\\s*)?[:=]?\\s*5\\b))))\\4(?=([\\s\\S]*?(?:(?:\\be\\s*(?:-|->|to)\\s*g\\b|\\bg\\s*(?:-|->|to)\\s*e\\b|\\(\\s*e\\s*,\\s*g\\s*\\)|\\(\\s*g\\s*,\\s*e\\s*\\)|\\beg\\b|\\bge\\b)|\\b(?:eg|ge)\\s*(?:\\(\\s*(?:w\\s*=\\s*)?9\\s*\\)|[:=]\\s*9\\b|,?\\s*(?:weight|cost)\\s*(?:of\\s*)?[:=]?\\s*9\\b))))\\5"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "total_39",
+   "description": "Total weight 39.",
+   "any": [
+    "(?<![\\w./])39(?![\\d/]|[.,]\\d)"
+   ],
+   "min_any": 1
+  },
+  {
+   "name": "skips_cycle_edges",
+   "description": "Explains why other edges are skipped: both ends already in the tree / they would form a cycle.",
+   "any": [
+    "cycle",
+    "already (?:in|part of|inside|connected|visited|reached|included|joined|added)",
+    "both (?:ends|endpoints|end points|vertices|nodes)",
+    "inside the tree"
+   ],
+   "min_any": 1
+  }
+ ],
+ "source_url": "https://commons.wikimedia.org/wiki/File:Prim_Algorithm_0.svg",
+ "license": "CC BY-SA 3.0",
+ "author": "Alexander Drichel"
+}
