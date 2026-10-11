@@ -3,15 +3,16 @@
 // callbacks to the engine and hands the BoardHandle to the app once the canvas is live.
 import { Excalidraw } from "@excalidraw/excalidraw";
 import "@excalidraw/excalidraw/index.css";
-import type { ExcalidrawProps } from "@excalidraw/excalidraw/types";
-import { useEffect, useRef, useState } from "react";
+import type { ExcalidrawImperativeAPI, ExcalidrawProps } from "@excalidraw/excalidraw/types";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { BoardTools, type ToolType } from "./BoardTools";
 import { type BoardDebug, BoardEngine } from "./engine";
 import type { BoardHandle, WhiteboardBoardProps } from "./types";
 
 declare global {
   interface Window {
     /** Dev builds only: the live board, for the screenshot/test harness. */
-    __studylensBoard?: BoardHandle & BoardDebug;
+    __drawexplainBoard?: BoardHandle & BoardDebug;
   }
 }
 
@@ -52,6 +53,8 @@ export default function WhiteboardBoard({
   const [engine] = useState(() => new BoardEngine());
   const [failure, setFailure] = useState<Error | null>(null);
   const hostRef = useRef<HTMLDivElement>(null);
+  const apiRef = useRef<ExcalidrawImperativeAPI | null>(null);
+  const [tool, setTool] = useState<string>("selection");
   const onReadyRef = useRef(onReady);
   const onStudentRef = useRef(onStudentDrawingChange);
 
@@ -70,7 +73,7 @@ export default function WhiteboardBoard({
     engine.whenReady().then(
       () => {
         if (!alive) return;
-        if (import.meta.env.DEV) window.__studylensBoard = engine.handle;
+        if (import.meta.env.DEV) window.__drawexplainBoard = engine.handle;
         onReadyRef.current(engine.handle);
       },
       (err: unknown) => {
@@ -83,14 +86,48 @@ export default function WhiteboardBoard({
     };
   }, [engine]);
 
+  const setApi = useCallback(
+    (api: ExcalidrawImperativeAPI) => {
+      apiRef.current = api;
+      engine.setApi(api);
+    },
+    [engine],
+  );
+
+  const onChange: NonNullable<ExcalidrawProps["onChange"]> = (elements, appState) => {
+    engine.onSceneChange(elements);
+    setTool(appState.activeTool.type);
+  };
+
+  const pickTool = (type: ToolType) => {
+    // the pen stays on after each stroke; shapes go back to Select after one, as in Excalidraw
+    apiRef.current?.setActiveTool({ type, locked: type === "freedraw" || type === "eraser" });
+    setTool(type);
+  };
+
+  /** Undo / redo through Excalidraw's own history (it listens for the shortcut on its container). */
+  const historyKey = (redo: boolean) => {
+    const target = hostRef.current?.querySelector(".excalidraw") ?? hostRef.current;
+    target?.dispatchEvent(
+      new KeyboardEvent("keydown", { key: redo ? "y" : "z", code: redo ? "KeyY" : "KeyZ", ctrlKey: true, bubbles: true }),
+    );
+  };
+
   // let the app's error boundary show its "reload" card
   if (failure) throw failure;
 
   return (
     <div ref={hostRef} className={`whiteboard${className ? ` ${className}` : ""}`} data-board="excalidraw">
+      <BoardTools
+        active={tool}
+        onTool={pickTool}
+        onUndo={() => historyKey(false)}
+        onRedo={() => historyKey(true)}
+        onClear={() => engine.clearStudentDrawings()}
+      />
       <Excalidraw
-        excalidrawAPI={engine.setApi}
-        onChange={engine.onSceneChange}
+        excalidrawAPI={setApi}
+        onChange={onChange}
         initialData={INITIAL_DATA}
         UIOptions={UI_OPTIONS}
         theme={theme}

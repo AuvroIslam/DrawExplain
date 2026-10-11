@@ -21,9 +21,8 @@ export function TopBar(p: Props) {
       <button type="button" className="brand" onClick={p.onHome} title="Start over with a new page">
         <LogoMark size={32} />
         <span className="brand-name">
-          Study<span className="brand-lens">Lens</span>
+          Draw<span className="brand-lens">Explain</span>
         </span>
-        <span className="brand-tag">Live Whiteboard</span>
       </button>
       {p.mock && (
         <span className="demo-pill" title="Running on built-in demo data (no backend needed)">

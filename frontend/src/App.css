@@ -51,15 +51,6 @@
   padding: 0 1px;
 }
 
-.brand-tag {
-  font-family: var(--font-hand);
-  font-size: 19px;
-  color: var(--red);
-  transform: rotate(-4deg) translateY(1px);
-  margin-left: 2px;
-  white-space: nowrap;
-}
-
 .demo-pill {
   font-size: 12px;
   font-weight: 650;
@@ -801,13 +792,18 @@
   inset: 0;
 }
 
-/* Excalidraw whiteboard (src/board/WhiteboardBoard.tsx): keep the drawing tools, zoom and undo;
-   hide what does not belong on a tutor's board (file menu, library, help, extra tools, hints). */
+/* Excalidraw whiteboard (src/board/WhiteboardBoard.tsx): Excalidraw's own menus, toolbar, zoom and undo bars
+   are hidden; the board's toolbar (BoardTools.tsx) takes their place. */
 .whiteboard {
   overflow: hidden;
   background: #fff;
 }
 
+.whiteboard .excalidraw .App-menu_top,
+.whiteboard .excalidraw .layer-ui__wrapper__footer,
+.whiteboard .excalidraw .App-bottom-bar,
+.whiteboard .excalidraw .App-toolbar--mobile,
+.whiteboard .excalidraw .mobile-misc-tools-container,
 .whiteboard .excalidraw .main-menu-trigger,
 .whiteboard .excalidraw .sidebar-trigger__label-element,
 .whiteboard .excalidraw .default-sidebar-trigger,
@@ -2498,7 +2494,6 @@
     gap: 8px;
   }
 
-  .brand-tag,
   .demo-pill,
   .tool-label {
     display: none;
@@ -2885,4 +2880,60 @@
 
 .focus-field > svg ~ input {
   padding-left: 40px;
+}
+
+/* the board's own toolbar (src/board/BoardTools.tsx) */
+.board-tools {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 5px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.board-tool {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.board-tool:hover {
+  background: var(--paper-deep);
+}
+
+.board-tool.on {
+  background: var(--hl-soft);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1.5px var(--hl-deep);
+}
+
+.board-tool:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 1px;
+}
+
+.board-tools-divider {
+  width: 1px;
+  height: 22px;
+  margin: 0 4px;
+  background: var(--line);
+}
+
+.whiteboard.is-tap-mode .board-tools {
+  opacity: 0;
+  pointer-events: none;
 }
