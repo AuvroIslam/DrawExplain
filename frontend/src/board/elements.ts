@@ -181,6 +181,10 @@ export function textElement(id: string, text: string, x: number, y: number, styl
 }
 
 export const HAND_FONT = FONT_FAMILY.Excalifont;
+/** The hand fonts have no ∞: Excalidraw falls back to Xiaolai, whose ∞ is a small raised circle that reads as
+ *  "°" ("C °→2"). Labels with ∞ use Liberation Sans, which has a real ∞. */
+export const HAND_FONT_MATH = FONT_FAMILY["Liberation Sans"];
+export const handFontFor = (text: string): number => (/[∞]/.test(text) ? HAND_FONT_MATH : HAND_FONT);
 export const MONO_FONT = FONT_FAMILY.Cascadia;
 
 /** The partially written text: same element box (left anchored), fewer characters. */

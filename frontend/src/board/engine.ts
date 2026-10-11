@@ -19,7 +19,7 @@ import {
   arrowWithPoints,
   type El,
   freedrawElement,
-  HAND_FONT,
+  handFontFor,
   imageElement,
   isStudentElement,
   MONO_FONT,
@@ -128,7 +128,11 @@ const REGION_COLORS: Record<RegionKind, string> = {
 };
 const BADGE_COLOR = "#495057";
 const FRAME_COLOR = "#d3cfc6";
-const FONT_SAMPLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,;:!?'\"()-+=/%&";
+// Letters plus the symbols the tutor writes on the board ("B ∞→5", "E 3 ✓", "a² + b² = c²"): the font subsets
+// holding them must be loaded before the canvas draws them, or it paints a fallback glyph (∞ came out as °).
+const FONT_SAMPLE =
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,;:!?'\"()-+=/%&" +
+  "∞→←↔⇒✓✗×÷±≤≥≠≈√πθαβγδλμσΔΣ²³½°·…";
 
 const annotationKey = (stepIndex: number, id: string) => `${stepIndex}:${id}`;
 const elementId = (key: string, part: string) => `tutor:${key}:${part}`;
@@ -320,7 +324,7 @@ export class BoardEngine {
   private async preloadFonts() {
     try {
       await Promise.race([
-        Promise.all([document.fonts.load("20px Excalifont", FONT_SAMPLE), document.fonts.load("20px Cascadia", FONT_SAMPLE)]),
+        Promise.all(["Excalifont", "Cascadia", "Liberation Sans"].map((f) => document.fonts.load(`20px "${f}"`, FONT_SAMPLE))),
         sleep(2500),
       ]);
     } catch {
@@ -564,7 +568,7 @@ export class BoardEngine {
    *  the page's own text), shrunk only if it would overflow the box width, centred in the box. */
   private fitText(id: string, text: string, box: PxBox, color: string, data: TutorData): El {
     let fontSize = clamp(box.h / 1.3, 10, 160);
-    const style = { fontFamily: HAND_FONT, color, opacity: 100 };
+    const style = { fontFamily: handFontFor(text), color, opacity: 100 };
     let el = textElement(id, text, box.x, box.y, { ...style, fontSize }, data);
     const room = box.w * 1.04;
     if (el.width > room) {
