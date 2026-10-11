@@ -1,0 +1,210 @@
+{
+ "image": "free_body.png",
+ "width": 1280,
+ "height": 720,
+ "template": "free_body",
+ "set": "clean",
+ "seed": 7,
+ "note": "Physics free-body diagram: block, four force arrows with labels, equations. Variant: clean. Boxes are [x0, y0, x1, y1] pixels of this file.",
+ "elements": [
+  {
+   "name": "title",
+   "kind": "text",
+   "query": "the slide title",
+   "box": [
+    56,
+    34,
+    595,
+    66
+   ]
+  },
+  {
+   "name": "footer",
+   "kind": "text",
+   "query": "the course name in the footer",
+   "box": [
+    60,
+    689,
+    196,
+    699
+   ]
+  },
+  {
+   "name": "slide number",
+   "kind": "text",
+   "query": "the slide number",
+   "box": [
+    1212,
+    689,
+    1220,
+    699
+   ]
+  },
+  {
+   "name": "block",
+   "kind": "shape",
+   "shape": "rect",
+   "query": "the block",
+   "box": [
+    300,
+    350,
+    480,
+    469
+   ]
+  },
+  {
+   "name": "weight arrow",
+   "kind": "arrow",
+   "query": "the weight arrow (pointing down)",
+   "box": [
+    380,
+    407,
+    400,
+    603
+   ]
+  },
+  {
+   "name": "normal force arrow",
+   "kind": "arrow",
+   "query": "the normal force arrow (pointing up)",
+   "box": [
+    380,
+    193,
+    400,
+    353
+   ]
+  },
+  {
+   "name": "applied force arrow",
+   "kind": "arrow",
+   "query": "the applied force arrow",
+   "box": [
+    477,
+    400,
+    653,
+    420
+   ]
+  },
+  {
+   "name": "friction arrow",
+   "kind": "arrow",
+   "query": "the friction arrow",
+   "box": [
+    147,
+    442,
+    303,
+    462
+   ]
+  },
+  {
+   "name": "label: Weight mg",
+   "kind": "text",
+   "query": "the label 'Weight mg'",
+   "box": [
+    404,
+    579,
+    519,
+    601
+   ]
+  },
+  {
+   "name": "label: Normal force N",
+   "kind": "text",
+   "query": "the label 'Normal force N'",
+   "box": [
+    404,
+    199,
+    563,
+    217
+   ]
+  },
+  {
+   "name": "label: Applied force F",
+   "kind": "text",
+   "query": "the label 'Applied force F'",
+   "box": [
+    487,
+    370,
+    643,
+    392
+   ]
+  },
+  {
+   "name": "label: Friction f",
+   "kind": "text",
+   "query": "the label 'Friction f'",
+   "box": [
+    166,
+    414,
+    262,
+    432
+   ]
+  },
+  {
+   "name": "heading",
+   "kind": "text",
+   "query": "the heading 'Newton's second law'",
+   "box": [
+    820,
+    148,
+    1051,
+    167
+   ]
+  },
+  {
+   "name": "equation: sum",
+   "kind": "text",
+   "query": "the equation ΣF = ma",
+   "box": [
+    818,
+    218,
+    974,
+    250
+   ]
+  },
+  {
+   "name": "equation: x",
+   "kind": "text",
+   "query": "the x-direction equation F − f = ma",
+   "box": [
+    819,
+    301,
+    995,
+    330
+   ]
+  },
+  {
+   "name": "equation: y",
+   "kind": "text",
+   "query": "the y-direction equation N − mg = 0",
+   "box": [
+    816,
+    360,
+    1007,
+    388
+   ]
+  },
+  {
+   "name": "equation: friction",
+   "kind": "text",
+   "query": "the friction law f = μN",
+   "box": [
+    815,
+    417,
+    901,
+    446
+   ]
+  },
+  {
+   "name": "note",
+   "kind": "text",
+   "query": "the note about when the block speeds up",
+   "box": [
+    820,
+    511,
+    1098,
+    529
+   ]
+  }
+ ]
+}

@@ -1,0 +1,210 @@
+{
+ "image": "bar_chart.jpg",
+ "width": 1600,
+ "height": 1200,
+ "template": "bar_chart",
+ "set": "photo",
+ "seed": 7,
+ "note": "Grouped bar chart: rotated y-axis title, category labels, legend, takeaway box. Variant: photo. Boxes are [x0, y0, x1, y1] pixels of this file.",
+ "elements": [
+  {
+   "name": "title",
+   "kind": "text",
+   "query": "the slide title",
+   "box": [
+    236,
+    223,
+    836,
+    302
+   ]
+  },
+  {
+   "name": "footer",
+   "kind": "text",
+   "query": "the course name in the footer",
+   "box": [
+    236,
+    890,
+    446,
+    912
+   ]
+  },
+  {
+   "name": "slide number",
+   "kind": "text",
+   "query": "the slide number",
+   "box": [
+    1341,
+    925,
+    1357,
+    937
+   ]
+  },
+  {
+   "name": "bars: Re-reading",
+   "kind": "figure",
+   "query": "the pair of bars for Re-reading",
+   "box": [
+    354,
+    480,
+    472,
+    767
+   ]
+  },
+  {
+   "name": "category: Re-reading",
+   "kind": "text",
+   "query": "the x-axis label 'Re-reading'",
+   "box": [
+    368,
+    776,
+    458,
+    798
+   ]
+  },
+  {
+   "name": "bars: Highlighting",
+   "kind": "figure",
+   "query": "the pair of bars for Highlighting",
+   "box": [
+    524,
+    506,
+    641,
+    774
+   ]
+  },
+  {
+   "name": "shortest bar",
+   "kind": "figure",
+   "query": "the shortest bar",
+   "box": [
+    584,
+    621,
+    640,
+    773
+   ]
+  },
+  {
+   "name": "bars: Practice tests",
+   "kind": "figure",
+   "query": "the pair of bars for Practice tests",
+   "box": [
+    690,
+    463,
+    808,
+    780
+   ]
+  },
+  {
+   "name": "tallest bar",
+   "kind": "figure",
+   "query": "the tallest bar",
+   "box": [
+    690,
+    463,
+    749,
+    777
+   ]
+  },
+  {
+   "name": "bars: Spaced review",
+   "kind": "figure",
+   "query": "the pair of bars for Spaced review",
+   "box": [
+    854,
+    492,
+    971,
+    786
+   ]
+  },
+  {
+   "name": "category: Spaced review",
+   "kind": "text",
+   "query": "the x-axis label 'Spaced review'",
+   "box": [
+    853,
+    795,
+    964,
+    817
+   ]
+  },
+  {
+   "name": "y-axis title",
+   "kind": "text",
+   "query": "the y-axis title",
+   "box": [
+    256,
+    447,
+    277,
+    648
+   ]
+  },
+  {
+   "name": "x-axis title",
+   "kind": "text",
+   "query": "the x-axis title",
+   "box": [
+    603,
+    833,
+    725,
+    857
+   ]
+  },
+  {
+   "name": "legend",
+   "kind": "figure",
+   "query": "the legend",
+   "box": [
+    653,
+    355,
+    968,
+    391
+   ]
+  },
+  {
+   "name": "plot",
+   "kind": "figure",
+   "query": "the whole bar chart (with its axes)",
+   "box": [
+    255,
+    320,
+    1002,
+    866
+   ]
+  },
+  {
+   "name": "takeaway box",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the Takeaway box",
+   "box": [
+    1050,
+    401,
+    1379,
+    646
+   ]
+  },
+  {
+   "name": "takeaway text",
+   "kind": "text_block",
+   "query": "the takeaway sentence",
+   "box": [
+    1075,
+    477,
+    1277,
+    585
+   ]
+  },
+  {
+   "name": "source note",
+   "kind": "text",
+   "query": "the data source note",
+   "box": [
+    1049,
+    658,
+    1287,
+    684
+   ]
+  }
+ ]
+}

@@ -1,0 +1,295 @@
+{
+ "image": "dense_architecture.jpg",
+ "width": 1600,
+ "height": 1200,
+ "template": "dense_architecture",
+ "set": "photo",
+ "seed": 7,
+ "note": "Dense computer-architecture block diagram: 18 small labelled boxes, nested CPU, system bus. Variant: photo. Boxes are [x0, y0, x1, y1] pixels of this file.",
+ "elements": [
+  {
+   "name": "title",
+   "kind": "text",
+   "query": "the slide title",
+   "box": [
+    244,
+    269,
+    800,
+    314
+   ]
+  },
+  {
+   "name": "footer",
+   "kind": "text",
+   "query": "the course name in the footer",
+   "box": [
+    234,
+    923,
+    418,
+    938
+   ]
+  },
+  {
+   "name": "slide number",
+   "kind": "text",
+   "query": "the slide number",
+   "box": [
+    1389,
+    906,
+    1396,
+    916
+   ]
+  },
+  {
+   "name": "CPU",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the CPU (the big box around the core parts)",
+   "box": [
+    241,
+    347,
+    783,
+    631
+   ]
+  },
+  {
+   "name": "Control Unit",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the Control Unit",
+   "box": [
+    267,
+    404,
+    421,
+    459
+   ]
+  },
+  {
+   "name": "ALU",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the ALU",
+   "box": [
+    450,
+    399,
+    581,
+    454
+   ]
+  },
+  {
+   "name": "Registers",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the Registers",
+   "box": [
+    611,
+    394,
+    759,
+    449
+   ]
+  },
+  {
+   "name": "L1 Cache",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the L1 Cache",
+   "box": [
+    265,
+    483,
+    419,
+    539
+   ]
+  },
+  {
+   "name": "L2 Cache",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the L2 Cache",
+   "box": [
+    448,
+    479,
+    580,
+    534
+   ]
+  },
+  {
+   "name": "MMU",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the MMU (memory management unit)",
+   "box": [
+    610,
+    474,
+    758,
+    529
+   ]
+  },
+  {
+   "name": "Clock",
+   "kind": "shape",
+   "shape": "ellipse",
+   "query": "the Clock",
+   "box": [
+    264,
+    565,
+    418,
+    614
+   ]
+  },
+  {
+   "name": "RAM",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the RAM",
+   "box": [
+    828,
+    359,
+    985,
+    418
+   ]
+  },
+  {
+   "name": "Power Supply",
+   "kind": "shape",
+   "shape": "rect",
+   "query": "the Power Supply",
+   "box": [
+    1031,
+    353,
+    1189,
+    413
+   ]
+  },
+  {
+   "name": "ROM / BIOS",
+   "kind": "shape",
+   "shape": "rect",
+   "query": "the ROM / BIOS chip",
+   "box": [
+    826,
+    529,
+    984,
+    589
+   ]
+  },
+  {
+   "name": "GPU",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the GPU",
+   "box": [
+    1030,
+    524,
+    1189,
+    584
+   ]
+  },
+  {
+   "name": "Display",
+   "kind": "shape",
+   "shape": "rect",
+   "query": "the Display",
+   "box": [
+    1235,
+    519,
+    1396,
+    579
+   ]
+  },
+  {
+   "name": "System Bus",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the System Bus",
+   "box": [
+    239,
+    645,
+    1396,
+    708
+   ]
+  },
+  {
+   "name": "I/O Controller",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the I/O Controller",
+   "box": [
+    237,
+    753,
+    407,
+    811
+   ]
+  },
+  {
+   "name": "SSD",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the SSD",
+   "box": [
+    436,
+    749,
+    576,
+    807
+   ]
+  },
+  {
+   "name": "Network Card",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the Network Card",
+   "box": [
+    606,
+    745,
+    778,
+    804
+   ]
+  },
+  {
+   "name": "USB Hub",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the USB Hub",
+   "box": [
+    808,
+    741,
+    951,
+    800
+   ]
+  },
+  {
+   "name": "Keyboard",
+   "kind": "shape",
+   "shape": "rect",
+   "query": "the Keyboard",
+   "box": [
+    1013,
+    713,
+    1157,
+    764
+   ]
+  },
+  {
+   "name": "Mouse",
+   "kind": "shape",
+   "shape": "rect",
+   "query": "the Mouse",
+   "box": [
+    1012,
+    786,
+    1156,
+    837
+   ]
+  },
+  {
+   "name": "caption",
+   "kind": "text",
+   "query": "the figure caption",
+   "box": [
+    235,
+    869,
+    646,
+    891
+   ]
+  }
+ ]
+}

@@ -1,0 +1,183 @@
+{
+ "image": "flowchart_loop.png",
+ "width": 1280,
+ "height": 720,
+ "template": "flowchart_loop",
+ "set": "dark",
+ "seed": 7,
+ "note": "Flowchart with terminals, parallelogram, decision diamond, Yes/No labels, loop arrow, symbol key. Variant: dark. Boxes are [x0, y0, x1, y1] pixels of this file.",
+ "elements": [
+  {
+   "name": "title",
+   "kind": "text",
+   "query": "the slide title",
+   "box": [
+    66,
+    45,
+    586,
+    79
+   ]
+  },
+  {
+   "name": "subtitle",
+   "kind": "text",
+   "query": "the subtitle under the title",
+   "box": [
+    66,
+    109,
+    457,
+    127
+   ]
+  },
+  {
+   "name": "footer",
+   "kind": "text",
+   "query": "the course name in the footer",
+   "box": [
+    60,
+    689,
+    293,
+    702
+   ]
+  },
+  {
+   "name": "slide number",
+   "kind": "text",
+   "query": "the slide number",
+   "box": [
+    1212,
+    689,
+    1220,
+    699
+   ]
+  },
+  {
+   "name": "Start",
+   "kind": "shape",
+   "shape": "pill",
+   "query": "the Start terminal",
+   "box": [
+    50,
+    268,
+    190,
+    332
+   ]
+  },
+  {
+   "name": "Read input",
+   "kind": "shape",
+   "shape": "parallelogram",
+   "query": "the 'Read input' step",
+   "box": [
+    240,
+    262,
+    450,
+    338
+   ]
+  },
+  {
+   "name": "Valid?",
+   "kind": "shape",
+   "shape": "diamond",
+   "query": "the 'Valid?' decision diamond",
+   "box": [
+    520,
+    224,
+    700,
+    376
+   ]
+  },
+  {
+   "name": "Process data",
+   "kind": "shape",
+   "shape": "rect",
+   "query": "the 'Process data' box",
+   "box": [
+    780,
+    262,
+    970,
+    338
+   ]
+  },
+  {
+   "name": "End",
+   "kind": "shape",
+   "shape": "pill",
+   "query": "the End terminal",
+   "box": [
+    1060,
+    268,
+    1200,
+    332
+   ]
+  },
+  {
+   "name": "Show error",
+   "kind": "shape",
+   "shape": "rect",
+   "query": "the 'Show error' box",
+   "box": [
+    520,
+    470,
+    700,
+    540
+   ]
+  },
+  {
+   "name": "Yes",
+   "kind": "text",
+   "query": "the 'Yes' label",
+   "box": [
+    724,
+    272,
+    754,
+    286
+   ]
+  },
+  {
+   "name": "No",
+   "kind": "text",
+   "query": "the 'No' label",
+   "box": [
+    624,
+    414,
+    650,
+    428
+   ]
+  },
+  {
+   "name": "loop-back arrow",
+   "kind": "arrow",
+   "query": "the loop-back arrow from 'Show error' to 'Read input'",
+   "box": [
+    327,
+    338,
+    522,
+    507
+   ]
+  },
+  {
+   "name": "symbol key",
+   "kind": "figure",
+   "shape": "round",
+   "query": "the flowchart symbol key",
+   "box": [
+    780,
+    420,
+    1220,
+    610
+   ]
+  },
+  {
+   "name": "caption",
+   "kind": "text",
+   "query": "the sentence under the flowchart",
+   "box": [
+    50,
+    611,
+    474,
+    629
+   ]
+  }
+ ]
+}

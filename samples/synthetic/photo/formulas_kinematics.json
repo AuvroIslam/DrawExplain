@@ -1,0 +1,166 @@
+{
+ "image": "formulas_kinematics.jpg",
+ "width": 1600,
+ "height": 1200,
+ "template": "formulas_kinematics",
+ "set": "photo",
+ "seed": 7,
+ "note": "Text + formula slide: bullets, key equations box, small v-t graph, worked example. Variant: photo. Boxes are [x0, y0, x1, y1] pixels of this file.",
+ "elements": [
+  {
+   "name": "title",
+   "kind": "text",
+   "query": "the slide title",
+   "box": [
+    233,
+    245,
+    823,
+    307
+   ]
+  },
+  {
+   "name": "footer",
+   "kind": "text",
+   "query": "the course name in the footer",
+   "box": [
+    222,
+    872,
+    363,
+    893
+   ]
+  },
+  {
+   "name": "slide number",
+   "kind": "text",
+   "query": "the slide number",
+   "box": [
+    1334,
+    942,
+    1351,
+    954
+   ]
+  },
+  {
+   "name": "bullet 1",
+   "kind": "text",
+   "query": "the first bullet point",
+   "box": [
+    266,
+    352,
+    726,
+    402
+   ]
+  },
+  {
+   "name": "bullet 2",
+   "kind": "text",
+   "query": "the bullet about velocity growing linearly",
+   "box": [
+    265,
+    407,
+    781,
+    460
+   ]
+  },
+  {
+   "name": "bullet 3",
+   "kind": "text",
+   "query": "the bullet about the area under the v–t graph",
+   "box": [
+    264,
+    462,
+    728,
+    513
+   ]
+  },
+  {
+   "name": "bullet 4",
+   "kind": "text",
+   "query": "the last bullet point (net force)",
+   "box": [
+    263,
+    517,
+    689,
+    565
+   ]
+  },
+  {
+   "name": "v-t graph",
+   "kind": "figure",
+   "query": "the small v–t graph",
+   "box": [
+    252,
+    573,
+    643,
+    775
+   ]
+  },
+  {
+   "name": "equations box",
+   "kind": "shape",
+   "shape": "round",
+   "query": "the Key equations box",
+   "box": [
+    907,
+    373,
+    1378,
+    744
+   ]
+  },
+  {
+   "name": "formula 1",
+   "kind": "text",
+   "query": "the formula v = u + at",
+   "box": [
+    961,
+    466,
+    1108,
+    498
+   ]
+  },
+  {
+   "name": "formula 2",
+   "kind": "text",
+   "query": "the formula s = ut + ½at²",
+   "box": [
+    958,
+    524,
+    1163,
+    570
+   ]
+  },
+  {
+   "name": "formula 3",
+   "kind": "text",
+   "query": "the formula v² = u² + 2as",
+   "box": [
+    956,
+    591,
+    1152,
+    635
+   ]
+  },
+  {
+   "name": "formula 4",
+   "kind": "text",
+   "query": "the formula F = ma",
+   "box": [
+    953,
+    663,
+    1061,
+    696
+   ]
+  },
+  {
+   "name": "example",
+   "kind": "text",
+   "query": "the worked example line",
+   "box": [
+    233,
+    794,
+    806,
+    854
+   ]
+  }
+ ]
+}
