@@ -14,7 +14,7 @@ page replacement) -> prompt block.
 Environment (read here, all optional):
     SIM_SOLVER=0        switch the feature off (default on)
     SIM_MODEL=...       model for the extraction call (default: the lesson's model)
-    SIM_TIMEOUT=12      seconds a lesson waits for the extraction before going on without it
+    SIM_TIMEOUT=20      seconds a lesson waits for the extraction before going on without it
 """
 from __future__ import annotations
 
@@ -61,7 +61,7 @@ log = logging.getLogger("app.tutor.solvers")
 __all__ = ["Simulation", "simulation_for", "build", "looks_algorithmic", "clear_cache"]
 
 GRAPH_KINDS = ("shortest_path", "bfs", "dfs", "mst")
-DEFAULT_TIMEOUT = 12.0
+DEFAULT_TIMEOUT = 20.0  # a scheduling chart with 14 processes takes ~4-8 s to read, longer under load
 MAX_CACHED = 256  # simulations kept in memory (per image + question + model)
 NAMES = {"shortest_path": "Dijkstra's algorithm", "bfs": "breadth-first search", "dfs": "depth-first search",
          "mst": "minimum spanning tree", "sort": "sorting", "binary_search": "binary search",

@@ -45,6 +45,7 @@ Fields: an arrow uses from_target and to_target (target = null); every other kin
 LESSON_RULES = """Lesson rules:
 - 4-6 steps for a concept page; up to 8 for a process, algorithm, proof or worked problem. Step 1 orients: say in one breath what this page is about and circle the main thing (or the title).
 - Each step teaches one idea with 1-3 drawings. Explain what things do and how they connect, give intuition and the why; do not just read the page aloud.
+- READ THE PAGE, NOT THE TEXTBOOK VERSION: identify every object by what the ORIGINAL image shows: where it is, its colour (the REGION LIST gives measured colours), what it touches or is attached to, what it contains. Check each label by where it sits. Never decide what something is from what a label letter usually means (a and b for legs, c for the hypotenuse, x for the unknown) or from the usual textbook form of the figure: if this page differs, teach this page. When you name an object, say how to find it ("the red square on the left").
 - TEACH BY DOING: when the page shows an algorithm, a process, a worked example, a graph or data, run it on the page's own example. Use the real names and numbers you see, and write the intermediate results a student would work out (for example "dist = 5", "1 + 3 = 4", "cwnd = 8") as labels next to the things they belong to, so the board shows the computation unfolding. Be specific ("the edge of weight 1 from A to I"), never generic ("the small values").
 - SIMULATE, DON'T SHORTCUT: when the page shows an algorithm, procedure or process of any kind (graph search, sorting, searching, recursion, a network protocol, a state machine, a numerical method, solving an equation, a cycle in biology or chemistry...), or the student asks for something such a procedure computes, answer by running that procedure on the page's own example as a real simulation:
   * start from its initial state, exactly as the procedure defines it;
@@ -134,15 +135,47 @@ def _quote(text: str | None) -> str:
     return json.dumps(t, ensure_ascii=False)
 
 
+_HUES = [(15, "red"), (40, "orange"), (70, "yellow"), (170, "green"), (200, "cyan"), (255, "blue"),
+         (290, "purple"), (335, "pink"), (360, "red")]  # upper hue bound (degrees) -> colour word
+
+
+def colour_words(image: Image.Image, box: Box) -> str:
+    """The dominant colour(s) inside a region, measured on the pixels ("red", "red and yellow"), so the
+    model does not have to judge colours (and what is attached to what) by eye. "" for tiny regions."""
+    import numpy as np
+
+    W, H = image.size
+    x0, y0 = int(box.x * W), int(box.y * H)
+    x1, y1 = int((box.x + box.w) * W), int((box.y + box.h) * H)
+    if x1 - x0 < 4 or y1 - y0 < 4:
+        return ""
+    step = max(1, max(x1 - x0, y1 - y0) // 80)
+    hsv = np.asarray(image.crop((x0, y0, x1, y1)).convert("HSV"))[::step, ::step].reshape(-1, 3).astype(float)
+    sat = hsv[(hsv[:, 1] > 90) & (hsv[:, 2] > 60)]
+    if len(sat) < 0.25 * len(hsv):  # mostly paper and ink: no colour worth naming
+        return ""
+    hues = sat[:, 0] * 360.0 / 255.0
+    counts: dict[str, int] = {}
+    for h in hues:
+        name = next(word for bound, word in _HUES if h < bound)
+        counts[name] = counts.get(name, 0) + 1
+    ranked = sorted(counts.items(), key=lambda kv: -kv[1])
+    words = [w for w, n in ranked if n >= 0.25 * len(sat)][:2]
+    return " and ".join(words)
+
+
 def region_lines(pr: "PerceptionResult") -> str:
-    """One line per region: id | kind | coarse position | quoted text. No coordinates on purpose."""
+    """One line per region: id | kind | coarse position | colour (shapes and figures) | quoted text. No coordinates
+    on purpose."""
     regions = pr.perception.regions
     if not regions:
         return "(no regions were found: use ids [] and rely on approx)"
     lines = []
     for r in regions[:MAX_REGION_LINES]:
         kind = f"{r.kind} in {r.parent_id}" if r.parent_id else r.kind
-        lines.append(f"{r.id} | {kind} | {position_word(r.box)} | {_quote(r.text)}")
+        colour = colour_words(pr.image, r.box) if r.kind != "text" else ""
+        lines.append(f"{r.id} | {kind} | {position_word(r.box)} | " + (f"{colour} | " if colour else "")
+                     + _quote(r.text))
     if len(regions) > MAX_REGION_LINES:
         lines.append(f"... {len(regions) - MAX_REGION_LINES} more regions are tagged in the MARKED image")
     return "\n".join(lines)
