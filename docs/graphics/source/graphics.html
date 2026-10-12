@@ -50,8 +50,9 @@
           border: 1px solid var(--line); }
   .miss img { display: block; width: 100%; height: 100%; }
   .miss svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .stat-row { display: flex; gap: 56px; margin-top: 28px; }
-  .stat { display: flex; align-items: baseline; gap: 14px; font-size: 21px; color: var(--ink-2); }
+  .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 26px; }
+  .stat { display: flex; align-items: center; gap: 18px; font-size: 22px; line-height: 1.35; color: var(--ink-2); padding: 0 30px; }
+  .stat span { max-width: 640px; }
   .stat b { font-size: 46px; color: var(--red); font-weight: 800; letter-spacing: -0.02em; }
 
   /* 2 solution */
@@ -158,8 +159,8 @@
     </div>
   </div>
   <div class="stat-row">
-    <div class="stat"><b>34%</b> of raw GPT drawings land tightly on their target</div>
-    <div class="stat"><b>0 of 3</b> plain-prompt Dijkstra lessons ran the algorithm correctly</div>
+    <div class="stat"><b>0/3</b><span>plain-prompt lessons on this slide were fully correct</span></div>
+    <div class="stat"><b>34%</b><span>of the model's own drawings land on their target</span></div>
   </div>
   <div class="brand"><svg width="34" height="34"><use href="#logo" /></svg><span>Draw<span class="x">Explain</span></span></div>
   <div class="page-no">01</div>
