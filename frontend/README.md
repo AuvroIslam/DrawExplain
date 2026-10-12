@@ -1,7 +1,7 @@
 # DrawExplain frontend
 
 React 19 + TypeScript + Vite app for DrawExplain. See the root [README](../README.md)
-for the project, and [CONTRACT.md](../CONTRACT.md) for the API it talks to.
+for the project. The API types are in `src/types.ts`, mirroring `backend/app/schemas.py`.
 
 ```bash
 npm install

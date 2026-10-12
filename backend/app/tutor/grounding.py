@@ -3,7 +3,7 @@
 For every target the model returns `ids` (region ids read off the Set-of-Mark image) and
 `approx` (its own normalized [x, y, w, h] estimate read off the original image). Two
 independent guesses that agree are trusted; when they disagree the CV regions, the OCR
-text and the ink mask decide (see CONTRACT.md "Grounding fusion").
+text and the ink mask decide.
 """
 from __future__ import annotations
 

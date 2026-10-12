@@ -167,7 +167,7 @@ backend/gpu/              GPU service on Modal (SAM 2.1, formula OCR)
 backend/scripts/          evaluation scripts (grounding, lessons, formula OCR)
 frontend/src/             React app and the Excalidraw whiteboard engine
 samples/                  example pages, benchmark cases and evaluation results
-docs/                     results log, write-up, demo script, graphics
+docs/                     results log, write-up, graphics
 ```
 
 ## Resources and credits

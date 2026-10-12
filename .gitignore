@@ -37,3 +37,6 @@ samples/real/
 
 # full screenshot set (local reference for the demo video)
 docs/screenshots_all/
+
+# demo video build (rendered video is uploaded to YouTube, not committed)
+brag-output/
