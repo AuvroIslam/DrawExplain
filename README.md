@@ -6,9 +6,13 @@ step: it circles the right parts, writes the working next to them and talks you 
 teacher at a whiteboard.
 
 - Live app: https://drawexplain.vercel.app
-- Demo video: _link coming_
+- Demo video: https://youtu.be/zywVs08X2wk
 - Code: https://github.com/AuvroIslam/DrawExplain
 - Built for Banana Hacks 2026 (image AI). Write-up: [docs/WRITEUP.md](docs/WRITEUP.md)
+
+<p align="center">
+  <a href="https://youtu.be/zywVs08X2wk"><img src="docs/graphics/video-thumbnail.jpg" alt="Watch the DrawExplain demo on YouTube" width="820" /></a>
+</p>
 
 ![The problem](docs/graphics/01-problem.png)
 
