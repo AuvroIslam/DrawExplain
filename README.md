@@ -37,6 +37,43 @@ DrawExplain splits the job so each part does what it is good at:
 4. **Teach (whiteboard and voice).** Marker strokes are drawn on the untouched page in sync with an
    ElevenLabs voice. You can circle a part and ask a follow-up, then take a quiz by tapping the image.
 
+## System architecture
+
+```mermaid
+flowchart TB
+    subgraph WEB["Browser (Vercel)"]
+        direction LR
+        B1["Upload a slide,<br/>photo or PDF"]:::board --> B2["Ask, or circle<br/>with the pen"]:::board --> B3["Excalidraw board:<br/>strokes + voice"]:::board
+    end
+
+    subgraph API["API server (Render)"]
+        direction LR
+        S["<b>1 · See</b><br/>OCR + OpenCV find<br/>numbered regions"]:::see --> P["<b>2 · Plan</b><br/>lesson as JSON,<br/>points at region ids"]:::plan --> C["<b>3 · Check</b><br/>drawings verified,<br/>solvers do the math"]:::check --> T["<b>4 · Teach</b><br/>each stroke timed<br/>to its spoken word"]:::teach
+    end
+
+    subgraph SVC["What each stage uses"]
+        direction LR
+        GPU["Modal GPU · optional<br/>SAM 2.1, Qwen2-VL"]:::see2 ~~~ LLM["OpenAI<br/>gpt-5.5"]:::plan2 ~~~ PY["Plain Python<br/>solvers"]:::check2 ~~~ EL["ElevenLabs<br/>voice"]:::teach2
+    end
+
+    WEB <== "page + question / streamed lesson" ==> API
+    API -. "uses" .-> SVC
+
+    classDef board fill:#ffd43b,stroke:#1d1b26,color:#1d1b26
+    classDef see fill:#1971c2,stroke:#1971c2,color:#ffffff
+    classDef plan fill:#9c36b5,stroke:#9c36b5,color:#ffffff
+    classDef check fill:#2f9e44,stroke:#2f9e44,color:#ffffff
+    classDef teach fill:#e03131,stroke:#e03131,color:#ffffff
+    classDef see2 fill:#e7f1fb,stroke:#1971c2,color:#1d1b26,stroke-dasharray:5 4
+    classDef plan2 fill:#f6eaf9,stroke:#9c36b5,color:#1d1b26
+    classDef check2 fill:#e8f5ea,stroke:#2f9e44,color:#1d1b26
+    classDef teach2 fill:#fdecec,stroke:#e03131,color:#1d1b26
+    style WEB fill:#1d1b26,stroke:#1d1b26,color:#ffd43b
+    style API fill:#f6f4ef,stroke:#8a8696,color:#1d1b26,stroke-dasharray:6 4
+    style SVC fill:#ffffff,stroke:#e2ddd1,color:#1d1b26
+    linkStyle 0,1,2,3,4,8,9 stroke:#8a8696,stroke-width:2px
+```
+
 ## Why it works
 
 ![Why it works](docs/graphics/03-why-it-works.png)
