@@ -37,6 +37,15 @@ DrawExplain splits the job so each part does what it is good at:
 4. **Teach (whiteboard and voice).** Marker strokes are drawn on the untouched page in sync with an
    ElevenLabs voice. You can circle a part and ask a follow-up, then take a quiz by tapping the image.
 
+## System architecture
+
+![System architecture](docs/graphics/02b-architecture.png)
+
+The browser (React, Vite and Excalidraw on Vercel) sends the page and the question to the API server
+(FastAPI on Render), which runs the four stages and streams the lesson back. Each stage uses one outside
+service: an optional Modal GPU for SAM 2.1 and formula reading, OpenAI for planning, plain Python for
+checking and solving, and ElevenLabs for the voice.
+
 ## Why it works
 
 ![Why it works](docs/graphics/03-why-it-works.png)

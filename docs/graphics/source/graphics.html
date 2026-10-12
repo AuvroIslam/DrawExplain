@@ -99,6 +99,39 @@
                   border-radius: 0 0 10px 10px; background: #b5b1a6; }
   .note { position: absolute; font-family: var(--hand); font-size: 24px; color: var(--red); }
 
+
+  /* architecture */
+  .arch { position: absolute; left: 96px; top: 246px; width: 1408px; height: 600px; }
+  .arch .browser { position: absolute; left: 0; top: 0; width: 1408px; height: 74px; border-radius: 18px; background: var(--ink);
+                   color: #fff; display: flex; align-items: center; gap: 22px; padding: 0 26px; font-size: 19px; }
+  .arch .browser b { color: var(--hl); font-size: 21px; }
+  .arch .browser .pill { background: rgb(255 255 255 / .1); border-radius: 999px; padding: 7px 14px; font-size: 16.5px; color: #e9e6f1; }
+  .arch .browser .host { margin-left: auto; font-size: 16px; color: #a9a5b6; }
+  .arch .server { position: absolute; left: -16px; top: 128px; width: 1440px; height: 308px; border: 2px dashed #c9c4b8;
+                  border-radius: 26px; }
+  .arch .server .lbl { position: absolute; left: 560px; top: -15px; background: var(--paper); padding: 0 10px; font-size: 16px;
+                       font-weight: 700; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+  .stage { position: absolute; top: 150px; width: 314px; height: 268px; border-radius: 20px; background: var(--card);
+           border: 1px solid var(--line); overflow: hidden; box-shadow: 0 2px 6px rgb(29 27 38 / .05), 0 24px 48px -26px rgb(29 27 38 / .32); }
+  .stage .top { height: 64px; display: flex; align-items: center; gap: 12px; padding: 0 18px; color: #fff; }
+  .stage .top .n { width: 34px; height: 34px; border-radius: 50%; background: rgb(255 255 255 / .25); display: grid; place-items: center;
+                   font-weight: 800; font-size: 18px; }
+  .stage .top h3 { font-size: 26px; letter-spacing: -0.01em; }
+  .stage .top .who { margin-left: auto; font-size: 14px; font-weight: 700; background: rgb(255 255 255 / .2); padding: 5px 10px;
+                     border-radius: 999px; letter-spacing: .02em; }
+  .stage ul { list-style: none; padding: 14px 18px 0; }
+  .stage li { font-size: 16.5px; line-height: 1.38; color: var(--ink-2); padding-left: 16px; position: relative; margin-bottom: 8px; }
+  .stage li::before { content: ""; position: absolute; left: 0; top: 8px; width: 7px; height: 7px; border-radius: 2px; background: var(--c); }
+  .stage .out { position: absolute; left: 14px; right: 14px; bottom: 14px; border-radius: 12px; padding: 9px 12px; font-size: 15.5px;
+                font-weight: 700; color: var(--c); background: var(--soft); }
+  .svc { position: absolute; top: 478px; width: 314px; height: 74px; border-radius: 16px; border: 2px solid var(--c); background: var(--soft);
+         display: flex; flex-direction: column; justify-content: center; padding: 0 16px; }
+  .svc b { font-size: 18px; color: var(--ink); }
+  .svc span { font-size: 15px; color: var(--ink-2); margin-top: 2px; }
+  .svc.opt { border-style: dashed; }
+  .arch svg.wires { position: absolute; left: 0; top: 0; width: 1408px; height: 600px; overflow: visible; }
+  .wire-lbl { font-family: var(--font); font-size: 15px; font-weight: 700; fill: var(--ink-2); }
+
   /* thank you */
   .thanks { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
             height: 100%; }
@@ -207,6 +240,29 @@
     numbers are.</p>
   <div class="brand"><svg width="34" height="34"><use href="#logo" /></svg><span>Draw<span class="x">Explain</span></span></div>
   <div class="page-no">02</div>
+</section>
+
+<!-- architecture -->
+<section class="slide" id="architecture">
+  <div class="kicker">System architecture</div>
+  <h1 style="font-size:50px">How a page <span class="hl">becomes a lesson</span></h1>
+  <div class="arch">
+    <div class="browser"><b>Browser</b><span class="pill">Upload a slide, photo or PDF</span><span class="pill">Ask, or circle with the pen</span><span class="pill">Excalidraw board draws the strokes</span><span class="host">React + Vite &middot; Vercel</span></div>
+    <div class="server"><span class="lbl">API server &middot; FastAPI on Render</span></div>
+    <div class="stage" style="left:0px;--c:#1971c2;--soft:#e7f1fb"><div class="top" style="background:#1971c2"><span class="n">1</span><h3>See</h3><span class="who">Computer vision</span></div>
+      <ul><li>Straightens photos of the page</li><li>RapidOCR reads words and labels</li><li>OpenCV finds shapes and arrows</li><li>Gives every element a number</li></ul><div class="out">&rarr; Numbered regions R1 … Rn</div></div>
+    <div class="stage" style="left:364px;--c:#9c36b5;--soft:#f6eaf9"><div class="top" style="background:#9c36b5"><span class="n">2</span><h3>Plan</h3><span class="who">Language model</span></div>
+      <ul><li>Reads the regions + marked page</li><li>Writes the lesson step by step</li><li>Points at region ids, not pixels</li><li>Adds a rough box as backup</li></ul><div class="out">&rarr; Lesson plan as JSON</div></div>
+    <div class="stage" style="left:728px;--c:#2f9e44;--soft:#e8f5ea"><div class="top" style="background:#2f9e44"><span class="n">3</span><h3>Check</h3><span class="who">Code</span></div>
+      <ul><li>Region id and rough box agree?</li><li>Algorithm data read off the page</li><li>Pixels confirm every number</li><li>Solvers compute each value</li></ul><div class="out">&rarr; Verified drawings, exact numbers</div></div>
+    <div class="stage" style="left:1092px;--c:#e8590c;--soft:#fdf0e6"><div class="top" style="background:#e8590c"><span class="n">4</span><h3>Teach</h3><span class="who">Board + voice</span></div>
+      <ul><li>Voice with a time for every word</li><li>Strokes appear as words are said</li><li>Circle a part and ask a follow-up</li><li>Tap quiz, notes saved as PNG</li></ul><div class="out">&rarr; Live lesson in the browser</div></div>
+    <div class="svc opt" style="left:0px;--c:#1971c2;--soft:#e7f1fb"><b>Modal GPU <span style="font-weight:600;color:var(--muted)">(optional)</span></b><span>SAM 2.1 shapes · Qwen2-VL formulas</span></div>
+    <div class="svc" style="left:364px;--c:#9c36b5;--soft:#f6eaf9"><b>OpenAI gpt-5.5</b><span>plans the lesson</span></div>
+    <div class="svc" style="left:728px;--c:#2f9e44;--soft:#e8f5ea"><b>Plain Python</b><span>Dijkstra, BFS/DFS, MST, sorting, scheduling, paging, TCP</span></div>
+    <div class="svc" style="left:1092px;--c:#e8590c;--soft:#fdf0e6"><b>ElevenLabs</b><span>tutor voice + word timings</span></div>
+    <svg class="wires"><defs><marker id="ah-e8590c" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#e8590c"/></marker><marker id="ah-9c36b5" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#9c36b5"/></marker><marker id="ah-2f9e44" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2f9e44"/></marker><marker id="ah-1d1b26" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1d1b26"/></marker><marker id="ah-1971c2" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1971c2"/></marker></defs><line x1="320" y1="284" x2="356" y2="284" stroke="#9c36b5" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ah-9c36b5)"/><line x1="684" y1="284" x2="720" y2="284" stroke="#2f9e44" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ah-2f9e44)"/><line x1="1048" y1="284" x2="1084" y2="284" stroke="#e8590c" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ah-e8590c)"/><line x1="157" y1="78" x2="157" y2="144" stroke="#1d1b26" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ah-1d1b26)"/><text class="wire-lbl" x="172" y="117">your page + question</text><line x1="1249" y1="146" x2="1249" y2="80" stroke="#1d1b26" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ah-1d1b26)"/><text class="wire-lbl" x="1264" y="117">streamed lesson</text><line x1="157" y1="422" x2="157" y2="474" stroke="#1971c2" stroke-width="3.5" stroke-dasharray="2 7" stroke-linecap="round"/><line x1="521" y1="422" x2="521" y2="474" stroke="#9c36b5" stroke-width="3.5" stroke-dasharray="2 7" stroke-linecap="round"/><line x1="885" y1="422" x2="885" y2="474" stroke="#2f9e44" stroke-width="3.5" stroke-dasharray="2 7" stroke-linecap="round"/><line x1="1249" y1="422" x2="1249" y2="474" stroke="#e8590c" stroke-width="3.5" stroke-dasharray="2 7" stroke-linecap="round"/></svg>
+  </div>
 </section>
 
 <!-- 3 why it works -->

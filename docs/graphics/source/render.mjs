@@ -7,7 +7,7 @@ import { chromium } from "../../../frontend/node_modules/playwright/index.mjs";
 const here = path.dirname(fileURLToPath(import.meta.url));
 const out = path.resolve(here, "..");
 const names = {
-  problem: "01-problem", solution: "02-solution", why: "03-why-it-works", "app-upload": "04-app-upload",
+  problem: "01-problem", solution: "02-solution", architecture: "02b-architecture", why: "03-why-it-works", "app-upload": "04-app-upload",
   "app-dijkstra": "05-app-algorithms", "app-scheduling": "06-app-charts", "app-vision": "07-app-how-it-sees",
   thanks: "08-thank-you",
 };
