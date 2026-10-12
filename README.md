@@ -7,7 +7,8 @@ teacher at a whiteboard.
 
 - Live app: https://drawexplain.vercel.app
 - Demo video: _link coming_
-- Built for Banana Hacks 2026 (image AI)
+- Code: https://github.com/AuvroIslam/DrawExplain
+- Built for Banana Hacks 2026 (image AI). Write-up: [docs/WRITEUP.md](docs/WRITEUP.md)
 
 ![The problem](docs/graphics/01-problem.png)
 
@@ -88,6 +89,28 @@ Every number comes from scripts in `backend/scripts/` and is written up, includi
 [docs/RESULTS_LOG.md](docs/RESULTS_LOG.md). Lesson scores are automatic fact checks on real lessons;
 every failed check was read by hand.
 
+## How we built it: inspiration and design process
+
+**Inspiration.** A teacher explains a slide by walking to the board and drawing on it. Chatbots only
+write. We wanted an AI that points at the exact part of your page while it talks.
+
+**Design process.** We measured every step and changed course when a number said so
+([full log](docs/RESULTS_LOG.md)):
+
+1. **Can the model draw by itself?** On a clean slide the newest models place boxes well, but on dense
+   diagrams, photos and small text their circles miss: only 34% of 407 targets land tightly.
+2. **Vision first.** OCR, a rescue pass for lone labels like graph weights, and OpenCV shapes turn the
+   page into numbered regions. The model names regions, and its own box is a second opinion, gated by
+   how self-consistent its answer is (63% to 81% tight hits for a small model).
+3. **Code does the math.** Prompt rules alone still skipped Dijkstra relaxations, so the model now only
+   reads the problem off the page and solvers run it: fully correct algorithm lessons went from 3/9 to 9/9.
+4. **Test on real pages.** 17 Wikimedia Commons pages exposed CPU scheduling and page replacement
+   mistakes, so we added solvers for both.
+5. **GPU where it helps.** SAM 2.1 on Modal lifts the uncertain targets from 26% to 47% tight hits, and
+   Qwen2-VL reads formulas as LaTeX.
+6. **User testing.** A misread geometry figure led to colour-aware region descriptions and a "read the
+   page, not the textbook version" rule.
+
 ## Screenshots
 
 ![Upload any page](docs/graphics/04-app-upload.png)
@@ -144,13 +167,39 @@ samples/                  example pages, benchmark cases and evaluation results
 docs/                     results log, write-up, demo script, graphics
 ```
 
-## Built with
+## Resources and credits
 
-OpenAI gpt-5.5, RapidOCR (PP-OCRv4), OpenCV, SAM 2.1 and Qwen2-VL on Modal, ElevenLabs, FastAPI,
-PyMuPDF, React, Vite, Excalidraw and lucide icons. Benchmark images come from Wikimedia Commons; sources
-and licenses are in [samples/bench/SOURCES.md](samples/bench/SOURCES.md).
+**Generative AI tools we used**
 
-DrawExplain was developed with **Claude Code**, Anthropic's AI coding assistant, which we used to write
-and test the code, run the evaluations and prepare these docs.
+| Tool | Used for |
+|---|---|
+| OpenAI gpt-5.5 | In the app: plans each lesson and reads algorithm data off the page. Other OpenAI models (gpt-4.1, gpt-5-mini, gpt-5.4) were compared in our evaluations. |
+| ElevenLabs text-to-speech | In the app: the tutor voice, with word timestamps that time the drawings. |
+| ElevenLabs voice, music and sound effects | The demo video's narration, music and sound effects. |
+| Claude Code (Anthropic) | Development: writing and testing the code, running the evaluations, and preparing the docs, graphics and demo video. |
+
+**Pre-trained models**
+
+| Model | Source | License |
+|---|---|---|
+| PP-OCRv4 text detection and recognition, via RapidOCR | PaddleOCR / RapidAI | Apache-2.0 |
+| SAM 2.1 base+ (optional GPU service), via Ultralytics | Meta AI | Apache-2.0 (Ultralytics: AGPL-3.0) |
+| Qwen2-VL-2B-Instruct (optional GPU service, formula OCR) | Alibaba Qwen | Apache-2.0 |
+
+**Open-source libraries**
+
+- Backend: FastAPI, Uvicorn, Pydantic, OpenCV, NumPy, Pillow, PyMuPDF, RapidOCR (ONNX Runtime), httpx,
+  OpenAI Python SDK.
+- GPU service: PyTorch, Hugging Face Transformers, Ultralytics, Modal.
+- Frontend: React, Vite, Excalidraw, mermaid-to-excalidraw, Rough.js, lucide-react.
+- Tooling: pytest, Playwright (screenshots and screen recording), ffmpeg (demo video).
+
+**Data**
+
+- Benchmark pages from Wikimedia Commons. Every image's source, author and license is in
+  [samples/bench/SOURCES.md](samples/bench/SOURCES.md).
+- Synthetic test slides that we generated ourselves (`samples/synthetic/`).
+
+**Hosting:** Vercel (frontend), Render (API), Modal (GPU service).
 
 ![Thank you](docs/graphics/08-thank-you.png)
