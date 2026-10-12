@@ -89,17 +89,16 @@ flowchart TB
 | Fully correct lessons on hard algorithm pages (3 pages, 3 runs each) | 3 of 9 (prompting only) | 9 of 9 |
 | Fact-check score on 20 real study pages (core + 17 Wikimedia Commons pages) | 0.86 (prompt rules) | 0.93 |
 
-Every number comes from scripts in `backend/scripts/` and is written up, including what went wrong, in
-[docs/RESULTS_LOG.md](docs/RESULTS_LOG.md). Lesson scores are automatic fact checks on real lessons;
-every failed check was read by hand.
+The numbers come from the evaluation scripts in `backend/scripts/` (`eval_grounding.py` for drawing
+placement, `eval_lessons.py` for lesson quality), run on the benchmark pages in `samples/bench/`. Lesson
+scores are automatic fact checks on real lessons; every failed check was read by hand.
 
 ## How we built it: inspiration and design process
 
 **Inspiration.** A teacher explains a slide by walking to the board and drawing on it. Chatbots only
 write. We wanted an AI that points at the exact part of your page while it talks.
 
-**Design process.** We measured every step and changed course when a number said so
-([full log](docs/RESULTS_LOG.md)):
+**Design process.** We measured every step and changed course when a number said so:
 
 1. **Can the model draw by itself?** On a clean slide the newest models place boxes well, but on dense
    diagrams, photos and small text their circles miss: only 34% of 407 targets land tightly.

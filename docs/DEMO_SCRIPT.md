@@ -25,7 +25,7 @@ Hard limit: 3:00. Record at 1440x900 or 1920x1080, browser zoom 100%, cursor vis
 | 1:15-1:35 | Draw a circle around node G with the pen, type "Why did G change from 9 to 4?" | "I'm still not sure about G, so I circle it and ask." (Let the purple answer play.) |
 | 1:35-1:50 | Quiz: tap the wrong node once, then the right one | "And it checks I understood, by tapping the picture." |
 | 1:50-2:25 | Toggle **How it sees**: region tags R1..Rn, grounding badges, timings | "Here's the trick. The language model never draws. Computer vision finds every region first; the model plans the lesson by choosing region IDs and giving its own box estimate; we cross-check the two before anything is drawn." |
-| 2:25-2:40 | The evaluation chart (`samples/eval/chart_hit75.png`), then the table in `samples/eval/lessons_summary.md` | "On 407 targets, raw GPT coordinates land tightly 34% of the time; ours 83%. And on algorithm pages, fully correct lessons went from 3 in 9 to 9 in 9." |
+| 2:25-2:40 | The results graphic (`docs/graphics/03-why-it-works.png`) | "On 407 targets, raw GPT coordinates land tightly 34% of the time; ours 83%. And on algorithm pages, fully correct lessons went from 3 in 9 to 9 in 9." |
 | 2:40-2:52 | Quick cut: the CPU-scheduling chart (`samples/bench/images/cs_sjf_gantt.png`) with its waiting-time labels, then a phone photo of a textbook page | "A scheduling chart every earlier version misread: now the waiting times come from code, exactly. Phone photos, any subject." |
 | 2:52-3:00 | Logo + GitHub URL | "DrawExplain: a tutor that teaches by drawing." |
 
